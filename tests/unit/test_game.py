@@ -33,3 +33,24 @@ class TestGame(unittest.TestCase):
         B = -A
         g = nash.Game(A, B)
         self.assertTrue(g.zero_sum)
+
+    def test_obtain_equilibria_for_bi_matrix(self):
+        """Test for the equilibria calculation"""
+        A = np.array([[160, 205, 44],
+                      [175, 180, 45],
+                      [201, 204, 50],
+                      [120, 207, 49]])
+        B = np.array([[2, 2, 2],
+                      [1, 0, 0],
+                      [3, 4, 1],
+                      [4, 1, 2]])
+        g = nash.Game(A, B)
+        self.assertTrue(g.obtain_equilibria(),
+                        [[(0, 0, 3/4, 1/4), (1/28, 27/28, 0)]])
+
+        A = np.array([[1, 0], [-2, 3]])
+        B = np.array([[3, 2], [-1, 0]])
+        g = nash.Game(A, B)
+        self.assertTrue(g.obtain_equilibria(), [[(0, 1), (0, 1)],
+                                                [(1/2, 1/2), (1/2, 1/2)],
+                                                [(1, 0), (1, 0)]])

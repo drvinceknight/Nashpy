@@ -54,3 +54,14 @@ class TestGame(unittest.TestCase):
         self.assertTrue(g.obtain_equilibria(), [[(0, 1), (0, 1)],
                                                 [(1/2, 1/2), (1/2, 1/2)],
                                                 [(1, 0), (1, 0)]])
+
+    def test_potential_supports(self):
+        """Test for the enumeration of potential supports"""
+        A = np.array([[1, 0], [-2, 3]])
+        B = np.array([[3, 2], [-1, 0]])
+        g = nash.Game(A, B)
+        self.assertTrue(g.potential_support_pairs(), [[(0,), (0,)],
+                                                      [(0,), (1,)],
+                                                      [(1,), (0,)],
+                                                      [(1,), (1,)],
+                                                      [(0, 1), (0, 1)]])

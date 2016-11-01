@@ -6,3 +6,15 @@ you want to do sophisticated equilibria computation you should use
 
 This code is based on code that was implemented in
 [Sagemath](http://www.sagemath.org/).
+
+# Tests
+
+To run the full test suite:
+
+- Install the library (preferably in a virtual environment)
+
+    python setup.py develop
+
+- Run the tests:
+
+    python -m unittest discover tests

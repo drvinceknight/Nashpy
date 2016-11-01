@@ -6,6 +6,7 @@ import unittest
 import nash
 import numpy as np
 
+
 class TestGame(unittest.TestCase):
     """
     Tests for the game class
@@ -60,8 +61,47 @@ class TestGame(unittest.TestCase):
         A = np.array([[1, 0], [-2, 3]])
         B = np.array([[3, 2], [-1, 0]])
         g = nash.Game(A, B)
-        self.assertTrue(g.potential_support_pairs(), [[(0,), (0,)],
-                                                      [(0,), (1,)],
-                                                      [(1,), (0,)],
-                                                      [(1,), (1,)],
-                                                      [(0, 1), (0, 1)]])
+        self.assertEqual(list(g.potential_support_pairs()), [((0,), (0,)),
+                                                             ((0,), (1,)),
+                                                             ((1,), (0,)),
+                                                             ((1,), (1,)),
+                                                             ((0, 1), (0, 1))])
+
+        A = np.array([[1, 0, 2], [-2, 3, 9]])
+        B = np.array([[3, 2, 1], [-1, 0, 2]])
+        g = nash.Game(A, B)
+        self.assertEqual(list(g.potential_support_pairs()), [((0,), (0,)),
+                                                             ((0,), (1,)),
+                                                             ((0,), (2,)),
+                                                             ((1,), (0,)),
+                                                             ((1,), (1,)),
+                                                             ((1,), (2,)),
+                                                             ((0, 1), (0, 1)),
+                                                             ((0, 1), (0, 2)),
+                                                             ((0, 1), (1, 2))])
+
+
+        A = np.array([[1, 0], [-2, 3], [2, 1]])
+        B = np.array([[3, 2], [-1, 0], [5, 2]])
+        g = nash.Game(B, A)
+        self.assertEqual(list(g.potential_support_pairs()), [((0,), (0,)),
+                                                             ((0,), (1,)),
+                                                             ((1,), (0,)),
+                                                             ((1,), (1,)),
+                                                             ((2,), (0,)),
+                                                             ((2,), (1,)),
+                                                             ((0, 1), (0, 1)),
+                                                             ((0, 2), (0, 1)),
+                                                             ((1, 2), (0, 1))])
+
+class TestUtils(unittest.TestCase):
+    def test_powerset(self):
+        n = 2
+        powerset = list(nash.powerset(n))
+        self.assertEqual(powerset, [(), (0,), (1,), (0, 1)])
+
+        n = 3
+        powerset = list(nash.powerset(n))
+        self.assertEqual(powerset, [(), (0,), (1,), (2,),
+                                    (0, 1), (0, 2), (1, 2),
+                                    (0, 1, 2)])

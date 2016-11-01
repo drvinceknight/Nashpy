@@ -1,5 +1,18 @@
 """A class for a normal form game"""
 import numpy as np
+from itertools import chain, combinations
+
+
+def powerset(n):
+    """
+    A power set of range(n)
+
+    Based on recipe from python itertools documentation:
+
+    https://docs.python.org/2/library/itertools.html#recipes
+    """
+    return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
+
 
 class Game:
     """
@@ -34,3 +47,14 @@ class Game:
         4. Solve indifference conditions and check that have Nash Equilibrium.
         """
         pass
+
+    def potential_support_pairs(self):
+        """
+        A generator for the potential support pairs
+        """
+        p1_num_strategies, p2_num_strategies = self.payoff_matrices[0].shape
+        for support1 in filter(lambda s: len(s) > 0,
+                               powerset(p1_num_strategies)):
+            for support2 in filter(lambda s: len(s) == len(support1),
+                                   powerset(p2_num_strategies)):
+                yield support1, support2

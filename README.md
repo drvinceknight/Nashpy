@@ -11,10 +11,6 @@ This code is based on code that was implemented in
 
 To run the full test suite:
 
-- Install the library (preferably in a virtual environment)
-
-    python setup.py develop
-
 - Run the tests:
 
-    python -m unittest discover tests
+    python setup.py test

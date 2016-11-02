@@ -53,8 +53,38 @@ class Game:
         A generator for the potential support pairs
         """
         p1_num_strategies, p2_num_strategies = self.payoff_matrices[0].shape
-        for support1 in filter(lambda s: len(s) > 0,
-                               powerset(p1_num_strategies)):
-            for support2 in filter(lambda s: len(s) == len(support1),
-                                   powerset(p2_num_strategies)):
+        for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
+            for support2 in (s for s in powerset(p2_num_strategies)
+                             if len(s) == len(support1)):
                 yield support1, support2
+
+    def indifference_strategies(self):
+        """
+        A generator for the strategies corresponding to the potential supports
+        """
+        for pair in self.potential_support_pairs():
+            s1 = self.solve_indifference(self.payoff_matrices[1], *pair)
+            s2 = self.solve_indifference(self.payoff_matrices[0], *pair[::-1])
+            yield (s1, s2)
+
+    def solve_indifference(self, A, rows=None, columns=None):
+        """
+        Solve the indifference for a payoff matrix assuming support for the strategies given by columns
+
+        Finds vector of probabilities that makes player indifferent between rows.
+        (So finds probability vector for corresponding column player)
+        """
+        M = (A[rows] - np.roll(A[rows], 1, axis=0))[:-1]  # Ensure differences between pairs of pure strategies are the same
+        M = np.append(M, [[1 for _ in M.T]], axis=0)   # Ensure have probability vector
+        zero_columns = set(range(A.shape[1])) - set(columns)  # Columns that must be played with prob 0
+        b = np.append(np.zeros(len(M) - 1), [1] + [0 for _ in zero_columns])
+
+        if zero_columns != set():
+            M = np.append(M, [[int(i == j) for i, col in enumerate(M.T)] for j in zero_columns], axis=0)
+
+        try:
+            prob = np.linalg.solve(M, b)
+            assert all(prob >= 0), "Not a probability vector (non positive values)"
+            return prob
+        except np.linalg.linalg.LinAlgError:
+            return None

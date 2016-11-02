@@ -94,6 +94,23 @@ class TestGame(unittest.TestCase):
                                                              ((0, 2), (0, 1)),
                                                              ((1, 2), (0, 1))])
 
+    def test_indifference_strategies(self):
+        """Test for the enumeration of potential supports"""
+        A = np.array([[1, 0], [-2, 3]])
+        B = np.array([[3, 2], [-1, 0]])
+        g = nash.Game(A, B)
+        self.assertEqual(list(g.indifference_strategies()), [((0,), (0,)),
+                                                             ((0,), (1,)),
+                                                             ((1,), (0,)),
+                                                             ((1,), (1,)),
+                                                             ((0, 1), (0, 1))])
+
+    def test_solve_indifference(self):
+        A = np.array([[1, 1, 5], [2, 2, 0]])
+        g = nash.Game(A)
+        self.assertEqual(g.solve_indifference(((0, 1), (0, 2)), A), (1/3, 2/3))
+
+
 class TestUtils(unittest.TestCase):
     def test_powerset(self):
         n = 2

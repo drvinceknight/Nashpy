@@ -106,9 +106,31 @@ class TestGame(unittest.TestCase):
                                                              ((0, 1), (0, 1))])
 
     def test_solve_indifference(self):
-        A = np.array([[1, 1, 5], [2, 2, 0]])
+        """Test solve indifference"""
+        A = np.array([[0, 1, -1], [1, 0, 1], [-1, 1, 0]])
         g = nash.Game(A)
-        self.assertEqual(g.solve_indifference(((0, 1), (0, 2)), A), (1/3, 2/3))
+
+        rows = [0, 1]
+        columns = [0, 1]
+        self.assertTrue(np.array_equal(g.solve_indifference(A, rows, columns),
+                                       np.array([0.5,  0.5,  0.])))
+
+        rows = [1, 2]
+        columns = [0, 1]
+        self.assertTrue(all(np.isclose(g.solve_indifference(A, rows, columns),
+                                       np.array([0.33333333,  0.66666667,  0.])
+                                       )))
+
+        rows = [0, 2]
+        columns = [0, 1]
+        self.assertTrue(np.array_equal(g.solve_indifference(A, rows, columns),
+                                       np.array([0.,  1.0,  0.])))
+
+        rows = [0, 1, 2]
+        columns = [0, 1, 2]
+        self.assertTrue(all(np.isclose(g.solve_indifference(A, rows, columns),
+                                       np.array([0.2,  0.6,  0.2])
+                                       )))
 
 
 class TestUtils(unittest.TestCase):

@@ -56,6 +56,13 @@ class TestGame(unittest.TestCase):
                                                 [(1/2, 1/2), (1/2, 1/2)],
                                                 [(1, 0), (1, 0)]])
 
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        g = nash.Game(A, B)
+        self.assertTrue(g.obtain_equilibria(), [[(0, 1), (0, 1)],
+                                                [(1, 0), (1, 0)],
+                                                [(1/3, 2/3), (1/3, 2/3)]])
+
     def test_potential_supports(self):
         """Test for the enumeration of potential supports"""
         A = np.array([[1, 0], [-2, 3]])
@@ -80,7 +87,6 @@ class TestGame(unittest.TestCase):
                                                              ((0, 1), (0, 2)),
                                                              ((0, 1), (1, 2))])
 
-
         A = np.array([[1, 0], [-2, 3], [2, 1]])
         B = np.array([[3, 2], [-1, 0], [5, 2]])
         g = nash.Game(B, A)
@@ -96,14 +102,21 @@ class TestGame(unittest.TestCase):
 
     def test_indifference_strategies(self):
         """Test for the enumeration of potential supports"""
-        A = np.array([[1, 0], [-2, 3]])
-        B = np.array([[3, 2], [-1, 0]])
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
         g = nash.Game(A, B)
-        self.assertEqual(list(g.indifference_strategies()), [((0,), (0,)),
-                                                             ((0,), (1,)),
-                                                             ((1,), (0,)),
-                                                             ((1,), (1,)),
-                                                             ((0, 1), (0, 1))])
+        expected_indifference = [(np.array([1, 0]), np.array([1, 0])),
+                                 (np.array([0, 1]), np.array([1, 0])),
+                                 (np.array([1, 0]), np.array([0, 1])),
+                                 (np.array([0, 1]), np.array([0, 1])),
+                                 (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
+        obtained_indifference = list(g.indifference_strategies())
+        self.assertEqual(len(obtained_indifference), len(expected_indifference))
+        for obtained, expected in zip(g.indifference_strategies(),
+                                      expected_indifference):
+            self.assertTrue(np.array_equal(obtained, expected),
+                            msg="obtained: {} !=expected: {}".format(obtained,
+                                                                     expected))
 
     def test_solve_indifference(self):
         """Test solve indifference"""

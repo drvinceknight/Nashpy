@@ -43,8 +43,9 @@ class Game:
 
         1. For each k in 1...min(size of strategy sets)
         2. For each I,J supports of size k
-        3. Prune: check if supports are dominated
-        4. Solve indifference conditions and check that have Nash Equilibrium.
+        3. Prune: check if supports are dominated  # TODO
+        4. Solve indifference conditions
+        5. Check that have Nash Equilibrium.  # TODO
         """
         pass
 
@@ -63,8 +64,8 @@ class Game:
         A generator for the strategies corresponding to the potential supports
         """
         for pair in self.potential_support_pairs():
-            s1 = self.solve_indifference(self.payoff_matrices[1], *pair)
-            s2 = self.solve_indifference(self.payoff_matrices[0], *pair[::-1])
+            s1 = self.solve_indifference(self.payoff_matrices[0], *pair)
+            s2 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
             yield (s1, s2)
 
     def solve_indifference(self, A, rows=None, columns=None):
@@ -74,7 +75,7 @@ class Game:
         Finds vector of probabilities that makes player indifferent between rows.
         (So finds probability vector for corresponding column player)
         """
-        M = (A[rows] - np.roll(A[rows], 1, axis=0))[:-1]  # Ensure differences between pairs of pure strategies are the same
+        M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]  # Ensure differences between pairs of pure strategies are the same
         M = np.append(M, [[1 for _ in M.T]], axis=0)   # Ensure have probability vector
         zero_columns = set(range(A.shape[1])) - set(columns)  # Columns that must be played with prob 0
         b = np.append(np.zeros(len(M) - 1), [1] + [0 for _ in zero_columns])

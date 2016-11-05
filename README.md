@@ -1,8 +1,8 @@
 # Nash: a python library for the computation of equilibria of normal form games.
 
-**This is a library with standard dependencies so that it is pip installable: if
-you want to do sophisticated equilibria computation YOU SHOULD use
-[gambit](https://github.com/gambitproject/gambit).**
+**This is a library with simple dependencies (it only requires numpy) so that it
+is pip installable: if you want to do sophisticated equilibria computation YOU
+SHOULD use [gambit](https://github.com/gambitproject/gambit).**
 
 This is a linear algebraic implementation of support enumeration using numpy.
 

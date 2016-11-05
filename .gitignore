@@ -1,3 +1,4 @@
 nashpy.egg-info
 *pyc
 .eggs
+.coverage

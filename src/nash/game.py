@@ -114,7 +114,7 @@ class Game:
         M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]
 
         # Ensure have probability vector
-        M = np.append(M, [[1 for _ in M.T]], axis=0)
+        M = np.append(M, np.ones((1, M.shape[1])), axis=0)
 
         # Columns that must be played with prob 0
         zero_columns = set(range(A.shape[1])) - set(columns)

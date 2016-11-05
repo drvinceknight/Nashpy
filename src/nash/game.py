@@ -34,6 +34,19 @@ class Game:
         self.zero_sum = np.array_equal(self.payoff_matrices[0],
                                        -self.payoff_matrices[1])
 
+    def __repr__(self):
+        if self.zero_sum:
+            tpe = "Zero sum"
+        else:
+            tpe = "Bi matrix"
+        return """{} game with payoff matrices:
+
+Row player:
+{}
+
+Column player:
+{}""".format(tpe, *self.payoff_matrices)
+
     def equilibria(self):
         """
         Obtain the Nash equilibria using support enumeration.

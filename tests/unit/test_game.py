@@ -27,6 +27,22 @@ class TestGame(unittest.TestCase):
         self.assertTrue(np.array_equal(g.payoff_matrices[1], np.asarray(B)))
         self.assertFalse(g.zero_sum)
 
+    def test_bi_matrix_repr(self):
+        """Test that can create a bi matrix game"""
+        A = np.array([[1, 2], [2, 1]])
+        B = np.array([[2, 1], [1, 2]])
+        g = nash.Game(A, B)
+        string_repr = """Bi matrix game with payoff matrices:
+
+Row player:
+[[1 2]
+ [2 1]]
+
+Column player:
+[[2 1]
+ [1 2]]"""
+        self.assertEqual(g.__repr__(), string_repr)
+
     def test_zero_sum_game_init(self):
         """Test that can create a zero sum game"""
         A = np.array([[1, 2], [2, 1]])
@@ -43,6 +59,21 @@ class TestGame(unittest.TestCase):
         self.assertTrue(np.array_equal(g.payoff_matrices[0],
                                        -g.payoff_matrices[1]))
         self.assertTrue(g.zero_sum)
+
+    def test_zero_sum_repr(self):
+        """Test that can create a bi matrix game"""
+        A = np.array([[1, -1], [-1, 1]])
+        g = nash.Game(A)
+        string_repr = """Zero sum game with payoff matrices:
+
+Row player:
+[[ 1 -1]
+ [-1  1]]
+
+Column player:
+[[-1  1]
+ [ 1 -1]]"""
+        self.assertEqual(g.__repr__(), string_repr)
 
     def test_zero_sum_property_from_bi_matrix(self):
         """Test that can create a zero sum game"""

@@ -38,13 +38,17 @@ class Game:
         """
         Obtain the Nash equilibria using support enumeration.
 
-        Algorithm implemented here is Algorithm 3.4 of [NN2007]_
-        with an aspect of pruning from [SLB2008]_.
+        Algorithm implemented here is Algorithm 3.4 of [NN2007]_.
 
         1. For each k in 1...min(size of strategy sets)
         2. For each I,J supports of size k
         3. Solve indifference conditions
         4. Check that have Nash Equilibrium.
+
+        Returns
+        -------
+
+            A generator.
         """
         return ((s1, s2)
                 for s1, s2, sup1, sup2 in self.indifference_strategies()
@@ -52,7 +56,23 @@ class Game:
 
     @staticmethod
     def obey_support(strategy, support):
-        """Test if a strategy obeys it's support"""
+        """
+        Test if a strategy obeys its support
+
+        Parameters
+        ----------
+
+            strategy: a numpy array
+                A given strategy vector
+            support: a numpy array
+                A strategy support
+
+        Returns
+        -------
+
+            A boolean: whether or not that strategy does indeed have the given
+            support
+        """
         if strategy is False:
             return False
         if not all((i in support and value > 0) or
@@ -64,6 +84,12 @@ class Game:
     def is_ne(self, strategy_pair, support_pair):
         """
         Test if a given strategy pair is a pair of best responses
+
+        Parameters
+        ----------
+
+            strategy_pair: a 2-tuple of numpy arrays
+            support_pair: a 2-tuple of numpy arrays
         """
         # Payoff against opponents strategies:
         u = strategy_pair[1].reshape(strategy_pair[1].size, 1)
@@ -82,6 +108,11 @@ class Game:
     def potential_support_pairs(self):
         """
         A generator for the potential support pairs
+
+        Returns
+        -------
+
+            A generator of all potential support pairs
         """
         p1_num_strategies, p2_num_strategies = self.payoff_matrices[0].shape
         for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
@@ -92,6 +123,13 @@ class Game:
     def indifference_strategies(self):
         """
         A generator for the strategies corresponding to the potential supports
+
+        Returns
+        -------
+
+            A generator of all potential strategies that are indifferent on each
+            potential support. Return False if they are not valid (not a
+            probability vector OR not fully on the given support).
         """
         for pair in self.potential_support_pairs():
             s1 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
@@ -109,6 +147,20 @@ class Game:
 
         Finds vector of probabilities that makes player indifferent between
         rows.  (So finds probability vector for corresponding column player)
+
+        Parameters
+        ----------
+
+            A: a 2 dimensional numpy array (A payoff matrix for the row player)
+            rows: the support played by the row player
+            columns: the support player by the column player
+
+        Returns
+        -------
+
+            A numpy array:
+            A probability vector for the column player that makes the row
+            player indifferent. Will return False if all entries are not >= 0.
         """
         # Ensure differences between pairs of pure strategies are the same
         M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]

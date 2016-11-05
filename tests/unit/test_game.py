@@ -35,7 +35,7 @@ class TestGame(unittest.TestCase):
         g = nash.Game(A, B)
         self.assertTrue(g.zero_sum)
 
-    def test_obtain_equilibria_for_bi_matrix(self):
+    def test_equilibria_for_bi_matrix(self):
         """Test for the equilibria calculation"""
         A = np.array([[160, 205, 44],
                       [175, 180, 45],
@@ -48,7 +48,7 @@ class TestGame(unittest.TestCase):
         g = nash.Game(A, B)
         expected_equilibria = [(np.array([0, 0, 3/4, 1/4]),
                                 np.array([1/28, 27/28, 0]))]
-        for obtained, expected in zip(g.obtain_equilibria(),
+        for obtained, expected in zip(g.equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),
@@ -61,7 +61,7 @@ class TestGame(unittest.TestCase):
         expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
                                (np.array([0, 1]), np.array([0, 1])),
                                (np.array([1/2, 1/2]), np.array([1/2, 1/2]))]
-        for obtained, expected in zip(g.obtain_equilibria(),
+        for obtained, expected in zip(g.equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),
@@ -74,7 +74,7 @@ class TestGame(unittest.TestCase):
         expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
                                (np.array([0, 1]), np.array([0, 1])),
                                (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
-        for obtained, expected in zip(g.obtain_equilibria(),
+        for obtained, expected in zip(g.equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),

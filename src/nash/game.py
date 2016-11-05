@@ -34,7 +34,7 @@ class Game:
         self.zero_sum = np.array_equal(self.payoff_matrices[0],
                                        -self.payoff_matrices[1])
 
-    def obtain_equilibria(self):
+    def equilibria(self):
         """
         Obtain the Nash equilibria using support enumeration.
 

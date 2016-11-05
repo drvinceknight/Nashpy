@@ -56,6 +56,8 @@ class Game:
         """
         # Test that supports are obeyed
         for strategy, support in zip(strategy_pair, support_pair):
+            if strategy is False:
+                return False
             if not all((i in support and value > 0) or
                        (i not in support and value <= 0)
                        for i, value in enumerate(strategy)):
@@ -112,6 +114,6 @@ class Game:
             prob = np.linalg.solve(M, b)
             if all(prob >= 0):  # TODO Add check for obeying of support here.
                 return prob
-            return False
         except np.linalg.linalg.LinAlgError:
-            return None
+            return False
+        return False

@@ -1,4 +1,4 @@
-# Nash: a python library for the computation of equilibria of normal form games.
+# Nash: a python library for the computation of equilibria of 2 player strategic games.
 
 **This is a library with simple dependencies (it only requires numpy) so that it
 is pip installable: if you want to do sophisticated equilibria computation YOU
@@ -64,3 +64,7 @@ To run the full test suite:
 ```
 $ python setup.py test
 ```
+
+All contributions are welcome, although this is meant to be a simple library,
+for more detailed game theoretic contribution please see
+[gambit](https://github.com/gambitproject/gambit).

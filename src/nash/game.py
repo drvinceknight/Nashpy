@@ -110,7 +110,8 @@ class Game:
 
         try:
             prob = np.linalg.solve(M, b)
-            assert all(prob >= 0), "Not a probability vector (non positive values)"
-            return prob
+            if all(prob >= 0):  # TODO Add check for obeying of support here.
+                return prob
+            return False
         except np.linalg.linalg.LinAlgError:
             return None

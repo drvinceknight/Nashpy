@@ -51,7 +51,7 @@ class TestGame(unittest.TestCase):
         for obtained, expected in zip(g.obtain_equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
-                self.assertTrue(all(np.isclose(s1, s2)),
+                self.assertTrue(np.array_equal(s1, s2),
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
 
@@ -64,7 +64,7 @@ class TestGame(unittest.TestCase):
         for obtained, expected in zip(g.obtain_equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
-                self.assertTrue(all(np.isclose(s1, s2)),
+                self.assertTrue(np.array_equal(s1, s2),
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
 
@@ -77,7 +77,7 @@ class TestGame(unittest.TestCase):
         for obtained, expected in zip(g.obtain_equilibria(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
-                self.assertTrue(all(np.isclose(s1, s2)),
+                self.assertTrue(np.array_equal(s1, s2),
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
 

@@ -217,7 +217,7 @@ class TestGame(unittest.TestCase):
         rows = [1, 2]
         columns = [0, 1]
         self.assertTrue(all(np.isclose(g.solve_indifference(A, rows, columns),
-                                       np.array([0.33333333,  0.66666667,  0.])
+                                       np.array([1/3,  2/3,  0.])
                                        )))
 
         rows = [0, 2]

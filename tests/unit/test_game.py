@@ -150,10 +150,6 @@ class TestGame(unittest.TestCase):
         support_pair = [0, 1], [0, 1]
         self.assertTrue(g.is_ne(strategy_pair, support_pair))
 
-        strategy_pair = np.array([1/3, 2/3]), np.array([1/3, 2/3])
-        support_pair = [1], [0, 1]
-        self.assertFalse(g.is_ne(strategy_pair, support_pair))
-
         strategy_pair = np.array([0, 1]), np.array([1, 0])
         support_pair = [1], [0]
         self.assertFalse(g.is_ne(strategy_pair, support_pair))

@@ -49,24 +49,21 @@ class Game:
         """
         return ((s1, s2) for s1, s2, sup1, sup2 in self.indifference_strategies() if self.is_ne((s1, s2), (sup1, sup2)))
 
+    def obey_support(self, strategy, support):
+        """Test if a strategy obeys it's support"""
+        if strategy is False:
+            return False
+        if not all((i in support and value > 0) or
+                   (i not in support and value <= 0)
+                   for i, value in enumerate(strategy)):
+            return False
+        return True
+
     def is_ne(self, strategy_pair, support_pair):
         """
-        Test if a given strategy pair is a nash equilibrium on a given support
-        pair
+        Test if a given strategy pair is a pair of best responses
         """
-        # Test that supports are obeyed
-        for strategy, support in zip(strategy_pair, support_pair):
-            if strategy is False:
-                return False
-            if not all((i in support and value > 0) or
-                       (i not in support and value <= 0)
-                       for i, value in enumerate(strategy)):
-                return False
-
-        # Test that have pair of best responses
-
         # Payoff against opponents strategies:
-
         u = strategy_pair[1].reshape(strategy_pair[1].size, 1)
         row_payoffs = np.dot(self.payoff_matrices[0], u)
 
@@ -97,7 +94,10 @@ class Game:
         for pair in self.potential_support_pairs():
             s1 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
             s2 = self.solve_indifference(self.payoff_matrices[0], *pair)
-            yield s1, s2, pair[0], pair[1]
+
+            if self.obey_support(s1, pair[0]) and \
+               self.obey_support(s2, pair[1]):
+                yield s1, s2, pair[0], pair[1]
 
     def solve_indifference(self, A, rows=None, columns=None):
         """

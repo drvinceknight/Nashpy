@@ -21,9 +21,9 @@ class Game:
     Parameters
     ----------
 
-        - A, B: 2 dimensional numpy array representing the payoff matrices for
+        - A, B: 2 dimensional list/arrays representing the payoff matrices for
           non zero sum games.
-        - A: 2 dimensional numpy array representing the payoff matrix for a
+        - A: 2 dimensional list/array representing the payoff matrix for a
           zero sum game.
     """
     def __init__(self, *args):
@@ -51,7 +51,8 @@ Column player:
         """
         Obtain the Nash equilibria using support enumeration.
 
-        Algorithm implemented here is Algorithm 3.4 of [NN2007]_.
+        Algorithm implemented here is Algorithm 3.4 of Nisan, Noam, et al., eds.
+        Algorithmic game theory. Cambridge University Press, 2007.
 
         1. For each k in 1...min(size of strategy sets)
         2. For each I,J supports of size k

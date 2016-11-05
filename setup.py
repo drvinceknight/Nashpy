@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 import unittest
+import doctest
 
 # Read in the requirements.txt file
 with open('requirements.txt') as f:
@@ -11,7 +12,12 @@ exec(open('src/nash/version.py', 'r').read())
 def test_suite():
     """Discover all tests in the tests dir"""
     test_loader = unittest.TestLoader()
+    # Read in unit tests
     test_suite = test_loader.discover('tests')
+
+    # Read in doctests from README
+    test_suite.addTests(doctest.DocFileSuite('README.md',
+                                          optionflags=doctest.ELLIPSIS))
     return test_suite
 
 setup(

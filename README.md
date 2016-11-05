@@ -7,14 +7,12 @@ you want to do sophisticated equilibria computation you should use
 This code is based on code that was implemented in
 [Sagemath](http://www.sagemath.org/).
 
-# Usage
-
 ## Installation
 
 The easiest way to install is from pypi:
 
 ```bash
-$ pip install nashpy
+$ pip install nashpy  # This doesn't work yet  #TODO Speak to James
 ```
 
 ## Usage
@@ -62,5 +60,5 @@ False
 To run the full test suite:
 
 ```
-python setup.py test
+$ python setup.py test
 ```

@@ -15,7 +15,7 @@ def test_suite():
     return test_suite
 
 setup(
-    name='nash',
+    name='nashpy',
     version=__version__,
     install_requires=requirements,
     author='Vince Knight, James Campbell',

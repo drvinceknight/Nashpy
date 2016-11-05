@@ -19,11 +19,27 @@ class TestGame(unittest.TestCase):
         self.assertEqual(g.payoff_matrices, (A, B))
         self.assertFalse(g.zero_sum)
 
+        # Can also init with lists
+        A = [[1, 2], [2, 1]]
+        B = [[2, 1], [1, 2]]
+        g = nash.Game(A, B)
+        self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
+        self.assertTrue(np.array_equal(g.payoff_matrices[1], np.asarray(B)))
+        self.assertFalse(g.zero_sum)
+
     def test_zero_sum_game_init(self):
         """Test that can create a zero sum game"""
         A = np.array([[1, 2], [2, 1]])
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], A))
+        self.assertTrue(np.array_equal(g.payoff_matrices[0],
+                                       -g.payoff_matrices[1]))
+        self.assertTrue(g.zero_sum)
+
+        # Can also init with lists
+        A = [[1, 2], [2, 1]]
+        g = nash.Game(A)
+        self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
         self.assertTrue(np.array_equal(g.payoff_matrices[0],
                                        -g.payoff_matrices[1]))
         self.assertTrue(g.zero_sum)

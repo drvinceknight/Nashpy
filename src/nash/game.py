@@ -28,9 +28,9 @@ class Game:
     """
     def __init__(self, *args):
         if len(args) == 2:
-            self.payoff_matrices = args
+            self.payoff_matrices = tuple([np.asarray(m) for m in args])
         if len(args) == 1:
-            self.payoff_matrices = args[0], -args[0]
+            self.payoff_matrices = np.asarray(args[0]), -np.asarray(args[0])
         self.zero_sum = np.array_equal(self.payoff_matrices[0],
                                        -self.payoff_matrices[1])
 

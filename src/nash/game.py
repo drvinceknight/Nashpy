@@ -45,7 +45,7 @@ class Game:
         2. For each I,J supports of size k
         3. Prune: check if supports are dominated  # TODO
         4. Solve indifference conditions
-        5. Check that have Nash Equilibrium.  # TODO
+        5. Check that have Nash Equilibrium.
         """
         pass
 
@@ -91,7 +91,7 @@ class Game:
         for pair in self.potential_support_pairs():
             s1 = self.solve_indifference(self.payoff_matrices[0], *pair)
             s2 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
-            yield (s1, s2)
+            yield s1, s2, pair[0], pair[1]
 
     def solve_indifference(self, A, rows=None, columns=None):
         """

@@ -110,9 +110,9 @@ class TestGame(unittest.TestCase):
                                  (np.array([1, 0]), np.array([0, 1])),
                                  (np.array([0, 1]), np.array([0, 1])),
                                  (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
-        obtained_indifference = list(g.indifference_strategies())
+        obtained_indifference = [out[:2] for out in g.indifference_strategies()]
         self.assertEqual(len(obtained_indifference), len(expected_indifference))
-        for obtained, expected in zip(g.indifference_strategies(),
+        for obtained, expected in zip(obtained_indifference,
                                       expected_indifference):
             self.assertTrue(np.array_equal(obtained, expected),
                             msg="obtained: {} !=expected: {}".format(obtained,

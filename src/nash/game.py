@@ -47,9 +47,12 @@ class Game:
         4. Solve indifference conditions
         5. Check that have Nash Equilibrium.
         """
-        return ((s1, s2) for s1, s2, sup1, sup2 in self.indifference_strategies() if self.is_ne((s1, s2), (sup1, sup2)))
+        return ((s1, s2)
+                for s1, s2, sup1, sup2 in self.indifference_strategies()
+                if self.is_ne((s1, s2), (sup1, sup2)))
 
-    def obey_support(self, strategy, support):
+    @staticmethod
+    def obey_support(strategy, support):
         """Test if a strategy obeys it's support"""
         if strategy is False:
             return False
@@ -99,7 +102,8 @@ class Game:
                self.obey_support(s2, pair[1]):
                 yield s1, s2, pair[0], pair[1]
 
-    def solve_indifference(self, A, rows=None, columns=None):
+    @staticmethod
+    def solve_indifference(A, rows=None, columns=None):
         """
         Solve the indifference for a payoff matrix assuming support for the strategies given by columns
 
@@ -115,8 +119,8 @@ class Game:
             M = np.append(M, [[int(i == j) for i, col in enumerate(M.T)] for j in zero_columns], axis=0)
 
         try:
-            prob = np.linalg.solve(M, b)
-            if all(prob >= 0):  # TODO Add check for obeying of support here.
+            prob = np.linalg.solve(M, b)  # TODO Add ability to use np.linalg.lstsq
+            if all(prob >= 0):
                 return prob
         except np.linalg.linalg.LinAlgError:
             return False

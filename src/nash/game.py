@@ -113,21 +113,21 @@ class Game:
         # Ensure differences between pairs of pure strategies are the same
         M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]
 
-        # Ensure have probability vector
-        M = np.append(M, np.ones((1, M.shape[1])), axis=0)
-
         # Columns that must be played with prob 0
         zero_columns = set(range(A.shape[1])) - set(columns)
-        b = np.append(np.zeros(len(M) - 1), [1] + [0 for _ in zero_columns])
 
         if zero_columns != set():
             M = np.append(M, [[int(i == j) for i, col in enumerate(M.T)]
                               for j in zero_columns], axis=0)
 
+        # Ensure have probability vector
+        M = np.append(M, np.ones((1, M.shape[1])), axis=0)
+        b = np.append(np.zeros(len(M) - 1), [1])
+
         try:
             prob = np.linalg.solve(M, b)
             if all(prob >= 0):
                 return prob
+            return False
         except np.linalg.linalg.LinAlgError:
             return False
-        return False

@@ -49,6 +49,31 @@ class Game:
         """
         pass
 
+    def is_ne(self, strategy_pair, support_pair):
+        """
+        Test if a given strategy pair is a nash equilibrium on a given support
+        pair
+        """
+        # Test that supports are obeyed
+        for strategy, support in zip(strategy_pair, support_pair):
+            if not all((i in support and value > 0) or
+                       (i not in support and value <= 0)
+                       for i, value in enumerate(strategy)):
+                return False
+
+        # Test that have pair of best responses
+
+        # Payoff against opponents strategies:
+        row_payoffs = np.dot(self.payoff_matrices[0], strategy_pair[1])
+        column_payoffs = np.dot(self.payoff_matrices[1].T, strategy_pair[0])
+
+        # Pure payoffs on current support:
+        row_support_payoffs = row_payoffs[support_pair[0]]
+        column_support_payoffs = column_payoffs[support_pair[1]]
+
+        return (row_payoffs.max() == row_support_payoffs.max() and
+                column_payoffs.max() == column_support_payoffs.max())
+
     def potential_support_pairs(self):
         """
         A generator for the potential support pairs

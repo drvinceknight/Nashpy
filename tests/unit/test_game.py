@@ -118,6 +118,50 @@ class TestGame(unittest.TestCase):
                             msg="obtained: {} !=expected: {}".format(obtained,
                                                                      expected))
 
+    def test_is_ne(self):
+        """Test if is ne"""
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        g = nash.Game(A, B)
+
+        strategy_pair = np.array([1, 0]), np.array([1, 0])
+        support_pair = [0], [0]
+        self.assertTrue(g.is_ne(strategy_pair, support_pair))
+
+        strategy_pair = np.array([1/3, 2/3]), np.array([1/3, 2/3])
+        support_pair = [0, 1], [0, 1]
+        self.assertTrue(g.is_ne(strategy_pair, support_pair))
+
+        strategy_pair = np.array([1/3, 2/3]), np.array([1/3, 2/3])
+        support_pair = [1], [0, 1]
+        self.assertFalse(g.is_ne(strategy_pair, support_pair))
+
+        strategy_pair = np.array([0, 1]), np.array([1, 0])
+        support_pair = [1], [0]
+        self.assertFalse(g.is_ne(strategy_pair, support_pair))
+
+        strategy_pair = np.array([1, 0]), np.array([0, 1])
+        support_pair = [0], [1]
+        self.assertFalse(g.is_ne(strategy_pair, support_pair))
+
+        A = np.array([[1, -1], [-1, 1]])
+        g = nash.Game(A)
+        strategy_pair = np.array([1 / 2, 1 / 2]), np.array([1 / 2, 1 / 2])
+        support_pair = [0, 1], [0, 1]
+        self.assertTrue(g.is_ne(strategy_pair, support_pair))
+
+        A = np.array([[0, 1, -1], [-1, 0, 1], [1, -1, 0]])
+        g = nash.Game(A)
+        strategy_pair = (np.array([1 / 3, 1 / 3, 1 / 3]),
+                         np.array([1 / 3, 1 / 3, 1 / 3]))
+        support_pair = [0, 1, 2], [0, 1, 2]
+        self.assertTrue(g.is_ne(strategy_pair, support_pair))
+
+        strategy_pair = (np.array([1, 0, 0]),
+                         np.array([1, 0, 0]))
+        support_pair = [0], [0]
+        self.assertFalse(g.is_ne(strategy_pair, support_pair))
+
     def test_solve_indifference(self):
         """Test solve indifference"""
         A = np.array([[0, 1, -1], [1, 0, 1], [-1, 1, 0]])

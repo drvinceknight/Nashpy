@@ -43,11 +43,11 @@ class Game:
 
         1. For each k in 1...min(size of strategy sets)
         2. For each I,J supports of size k
-        3. Prune: check if supports are dominated  # TODO
+        3. Prune: check if supports are dominated # TODO
         4. Solve indifference conditions
         5. Check that have Nash Equilibrium.
         """
-        pass
+        return ((s1, s2) for s1, s2, sup1, sup2 in self.indifference_strategies() if self.is_ne((s1, s2), (sup1, sup2)))
 
     def is_ne(self, strategy_pair, support_pair):
         """
@@ -74,8 +74,8 @@ class Game:
         column_payoffs = np.dot(self.payoff_matrices[1].T, v)
 
         # Pure payoffs on current support:
-        row_support_payoffs = row_payoffs[support_pair[0]]
-        column_support_payoffs = column_payoffs[support_pair[1]]
+        row_support_payoffs = row_payoffs[np.array(support_pair[0])]
+        column_support_payoffs = column_payoffs[np.array(support_pair[1])]
 
         return (row_payoffs.max() == row_support_payoffs.max() and
                 column_payoffs.max() == column_support_payoffs.max())

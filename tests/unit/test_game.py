@@ -46,23 +46,40 @@ class TestGame(unittest.TestCase):
                       [3, 4, 1],
                       [4, 1, 2]])
         g = nash.Game(A, B)
-        equilibria = g.obtain_equilibria()
-        self.assertEqual(list(equilibria),
-                         [[(0, 0, 3/4, 1/4), (1/28, 27/28, 0)]])
+        expected_equilibria = [(np.array([0, 0, 3/4, 1/4]),
+                                np.array([1/28, 27/28, 0]))]
+        for obtained, expected in zip(g.obtain_equilibria(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
 
-        #A = np.array([[1, 0], [-2, 3]])
-        #B = np.array([[3, 2], [-1, 0]])
-        #g = nash.Game(A, B)
-        #self.assertEqual(g.obtain_equilibria(), [[(0, 1), (0, 1)],
-                                                #[(1/2, 1/2), (1/2, 1/2)],
-                                                #[(1, 0), (1, 0)]])
+        A = np.array([[1, 0], [-2, 3]])
+        B = np.array([[3, 2], [-1, 0]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
+                               (np.array([0, 1]), np.array([0, 1])),
+                               (np.array([1/2, 1/2]), np.array([1/2, 1/2]))]
+        for obtained, expected in zip(g.obtain_equilibria(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
 
-        #A = np.array([[2, 1], [0, 2]])
-        #B = np.array([[2, 0], [1, 2]])
-        #g = nash.Game(A, B)
-        #self.assertEqual(g.obtain_equilibria(), [[(0, 1), (0, 1)],
-                                                #[(1, 0), (1, 0)],
-                                                #[(1/3, 2/3), (1/3, 2/3)]])
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
+                               (np.array([0, 1]), np.array([0, 1])),
+                               (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
+        for obtained, expected in zip(g.obtain_equilibria(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
 
     def test_potential_supports(self):
         """Test for the enumeration of potential supports"""

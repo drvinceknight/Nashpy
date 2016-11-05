@@ -66,8 +66,12 @@ class Game:
         # Test that have pair of best responses
 
         # Payoff against opponents strategies:
-        row_payoffs = np.dot(self.payoff_matrices[0], strategy_pair[1])
-        column_payoffs = np.dot(self.payoff_matrices[1].T, strategy_pair[0])
+
+        u = strategy_pair[1].reshape(strategy_pair[1].size, 1)
+        row_payoffs = np.dot(self.payoff_matrices[0], u)
+
+        v = strategy_pair[0].reshape(strategy_pair[0].size, 1)
+        column_payoffs = np.dot(self.payoff_matrices[1].T, v)
 
         # Pure payoffs on current support:
         row_support_payoffs = row_payoffs[support_pair[0]]

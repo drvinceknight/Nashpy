@@ -163,6 +163,19 @@ class TestGame(unittest.TestCase):
         support_pair = [0], [0]
         self.assertFalse(g.is_ne(strategy_pair, support_pair))
 
+        A = np.array([[160, 205, 44],
+                      [175, 180, 45],
+                      [201, 204, 50],
+                      [120, 207, 49]])
+        B = np.array([[2, 2, 2],
+                      [1, 0, 0],
+                      [3, 4, 1],
+                      [4, 1, 2]])
+        g = nash.Game(A, B)
+        self.assertTrue(g.is_ne((np.array((0, 0, 3/4, 1/4)),
+                                 np.array((1/28, 27/28, 0))),
+                                (np.array([2, 3]), np.array([0, 1]))))
+
     def test_solve_indifference(self):
         """Test solve indifference"""
         A = np.array([[0, 1, -1], [1, 0, 1], [-1, 1, 0]])

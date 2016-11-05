@@ -95,9 +95,9 @@ class Game:
         A generator for the strategies corresponding to the potential supports
         """
         for pair in self.potential_support_pairs():
-            s1 = self.solve_indifference(self.payoff_matrices[0], *pair)
-            s2 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
-            yield s2, s1, pair[0], pair[1]
+            s1 = self.solve_indifference(self.payoff_matrices[1].T, *(pair[::-1]))
+            s2 = self.solve_indifference(self.payoff_matrices[0], *pair)
+            yield s1, s2, pair[0], pair[1]
 
     def solve_indifference(self, A, rows=None, columns=None):
         """

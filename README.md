@@ -20,7 +20,7 @@ This algorithm has also been implemented in
 The easiest way to install is from pypi:
 
 ```bash
-$ pip install nashpy  # This doesn't work yet  #TODO Speak to James
+$ pip install nashpy
 ```
 
 ## Usage

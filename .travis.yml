@@ -1,0 +1,17 @@
+
+language: python
+python:
+  - 3.4
+  - 3.5
+
+install:
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
+
+script:
+  - coverage run --source=src/nash setup.py test
+  - coverage report -m
+
+after_success:
+  - coveralls

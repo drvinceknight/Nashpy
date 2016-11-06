@@ -2,12 +2,9 @@ from setuptools import setup, find_packages
 import unittest
 import doctest
 
-# Read in the requirements.txt file
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
-
 # Read in the version number
 exec(open('src/nash/version.py', 'r').read())
+
 
 def test_suite():
     """Discover all tests in the tests dir"""
@@ -17,13 +14,12 @@ def test_suite():
 
     # Read in doctests from README
     test_suite.addTests(doctest.DocFileSuite('README.md',
-                                          optionflags=doctest.ELLIPSIS))
+                                             optionflags=doctest.ELLIPSIS))
     return test_suite
 
 setup(
     name='nashpy',
     version=__version__,
-    install_requires=requirements,
     author='Vince Knight, James Campbell',
     author_email=('knightva@cardiff.ac.uk'),
     packages=find_packages('src'),

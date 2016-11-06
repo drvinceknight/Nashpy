@@ -6,7 +6,7 @@ SHOULD use [gambit](https://github.com/gambitproject/gambit).**
 
 This is a linear algebraic implementation of support enumeration using numpy.
 
-This code is based on code that was implemented in
+This algorithm has also been implemented in
 [Sagemath](http://www.sagemath.org/).
 
 ## Installation

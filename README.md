@@ -68,6 +68,12 @@ False
 
 ## Development
 
+To install a development version of this library:
+
+```
+$ python setup.py develop
+```
+
 To run the full test suite:
 
 ```
@@ -77,3 +83,9 @@ $ python setup.py test
 All contributions are welcome, although this is meant to be a simple library,
 for more detailed game theoretic contribution please see
 [gambit](https://github.com/gambitproject/gambit).
+
+## Code of conduct
+
+In the interest of fostering an open and welcoming environment, all
+contributors, maintainers and users are expected to abide by the Python code of
+conduct: https://www.python.org/psf/codeofconduct/

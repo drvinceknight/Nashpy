@@ -4,6 +4,9 @@ Status](https://coveralls.io/repos/github/drvinceknight/Nashpy/badge.svg?branch=
 [![Build
 Status](https://travis-ci.org/drvinceknight/Nashpy.svg?branch=master)](https://travis-ci.org/drvinceknight/Nashpy)
 
+[![Join the chat at
+https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](https://gitter.im/Nashpy/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 # Nash: a python library for the computation of equilibria of 2 player strategic games.
 
 **This is a library with simple dependencies (it only requires numpy) so that it

@@ -5,6 +5,7 @@ import doctest
 # Read in the version number
 exec(open('src/nash/version.py', 'r').read())
 
+requirements = ["numpy==1.11.2"]
 
 def test_suite():
     """Discover all tests in the tests dir"""
@@ -20,6 +21,7 @@ def test_suite():
 setup(
     name='nashpy',
     version=__version__,
+    install_requires=requirements,
     author='Vince Knight, James Campbell',
     author_email=('knightva@cardiff.ac.uk'),
     packages=find_packages('src'),

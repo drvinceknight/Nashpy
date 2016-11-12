@@ -3,3 +3,4 @@ nashpy.egg-info
 .eggs
 .coverage
 dist/
+.hypothesis/

@@ -85,6 +85,22 @@ Column player:
         g = nash.Game(A, B)
         self.assertTrue(g.zero_sum)
 
+    @given(A=arrays(np.int8, (3, 4)), B=arrays(np.int8, (3, 4)))
+    def test_property_equilibria(self, A, B):
+        """Property based test for the equilibria calculation"""
+        g = nash.Game(A, B)
+        for equilibrium in g.equilibria():
+            for i, s in enumerate(equilibrium):
+                # Test that have a probability vector (subject to numerical
+                # error)
+                self.assertAlmostEqual(s.sum(), 1)
+
+                # Test that it is of the correct size
+                self.assertEqual(s.size, [3, 4][i])
+
+                # Test that it is non negative
+                self.assertTrue(all(s >= 0))
+
     def test_equilibria_for_bi_matrix(self):
         """Test for the equilibria calculation"""
         A = np.array([[160, 205, 44],

@@ -6,26 +6,29 @@ import unittest
 import nash
 import numpy as np
 
+from hypothesis import given
+from hypothesis.extra.numpy import arrays
 
 class TestGame(unittest.TestCase):
     """
     Tests for the game class
     """
-    def test_bi_matrix_init(self):
+    @given(A=arrays(np.int8, (4, 5)), B=arrays(np.int8, (4, 5)))
+    def test_bi_matrix_init(self, A, B):
         """Test that can create a bi matrix game"""
-        A = np.array([[1, 2], [2, 1]])
-        B = np.array([[2, 1], [1, 2]])
         g = nash.Game(A, B)
         self.assertEqual(g.payoff_matrices, (A, B))
-        self.assertFalse(g.zero_sum)
+        if A.any() or B.any():  # Check if A or B are non zero
+            self.assertFalse(g.zero_sum)
+        else:
+            self.assertTrue(g.zero_sum)
 
         # Can also init with lists
-        A = [[1, 2], [2, 1]]
-        B = [[2, 1], [1, 2]]
+        A = A.tolist()
+        B = B.tolist()
         g = nash.Game(A, B)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
         self.assertTrue(np.array_equal(g.payoff_matrices[1], np.asarray(B)))
-        self.assertFalse(g.zero_sum)
 
     def test_bi_matrix_repr(self):
         """Test that can create a bi matrix game"""
@@ -43,9 +46,9 @@ Column player:
  [1 2]]"""
         self.assertEqual(g.__repr__(), string_repr)
 
-    def test_zero_sum_game_init(self):
+    @given(A=arrays(np.int8, (4, 5)))
+    def test_zero_sum_game_init(self, A):
         """Test that can create a zero sum game"""
-        A = np.array([[1, 2], [2, 1]])
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], A))
         self.assertTrue(np.array_equal(g.payoff_matrices[0],
@@ -53,7 +56,7 @@ Column player:
         self.assertTrue(g.zero_sum)
 
         # Can also init with lists
-        A = [[1, 2], [2, 1]]
+        A = A.tolist()
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
         self.assertTrue(np.array_equal(g.payoff_matrices[0],
@@ -75,9 +78,9 @@ Column player:
  [ 1 -1]]"""
         self.assertEqual(g.__repr__(), string_repr)
 
-    def test_zero_sum_property_from_bi_matrix(self):
+    @given(A=arrays(np.int8, (4, 5)))
+    def test_zero_sum_property_from_bi_matrix(self, A):
         """Test that can create a zero sum game"""
-        A = np.array([[1, 2], [2, 1]])
         B = -A
         g = nash.Game(A, B)
         self.assertTrue(g.zero_sum)
@@ -166,7 +169,7 @@ Column player:
                                                              ((1, 2), (0, 1))])
 
     def test_indifference_strategies(self):
-        """Test for the enumeration of potential supports"""
+        """Test for the indifference strategies of potential supports"""
         A = np.array([[2, 1], [0, 2]])
         B = np.array([[2, 0], [1, 2]])
         g = nash.Game(A, B)

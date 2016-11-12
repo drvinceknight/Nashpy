@@ -4,6 +4,10 @@ Status](https://coveralls.io/repos/github/drvinceknight/Nashpy/badge.svg?branch=
 [![Build
 Status](https://travis-ci.org/drvinceknight/Nashpy.svg?branch=master)](https://travis-ci.org/drvinceknight/Nashpy)
 
+[![Build
+status](https://ci.appveyor.com/api/projects/status/fj864wcbfpqfy6po?svg=true)](https://ci.appveyor.com/project/drvinceknight/nashpy)
+
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.164954.svg)](https://doi.org/10.5281/zenodo.164954)
 
 [![Join the chat at

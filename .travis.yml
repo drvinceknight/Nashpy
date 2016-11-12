@@ -12,6 +12,7 @@ install:
 script:
   - coverage run --source=src/nash setup.py test
   - coverage report -m
+  - pip install nashpy  # Test if pip install works
 
 after_success:
   - coveralls

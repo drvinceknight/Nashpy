@@ -1,3 +1,7 @@
+# v0.0.4
+
+Unpin numpy version number for easier installation.
+
 # v0.0.3
 
 Various packaging and testing improvements and a CITATION.md file.

@@ -5,7 +5,7 @@ import doctest
 # Read in the version number
 exec(open('src/nash/version.py', 'r').read())
 
-requirements = ["numpy==1.11.2"]
+requirements = ["numpy"]
 
 def test_suite():
     """Discover all tests in the tests dir"""

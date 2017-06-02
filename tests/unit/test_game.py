@@ -283,8 +283,7 @@ Column player:
         rows = [1, 2]
         columns = [0, 1]
         self.assertTrue(all(np.isclose(g.solve_indifference(A, rows, columns),
-                                       np.array([1/3,  2/3,  0.])
-                                       )))
+                                       np.array([1/3,  2/3,  0.]))))
 
         rows = [0, 2]
         columns = [0, 1]
@@ -294,9 +293,22 @@ Column player:
         rows = [0, 1, 2]
         columns = [0, 1, 2]
         self.assertTrue(all(np.isclose(g.solve_indifference(A, rows, columns),
-                                       np.array([0.2,  0.6,  0.2])
-                                       )))
+                                       np.array([0.2,  0.6,  0.2]))))
 
+    def test_utility(self):
+        """Test solve indifference"""
+        A = np.array([[1, -1], [-1, 1]])
+        g = nash.Game(A)
+
+        row_strategy = [0, 1]
+        column_strategy = [1, 0]
+        self.assertTrue(np.array_equal(g[row_strategy, column_strategy],
+                                       np.array((-1, 1))))
+
+        row_strategy = [1/2, 1/2]
+        column_strategy = [1/2, 1/2]
+        self.assertTrue(np.array_equal(g[row_strategy, column_strategy],
+                                       np.array((0, 0))))
 
 class TestUtils(unittest.TestCase):
     def test_powerset(self):

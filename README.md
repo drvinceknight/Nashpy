@@ -50,6 +50,14 @@ generator:
 
 ```
 
+We can pass a pair of strategies to a game to see the utilities:
+
+```python
+>>> matching_pennies[[ 0.5,  0.5], [ 0.5,  0.5]]
+array([ 0.,  0.])
+
+```
+
 You can also create bi matrix games by passing two 2 dimensional arrays/lists:
 
 ```python
@@ -63,6 +71,8 @@ False
 (array([ 1.,  0.]), array([ 0.,  1.]))
 (array([ 0.,  1.]), array([ 1.,  0.]))
 (array([ 0.5,  0.5]), array([ 0.5,  0.5]))
+>>> battle_of_the_sexes[[0, 1], [1, 0]]
+array([3, 3])
 
 ```
 

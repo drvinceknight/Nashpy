@@ -1,3 +1,7 @@
+# v0.0.5
+
+Add ability to calculate utilities against a given pair of strategies.
+
 # v0.0.4
 
 Unpin numpy version number for easier installation.

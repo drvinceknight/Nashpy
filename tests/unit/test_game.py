@@ -86,10 +86,10 @@ Column player:
         self.assertTrue(g.zero_sum)
 
     @given(A=arrays(np.int8, (3, 4)), B=arrays(np.int8, (3, 4)))
-    def test_property_equilibria(self, A, B):
+    def test_property_support_enumeration(self, A, B):
         """Property based test for the equilibria calculation"""
         g = nash.Game(A, B)
-        for equilibrium in g.equilibria():
+        for equilibrium in g.support_enumeration():
             for i, s in enumerate(equilibrium):
                 # Test that have a probability vector (subject to numerical
                 # error)
@@ -101,7 +101,7 @@ Column player:
                 # Test that it is non negative
                 self.assertTrue(all(s >= 0))
 
-    def test_equilibria_for_bi_matrix(self):
+    def test_support_enumeration_for_bi_matrix(self):
         """Test for the equilibria calculation"""
         A = np.array([[160, 205, 44],
                       [175, 180, 45],
@@ -114,7 +114,7 @@ Column player:
         g = nash.Game(A, B)
         expected_equilibria = [(np.array([0, 0, 3/4, 1/4]),
                                 np.array([1/28, 27/28, 0]))]
-        for obtained, expected in zip(g.equilibria(),
+        for obtained, expected in zip(g.support_enumeration(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),
@@ -127,7 +127,7 @@ Column player:
         expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
                                (np.array([0, 1]), np.array([0, 1])),
                                (np.array([1/2, 1/2]), np.array([1/2, 1/2]))]
-        for obtained, expected in zip(g.equilibria(),
+        for obtained, expected in zip(g.support_enumeration(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),
@@ -140,7 +140,7 @@ Column player:
         expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
                                (np.array([0, 1]), np.array([0, 1])),
                                (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
-        for obtained, expected in zip(g.equilibria(),
+        for obtained, expected in zip(g.support_enumeration(),
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),

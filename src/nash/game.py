@@ -52,7 +52,7 @@ Column player:
         return np.array([np.dot(row_strategy, np.dot(m, column_strategy))
                          for m in self.payoff_matrices])
 
-    def equilibria(self):
+    def support_enumeration(self):
         """
         Obtain the Nash equilibria using support enumeration.
 

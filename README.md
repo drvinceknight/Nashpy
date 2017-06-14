@@ -41,8 +41,8 @@ True
 
 ```
 
-To compute the equilibria you can iterate over `Game.equilibria()` which is a
-generator:
+To compute the equilibria you can iterate over `Game.support_enumeration()`
+which is a generator that implements a linear algebraic algorithm:
 
 ```python
 >>> for eq in matching_pennies.support_enumeration():

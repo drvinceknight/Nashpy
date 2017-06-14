@@ -1,3 +1,2 @@
 from .game import *
 from .version import __version__
-from .vertex_enumeration import *

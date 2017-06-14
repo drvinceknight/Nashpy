@@ -1,5 +1,6 @@
 """A class for a normal form game"""
 import numpy as np
+from .algorithms.vertex_enumeration import vertex_enumeration
 from itertools import chain, combinations
 
 
@@ -51,6 +52,9 @@ Column player:
         row_strategy, column_strategy = key
         return np.array([np.dot(row_strategy, np.dot(m, column_strategy))
                          for m in self.payoff_matrices])
+
+    def vertex_enumeration(self):
+        return vertex_enumeration(*self.payoff_matrices)
 
     def support_enumeration(self):
         """

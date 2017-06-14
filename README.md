@@ -10,14 +10,15 @@ https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](http
 
 # Nash: a python library for the computation of equilibria of 2 player strategic games.
 
-**This is a library with simple dependencies (it only requires numpy) so that it
-is pip installable: if you want to do sophisticated equilibria computation YOU
-SHOULD use [gambit](https://github.com/gambitproject/gambit).**
+**This is a library with simple dependencies (it only requires numpy and scipy)
+so that it is pip installable: if you want to do sophisticated equilibria
+computation YOU SHOULD use [gambit](https://github.com/gambitproject/gambit).**
 
-This is a linear algebraic implementation of support enumeration using numpy.
+This is an implementation of the following algorithms for equilibria of 2 player
+games:
 
-This algorithm has also been implemented in
-[Sagemath](http://www.sagemath.org/).
+- Support enumeration
+- Best response polytope vertex enumeration
 
 ## Installation
 
@@ -44,7 +45,7 @@ To compute the equilibria you can iterate over `Game.equilibria()` which is a
 generator:
 
 ```python
->>> for eq in matching_pennies.equilibria():
+>>> for eq in matching_pennies.support_enumeration():
 ...     print(eq)
 (array([ 0.5,  0.5]), array([ 0.5,  0.5]))
 
@@ -66,7 +67,7 @@ You can also create bi matrix games by passing two 2 dimensional arrays/lists:
 >>> battle_of_the_sexes = nash.Game(A, B)
 >>> battle_of_the_sexes.zero_sum
 False
->>> for eq in battle_of_the_sexes.equilibria():
+>>> for eq in battle_of_the_sexes.support_enumeration():
 ...     print(eq)
 (array([ 1.,  0.]), array([ 0.,  1.]))
 (array([ 0.,  1.]), array([ 1.,  0.]))

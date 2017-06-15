@@ -5,6 +5,23 @@ import numpy as np
 from itertools import product
 
 def vertex_enumeration(A, B):
+    """
+    Obtain the Nash equilibria using enumeration of the vertices of the best
+    response polytopes.
+
+    Algorithm implemented here is Algorithm 3.5 of Nisan, Noam, et al., eds.
+    Algorithmic game theory. Cambridge University Press, 2007.
+
+    1. Build best responses polytopes of both players
+    2. For each vertex pair of both polytopes
+    3. Check if pair is fully labelled
+    4. Return the normalised pair
+
+    Returns
+    -------
+
+        A generator.
+    """
 
     if np.min(A) < 0:
         A = A + abs(np.min(A))

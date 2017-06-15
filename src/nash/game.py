@@ -55,7 +55,40 @@ Column player:
                          for m in self.payoff_matrices])
 
     def vertex_enumeration(self):
+        """
+        Obtain the Nash equilibria using enumeration of the vertices of the best
+        response polytopes.
+
+        Algorithm implemented here is Algorithm 3.5 of Nisan, Noam, et al., eds.
+        Algorithmic game theory. Cambridge University Press, 2007.
+
+        1. Build best responses polytopes of both players
+        2. For each vertex pair of both polytopes
+        3. Check if pair is fully labelled
+        4. Return the normalised pair
+
+        Returns
+        -------
+
+            A generator.
+        """
         return vertex_enumeration(*self.payoff_matrices)
 
     def support_enumeration(self):
+        """
+        Obtain the Nash equilibria using support enumeration.
+
+        Algorithm implemented here is Algorithm 3.4 of Nisan, Noam, et al., eds.
+        Algorithmic game theory. Cambridge University Press, 2007.
+
+        1. For each k in 1...min(size of strategy sets)
+        2. For each I,J supports of size k
+        3. Solve indifference conditions
+        4. Check that have Nash Equilibrium.
+
+        Returns
+        -------
+
+            A generator.
+        """
         return support_enumeration(*self.payoff_matrices)

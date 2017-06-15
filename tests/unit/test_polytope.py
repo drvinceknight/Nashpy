@@ -1,15 +1,15 @@
 """
 Tests for the game class
 """
+import unittest
 from types import GeneratorType
+
+import numpy as np
+
 from scipy.spatial import HalfspaceIntersection
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
-
-import unittest
-import numpy as np
-
 
 from nash.polytope.polytope import (build_halfspaces, find_feasible_point,
                                     labels, non_trivial_vertices)
@@ -128,8 +128,8 @@ class TestPolytope(unittest.TestCase):
         A = np.array([[3, 3], [2, 5], [0, 6]])
         halfspaces = build_halfspaces(A)
         vertices = non_trivial_vertices(halfspaces)
-        expected_labels = sorted([np.array([0, 1]), np.array([0, 4]),
-                                  np.array([1, 2]), np.array([2, 3])],
+        expected_labels = sorted([set([0, 1]), set([0, 4]),
+                                  set([1, 2]), set([2, 3])],
                                  key=list)
         labels_ = sorted((labels(v, halfspaces) for v, l in vertices),
                          key=list)
@@ -140,9 +140,9 @@ class TestPolytope(unittest.TestCase):
         B = np.array([[3, 2], [2, 6], [3, 1]])
         halfspaces = build_halfspaces(B.transpose())
         vertices = non_trivial_vertices(halfspaces)
-        expected_labels = sorted([np.array([0, 2, 3]), np.array([0, 3, 4]),
-                                  np.array([0, 1, 2]), np.array([1, 2, 4]),
-                                  np.array([0, 1, 4])],
+        expected_labels = sorted([set([0, 2, 3]), set([0, 3, 4]),
+                                  set([0, 1, 2]), set([1, 2, 4]),
+                                  set([0, 1, 4])],
                                  key=list)
 
         labels_ = sorted((labels(v, halfspaces) for v, l in vertices),

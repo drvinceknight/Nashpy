@@ -32,7 +32,7 @@ def find_feasible_point(halfspaces):
 def labels(vertex, halfspaces):
     b = halfspaces[:,-1]
     M = halfspaces[:,:-1]
-    return np.where(np.isclose(np.dot(M, vertex), -b))[0]
+    return set(np.where(np.isclose(np.dot(M, vertex), -b))[0])
 
 def non_trivial_vertices(halfspaces):
     feasible_point = find_feasible_point(halfspaces)

@@ -1,3 +1,7 @@
+# v0.0.6
+
+Add vertex enumeration algorithm.
+
 # v0.0.5
 
 Add ability to calculate utilities against a given pair of strategies.

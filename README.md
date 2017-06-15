@@ -41,6 +41,8 @@ True
 
 ```
 
+### Support enumeration
+
 To compute the equilibria you can iterate over `Game.support_enumeration()`
 which is a generator that implements a linear algebraic algorithm:
 
@@ -51,6 +53,21 @@ which is a generator that implements a linear algebraic algorithm:
 
 ```
 
+### Vertex enumeration
+
+To compute the equilibria you can iterate over `Game.vertex_enumeration()`
+which is a generator that implements an enumeration of vertices of best response
+polytopes:
+
+```python
+>>> for eq in matching_pennies.vertex_enumeration():
+...     print(eq)
+(array([ 0.5,  0.5]), array([ 0.5,  0.5]))
+
+```
+
+### Utility calculation
+
 We can pass a pair of strategies to a game to see the utilities:
 
 ```python
@@ -58,6 +75,8 @@ We can pass a pair of strategies to a game to see the utilities:
 array([ 0.,  0.])
 
 ```
+
+### Non zero sum games
 
 You can also create bi matrix games by passing two 2 dimensional arrays/lists:
 

@@ -3,11 +3,13 @@ Tests for the game class
 """
 
 import unittest
-import nash
 import numpy as np
 
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
+from hypothesis.strategies import integers
+
+import nash
 
 class TestGame(unittest.TestCase):
     """
@@ -102,7 +104,7 @@ Column player:
                 self.assertTrue(all(s >= 0))
 
     def test_support_enumeration_for_bi_matrix(self):
-        """Test for the equilibria calculation"""
+        """Test for the equilibria calculation support enumeration"""
         A = np.array([[160, 205, 44],
                       [175, 180, 45],
                       [201, 204, 50],
@@ -144,6 +146,52 @@ Column player:
                                       expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(np.array_equal(s1, s2),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
+
+    def test_vertex_enumeration_for_bi_matrix(self):
+        """Test for the equilibria calculation using vertex enumeration"""
+        A = np.array([[160, 205, 44],
+                      [175, 180, 45],
+                      [201, 204, 50],
+                      [120, 207, 49]])
+        B = np.array([[2, 2, 2],
+                      [1, 0, 0],
+                      [3, 4, 1],
+                      [4, 1, 2]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([0, 0, 3/4, 1/4]),
+                                np.array([1/28, 27/28, 0]))]
+        for obtained, expected in zip(g.vertex_enumeration(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
+
+        A = np.array([[1, 0], [-2, 3]])
+        B = np.array([[3, 2], [-1, 0]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
+                               (np.array([0, 1]), np.array([0, 1])),
+                               (np.array([1/2, 1/2]), np.array([1/2, 1/2]))]
+        for obtained, expected in zip(g.vertex_enumeration(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
+                                msg="obtained: {} !=expected: {}".format(obtained,
+                                                                         expected))
+
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
+                               (np.array([0, 1]), np.array([0, 1])),
+                               (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
+        for obtained, expected in zip(g.vertex_enumeration(),
+                                      expected_equilibria):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(all(np.isclose(s1, s2)),
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
 

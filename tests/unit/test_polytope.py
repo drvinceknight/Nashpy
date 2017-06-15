@@ -1,15 +1,15 @@
 """
 Tests for the game class
 """
+import unittest
 from types import GeneratorType
+
+import numpy as np
+
 from scipy.spatial import HalfspaceIntersection
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
-
-import unittest
-import numpy as np
-
 
 from nash.polytope.polytope import (build_halfspaces, find_feasible_point,
                                     labels, non_trivial_vertices)

@@ -1,17 +1,11 @@
 """
 Tests for the game class
 """
-from nash.algorithms.vertex_enumeration import vertex_enumeration
-
 import unittest
 import numpy as np
-from scipy.spatial import HalfspaceIntersection
 
-from hypothesis import given
-from hypothesis.extra.numpy import arrays
-from hypothesis.strategies import integers
+from nash.algorithms.vertex_enumeration import vertex_enumeration
 
-from types import GeneratorType
 
 class TestVertexEnumeration(unittest.TestCase):
     """

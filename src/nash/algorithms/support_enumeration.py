@@ -157,7 +157,7 @@ def support_enumeration(A, B):
     Returns
     -------
 
-        A generator.
+        equilibria: A generator.
     """
     return ((s1, s2)
             for s1, s2, sup1, sup2 in indifference_strategies(A, B)

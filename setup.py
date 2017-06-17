@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 import unittest
 import doctest
+import os
 
 # Read in the version number
 exec(open('src/nash/version.py', 'r').read())
@@ -13,9 +14,14 @@ def test_suite():
     # Read in unit tests
     test_suite = test_loader.discover('tests')
 
-    # Read in doctests from README
-    test_suite.addTests(doctest.DocFileSuite('README.md',
-                                             optionflags=doctest.ELLIPSIS))
+    # Doctest all md and rst files
+    for root, dirs, files in os.walk("."):
+        for f in files:
+            if f.endswith(".rst") or f.endswith(".md"):
+                test_suite.addTests(
+                     doctest.DocFileSuite(os.path.join(root, f),
+                                          optionflags=doctest.ELLIPSIS))
+
     return test_suite
 
 setup(

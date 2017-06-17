@@ -20,7 +20,7 @@ def vertex_enumeration(A, B):
     Returns
     -------
 
-        A generator.
+        equilibria: A generator.
     """
 
     if np.min(A) < 0:

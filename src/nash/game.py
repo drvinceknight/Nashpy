@@ -5,17 +5,6 @@ from .algorithms.support_enumeration import support_enumeration
 from itertools import chain, combinations
 
 
-def powerset(n):
-    """
-    A power set of range(n)
-
-    Based on recipe from python itertools documentation:
-
-    https://docs.python.org/2/library/itertools.html#recipes
-    """
-    return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
-
-
 class Game:
     """
     A class for a normal form game.
@@ -70,7 +59,7 @@ Column player:
         Returns
         -------
 
-            A generator.
+            equilibria: A generator.
         """
         return vertex_enumeration(*self.payoff_matrices)
 
@@ -89,6 +78,6 @@ Column player:
         Returns
         -------
 
-            A generator.
+            equilibria: A generator.
         """
         return support_enumeration(*self.payoff_matrices)

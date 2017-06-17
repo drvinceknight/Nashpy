@@ -41,6 +41,35 @@ the :math:`j` th column. For example, if the row player played Scissors (the 3rd
 strategy) and the column player played Paper (the 2nd strategy) then the row
 player gets: :math:`A_{32}=1` because Scissors cuts Paper.
 
+Installing Nashpy
+-----------------
+
+We are going to study this game using Nashpy, first though we need to install
+it. Nasphy requires the following things to be on your computer:
+
+- Python 3.5 or greater;
+- Scipy 0.19.0 or greater;
+- Numpy 1.12.1 or greater.
+
+Assuming you have those installed, to install Nashpy:
+
+- On Mac OSX or linux open a terminal;
+- On Windows open the Command prompt or similar
+
+and type::
+
+    $ pip install nashpy
+
+If this does not work, you might not have Python or one of the other
+dependencies. You might also have problems due to :code:`pip` not being
+recognised. To overcome these, using the `Anaconda
+<https://www.continuum.io/downloads>`_ distribution of Python
+is recommended as it installs straightforwardly on all operating systems and
+also includes the libraries needed to run :code:`Nashpy`.
+
+Creating a game
+---------------
+
 We can create this game using Nashpy::
 
     >>> import nash
@@ -157,3 +186,11 @@ players do not have an incentive to deviate. We can find these using
 
 *Nash* equilibria is an important concept as it allows to gain an initial
 understanding of emergent behaviour in complex systems.
+
+
+Indices and tables
+++++++++++++++++++
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

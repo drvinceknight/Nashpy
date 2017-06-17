@@ -4,3 +4,4 @@ nashpy.egg-info
 .coverage
 dist/
 .hypothesis/
+docs/_build/

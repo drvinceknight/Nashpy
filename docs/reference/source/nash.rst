@@ -1,4 +1,4 @@
-nash package
+Source files
 ============
 
 Subpackages

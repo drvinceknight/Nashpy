@@ -146,8 +146,7 @@ def support_enumeration(A, B):
     """
     Obtain the Nash equilibria using support enumeration.
 
-    Algorithm implemented here is Algorithm 3.4 of Nisan, Noam, et al., eds.
-    Algorithmic game theory. Cambridge University Press, 2007.
+    Algorithm implemented here is Algorithm 3.4 of [Nisan2007]_
 
     1. For each k in 1...min(size of strategy sets)
     2. For each I,J supports of size k

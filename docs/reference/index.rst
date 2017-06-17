@@ -6,11 +6,5 @@ Reference
 
    support-enumeration.rst
    vertex-enumeration.rst
+   bibliography.rst
    source/nash.rst
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

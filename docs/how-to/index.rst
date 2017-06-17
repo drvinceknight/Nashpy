@@ -12,11 +12,3 @@ How to:
    solve-with-support-enumeration.rst
    solve-with-vertex-enumeration.rst
    find-equilibria-for-large-games.rst
-
-
-Indices and tables
-++++++++++++++++++
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

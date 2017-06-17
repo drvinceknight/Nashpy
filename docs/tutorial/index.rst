@@ -186,11 +186,3 @@ players do not have an incentive to deviate. We can find these using
 
 *Nash* equilibria is an important concept as it allows to gain an initial
 understanding of emergent behaviour in complex systems.
-
-
-Indices and tables
-++++++++++++++++++
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

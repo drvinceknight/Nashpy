@@ -11,10 +11,3 @@ To install a development version from source::
     $ git clone https://github.com/drvinceknight/Nashpy.git
     $ cd nashpy
     $ python setup.py develop
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

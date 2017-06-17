@@ -38,11 +38,3 @@ dilemma <https://en.wikipedia.org/wiki/Prisoner%27s_dilemma>`_::
     Column player:
     [[3 5]
      [0 1]]
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

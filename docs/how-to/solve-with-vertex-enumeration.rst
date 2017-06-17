@@ -16,10 +16,3 @@ equilibria::
     >>> for eq in equilibria:
     ...     print(eq)
     (array([ 0.5,  0.5]), array([ 0.5,  0.5]))
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

@@ -25,10 +25,3 @@ strategies::
     >>> sigma_c = np.array([1 / 2, 1 / 2])
     >>> prisoners_dilemma[sigma_r, sigma_c]
     array([ 2.25,  2.25])
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

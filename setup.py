@@ -6,7 +6,7 @@ import os
 # Read in the version number
 exec(open('src/nash/version.py', 'r').read())
 
-requirements = ["numpy"]
+requirements = ["numpy>=1.12.1", "scipy>=0.19.0"]
 
 def test_suite():
     """Discover all tests in the tests dir"""

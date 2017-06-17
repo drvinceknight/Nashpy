@@ -4,7 +4,8 @@ Tests for the game class
 from nash.algorithms.support_enumeration import (potential_support_pairs,
                                                  indifference_strategies,
                                                  obey_support, is_ne,
-                                                 solve_indifference)
+                                                 solve_indifference,
+                                                 powerset)
 
 import unittest
 import nash
@@ -145,11 +146,11 @@ class TestSupportEnumeration(unittest.TestCase):
 class TestUtils(unittest.TestCase):
     def test_powerset(self):
         n = 2
-        powerset = list(nash.powerset(n))
-        self.assertEqual(powerset, [(), (0,), (1,), (0, 1)])
+        powerset_ = list(powerset(n))
+        self.assertEqual(powerset_, [(), (0,), (1,), (0, 1)])
 
         n = 3
-        powerset = list(nash.powerset(n))
-        self.assertEqual(powerset, [(), (0,), (1,), (2,),
+        powerset_ = list(powerset(n))
+        self.assertEqual(powerset_, [(), (0,), (1,), (2,),
                                     (0, 1), (0, 2), (1, 2),
                                     (0, 1, 2)])

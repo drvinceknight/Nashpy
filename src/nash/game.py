@@ -59,7 +59,7 @@ Column player:
         Returns
         -------
 
-            A generator.
+            equilibria: A generator.
         """
         return vertex_enumeration(*self.payoff_matrices)
 
@@ -78,6 +78,6 @@ Column player:
         Returns
         -------
 
-            A generator.
+            equilibria: A generator.
         """
         return support_enumeration(*self.payoff_matrices)

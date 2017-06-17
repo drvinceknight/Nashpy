@@ -1,3 +1,7 @@
+# v0.0.7
+
+Documentation
+
 # v0.0.6
 
 Add vertex enumeration algorithm.

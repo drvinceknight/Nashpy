@@ -96,6 +96,9 @@ array([3, 3])
 
 ```
 
+## Documentation
+
+Full documentation is available here: http://nashpy.readthedocs.io/
 
 ## Development
 

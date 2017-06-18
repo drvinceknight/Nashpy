@@ -41,6 +41,8 @@ the :math:`j` th column. For example, if the row player played Scissors (the 3rd
 strategy) and the column player played Paper (the 2nd strategy) then the row
 player gets: :math:`A_{32}=1` because Scissors cuts Paper.
 
+A recommend text book on Game Theory is [Maschler2013]_.
+
 Installing Nashpy
 -----------------
 
@@ -127,7 +129,7 @@ player gets: :math:`A_{32}=1` because Scissors cuts Paper.
 A mathematical approach to representing a strategy is to consider a vector of
 the size: the number of strategies. For example :math:`\sigma_r=(0, 0, 1)` is
 the row strategy where the row player always plays their third strategy.
-Similarly :math:`sigma_c=(0, 1, 0)` is the strategy for the column player where
+Similarly :math:`\sigma_c=(0, 1, 0)` is the strategy for the column player where
 they always play their second strategy.
 
 When we represent strategies like this we can get the utility to the row player

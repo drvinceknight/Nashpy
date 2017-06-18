@@ -20,6 +20,7 @@ equilibria computation you should use
    tutorial/index.rst
    how-to/index.rst
    reference/index.rst
+   discussion/index.rst
 
 
 

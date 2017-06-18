@@ -19,7 +19,7 @@ the following algorithm returns all nash equilibria:
 Repeat steps 2 and 3 for all pairs of vertices.
 
 Discussion
-==========
+----------
 
 1. Before creating the best response Polytope we need to consider the best
    response Polyhedron. For the row player, this corresponds to the set of all

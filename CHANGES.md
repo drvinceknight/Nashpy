@@ -1,3 +1,7 @@
+# v0.0.8
+
+Add discussion section to documentation
+
 # v0.0.7
 
 Documentation

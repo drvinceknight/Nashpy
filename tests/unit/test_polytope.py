@@ -1,5 +1,5 @@
 """
-Tests for the game class
+Tests for the polytope functionality
 """
 import unittest
 from types import GeneratorType

@@ -19,6 +19,7 @@ games:
 
 - Support enumeration
 - Best response polytope vertex enumeration
+- Lemke Howson algorithm
 
 ## Installation
 
@@ -30,62 +31,13 @@ $ pip install nashpy
 
 ## Usage
 
-You can create a zero sum game by passing a single 2 dimensional array/list:
-
-```python
->>> import nash
->>> A = [[1, -1], [-1, 1]]
->>> matching_pennies = nash.Game(A)
->>> matching_pennies.zero_sum
-True
-
-```
-
-### Support enumeration
-
-To compute the equilibria you can iterate over `Game.support_enumeration()`
-which is a generator that implements a linear algebraic algorithm:
-
-```python
->>> for eq in matching_pennies.support_enumeration():
-...     print(eq)
-(array([ 0.5,  0.5]), array([ 0.5,  0.5]))
-
-```
-
-### Vertex enumeration
-
-To compute the equilibria you can iterate over `Game.vertex_enumeration()`
-which is a generator that implements an enumeration of vertices of best response
-polytopes:
-
-```python
->>> for eq in matching_pennies.vertex_enumeration():
-...     print(eq)
-(array([ 0.5,  0.5]), array([ 0.5,  0.5]))
-
-```
-
-### Utility calculation
-
-We can pass a pair of strategies to a game to see the utilities:
-
-```python
->>> matching_pennies[[ 0.5,  0.5], [ 0.5,  0.5]]
-array([ 0.,  0.])
-
-```
-
-### Non zero sum games
-
 You can also create bi matrix games by passing two 2 dimensional arrays/lists:
 
 ```python
+>>> import nash
 >>> A = [[1, 2], [3, 0]]
 >>> B = [[0, 2], [3, 1]]
 >>> battle_of_the_sexes = nash.Game(A, B)
->>> battle_of_the_sexes.zero_sum
-False
 >>> for eq in battle_of_the_sexes.support_enumeration():
 ...     print(eq)
 (array([ 1.,  0.]), array([ 0.,  1.]))

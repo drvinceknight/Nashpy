@@ -1,3 +1,7 @@
+# v0.0.9
+
+Add implementation of the Lemke Howson algorithm
+
 # v0.0.8
 
 Add discussion section to documentation

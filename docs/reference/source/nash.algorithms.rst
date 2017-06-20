@@ -19,3 +19,11 @@ nash\.algorithms\.vertex\_enumeration module
     :members:
     :undoc-members:
     :show-inheritance:
+
+nash\.algorithms\.lemke\_howson module
+--------------------------------------
+
+.. automodule:: nash.algorithms.lemke_howson
+    :members:
+    :undoc-members:
+    :show-inheritance:

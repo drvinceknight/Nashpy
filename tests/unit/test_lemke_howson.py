@@ -1,7 +1,8 @@
 import unittest
 import numpy as np
 
-from nash.algorithms.lemke_howson import shift_tableau, lemke_howson
+from nash.algorithms.lemke_howson import (shift_tableau, lemke_howson,
+                                          tableau_to_strategy)
 
 
 class TestLemkeHowson(unittest.TestCase):
@@ -18,6 +19,23 @@ class TestLemkeHowson(unittest.TestCase):
         shift = shift_tableau(tableau, (3, 2))
         self.assertTrue(np.array_equal(shift, expected_shift),
                         msg="{} != {}".format(shift, expected_shift))
+
+    def test_particular_tableau_to_strategy(self):
+        tableau = np.array([[3., 0,  1., 1., 0.,  1.],
+                            [0., 0,  1., 1., 1.,  1.],
+                            [0., 6., 0., 0., 1.,  1.]])
+        basic_labels = set([0, 1])
+        strategy_labels = set([0, 1])
+        strategy = tableau_to_strategy(tableau, basic_labels, strategy_labels)
+        self.assertTrue(np.array_equal(strategy, np.array([2/3, 1/3])))
+
+        tableau = np.array([[3., 0,  1., 0,  0.,  1.],
+                            [0., 3., 1., 3., 1., 1.],
+                            [0., 6., 0., 0., 1., 1.]])
+        basic_labels = set([0, 3])
+        strategy_labels = set([0, 1])
+        strategy = tableau_to_strategy(tableau, basic_labels, strategy_labels)
+        self.assertTrue(np.array_equal(strategy, np.array([1, 0])))
 
     def test_particular_lemke_howson(self):
         A = np.array([[3, 3], [2, 5], [0, 6]])

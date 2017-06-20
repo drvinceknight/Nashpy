@@ -1,8 +1,9 @@
 """A class for a normal form game"""
 import numpy as np
-from .algorithms.vertex_enumeration import vertex_enumeration
+from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
-from itertools import chain, combinations
+from .algorithms.vertex_enumeration import vertex_enumeration
+from itertools import combinations
 
 
 class Game:
@@ -48,8 +49,7 @@ Column player:
         Obtain the Nash equilibria using enumeration of the vertices of the best
         response polytopes.
 
-        Algorithm implemented here is Algorithm 3.5 of Nisan, Noam, et al., eds.
-        Algorithmic game theory. Cambridge University Press, 2007.
+        Algorithm implemented here is Algorithm 3.5 of [Nisan2007]_.
 
         1. Build best responses polytopes of both players
         2. For each vertex pair of both polytopes
@@ -67,8 +67,7 @@ Column player:
         """
         Obtain the Nash equilibria using support enumeration.
 
-        Algorithm implemented here is Algorithm 3.4 of Nisan, Noam, et al., eds.
-        Algorithmic game theory. Cambridge University Press, 2007.
+        Algorithm implemented here is Algorithm 3.4 of [Nisan2007]_.
 
         1. For each k in 1...min(size of strategy sets)
         2. For each I,J supports of size k
@@ -81,3 +80,32 @@ Column player:
             equilibria: A generator.
         """
         return support_enumeration(*self.payoff_matrices)
+
+    def lemke_howson(self, initial_dropped_label):
+        """
+        Obtain the Nash equilibria using the Lemke Howson algorithm implemented
+        using integer pivoting.
+
+        Algorithm implemented here is Algorithm 3.6 of [Nisan2007]_.
+
+        1. Start at the artificial equilibrium (which is fully labeled)
+        2. Choose an initial label to drop and move in the polytope for which
+           the vertex has that label to the edge
+           that does not share that label. (This is implemented using integer
+           pivoting)
+        3. A label will now be duplicated in the other polytope, drop it in a
+           similar way.
+        4. Repeat steps 2 and 3 until have Nash Equilibrium.
+
+        Parameters
+        ----------
+
+            initial_dropped_label: int
+
+        Returns
+        -------
+
+            equilibria: A tuple.
+        """
+        return lemke_howson(*self.payoff_matrices,
+                            initial_dropped_label=initial_dropped_label)

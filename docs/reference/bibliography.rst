@@ -6,6 +6,7 @@ Bibliography
 This is a collection of various bibliographic items referenced in the
 documentation.
 
+.. [Dantzig2016] Dantzig, George. Linear programming and extensions. Princeton university press, 2016.  APA
 .. [Knight2016] Knight, V. et al., (2016). An Open Framework for the Reproducible Study of the Iterated Prisoner’s Dilemma. Journal of Open Research Software. 4(1), p.e35. DOI: http://doi.org/10.5334/jors.125
 .. [Maschler2013] Maschler, M., Eilon Solan, and Shmuel Zamir. "Game theory. Translated from the Hebrew by Ziv Hellman and edited by Mike Borns." (2013).
 .. [McKelvey2016] McKelvey, Richard D., McLennan, Andrew M., and Turocy, Theodore L. (2016). Gambit: Software Tools for Game Theory, Version 16.0.1. http://www.gambit-project.org.

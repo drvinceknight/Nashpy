@@ -11,4 +11,4 @@ How to:
    calculate-utilities.rst
    solve-with-support-enumeration.rst
    solve-with-vertex-enumeration.rst
-   find-equilibria-for-large-games.rst
+   solve-with-lemke-howson.rst

@@ -195,6 +195,23 @@ Column player:
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
 
+    def test_lemke_howson_for_bi_matrix(self):
+        """Test for the equilibria calculation using lemke howson"""
+        A = np.array([[160, 205, 44],
+                      [175, 180, 45],
+                      [201, 204, 50],
+                      [120, 207, 49]])
+        B = np.array([[2, 2, 2],
+                      [1, 0, 0],
+                      [3, 4, 1],
+                      [4, 1, 2]])
+        g = nash.Game(A, B)
+        expected_equilibria = (np.array([0, 0, 3/4, 1/4]),
+                               np.array([1/28, 27/28, 0]))
+        equilibria = g.lemke_howson(initial_dropped_label=4)
+        for eq, expected in zip(equilibria, expected_equilibria):
+            self.assertTrue(all(np.isclose(eq, expected)))
+
     def test_get_item(self):
         """Test solve indifference"""
         A = np.array([[1, -1], [-1, 1]])

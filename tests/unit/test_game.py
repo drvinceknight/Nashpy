@@ -212,6 +212,32 @@ Column player:
         for eq, expected in zip(equilibria, expected_equilibria):
             self.assertTrue(all(np.isclose(eq, expected)))
 
+    def test_lemke_howson_enumeration(self):
+        """Test for the enumeration of equilibrium using Lemke Howson"""
+        A = np.array([[3, 1], [0, 2]])
+        B = np.array([[2, 1], [0, 3]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1, 0]), np.array([1, 0])),
+                               (np.array([0, 1]), np.array([0, 1]))] * 2
+        equilibria = g.lemke_howson_enumeration()
+        for equilibrium, expected_equilibrium in zip(equilibria,
+                                                     expected_equilibria):
+            for strategy, expected_strategy in zip(equilibrium,
+                                                   expected_equilibrium):
+                self.assertTrue(all(np.isclose(strategy, expected_strategy)))
+
+        A = np.array([[3, 1], [1, 3]])
+        B = np.array([[1, 3], [3, 1]])
+        g = nash.Game(A, B)
+        expected_equilibria = [(np.array([1 / 2, 1 / 2]),
+                                np.array([1 / 2, 1 / 2]))] * 4
+        equilibria = g.lemke_howson_enumeration()
+        for equilibrium, expected_equilibrium in zip(equilibria,
+                                                     expected_equilibria):
+            for strategy, expected_strategy in zip(equilibrium,
+                                                   expected_equilibrium):
+                self.assertTrue(all(np.isclose(strategy, expected_strategy)))
+
     def test_get_item(self):
         """Test solve indifference"""
         A = np.array([[1, -1], [-1, 1]])

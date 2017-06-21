@@ -81,6 +81,22 @@ Column player:
         """
         return support_enumeration(*self.payoff_matrices)
 
+    def lemke_howson_enumeration(self):
+        """
+        Obtain Nash equilibria for all possible starting dropped labels
+        using the lemke howson algorithm. See `Game.lemke_howson` for more
+        information.
+
+        Note: this is not guaranteed to find all equilibria.
+
+        Returns
+        -------
+
+            equilibria: A generator
+        """
+        for label in range(sum(self.payoff_matrices[0].shape)):
+            yield self.lemke_howson(initial_dropped_label=label)
+
     def lemke_howson(self, initial_dropped_label):
         """
         Obtain the Nash equilibria using the Lemke Howson algorithm implemented

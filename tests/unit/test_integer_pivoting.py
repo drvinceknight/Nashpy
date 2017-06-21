@@ -52,13 +52,15 @@ class TestPolytope(unittest.TestCase):
                             [ 2.,  5.,  0.,  1.,  0.,  1.],
                             [ 0.,  6.,  0.,  0.,  1.,  1.]])
         for column, row in [(0, 0), (1, 2), (2, 0), (3, 1), (4, 2)]:
-            self.assertEqual(find_pivot_row(tableau=tableau, column=column),
+            self.assertEqual(find_pivot_row(tableau=tableau,
+                                            column_index=column),
                              row)
 
         tableau = np.array([[ 3.,  2.,  3.,  1.,  0.,  1.],
                             [ 2.,  6.,  1.,  0.,  1.,  1.]])
         for column, row in [(0, 0), (1, 1), (2, 0), (3, 0), (4, 1)]:
-            self.assertEqual(find_pivot_row(tableau=tableau, column=column),
+            self.assertEqual(find_pivot_row(tableau=tableau,
+                                            column_index=column),
                              row)
 
     def test_non_basic_variables(self):

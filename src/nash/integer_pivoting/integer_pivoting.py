@@ -16,7 +16,7 @@ def make_tableau(M):
                      np.ones((M.shape[0], 1)), axis=1)
 
 
-def find_pivot_row(tableau, column):
+def find_pivot_row(tableau, column_index):
     """
     Find the index of the row to pivot.
 
@@ -24,7 +24,7 @@ def find_pivot_row(tableau, column):
     implemented to calculate the maximum ratio test to avoid divide by zero
     errors).
     """
-    return np.argmax(tableau[:, column] / tableau[:, -1])
+    return np.argmax(tableau[:, column_index] / tableau[:, -1])
 
 
 def non_basic_variables(tableau):

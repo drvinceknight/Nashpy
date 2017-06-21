@@ -31,7 +31,7 @@ $ pip install nashpy
 
 ## Usage
 
-You can also create bi matrix games by passing two 2 dimensional arrays/lists:
+Create bi matrix games by passing two 2 dimensional arrays/lists:
 
 ```python
 >>> import nash

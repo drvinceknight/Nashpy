@@ -78,12 +78,12 @@ def lemke_howson(A, B, initial_dropped_label=0):
         equilibria: A tuple.
     """
 
-    if np.min(A) < 0:
+    if np.min(A) <= 0:
         A = A + abs(np.min(A)) + 1
-    if np.min(B) < 0:
+    if np.min(B) <= 0:
         B = B + abs(np.min(B)) + 1
 
-    # build tableax
+    # build tableaux
     col_tableau = make_tableau(A)
     col_tableau = shift_tableau(col_tableau, A.shape)
     row_tableau = make_tableau(B.transpose())

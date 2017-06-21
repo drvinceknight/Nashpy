@@ -20,10 +20,10 @@ class TestGame(unittest.TestCase):
         """Test that can create a bi matrix game"""
         g = nash.Game(A, B)
         self.assertEqual(g.payoff_matrices, (A, B))
-        if A.any() or B.any():  # Check if A or B are non zero
-            self.assertFalse(g.zero_sum)
-        else:
+        if np.array_equal(A, -B):  # Check if A or B are non zero
             self.assertTrue(g.zero_sum)
+        else:
+            self.assertFalse(g.zero_sum)
 
         # Can also init with lists
         A = A.tolist()

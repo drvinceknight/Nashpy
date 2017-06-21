@@ -1,3 +1,8 @@
+# v0.0.10
+
+Add enumeration method for the Lemke Howson algorithm as well as a more
+extensive reference document.
+
 # v0.0.9
 
 Add implementation of the Lemke Howson algorithm

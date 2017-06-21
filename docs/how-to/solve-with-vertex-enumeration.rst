@@ -1,8 +1,9 @@
 Solve with vertex enumeration
 =============================
 
-One of the algorithms implemented in :code:`Nashpy` is called *vertex
-enumeration*, this is implemented as a method on the :code:`Game` class::
+One of the algorithms implemented in :code:`Nashpy` is called
+:ref:`vertex-enumeration`, this is implemented as a method on the :code:`Game`
+class::
 
     >>> import nash
     >>> import numpy as np

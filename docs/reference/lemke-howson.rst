@@ -4,7 +4,7 @@ The Lemke Howson Algorithm
 ==========================
 
 The Lemke Howson algorithm implemented in :code:`Nashpy` is based on the
-one described in [Nisan2007]_.
+one described in [Nisan2007]_ originally introduced in [Lemke1964]_.
 
 The algorithm is as follows:
 

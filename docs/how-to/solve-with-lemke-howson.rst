@@ -1,9 +1,8 @@
 Solve with Lemke Howson
 =======================
 
-One of the algorithms implemented in :code:`Nashpy` is the *Lemke Howson*
-algorithm. This algorithm does not return **all** equilibria and takes an input
-argument::
+One of the algorithms implemented in :code:`Nashpy` is :ref:`lemke-howson`. This
+algorithm does not return **all** equilibria and takes an input argument::
 
     >>> import nash
     >>> import numpy as np

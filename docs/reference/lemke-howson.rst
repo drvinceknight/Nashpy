@@ -107,7 +107,7 @@ This algorithm is implemented using integer pivoting.
          >>> nash.integer_pivoting.non_basic_variables(row_tableau)
          {0, 1}
 
-   **So we are going to drop label :math:`1` from :math:`T_r`.**
+   So we are going to drop label :math:`1` from :math:`T_r`.
 
 
 3. Step 3, removing a label and moving from one vertex to another corresponds

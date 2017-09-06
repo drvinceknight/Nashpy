@@ -1,3 +1,7 @@
+# v0.0.11
+
+Very minor documentation fix.
+
 # v0.0.10
 
 Add enumeration method for the Lemke Howson algorithm as well as a more

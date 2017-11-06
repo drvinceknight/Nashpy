@@ -1,6 +1,8 @@
 import nash
 import numpy as np
-
+'''
+calculate conquest games
+'''
 def payoffw(A):
     '''
     this funtion in order to calculata playerA's equilibium payoff

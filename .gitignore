@@ -5,3 +5,8 @@ nashpy.egg-info
 dist/
 .hypothesis/
 docs/_build/
+.idea/workspace.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/myNashpy.iml
+.idea/vcs.xml

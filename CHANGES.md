@@ -1,3 +1,7 @@
+# v0.0.12
+
+Add another game theoretic library to documentation.
+
 # v0.0.11
 
 Very minor documentation fix.

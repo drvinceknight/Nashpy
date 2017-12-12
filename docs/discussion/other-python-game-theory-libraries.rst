@@ -6,4 +6,5 @@ Other Python Game theory libraries
 - `Gambit <http://www.gambit-project.org/>`_: a C library with a Python
   interface for the computation of equilibria [McKelvey2016]_.
   :ref:`relation-to-gambit`.
-- `PyNFG <https://pypi.python.org/pypi/PyNFG/0.1.2/>`_: PyNFG is a Python package for modeling and solving Network Form Games [Bono, Grana and Xie]_.
+- `PyNFG <https://pypi.python.org/pypi/PyNFG/0.1.2/>`_: PyNFG is a Python 
+  package for modeling and solving Network Form Games.

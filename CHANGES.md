@@ -1,3 +1,7 @@
+# v0.0.13
+
+Add a warning for nonsensical output from lemke-howson.
+
 # v0.0.12
 
 Add another game theoretic library to documentation.

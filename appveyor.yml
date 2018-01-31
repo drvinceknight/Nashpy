@@ -8,7 +8,7 @@ install:
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - "conda config --set always_yes yes --set changeps1 no"
   - "conda update -q conda"
-  - "conda create -q -n test-environment python=%PYTHON_VERSION% scipy>=0.19.0 numpy>=1.12.1"
+  - "conda create -q -n test-environment python=%PYTHON_VERSION% scipy>=0.19.0 numpy=1.13.3"
   - "activate test-environment"
   - "pip install hypothesis"
 build: off

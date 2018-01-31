@@ -2,6 +2,8 @@
 from nash.integer_pivoting import (make_tableau, non_basic_variables,
                                    pivot_tableau)
 
+import warnings
+
 import numpy as np
 from itertools import cycle
 
@@ -104,4 +106,9 @@ def lemke_howson(A, B, initial_dropped_label=0):
     col_strategy = tableau_to_strategy(col_tableau, non_basic_variables(row_tableau),
                                        range(A.shape[0], sum(A.shape)))
 
+    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):
+        msg = """The Lemke Howson algorithm has returned probability vectors of 
+incorrect shapes. This indicates an error. Your game could be degenerate."""
+
+        warnings.warn(msg, RuntimeWarning)
     return row_strategy, col_strategy

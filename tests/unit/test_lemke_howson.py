@@ -1,4 +1,6 @@
 import unittest
+import warnings
+
 import numpy as np
 
 from nash.algorithms.lemke_howson import (shift_tableau, lemke_howson,
@@ -55,3 +57,18 @@ class TestLemkeHowson(unittest.TestCase):
             for eq in lemke_howson(A, B, label):
                 self.assertTrue(all(np.isclose(eq, np.array([1 / 2, 1 / 2]))),
                                 msg=str(eq))
+
+    def test_particular_lemke_howson_raises_warning(self):
+        """
+        This is a degenerate game so the algorithm fails. 
+        This was raised in
+        https://github.com/drvinceknight/Nashpy/issues/35
+        """
+        A = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
+        B = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
+        with warnings.catch_warnings(record=True) as w:
+            eqs = lemke_howson(A, B, initial_dropped_label=0)
+            self.assertEqual(len(eqs[0]), 2)
+            self.assertEqual(len(eqs[1]), 4)
+            self.assertGreater(len(w), 0)
+            self.assertEqual(w[-1].category, RuntimeWarning)

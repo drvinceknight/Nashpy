@@ -5,7 +5,7 @@ A game can be passed a pair of mixed strategies (distributions over the set of
 pure strategies) to return the utilities. Let us create a game to illustrate
 this::
 
-    >>> import nash
+    >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[3, 0], [5, 1]])
     >>> B = np.array([[3, 5], [0, 1]])

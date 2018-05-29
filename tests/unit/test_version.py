@@ -3,7 +3,7 @@ Tests for version number
 """
 
 import unittest
-import nash
+import nashpy as nash
 
 
 class TestVersion(unittest.TestCase):

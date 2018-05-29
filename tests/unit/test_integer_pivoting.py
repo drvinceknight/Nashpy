@@ -9,10 +9,10 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 
-from nash.integer_pivoting.integer_pivoting import (make_tableau,
-                                                    find_pivot_row,
-                                                    non_basic_variables,
-                                                    pivot_tableau)
+from nashpy.integer_pivoting.integer_pivoting import (make_tableau,
+                                                      find_pivot_row,
+                                                      non_basic_variables,
+                                                      pivot_tableau)
 
 class TestPolytope(unittest.TestCase):
     """

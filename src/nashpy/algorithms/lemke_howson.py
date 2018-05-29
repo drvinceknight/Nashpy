@@ -1,6 +1,6 @@
 """A class for the Lemke Howson algorithm"""
-from nash.integer_pivoting import (make_tableau, non_basic_variables,
-                                   pivot_tableau)
+from nashpy.integer_pivoting import (make_tableau, non_basic_variables,
+                                     pivot_tableau)
 
 import warnings
 

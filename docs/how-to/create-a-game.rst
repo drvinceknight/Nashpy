@@ -5,7 +5,7 @@ A game in :code:`Nashpy` is created by passing 1 or 2 matrices to the
 :code:`nash.Game` class. Here is the zero sum game `matching pennies
 <https://en.wikipedia.org/wiki/Matching_pennies>`_::
 
-    >>> import nash
+    >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[1, -1], [-1, 1]])
     >>> matching_pennies = nash.Game(A)
@@ -23,7 +23,7 @@ A game in :code:`Nashpy` is created by passing 1 or 2 matrices to the
 Here is the **non** zero sum game `prisoners
 dilemma <https://en.wikipedia.org/wiki/Prisoner%27s_dilemma>`_::
 
-    >>> import nash
+    >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[3, 0], [5, 1]])
     >>> B = np.array([[3, 5], [0, 1]])

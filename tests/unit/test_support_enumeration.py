@@ -1,14 +1,14 @@
 """
 Tests for the game class
 """
-from nash.algorithms.support_enumeration import (potential_support_pairs,
-                                                 indifference_strategies,
-                                                 obey_support, is_ne,
-                                                 solve_indifference,
-                                                 powerset)
+from nashpy.algorithms.support_enumeration import (potential_support_pairs,
+                                                   indifference_strategies,
+                                                   obey_support, is_ne,
+                                                   solve_indifference,
+                                                   powerset)
 
 import unittest
-import nash
+import nashpy as nash
 import numpy as np
 
 from hypothesis import given

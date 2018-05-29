@@ -3,8 +3,8 @@ import warnings
 
 import numpy as np
 
-from nash.algorithms.lemke_howson import (shift_tableau, lemke_howson,
-                                          tableau_to_strategy)
+from nashpy.algorithms.lemke_howson import (shift_tableau, lemke_howson,
+                                            tableau_to_strategy)
 
 
 class TestLemkeHowson(unittest.TestCase):

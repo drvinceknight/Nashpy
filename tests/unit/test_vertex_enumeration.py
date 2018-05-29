@@ -4,7 +4,7 @@ Tests for the game class
 import unittest
 import numpy as np
 
-from nash.algorithms.vertex_enumeration import vertex_enumeration
+from nashpy.algorithms.vertex_enumeration import vertex_enumeration
 
 
 class TestVertexEnumeration(unittest.TestCase):

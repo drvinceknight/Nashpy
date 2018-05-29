@@ -74,7 +74,7 @@ Creating a game
 
 We can create this game using Nashpy::
 
-    >>> import nash
+    >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
     >>> rps = nash.Game(A)

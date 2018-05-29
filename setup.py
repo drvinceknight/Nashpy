@@ -4,7 +4,7 @@ import doctest
 import os
 
 # Read in the version number
-exec(open('src/nash/version.py', 'r').read())
+exec(open('src/nashpy/version.py', 'r').read())
 
 requirements = ["numpy>=1.12.1", "scipy>=0.19.0"]
 

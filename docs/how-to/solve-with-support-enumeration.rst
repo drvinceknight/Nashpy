@@ -5,7 +5,7 @@ One of the algorithms implemented in :code:`Nashpy` is called
 :ref:`support-enumeration`, this is implemented as a method on the :code:`Game`
 class::
 
-    >>> import nash
+    >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[1, -1], [-1, 1]])
     >>> matching_pennies = nash.Game(A)

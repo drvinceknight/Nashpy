@@ -1,3 +1,13 @@
+# v0.0.14
+
+Change module name to `nashpy`. Now for consistency have:
+
+`$ pip install nashpy`
+
+and
+
+`>>> import nashpy`
+
 # v0.0.13
 
 Add a warning for nonsensical output from lemke-howson.

@@ -84,7 +84,7 @@ Discussion
    used by the vertex enumeration algorithm to give the vertices and
    corresponding labels::
 
-       >>> import nash
+       >>> import nashpy as nash
        >>> import numpy as np
        >>> A = np.array([[3, 1], [1, 3]])
        >>> halfspaces = nash.polytope.build_halfspaces(A)

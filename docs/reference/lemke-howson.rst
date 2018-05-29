@@ -97,7 +97,7 @@ This algorithm is implemented using integer pivoting.
 
    - The labels of :math:`T_c` are thus :math:`\{2, 3\}`::
 
-         >>> import nash
+         >>> import nashpy as nash
          >>> nash.integer_pivoting.non_basic_variables(col_tableau)
          {2, 3}
 

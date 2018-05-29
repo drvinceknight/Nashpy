@@ -34,7 +34,7 @@ $ pip install nashpy
 Create bi matrix games by passing two 2 dimensional arrays/lists:
 
 ```python
->>> import nash
+>>> import nashpy as nash
 >>> A = [[1, 2], [3, 0]]
 >>> B = [[0, 2], [3, 1]]
 >>> battle_of_the_sexes = nash.Game(A, B)

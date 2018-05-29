@@ -10,7 +10,7 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 
-import nash
+import nashpy as nash
 
 class TestGame(unittest.TestCase):
     """

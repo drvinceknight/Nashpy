@@ -51,9 +51,8 @@ software is automatically tested using a combination of unit, integration and
 property based tests with 100% coverage. All the documentation is doctested and
 in fact the example in this paper is as well.
 
-An often used game in beginner game theory classes is referred to as the *battle
-of the sexes* and here is an example of how to use ``Nashpy`` to obtain the
-equilibria:
+Here is an example of how to use ``Nashpy`` to obtain the
+equilibria for a game with 2 pure and 1 mixed equilibria:
 
 ```
 >>> import nashpy as nash

@@ -58,7 +58,7 @@ def solve_indifference(A, rows=None, columns=None):
     except np.linalg.linalg.LinAlgError:
         return False
 
-def potential_support_pairs(A, B):
+def potential_support_pairs(A, B, non_degenerate=False):
     """
     A generator for the potential support pairs
 
@@ -70,7 +70,8 @@ def potential_support_pairs(A, B):
     p1_num_strategies, p2_num_strategies = A.shape
     for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
         for support2 in (s for s in powerset(p2_num_strategies)
-                         if len(s) == len(support1)):
+                         if (len(s) > 0 and not non_degenerate) or
+                             len(s) == len(support1)):
             yield support1, support2
 
 def indifference_strategies(A, B):

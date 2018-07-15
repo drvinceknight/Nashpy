@@ -14,5 +14,6 @@ documentation.
 .. [Nasar2011] Nasar, Sylvia. A beautiful mind. Simon and Schuster, 2011.  APA
 .. [Nash1950] Nash, John F. "Equilibrium points in n-person games." Proceedings of the national academy of sciences 36.1 (1950): 48-49.
 .. [Nisan2007] Nisan, Noam, et al., eds. Algorithmic game theory. Vol. 1. Cambridge: Cambridge University Press, 2007.
+.. [Savani2015] Rahul Savani and Bernhard von Stengel. Game Theory Explorer – Software for the Applied Game Theorist. Computational Management Science 12, 5-33, 2015
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
 

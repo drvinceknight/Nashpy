@@ -10,20 +10,20 @@ https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](http
 
 # Nash: a python library for the computation of equilibria of 2 player strategic games.
 
-**This is a library with simple dependencies (it only requires numpy and scipy)
-so that it is pip installable: if you want to do sophisticated equilibria
-computation YOU SHOULD use [gambit](https://github.com/gambitproject/gambit).**
-
-This is an implementation of the following algorithms for equilibria of 2 player
+This library implements the following algorithms for Nash equilibria on 2 player
 games:
 
 - Support enumeration
 - Best response polytope vertex enumeration
 - Lemke Howson algorithm
 
+**Nashpy**'s has a simple set of Python dependencies: it only requires `numpy`
+and `scipy` so is straightforward to install on all operating systems.
+
 ## Installation
 
-The easiest way to install is from pypi:
+**By design Nashpy** is easy to install: the easiest way to install is from
+pypi:
 
 ```bash
 $ pip install nashpy
@@ -37,20 +37,29 @@ Create bi matrix games by passing two 2 dimensional arrays/lists:
 >>> import nashpy as nash
 >>> A = [[1, 2], [3, 0]]
 >>> B = [[0, 2], [3, 1]]
->>> battle_of_the_sexes = nash.Game(A, B)
->>> for eq in battle_of_the_sexes.support_enumeration():
+>>> game = nash.Game(A, B)
+>>> for eq in game.support_enumeration():
 ...     print(eq)
 (array([ 1.,  0.]), array([ 0.,  1.]))
 (array([ 0.,  1.]), array([ 1.,  0.]))
 (array([ 0.5,  0.5]), array([ 0.5,  0.5]))
->>> battle_of_the_sexes[[0, 1], [1, 0]]
+>>> game[[0, 1], [1, 0]]
 array([3, 3])
 
 ```
-
 ## Documentation
 
 Full documentation is available here: http://nashpy.readthedocs.io/
+
+## Other game theoretic software
+
+- [Gambit](http://www.gambit-project.org/) is a library with a python api and
+  support for more algorithms and more than 2 player games.
+- [Game theory explorer](http://gte.csc.liv.ac.uk/index/) a web interface to
+  gambit useful for teaching.
+- [Axelrod](http://axelrod.readthedocs.io/en/stable/) a research library aimed
+  at the study of the Iterated Prisoners dilemma
+
 
 ## Development
 

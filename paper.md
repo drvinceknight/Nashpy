@@ -83,7 +83,11 @@ explorer](http://gte.csc.liv.ac.uk/index/index.html#document-documentation)
 however this is not practical for reproducible research.
 
 ``Nashpy`` is a Python library with all dependencies being part of the standard
-scientific Python stack (numpy and scipy [@scipy]) thus it is portable. Nashpy
+scientific Python stack (numpy and scipy [@scipy]) thus it is portable. For
+example Windows support is regularly tested through a Windows continuous
+integration service (Appveyor).
+
+``Nashpy``
 currently implements 3 algorithms for the computation of equilibria (currently
 only for 2 player games) and is extensively documented, including theoretic
 reference material on the algorithms:

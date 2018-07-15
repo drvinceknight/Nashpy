@@ -6,7 +6,7 @@ tags:
   - economics
   - computer science
   - game theory
-  - equilibrium
+  - equilbrium
 authors:
   - name: Vincent Knight
     orcid: 0000-0002-4245-0638
@@ -27,55 +27,77 @@ Game theory is the study of strategic interactions where the outcomes of choice
 depend on the choices of all participants. A key solution concept in the field
 is that of Nash Equilibrium [@nash1950equilibrium]. This solution concept
 corresponds to a coordinate at which no participant has any incentive to change
-their choice. Some applications of this concept include the modelling of
-healthcare decisions [@knight2017measuring] as well as evolutionary game theory.
-A number of algorithms exist to compute this Nash equilibria, for example the
+their choice.
+
+As an example, consider the game of Rock Paper Scissors which can be represented
+mathematically using the following matrix:
+
+\[
+A=
+\begin{pmatrix}
+0  & -1 & 1  \\
+1  & 0  & -1 \\
+-1 & 1  & 0  \\
+\end{pmatrix}
+\]
+
+The rows and columns correspond to the actions available: Rock, Paper and
+Scissors. A value of 1 indicates that that specific row beats the corresponding
+column and similarly a value of -1 indicates a loss and a 0 indicates a tie. For
+example \(A\_{21}\) shows that Paper (the second action) beats Rock (the first
+action. Using `Nashpy` the equilibrium behaviour can be computed:
+
+```
+>>> import nashpy as nash
+>>> import numpy as np
+>>> A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
+>>> game = nash.Game(A)
+>>> list(game.support_enumeration())
+[(array([ 0.333...,  0.333...,  0.333...]), array([ 0.333...,  0.333...,  0.333...]))]
+
+```
+
+As expected: both players should play each action randomly (each with
+probability 1/3).
+
+Computing this equilibria for large games, situations where individuals have
+many strategic options available to them requires the use of
+software.implementations of known algorithms.
+A number of algorithms exist to compute these Nash equilibria, for example the
 Lemke-Howson algorithm [@lemke1964equilibrium].
 
-The state of the art in terms of software implementations of these algorithms
+# Statement of need
+
+Access to these algorithms is non trival, an example of this includes the
+modelling of healthcare decisions [@knight2017measuring] where a bespoke
+theoretic result was used to design a specific algorithm for the computation of
+equilibria. Easily accessibly software would make that research more
+straightforward as no new algorithm would need to be implemented.
+
+The most mature piece of software available for the computation of equilibria
 is **Gambit** [@mckelvey2006gambit]. Gambit includes a python wrapper to its
-core C functionality however is not currently portable (for example
-Windows is not supported).
+core C functionality however is not currently portable for example
+Windows is not supported. There does exist a web interface with a Gambit back
+end: [Game theory
+explorer](http://gte.csc.liv.ac.uk/index/index.html#document-documentation)
+however this is not practical for reproducible research.
 
 ``Nashpy`` is a Python library with all dependencies being part of the standard
 scientific Python stack (numpy and scipy [@scipy]) thus it is portable. Nashpy
 currently implements 3 algorithms for the computation of equilibria (currently
 only for 2 player games) and is extensively documented, including theoretic
 reference material on the algorithms:
-[nashpy.readthedocs.io](http://nashpy.readthedocs.io/). This documentation
-coupled with the readability of Python make it a particularly effective teaching
-tool as students can inspect the code to reinforce
-their understanding of the algorthms.
-Furthermore, the
-software is automatically tested using a combination of unit, integration and
-property based tests with 100% coverage. All the documentation is doctested and
-in fact the example in this paper is as well.
+[nashpy.readthedocs.io](http://nashpy.readthedocs.io/). Furthermore, the
+software is automatically tested using a combination of doc (this paper is also
+tested), unit, integration and property based tests with 100% coverage.
 
-Here is an example of how to use ``Nashpy`` to obtain the
-equilibria for a game with 2 pure and 1 mixed equilibria:
-
-```
->>> import nashpy as nash
->>> import numpy as np
->>> A = np.array([[2, 0], [0, 1]])
->>> B = np.array([[1, 0], [0, 2]])
->>> game = nash.Game(A, B)
->>> for eq in game.support_enumeration():
-...     print(eq)
-(array([ 1.,  0.]), array([ 1.,  0.]))
-(array([ 0.,  1.]), array([ 0.,  1.]))
-(array([ 0.666...,  0.333...]), array([ 0.333...,  0.666...]))
-
-```
-
-``Nashpy`` is designed to be used by researchers and students in courses in the
-fields of mathematics, computer science and/or economics. It is already
-currently being used in a final year course at Cardiff University.
-``Nashpy`` has been archived to Zenodo with the linkd DOI:
+``Nashpy`` is designed to be used by researchers but also students in courses in
+the fields of mathematics, computer science and/or economics. It is already
+currently being used in a final year course at Cardiff University.  Due to the
+fact that the code is written entirely in Python and is open source, this makes
+it a positive teaching tool as students can read and understand implementation
+of the algorithms.  ``Nashpy`` has been archived to Zenodo with the linkd DOI:
 [@zenodo].
-
-
-```
 
 # Acknowledgements
 

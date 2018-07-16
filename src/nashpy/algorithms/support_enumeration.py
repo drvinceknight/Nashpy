@@ -2,6 +2,8 @@
 import numpy as np
 from itertools import chain, combinations
 
+import warnings
+
 
 def powerset(n):
     """
@@ -38,7 +40,6 @@ def solve_indifference(A, rows=None, columns=None):
     """
     # Ensure differences between pairs of pure strategies are the same
     M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]
-
     # Columns that must be played with prob 0
     zero_columns = set(range(A.shape[1])) - set(columns)
 
@@ -92,7 +93,7 @@ def indifference_strategies(A, B):
         if obey_support(s1, pair[0]) and obey_support(s2, pair[1]):
             yield s1, s2, pair[0], pair[1]
 
-def obey_support(strategy, support):
+def obey_support(strategy, support, tol=10**-16):
     """
     Test if a strategy obeys its support
 
@@ -112,8 +113,8 @@ def obey_support(strategy, support):
     """
     if strategy is False:
         return False
-    if not all((i in support and value > 0) or
-               (i not in support and value <= 0)
+    if not all((i in support and value > tol) or
+               (i not in support and value <= tol)
                for i, value in enumerate(strategy)):
         return False
     return True
@@ -159,6 +160,15 @@ def support_enumeration(A, B):
 
         equilibria: A generator.
     """
-    return ((s1, s2)
-            for s1, s2, sup1, sup2 in indifference_strategies(A, B)
-            if is_ne((s1, s2), (sup1, sup2), (A, B)))
+    count = 0
+    for s1, s2, sup1, sup2 in indifference_strategies(A, B):
+        if is_ne((s1, s2), (sup1, sup2), (A, B)):
+            count += 1
+            yield s1, s2
+    if count % 2 == 0:
+        warning = """
+An even number of ({}) equilibria was returned. This
+indicates that the game is degenerate. Consider using another algorithm
+to investigate.
+                  """.format(count)
+        warnings.warn(warning, RuntimeWarning)

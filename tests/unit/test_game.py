@@ -152,6 +152,7 @@ Column player:
                 self.assertTrue(np.array_equal(s1, s2),
                                 msg="obtained: {} !=expected: {}".format(obtained,
                                                                          expected))
+
     def test_support_enumeration_for_degenerate_bi_matrix_game(self):
         """Test for the equilibria calculation support enumeration with a
         degenerate game"""
@@ -203,6 +204,28 @@ Column player:
                     self.assertTrue(np.allclose(s1, s2),
                                     msg="obtained: {} !=expected: {}".format(obtained,
                                                                              expected))
+            self.assertGreater(len(w), 0)
+            self.assertEqual(w[-1].category, RuntimeWarning)
+
+
+    def test_support_enumeration_for_deg_bi_matrix_game_with_non_deg(self):
+
+        A = np.array([[-1, 0, 1], [0, -1, 0], [1, -1, -1]])
+        g = nash.Game(A)
+        with warnings.catch_warnings(record=True) as w:
+            obtained_equilibria = list(g.support_enumeration(non_degenerate=True))
+            self.assertEqual(len(obtained_equilibria), 0)
+            self.assertGreater(len(w), 0)
+            self.assertEqual(w[-1].category, RuntimeWarning)
+
+
+    def test_support_enumeration_for_deg_bi_matrix_game_with_low_tol(self):
+
+        A = np.array([[-1, 0, 1], [0, -1, 0], [1, -1, -1]])
+        g = nash.Game(A)
+        with warnings.catch_warnings(record=True) as w:
+            obtained_equilibria = list(g.support_enumeration(tol=0))
+            self.assertEqual(len(obtained_equilibria), 0)
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
 

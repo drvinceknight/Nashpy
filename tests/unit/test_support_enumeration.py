@@ -139,6 +139,43 @@ class TestSupportEnumeration(unittest.TestCase):
             self.assertTrue(np.array_equal(obtained, expected),
                             msg="obtained: {} !=expected: {}".format(obtained,
                                                                      expected))
+    def test_indifference_strategies_with_non_degenerate(self):
+        """Test for the indifference strategies of potential supports"""
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        expected_indifference = [(np.array([1, 0]), np.array([1, 0])),
+                                 (np.array([1, 0]), np.array([0, 1])),
+                                 (np.array([0, 1]), np.array([1, 0])),
+                                 (np.array([0, 1]), np.array([0, 1])),
+                                 (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
+        obtained_indifference = [out[:2]
+                                 for out in indifference_strategies(A, B,
+                                                                    non_degenerate=True)]
+        self.assertEqual(len(obtained_indifference), len(expected_indifference))
+        for obtained, expected in zip(obtained_indifference,
+                                      expected_indifference):
+            self.assertTrue(np.array_equal(obtained, expected),
+                            msg="obtained: {} !=expected: {}".format(obtained,
+                                                                     expected))
+
+    def test_indifference_strategies_with_high_tolerance(self):
+        """Test for the indifference strategies of potential supports"""
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        expected_indifference = [(np.array([1, 0]), np.array([1, 0])),
+                                 (np.array([1, 0]), np.array([0, 1])),
+                                 (np.array([0, 1]), np.array([1, 0])),
+                                 (np.array([0, 1]), np.array([0, 1])),
+                                 (np.array([1/3, 2/3]), np.array([1/3, 2/3]))]
+        obtained_indifference = [out[:2]
+                                 for out in indifference_strategies(A, B,
+                                                                    tol=10 ** -2)]
+        self.assertEqual(len(obtained_indifference), len(expected_indifference))
+        for obtained, expected in zip(obtained_indifference,
+                                      expected_indifference):
+            self.assertTrue(np.array_equal(obtained, expected),
+                            msg="obtained: {} !=expected: {}".format(obtained,
+                                                                     expected))
 
     def test_obey_support(self):
         """Test for obey support"""
@@ -153,6 +190,24 @@ class TestSupportEnumeration(unittest.TestCase):
         self.assertTrue(obey_support(np.array([0, .5]), np.array([1])))
         self.assertTrue(obey_support(np.array([.5, 0]), np.array([0])))
         self.assertTrue(obey_support(np.array([.5, .5]), np.array([0, 1])))
+
+
+    def test_obey_support_with_high_tolerance(self):
+        """Test for obey support"""
+        A = np.array([[2, 1], [0, 2]])
+        B = np.array([[2, 0], [1, 2]])
+        tol = 1
+        self.assertFalse(obey_support(False, np.array([0, 1])))
+        self.assertFalse(obey_support(np.array([1, 0]), np.array([0, 1]),
+                                      tol=tol))
+        self.assertFalse(obey_support(np.array([1, 0]), np.array([0]), 
+                                      tol=tol))
+        self.assertFalse(obey_support(np.array([0, .5]), np.array([1]), 
+                                      tol=tol))
+        self.assertFalse(obey_support(np.array([.5, 0]), np.array([0]), 
+                                      tol=tol))
+        self.assertFalse(obey_support(np.array([.5, .5]), np.array([0, 1]),
+                                      tol=tol))
 
     def test_is_ne(self):
         """Test if is ne"""

@@ -75,7 +75,7 @@ def potential_support_pairs(A, B, non_degenerate=False):
                              len(s) == len(support1)):
             yield support1, support2
 
-def indifference_strategies(A, B):
+def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
     """
     A generator for the strategies corresponding to the potential supports
 
@@ -86,14 +86,17 @@ def indifference_strategies(A, B):
         potential support. Return False if they are not valid (not a
         probability vector OR not fully on the given support).
     """
-    for pair in potential_support_pairs(A, B):
+    if non_degenerate:
+        tol = min(tol, 0)
+
+    for pair in potential_support_pairs(A, B, non_degenerate=non_degenerate):
         s1 = solve_indifference(B.T, *(pair[::-1]))
         s2 = solve_indifference(A, *pair)
 
-        if obey_support(s1, pair[0]) and obey_support(s2, pair[1]):
+        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
             yield s1, s2, pair[0], pair[1]
 
-def obey_support(strategy, support, tol=10**-16):
+def obey_support(strategy, support, tol=10 ** -16):
     """
     Test if a strategy obeys its support
 
@@ -144,7 +147,8 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
     return (row_payoffs.max() == row_support_payoffs.max() and
             column_payoffs.max() == column_support_payoffs.max())
 
-def support_enumeration(A, B):
+def support_enumeration(A, B, non_degenerate=False,
+                        tol=10 ** -16):
     """
     Obtain the Nash equilibria using support enumeration.
 
@@ -161,7 +165,8 @@ def support_enumeration(A, B):
         equilibria: A generator.
     """
     count = 0
-    for s1, s2, sup1, sup2 in indifference_strategies(A, B):
+    for s1, s2, sup1, sup2 in indifference_strategies(
+                                           A, B, non_degenerate=non_degenerate, tol=tol):
         if is_ne((s1, s2), (sup1, sup2), (A, B)):
             count += 1
             yield s1, s2

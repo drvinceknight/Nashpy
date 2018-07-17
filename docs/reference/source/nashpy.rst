@@ -6,15 +6,15 @@ Subpackages
 
 .. toctree::
 
-    nash.algorithms
+    nashpy.algorithms
 
 Submodules
 ----------
 
-nash\.game module
------------------
+nashpy\.game module
+-------------------
 
-.. automodule:: nash.game
+.. automodule:: nashpy.game
     :members:
     :undoc-members:
     :show-inheritance:
@@ -23,7 +23,7 @@ nash\.game module
 Module contents
 ---------------
 
-.. automodule:: nash
+.. automodule:: nashpy
     :members:
     :undoc-members:
     :show-inheritance:

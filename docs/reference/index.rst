@@ -7,5 +7,6 @@ Reference
    support-enumeration.rst
    vertex-enumeration.rst
    lemke-howson.rst
+   degenerate-games.rst
    bibliography.rst
-   source/nash.rst
+   source/nashpy.rst

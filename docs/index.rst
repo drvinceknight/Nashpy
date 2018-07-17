@@ -10,9 +10,7 @@ This is a Python library used for the computation of equilibria in 2 player
 strategic form games.
 
 This is a library with simple dependencies (it only requires :code:`numpy` and
-:code:`scipy`) so that it is pip installable: if you want to do sophisticated
-equilibria computation you should use
-`gambit <https://github.com/gambitproject/gambit>`_
+:code:`scipy`) so that it is pip installable.
 
 .. toctree::
    :maxdepth: 2

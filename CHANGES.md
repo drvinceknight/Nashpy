@@ -1,4 +1,8 @@
-# v0.015
+# v0.0.16
+
+Minor edit to documentation.
+
+# v0.0.15
 
 Add support for degenerate games in support enumeration.
 

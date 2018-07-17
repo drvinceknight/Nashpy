@@ -10,3 +10,9 @@ Other Python Game theory libraries
   gambit useful for teaching. [Savani2015]_
 - `PyNFG <https://pypi.python.org/pypi/PyNFG/0.1.2/>`_: PyNFG is a Python
   package for modeling and solving Network Form Games.
+- `lrslib <http://cgm.cs.mcgill.ca/~avis/C/lrs.html>`_: A C implementation of a
+  reverse search algorithm with modules for Nash equilibria computation.
+- `sagemath
+  <http://doc.sagemath.org/html/en/reference/game_theory/index.html>`_: The
+  mathematical software package Sage has various algorithms for the computation
+  of Nash equilibria.

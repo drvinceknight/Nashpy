@@ -1,3 +1,7 @@
+# v0.015
+
+Add support for degenerate games in support enumeration.
+
 # v0.0.14
 
 Change module name to `nashpy`. Now for consistency have:

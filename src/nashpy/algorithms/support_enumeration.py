@@ -2,6 +2,8 @@
 import numpy as np
 from itertools import chain, combinations
 
+import warnings
+
 
 def powerset(n):
     """
@@ -38,7 +40,6 @@ def solve_indifference(A, rows=None, columns=None):
     """
     # Ensure differences between pairs of pure strategies are the same
     M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]
-
     # Columns that must be played with prob 0
     zero_columns = set(range(A.shape[1])) - set(columns)
 
@@ -58,7 +59,7 @@ def solve_indifference(A, rows=None, columns=None):
     except np.linalg.linalg.LinAlgError:
         return False
 
-def potential_support_pairs(A, B):
+def potential_support_pairs(A, B, non_degenerate=False):
     """
     A generator for the potential support pairs
 
@@ -70,10 +71,11 @@ def potential_support_pairs(A, B):
     p1_num_strategies, p2_num_strategies = A.shape
     for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
         for support2 in (s for s in powerset(p2_num_strategies)
-                         if len(s) == len(support1)):
+                         if (len(s) > 0 and not non_degenerate) or
+                             len(s) == len(support1)):
             yield support1, support2
 
-def indifference_strategies(A, B):
+def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
     """
     A generator for the strategies corresponding to the potential supports
 
@@ -84,14 +86,17 @@ def indifference_strategies(A, B):
         potential support. Return False if they are not valid (not a
         probability vector OR not fully on the given support).
     """
-    for pair in potential_support_pairs(A, B):
+    if non_degenerate:
+        tol = min(tol, 0)
+
+    for pair in potential_support_pairs(A, B, non_degenerate=non_degenerate):
         s1 = solve_indifference(B.T, *(pair[::-1]))
         s2 = solve_indifference(A, *pair)
 
-        if obey_support(s1, pair[0]) and obey_support(s2, pair[1]):
+        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
             yield s1, s2, pair[0], pair[1]
 
-def obey_support(strategy, support):
+def obey_support(strategy, support, tol=10 ** -16):
     """
     Test if a strategy obeys its support
 
@@ -111,8 +116,8 @@ def obey_support(strategy, support):
     """
     if strategy is False:
         return False
-    if not all((i in support and value > 0) or
-               (i not in support and value <= 0)
+    if not all((i in support and value > tol) or
+               (i not in support and value <= tol)
                for i, value in enumerate(strategy)):
         return False
     return True
@@ -142,7 +147,8 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
     return (row_payoffs.max() == row_support_payoffs.max() and
             column_payoffs.max() == column_support_payoffs.max())
 
-def support_enumeration(A, B):
+def support_enumeration(A, B, non_degenerate=False,
+                        tol=10 ** -16):
     """
     Obtain the Nash equilibria using support enumeration.
 
@@ -158,6 +164,16 @@ def support_enumeration(A, B):
 
         equilibria: A generator.
     """
-    return ((s1, s2)
-            for s1, s2, sup1, sup2 in indifference_strategies(A, B)
-            if is_ne((s1, s2), (sup1, sup2), (A, B)))
+    count = 0
+    for s1, s2, sup1, sup2 in indifference_strategies(
+                                           A, B, non_degenerate=non_degenerate, tol=tol):
+        if is_ne((s1, s2), (sup1, sup2), (A, B)):
+            count += 1
+            yield s1, s2
+    if count % 2 == 0:
+        warning = """
+An even number of ({}) equilibria was returned. This
+indicates that the game is degenerate. Consider using another algorithm
+to investigate.
+                  """.format(count)
+        warnings.warn(warning, RuntimeWarning)

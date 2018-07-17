@@ -63,7 +63,7 @@ Column player:
         """
         return vertex_enumeration(*self.payoff_matrices)
 
-    def support_enumeration(self):
+    def support_enumeration(self, non_degenerate=False, tol=10 ** -16):
         """
         Obtain the Nash equilibria using support enumeration.
 
@@ -79,7 +79,9 @@ Column player:
 
             equilibria: A generator.
         """
-        return support_enumeration(*self.payoff_matrices)
+        return support_enumeration(*self.payoff_matrices,
+                                   non_degenerate=non_degenerate,
+                                   tol=tol)
 
     def lemke_howson_enumeration(self):
         """

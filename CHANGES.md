@@ -1,3 +1,7 @@
+# v0.0.17
+
+Minor edit to documentation.
+
 # v0.0.16
 
 Minor edit to documentation.

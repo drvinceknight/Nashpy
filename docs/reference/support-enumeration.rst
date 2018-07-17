@@ -8,11 +8,12 @@ one described in [Nisan2007]_.
 
 The algorithm is as follows:
 
-For a nondegenerate 2 player game :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2`
+For a degenerate 2 player game :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2`
 the following algorithm returns all nash equilibria:
 
-1. For all :math:`1\leq k\leq \min(m, n)`;
-2. For all pairs of support :math:`(I, J)` with :math:`|I|=|J|=k`
+1. For all :math:`1\leq k_1\leq m` and :math:`1\leq k_2\leq n`;
+2. For all pairs of support :math:`(I, J)` with :math:`|I|=k_1` and
+   :math:`|J|=k_2`. 
 3. Solve the following equations (this ensures we have best responses):
 
    .. math::
@@ -37,8 +38,9 @@ Discussion
 
 1. Step 1 is a complete enumeration of all possible strategies that the
    equilibria could be.
-2. Step 2 is based on the definition of a non degenerate game which ensures that
-   equilibria will be on supports of the same size.
+2. Step 2 can be modified to only consider degenerate games ensuring that only
+   supports of equal size are considered :math:`|I|=|J|`. This is described
+   further in :ref:`degenerate-games`.
 3. Step 3 are the linear equations that are to be solved, for a given pair of
    supports these ensure that neither player has an incentive to move to another
    strategy on that support.

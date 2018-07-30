@@ -214,7 +214,6 @@ Column player:
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration(non_degenerate=True))
-            self.assertEqual(len(obtained_equilibria), 0)
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
 
@@ -225,7 +224,6 @@ Column player:
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration(tol=0))
-            self.assertEqual(len(obtained_equilibria), 0)
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
 

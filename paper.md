@@ -32,14 +32,14 @@ their choice.
 As an example, consider the game of Rock Paper Scissors which can be represented
 mathematically using the following matrix:
 
-\[
+$$
 A=
 \begin{pmatrix}
 0  & -1 & 1  \\
 1  & 0  & -1 \\
 -1 & 1  & 0  \\
 \end{pmatrix}
-\]
+$$
 
 The rows and columns correspond to the actions available: Rock, Paper and
 Scissors. A value of 1 indicates that that specific row beats the corresponding
@@ -52,8 +52,9 @@ action. Using `Nashpy` the equilibrium behaviour can be computed:
 >>> import numpy as np
 >>> A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
 >>> game = nash.Game(A)
->>> list(game.support_enumeration())
-[(array([ 0.333...,  0.333...,  0.333...]), array([ 0.333...,  0.333...,  0.333...]))]
+>>> for eq in game.support_enumeration():
+...     print(eq)
+(array([ 0.33...,  0.33...,  0.33...]), array([ 0.33...,  0.33...,  0.33...]))
 
 ```
 

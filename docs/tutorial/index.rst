@@ -19,7 +19,7 @@ these *strategies*):
 
 The winner is decided according to the following:
 
-- Rock crushers scissors
+- Rock crushes scissors
 - Paper covers Rock
 - Scissors cuts paper
 

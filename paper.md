@@ -96,6 +96,31 @@ reference material on the algorithms:
 software is automatically tested using a combination of doc (this paper is also
 tested), unit, integration and property based tests with 100% coverage.
 
+There are potential limitiations associated with Nashpy, these are due to the
+complexity of the algorithms themselves. For example, support enumeration
+enumerates all potential pairs of strategy. For $n\times n$ sized square
+matrices it has complexity of the order of $\mathcal{O}\left({2^n}^2\right)$.
+All implementations provided in Nashpy ensure these affects are reduced: numpy
+[@scipy] provides C based implementations for vectorized performance.
+Furthermore, all algorithms are generators which ensures that not all equilibria
+must be found before one is returned. For example, below an 11 by 11 game is
+considered and timings computed are shown for relative comparison.  Using the
+more efficient Lemke-Howson algorithm [@lemke1964equilibrium] an equilibria is
+founds approximately 3000 times faster.
+
+```
+>>> from pprint import pprint
+>>> A = np.eye(11)
+>>> game = nash.Game(A, A[::-1])
+>>> pprint(next(game.support_enumeration()))  # 2.26 s ± 118 ms per loop
+(array([ 0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.]),
+ array([ 0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.]))
+>>> pprint(next(game.lemke_howson_enumeration()))  # 734 µs ± 5.27 µs per loop
+(array([ 0.5,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0.5]),
+ array([ 0.5,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0.5]))
+
+```
+
 ``Nashpy`` is designed to be used by researchers but also students in courses in
 the fields of mathematics, computer science and/or economics. It is already
 currently being used in a final year course at Cardiff University.  Due to the

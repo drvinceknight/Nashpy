@@ -17,7 +17,7 @@ games:
 - Best response polytope vertex enumeration
 - Lemke Howson algorithm
 
-**Nashpy**'s has a simple set of Python dependencies: it only requires `numpy`
+**Nashpy** has a simple set of Python dependencies: it only requires `numpy`
 and `scipy` so is straightforward to install on all operating systems.
 
 ## Installation

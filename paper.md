@@ -63,7 +63,7 @@ probability 1/3).
 
 Computing this equilibria for large games, situations where individuals have
 many strategic options available to them requires the use of
-software.implementations of known algorithms.
+software implementations of known algorithms.
 A number of algorithms exist to compute these Nash equilibria, for example the
 Lemke-Howson algorithm [@lemke1964equilibrium].
 
@@ -126,7 +126,7 @@ the fields of mathematics, computer science and/or economics. It is already
 currently being used in a final year course at Cardiff University.  Due to the
 fact that the code is written entirely in Python and is open source, this makes
 it a positive teaching tool as students can read and understand implementation
-of the algorithms.  ``Nashpy`` has been archived to Zenodo with the linkd DOI:
+of the algorithms.  ``Nashpy`` has been archived to Zenodo with the linked DOI:
 [@zenodo].
 
 # Acknowledgements

@@ -5,3 +5,4 @@ nashpy.egg-info
 dist/
 .hypothesis/
 docs/_build/
+.pytest_cache/

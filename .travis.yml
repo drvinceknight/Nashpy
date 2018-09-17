@@ -25,10 +25,13 @@ install:
   - pip install coverage
   - pip install coveralls
   - pip install hypothesis
+  - pip install pytest
 
 script:
-  - coverage run --source=src/nashpy setup.py test
+  - python setup.py develop
+  - coverage run pytest --doctest-glob="*.rst" --doctest-glob="*.md"
   - coverage report -m
+  - pip uninstall nashpy
   - pip install nashpy  # Test if pip install works
 
 after_success:

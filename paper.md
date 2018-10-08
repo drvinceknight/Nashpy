@@ -44,8 +44,8 @@ $$
 The rows and columns correspond to the actions available: Rock, Paper and
 Scissors. A value of 1 indicates that that specific row beats the corresponding
 column and similarly a value of -1 indicates a loss and a 0 indicates a tie. For
-example \(A\_{21}\) shows that Paper (the second action) beats Rock (the first
-action. Using `Nashpy` the equilibrium behaviour can be computed:
+example $A_{21}$ shows that Paper (the second action) beats Rock (the first
+action). Using `Nashpy` the equilibrium behaviour can be computed:
 
 ```
 >>> import nashpy as nash
@@ -61,8 +61,8 @@ action. Using `Nashpy` the equilibrium behaviour can be computed:
 As expected: both players should play each action randomly (each with
 probability 1/3).
 
-Computing this equilibria for large games, situations where individuals have
-many strategic options available to them requires the use of
+Computing these equilibria for large games, where individuals have
+many strategic options available to them, requires the use of
 software implementations of known algorithms.
 A number of algorithms exist to compute these Nash equilibria, for example the
 Lemke-Howson algorithm [@lemke1964equilibrium].
@@ -72,40 +72,41 @@ Lemke-Howson algorithm [@lemke1964equilibrium].
 Access to these algorithms is non trival, an example of this includes the
 modelling of healthcare decisions [@knight2017measuring] where a bespoke
 theoretic result was used to design a specific algorithm for the computation of
-equilibria. Easily accessibly software would make that research more
+equilibria. Accessible software would make that research more
 straightforward as no new algorithm would need to be implemented.
 
 The most mature piece of software available for the computation of equilibria
-is **Gambit** [@mckelvey2006gambit]. Gambit includes a python wrapper to its
-core C functionality however is not currently portable for example
+is **Gambit** [@mckelvey2006gambit]. Gambit has a Python wrapper to its
+core C functionality however is not currently portable. For example
 Windows is not supported. There does exist a web interface with a Gambit back
 end: [Game theory
 explorer](http://gte.csc.liv.ac.uk/index/index.html#document-documentation)
 however this is not practical for reproducible research.
 
 ``Nashpy`` is a Python library with all dependencies being part of the standard
-scientific Python stack (numpy and scipy [@scipy]) thus it is portable. For
-example Windows support is regularly tested through a Windows continuous
+scientific Python stack — NumPy and SciPy [@scipy] — thus it is portable. For
+example, Windows support is regularly tested through a Windows continuous
 integration service (Appveyor).
 
 ``Nashpy``
 currently implements 3 algorithms for the computation of equilibria (currently
-only for 2 player games) and is extensively documented, including theoretic
+only for 2-player games) and is extensively documented, including theoretic
 reference material on the algorithms:
 [nashpy.readthedocs.io](http://nashpy.readthedocs.io/). Furthermore, the
 software is automatically tested using a combination of doc (this paper is also
 tested), unit, integration and property based tests with 100% coverage.
 
-There are potential limitations associated with Nashpy, these are due to the
-complexity of the algorithms themselves. For example, support enumeration
-enumerates all potential pairs of strategy. For $n\times n$ sized square
-matrices it has complexity of the order of $\mathcal{O}\left({2^n}^2\right)$.
-All implementations provided in Nashpy ensure these effects are reduced: numpy
+Potential limitations of Nashpy are due to the complexity of the algorithms
+themselves.
+For example, support enumeration
+enumerates all potential pairs of strategies. For $n\times n$ square
+matrices it has $\mathcal{O}\left({2^n}^2\right)$ complexity.
+All implementations provided in Nashpy ensure these effects are reduced: NumPy
 [@scipy] provides C based implementations for vectorized performance.
-Furthermore, all algorithms are generators which ensures that not all equilibria
-must be found before one is returned. For example, below an 11 by 11 game is
-considered and timings computed are shown for relative comparison.  Using the
-more efficient Lemke-Howson algorithm [@lemke1964equilibrium] an equilibrium is
+Furthermore, all algorithms are generators, which ensures that not all equilibria
+must be found before one is returned. For example, below, an 11-by-11 game is
+considered and timings are shown for relative comparison.  Using the
+more efficient Lemke-Howson algorithm [@lemke1964equilibrium], an equilibrium is
 found approximately 3000 times faster.
 
 ```
@@ -122,16 +123,19 @@ found approximately 3000 times faster.
 ```
 
 ``Nashpy`` is designed to be used by researchers but also students in courses in
-the fields of mathematics, computer science and/or economics. It is already
-currently being used in a final year course at Cardiff University.  Due to the
+the fields of mathematics, computer science and/or economics. It is
+currently being used in a final-year course at Cardiff University.  Due to the
 fact that the code is written entirely in Python and is open source, this makes
-it a positive teaching tool as students can read and understand implementation
-of the algorithms.  ``Nashpy`` has been archived to Zenodo with the linked DOI:
+it a positive teaching tool as students can read and understand the implementation
+of the algorithms.  ``Nashpy`` has been archived to Zenodo
 [@zenodo].
 
 # Acknowledgements
 
 We acknowledge code contributions from Ria Baldevia as well as many helpful
 discussions with Nikoleta Glynatsi.
+
+We would also like to the thank the reviewers and editor for their time which
+helped improve this manuscript.
 
 # References

@@ -29,8 +29,8 @@ is that of Nash Equilibrium [@nash1950equilibrium]. This solution concept
 corresponds to a coordinate at which no participant has any incentive to change
 their choice.
 
-As an example, consider the game of Rock Paper Scissors which can be represented
-mathematically using the following matrix:
+As an example, consider the game of Rock Paper Scissors, which can be
+represented mathematically using the following matrix:
 
 $$
 A=
@@ -44,8 +44,8 @@ $$
 The rows and columns correspond to the actions available: Rock, Paper and
 Scissors. A value of 1 indicates that that specific row beats the corresponding
 column and similarly a value of -1 indicates a loss and a 0 indicates a tie. For
-example $A_{21}$ shows that Paper (the second action) beats Rock (the first
-action). Using `Nashpy` the equilibrium behaviour can be computed:
+example, $A_{21}$ shows that Paper (the second action) beats Rock (the first
+action). Using ``Nashpy``, the equilibrium behaviour can be computed:
 
 ```
 >>> import nashpy as nash
@@ -69,7 +69,7 @@ Lemke-Howson algorithm [@lemke1964equilibrium].
 
 # Statement of need
 
-Access to these algorithms is non trival, an example of this includes the
+Access to these algorithms is non trival, an example is the
 modelling of healthcare decisions [@knight2017measuring] where a bespoke
 theoretic result was used to design a specific algorithm for the computation of
 equilibria. Accessible software would make that research more
@@ -84,7 +84,7 @@ explorer](http://gte.csc.liv.ac.uk/index/index.html#document-documentation)
 however this is not practical for reproducible research.
 
 ``Nashpy`` is a Python library with all dependencies being part of the standard
-scientific Python stack — NumPy and SciPy [@scipy] — thus it is portable. For
+scientific Python stack—NumPy and SciPy [@scipy]—thus it is portable. For
 example, Windows support is regularly tested through a Windows continuous
 integration service (Appveyor).
 
@@ -96,12 +96,12 @@ reference material on the algorithms:
 software is automatically tested using a combination of doc (this paper is also
 tested), unit, integration and property based tests with 100% coverage.
 
-Potential limitations of Nashpy are due to the complexity of the algorithms
+Potential limitations of ``Nashpy`` are due to the complexity of the algorithms
 themselves.
 For example, support enumeration
 enumerates all potential pairs of strategies. For $n\times n$ square
 matrices it has $\mathcal{O}\left({2^n}^2\right)$ complexity.
-All implementations provided in Nashpy ensure these effects are reduced: NumPy
+All implementations provided in ``Nashpy`` ensure these effects are reduced: NumPy
 [@scipy] provides C based implementations for vectorized performance.
 Furthermore, all algorithms are generators, which ensures that not all equilibria
 must be found before one is returned. For example, below, an 11-by-11 game is
@@ -135,7 +135,8 @@ of the algorithms.  ``Nashpy`` has been archived to Zenodo
 We acknowledge code contributions from Ria Baldevia as well as many helpful
 discussions with Nikoleta Glynatsi.
 
-We would also like to the thank the reviewers and editor for their time which
+We would also like to the thank the reviewers and editor for their comments and
+suggestions which
 helped improve this manuscript.
 
 # References

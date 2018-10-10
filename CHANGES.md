@@ -1,3 +1,7 @@
+# v0.0.18
+
+Minor edits and final version of JOSS paper.
+
 # v0.0.17
 
 Minor edit to documentation.

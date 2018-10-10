@@ -4,10 +4,9 @@ Status](https://coveralls.io/repos/github/drvinceknight/Nashpy/badge.svg?branch=
 Status](https://travis-ci.org/drvinceknight/Nashpy.svg?branch=master)](https://travis-ci.org/drvinceknight/Nashpy)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/fj864wcbfpqfy6po?svg=true)](https://ci.appveyor.com/project/drvinceknight/nashpy)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.164954.svg)](https://doi.org/10.5281/zenodo.164954)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596758.svg)](https://doi.org/10.5281/zenodo.596758)
 [![Join the chat at
 https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](https://gitter.im/Nashpy/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Markdown:
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00904/status.svg)](https://doi.org/10.21105/joss.00904)
 
 # Nash: a python library for the computation of equilibria of 2 player strategic games.

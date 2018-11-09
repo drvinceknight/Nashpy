@@ -6,3 +6,4 @@ dist/
 .hypothesis/
 docs/_build/
 *mypy*
+.wily/

@@ -8,11 +8,14 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
 import nashpy as nash
-from nashpy.algorithms.support_enumeration import (indifference_strategies,
-                                                   is_ne, obey_support,
-                                                   potential_support_pairs,
-                                                   powerset,
-                                                   solve_indifference)
+from nashpy.algorithms.support_enumeration import (
+    indifference_strategies,
+    is_ne,
+    obey_support,
+    potential_support_pairs,
+    powerset,
+    solve_indifference,
+)
 
 
 class TestSupportEnumeration(unittest.TestCase):

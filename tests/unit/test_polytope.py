@@ -10,8 +10,12 @@ from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 from scipy.spatial import HalfspaceIntersection
 
-from nashpy.polytope.polytope import (build_halfspaces, find_feasible_point,
-                                      labels, non_trivial_vertices)
+from nashpy.polytope.polytope import (
+    build_halfspaces,
+    find_feasible_point,
+    labels,
+    non_trivial_vertices,
+)
 
 
 class TestPolytope(unittest.TestCase):

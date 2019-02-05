@@ -25,10 +25,14 @@ install:
   - pip install coverage
   - pip install coveralls
   - pip install hypothesis
+  - pip install isort
+  - pip install black
 
 script:
   - coverage run --source=src/nashpy setup.py test
   - coverage report -m
+  - black -l 80 . --check
+  - isort -rc . --check-only
   - pip install nashpy  # Test if pip install works
 
 after_success:

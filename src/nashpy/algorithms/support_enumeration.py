@@ -1,8 +1,8 @@
 """A class for a normal form game"""
-import numpy as np
+import warnings
 from itertools import chain, combinations
 
-import warnings
+import numpy as np
 
 
 def powerset(n):
@@ -44,8 +44,11 @@ def solve_indifference(A, rows=None, columns=None):
     zero_columns = set(range(A.shape[1])) - set(columns)
 
     if zero_columns != set():
-        M = np.append(M, [[int(i == j) for i, col in enumerate(M.T)]
-                          for j in zero_columns], axis=0)
+        M = np.append(
+            M,
+            [[int(i == j) for i, col in enumerate(M.T)] for j in zero_columns],
+            axis=0,
+        )
 
     # Ensure have probability vector
     M = np.append(M, np.ones((1, M.shape[1])), axis=0)
@@ -59,6 +62,7 @@ def solve_indifference(A, rows=None, columns=None):
     except np.linalg.linalg.LinAlgError:
         return False
 
+
 def potential_support_pairs(A, B, non_degenerate=False):
     """
     A generator for the potential support pairs
@@ -70,10 +74,13 @@ def potential_support_pairs(A, B, non_degenerate=False):
     """
     p1_num_strategies, p2_num_strategies = A.shape
     for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
-        for support2 in (s for s in powerset(p2_num_strategies)
-                         if (len(s) > 0 and not non_degenerate) or
-                             len(s) == len(support1)):
+        for support2 in (
+            s
+            for s in powerset(p2_num_strategies)
+            if (len(s) > 0 and not non_degenerate) or len(s) == len(support1)
+        ):
             yield support1, support2
+
 
 def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
     """
@@ -93,8 +100,11 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
         s1 = solve_indifference(B.T, *(pair[::-1]))
         s2 = solve_indifference(A, *pair)
 
-        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
+        if obey_support(s1, pair[0], tol=tol) and obey_support(
+            s2, pair[1], tol=tol
+        ):
             yield s1, s2, pair[0], pair[1]
+
 
 def obey_support(strategy, support, tol=10 ** -16):
     """
@@ -116,11 +126,13 @@ def obey_support(strategy, support, tol=10 ** -16):
     """
     if strategy is False:
         return False
-    if not all((i in support and value > tol) or
-               (i not in support and value <= tol)
-               for i, value in enumerate(strategy)):
+    if not all(
+        (i in support and value > tol) or (i not in support and value <= tol)
+        for i, value in enumerate(strategy)
+    ):
         return False
     return True
+
 
 def is_ne(strategy_pair, support_pair, payoff_matrices):
     """
@@ -144,11 +156,13 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
     row_support_payoffs = row_payoffs[np.array(support_pair[0])]
     column_support_payoffs = column_payoffs[np.array(support_pair[1])]
 
-    return (row_payoffs.max() == row_support_payoffs.max() and
-            column_payoffs.max() == column_support_payoffs.max())
+    return (
+        row_payoffs.max() == row_support_payoffs.max()
+        and column_payoffs.max() == column_support_payoffs.max()
+    )
 
-def support_enumeration(A, B, non_degenerate=False,
-                        tol=10 ** -16):
+
+def support_enumeration(A, B, non_degenerate=False, tol=10 ** -16):
     """
     Obtain the Nash equilibria using support enumeration.
 
@@ -166,7 +180,8 @@ def support_enumeration(A, B, non_degenerate=False,
     """
     count = 0
     for s1, s2, sup1, sup2 in indifference_strategies(
-                                           A, B, non_degenerate=non_degenerate, tol=tol):
+        A, B, non_degenerate=non_degenerate, tol=tol
+    ):
         if is_ne((s1, s2), (sup1, sup2), (A, B)):
             count += 1
             yield s1, s2
@@ -175,5 +190,7 @@ def support_enumeration(A, B, non_degenerate=False,
 An even number of ({}) equilibria was returned. This
 indicates that the game is degenerate. Consider using another algorithm
 to investigate.
-                  """.format(count)
+                  """.format(
+            count
+        )
         warnings.warn(warning, RuntimeWarning)

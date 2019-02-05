@@ -1,9 +1,11 @@
 """A class for a normal form game"""
+from itertools import combinations
+
 import numpy as np
+
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
-from itertools import combinations
 
 
 class Game:
@@ -18,13 +20,15 @@ class Game:
         - A: 2 dimensional list/array representing the payoff matrix for a
           zero sum game.
     """
+
     def __init__(self, *args):
         if len(args) == 2:
             self.payoff_matrices = tuple([np.asarray(m) for m in args])
         if len(args) == 1:
             self.payoff_matrices = np.asarray(args[0]), -np.asarray(args[0])
-        self.zero_sum = np.array_equal(self.payoff_matrices[0],
-                                       -self.payoff_matrices[1])
+        self.zero_sum = np.array_equal(
+            self.payoff_matrices[0], -self.payoff_matrices[1]
+        )
 
     def __repr__(self):
         if self.zero_sum:
@@ -37,12 +41,18 @@ Row player:
 {}
 
 Column player:
-{}""".format(tpe, *self.payoff_matrices)
+{}""".format(
+            tpe, *self.payoff_matrices
+        )
 
     def __getitem__(self, key):
         row_strategy, column_strategy = key
-        return np.array([np.dot(row_strategy, np.dot(m, column_strategy))
-                         for m in self.payoff_matrices])
+        return np.array(
+            [
+                np.dot(row_strategy, np.dot(m, column_strategy))
+                for m in self.payoff_matrices
+            ]
+        )
 
     def vertex_enumeration(self):
         """
@@ -79,9 +89,9 @@ Column player:
 
             equilibria: A generator.
         """
-        return support_enumeration(*self.payoff_matrices,
-                                   non_degenerate=non_degenerate,
-                                   tol=tol)
+        return support_enumeration(
+            *self.payoff_matrices, non_degenerate=non_degenerate, tol=tol
+        )
 
     def lemke_howson_enumeration(self):
         """
@@ -125,5 +135,6 @@ Column player:
 
             equilibria: A tuple.
         """
-        return lemke_howson(*self.payoff_matrices,
-                            initial_dropped_label=initial_dropped_label)
+        return lemke_howson(
+            *self.payoff_matrices, initial_dropped_label=initial_dropped_label
+        )

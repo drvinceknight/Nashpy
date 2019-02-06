@@ -1,8 +1,10 @@
 """A class for the vertex enumeration algorithm"""
-from nashpy.polytope import build_halfspaces, non_trivial_vertices
+from itertools import product
 
 import numpy as np
-from itertools import product
+
+from nashpy.polytope import build_halfspaces, non_trivial_vertices
+
 
 def vertex_enumeration(A, B):
     """
@@ -35,8 +37,9 @@ def vertex_enumeration(A, B):
     col_halfspaces = build_halfspaces(A)
 
     for row_v, row_l in non_trivial_vertices(row_halfspaces):
-        adjusted_row_l = set((label + number_of_row_strategies) % (max_label)
-                             for label in row_l)
+        adjusted_row_l = set(
+            (label + number_of_row_strategies) % (max_label) for label in row_l
+        )
 
         for col_v, col_l in non_trivial_vertices(col_halfspaces):
             if adjusted_row_l.union(col_l) == full_labels:

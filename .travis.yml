@@ -25,10 +25,12 @@ install:
   - pip install coverage
   - pip install coveralls
   - pip install hypothesis
+  - if [[ "$TRAVIS_PYTHON_VERSION" == '3.6' ]]; then pip install black; fi
 
 script:
   - coverage run --source=src/nashpy setup.py test
   - coverage report -m
+  - if [[ "$TRAVIS_PYTHON_VERSION" == '3.6' ]]; then black -l 80 . --check; fi
   - pip install nashpy  # Test if pip install works
 
 after_success:

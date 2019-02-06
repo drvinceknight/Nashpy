@@ -4,6 +4,7 @@ algorithm.
 """
 import numpy as np
 
+
 def make_tableau(M):
     """
     Make a tableau for the given matrix M.
@@ -12,8 +13,11 @@ def make_tableau(M):
 
        Mx <= 1 and x >= 0
     """
-    return np.append(np.append(M, np.eye(M.shape[0]), axis=1),
-                     np.ones((M.shape[0], 1)), axis=1)
+    return np.append(
+        np.append(M, np.eye(M.shape[0]), axis=1),
+        np.ones((M.shape[0], 1)),
+        axis=1,
+    )
 
 
 def find_pivot_row(tableau, column_index):
@@ -32,7 +36,7 @@ def non_basic_variables(tableau):
     Identifies the non basic variables of a tableau,
     these correspond to the labels.
     """
-    columns = tableau[:,:-1].transpose()
+    columns = tableau[:, :-1].transpose()
     return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
 
@@ -47,7 +51,8 @@ def pivot_tableau(tableau, column_index):
     for i, _ in enumerate(tableau):
         if i != pivot_row_index:
             tableau[i, :] = (
-                tableau[i, :] * pivot_element -
-                tableau[pivot_row_index, :] * tableau[i, column_index])
+                tableau[i, :] * pivot_element
+                - tableau[pivot_row_index, :] * tableau[i, column_index]
+            )
 
     return non_basic_variables(tableau) - original_labels

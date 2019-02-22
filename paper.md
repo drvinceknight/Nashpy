@@ -54,7 +54,7 @@ action). Using ``Nashpy``, the equilibrium behaviour can be computed:
 >>> game = nash.Game(A)
 >>> for eq in game.support_enumeration():
 ...     print(eq)
-(array([ 0.33...,  0.33...,  0.33...]), array([ 0.33...,  0.33...,  0.33...]))
+(array([0.33..., 0.33..., 0.33...]), array([0.33..., 0.33..., 0.33...]))
 
 ```
 
@@ -114,11 +114,11 @@ found approximately 3000 times faster.
 >>> A = np.eye(11)
 >>> game = nash.Game(A, A[::-1])
 >>> pprint(next(game.support_enumeration()))  # 2.26 s ± 118 ms per loop
-(array([ 0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.]),
- array([ 0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.]))
+(array([0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.]),
+ array([0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.]))
 >>> pprint(next(game.lemke_howson_enumeration()))  # 734 µs ± 5.27 µs per loop
-(array([ 0.5,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0.5]),
- array([ 0.5,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0.5]))
+(array([0.5, 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0.5]),
+ array([0.5, 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0. , 0.5]))
 
 ```
 

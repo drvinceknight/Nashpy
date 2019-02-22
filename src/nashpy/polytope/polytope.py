@@ -1,8 +1,9 @@
 """A class for a normal form game"""
-import numpy as np
-from scipy.spatial import HalfspaceIntersection
-from scipy.optimize import linprog
 from itertools import product
+
+import numpy as np
+from scipy.optimize import linprog
+from scipy.spatial import HalfspaceIntersection
 
 
 def build_halfspaces(M):
@@ -31,9 +32,10 @@ def build_halfspaces(M):
     """
     number_of_strategies, dimension = M.shape
     b = np.append(-np.ones(number_of_strategies), np.zeros(dimension))
-    M = np.append(M, - np.eye(dimension), axis=0)
+    M = np.append(M, -np.eye(dimension), axis=0)
     halfspaces = np.column_stack((M, b.transpose()))
     return halfspaces
+
 
 def find_feasible_point(halfspaces):
     """
@@ -53,14 +55,16 @@ def find_feasible_point(halfspaces):
 
         numpy array
     """
-    norm_vector = np.reshape(np.linalg.norm(halfspaces[:, :-1], axis=1),
-                             (halfspaces.shape[0], 1))
+    norm_vector = np.reshape(
+        np.linalg.norm(halfspaces[:, :-1], axis=1), (halfspaces.shape[0], 1)
+    )
     c = np.zeros((halfspaces.shape[1],))
     c[-1] = -1
     A = np.hstack((halfspaces[:, :-1], norm_vector))
-    b = - halfspaces[:, -1:]
+    b = -halfspaces[:, -1:]
     res = linprog(c, A_ub=A, b_ub=b)
     return res.x[:-1]
+
 
 def labels(vertex, halfspaces):
     """
@@ -78,9 +82,10 @@ def labels(vertex, halfspaces):
 
        set
     """
-    b = halfspaces[:,-1]
-    M = halfspaces[:,:-1]
+    b = halfspaces[:, -1]
+    M = halfspaces[:, :-1]
     return set(np.where(np.isclose(np.dot(M, vertex), -b))[0])
+
 
 def non_trivial_vertices(halfspaces):
     """

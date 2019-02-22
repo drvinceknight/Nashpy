@@ -162,7 +162,7 @@ corresponds to :math:`\sigma_c=(1/2, 1/2, 0)`::
 
     >>> sigma_c = [1 / 2, 1 / 2, 0]
     >>> rps[sigma_r, sigma_c]
-    array([ 0.,  0.])
+    array([0., 0.])
 
 The row player might then decide to change their strategy and "randomly" play
 Paper and Scissors::
@@ -184,7 +184,7 @@ players do not have an incentive to deviate. We can find these using
 
     >>> eqs = rps.support_enumeration()
     >>> list(eqs)
-    [(array([ 0.333...,  0.333...,  0.333...]), array([ 0.333...,  0.333...,  0.333...]))]
+    [(array([0.333..., 0.333..., 0.333...]), array([0.333..., 0.333..., 0.333...]))]
 
 *Nash* equilibria is an important concept as it allows to gain an initial
 understanding of emergent behaviour in complex systems.

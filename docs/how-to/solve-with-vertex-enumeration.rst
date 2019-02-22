@@ -16,4 +16,4 @@ equilibria::
     >>> equilibria = matching_pennies.vertex_enumeration()
     >>> for eq in equilibria:
     ...     print(eq)
-    (array([ 0.5,  0.5]), array([ 0.5,  0.5]))
+    (array([0.5, 0.5]), array([0.5, 0.5]))

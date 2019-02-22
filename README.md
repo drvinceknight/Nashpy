@@ -41,9 +41,9 @@ Create bi matrix games by passing two 2 dimensional arrays/lists:
 >>> game = nash.Game(A, B)
 >>> for eq in game.support_enumeration():
 ...     print(eq)
-(array([ 1.,  0.]), array([ 0.,  1.]))
-(array([ 0.,  1.]), array([ 1.,  0.]))
-(array([ 0.5,  0.5]), array([ 0.5,  0.5]))
+(array([1., 0.]), array([0., 1.]))
+(array([0., 1.]), array([1., 0.]))
+(array([0.5, 0.5]), array([0.5, 0.5]))
 >>> game[[0, 1], [1, 0]]
 array([3, 3])
 

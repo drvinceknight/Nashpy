@@ -91,9 +91,9 @@ Discussion
        >>> vertices = nash.polytope.non_trivial_vertices(halfspaces)
        >>> for vertex in vertices:
        ...     print(vertex)
-       (array([ 0.333...,  0...]), {0, 3})
-       (array([ 0...,  0.333...]), {1, 2})
-       (array([ 0.25,  0.25]), {0, 1})
+       (array([0.333..., 0...]), {0, 3})
+       (array([0..., 0.333...]), {1, 2})
+       (array([0.25, 0.25]), {0, 1})
 
 3. Step 3, we iterate over all pairs of the vertices of both polytopes and pick
    out the ones that are fully labeled. Because of the scaling that took place

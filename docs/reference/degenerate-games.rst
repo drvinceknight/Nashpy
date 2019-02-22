@@ -30,14 +30,14 @@ Here is the output when using :ref:`support-enumeration`::
 
     >>> for eq in game.support_enumeration():
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 0.5  0.5  0. ] [ 0.5  0.5  0. ]
-    [ 0.5  0.   0.5] [ 0.5  0.5  0. ]
+    [0.5 0.5 0. ] [0.5 0.5 0. ]
+    [0.5 0.  0.5] [0.5 0.5 0. ]
 
 Here is the output when using :ref:`vertex-enumeration`::
 
     >>> for eq in game.vertex_enumeration():
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 0.5  0.   0.5] [ 0.5  0.5 -0. ]
+    [0.5 0.  0.5] [ 0.5  0.5 -0. ]
     [ 0.5  0.5 -0. ] [ 0.5  0.5 -0. ]
 
 
@@ -45,7 +45,7 @@ Here is the output when using the :ref:`lemke-howson`::
 
     >>> for eq in game.lemke_howson_enumeration():
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 0.33...  0.33...  0.33...] [ nan]
+    [0.33... 0.33... 0.33...] [nan]
 
 
 We see that the `lemke-howson` algorithm fails but also that the
@@ -71,17 +71,17 @@ Here is an example::
     >>> game = nash.Game(A, B)
     >>> for eq in game.support_enumeration():
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 1.  0.  0.] [ 0.  0.  1.]
-    [ 0.  1.  0.] [ 1.  0.  0.]
-    [ 0.5  0.5  0. ] [ 0.38  0.    0.62]
-    [ 0.2  0.5  0.3] [ 0.57  0.32  0.11]
+    [1. 0. 0.] [0. 0. 1.]
+    [0. 1. 0.] [1. 0. 0.]
+    [0.5 0.5 0. ] [0.38 0.   0.62]
+    [0.2 0.5 0.3] [0.57 0.32 0.11]
     >>> for eq in game.support_enumeration(non_degenerate=True):
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 1.  0.  0.] [ 0.  0.  1.]
-    [ 0.  1.  0.] [ 1.  0.  0.]
-    [ 0.2  0.5  0.3] [ 0.57  0.32  0.11]
+    [1. 0. 0.] [0. 0. 1.]
+    [0. 1. 0.] [1. 0. 0.]
+    [0.2 0.5 0.3] [0.57 0.32 0.11]
     >>> for eq in game.support_enumeration(non_degenerate=False, tol=0):
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [ 1.  0.  0.] [ 0.  0.  1.]
-    [ 0.  1.  0.] [ 1.  0.  0.]
-    [ 0.2  0.5  0.3] [ 0.57  0.32  0.11]
+    [1. 0. 0.] [0. 0. 1.]
+    [0. 1. 0.] [1. 0. 0.]
+    [0.2 0.5 0.3] [0.57 0.32 0.11]

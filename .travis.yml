@@ -25,13 +25,16 @@ install:
   - pip install coverage
   - pip install coveralls
   - pip install hypothesis
+  - pip install pytest
+  - pip install pytest-cov
   - if [[ "$TRAVIS_PYTHON_VERSION" == '3.6' ]]; then pip install black; fi
 
 script:
-  - coverage run --source=src/nashpy setup.py test
+  - python setup.py develop
+  - pytest --cov=nashpy tests/
   - coverage report -m
   - if [[ "$TRAVIS_PYTHON_VERSION" == '3.6' ]]; then black -l 80 . --check; fi
-  - pip install nashpy  # Test if pip install works
+  - python doctests.py  # Run doctests
 
 after_success:
   - coveralls

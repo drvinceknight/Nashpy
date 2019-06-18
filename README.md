@@ -70,10 +70,10 @@ To install a development version of this library:
 $ python setup.py develop
 ```
 
-To run the full test suite:
+To run the full test suite (install `pytest`: `pip install pytest`) and run:
 
 ```
-$ python setup.py test
+$ pytest .
 ```
 
 All contributions are welcome, although this is meant to be a simple library,

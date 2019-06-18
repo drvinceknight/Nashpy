@@ -43,7 +43,7 @@ Here is the output when using :ref:`vertex-enumeration`::
 
 Here is the output when using the :ref:`lemke-howson`::
 
-    >>> for eq in game.lemke_howson_enumeration():
+    >>> for eq in game.lemke_howson_enumeration():  # doctest: +SKIP
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
     [0.33... 0.33... 0.33...] [nan]
 

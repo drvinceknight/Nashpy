@@ -1,8 +1,6 @@
 """
 Tests for fictitious learning
 """
-import unittest
-
 import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
@@ -15,15 +13,10 @@ from nashpy.learning.fictitious_learning import (
 
 
 
-class TestFicticiousLearning(unittest.TestCase):
-    """
-    Tests for the functions for fictitious learning
-    """
-
-    @given(M=arrays(np.int8, (4, 5)))
-    def test_find_best_response_to_belief(self, M):
-        belief = np.zeros(M.shape[1])
-        best_response = get_best_response_to_belief(M, belief)
-        self.assertGreaterEqual(best_response, 0)
-        self.assertLessEqual(best_response, M.shape[1] - 1)
-        self.assertIsInstance(best_response, np.int64)
+@given(M=arrays(np.int8, (4, 5)))
+def test_find_best_response_to_belief(M):
+    belief = np.zeros(M.shape[1])
+    best_response = get_best_response_to_belief(M, belief)
+    assert best_response >= 0
+    assert best_response <= M.shape[1] - 1
+    assert type(best_response) is np.int64

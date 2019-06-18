@@ -11,7 +11,9 @@ install:
   - "conda create -q -n test-environment python=%PYTHON_VERSION% scipy>=0.19.0 numpy>=1.15.4"
   - "activate test-environment"
   - "pip install hypothesis"
+  - "pip install pytest"
 build: off
 test_script:
-  - "python setup.py test"
-  - "pip install nashpy"
+  - "python setup.py install"
+  - "pytest ."
+  - "python doctests.py" 

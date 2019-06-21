@@ -1,6 +1,8 @@
 """
 Tests for fictitious learning
 """
+import types
+
 import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
@@ -45,6 +47,8 @@ def test_property_update_belief(play):
 def test_property_fictitious_play(A, B, iterations):
     game = nash.Game(A, B)
     plays = fictitious_play(game=game, iterations=iterations)
+    assert type(plays) is types.GeneratorType
+    plays = tuple(plays)
     assert len(plays) == iterations + 1
     assert max(tuple(map(len, plays))) == min(tuple(map(len, plays))) == 2
 
@@ -55,13 +59,13 @@ def test_fictitious_play():
     iterations = 10_000
 
     np.random.seed(0)
-    plays = fictitious_play(game=game, iterations=iterations)
+    plays = tuple(fictitious_play(game=game, iterations=iterations))
     assert len(plays) == iterations + 1
     final_row_play, final_column_play = plays[-1]
     assert np.array_equal(final_row_play, [3290, 3320, 3390])
 
     np.random.seed(1)
-    plays = fictitious_play(game=game, iterations=iterations)
+    plays = tuple(fictitious_play(game=game, iterations=iterations))
     assert len(plays) == iterations + 1
     final_row_play, final_column_play = plays[-1]
     assert np.array_equal(final_row_play, [3312, 3309, 3379])

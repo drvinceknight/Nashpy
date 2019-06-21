@@ -28,17 +28,16 @@ def fictitious_play(game, iterations, beliefs=None):
     A, B = game.payoff_matrices
     if beliefs is None:
         beliefs = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
-    
-    history = [beliefs]
+
+    yield beliefs
+
     for repetition in range(iterations):
-        
-        beliefs = history[-1]
+
         plays = [
-            get_best_response_to_belief(matrix, belief) 
+            get_best_response_to_belief(matrix, belief)
             for matrix, belief in zip(
                 (A, B.transpose()), beliefs[::-1])
         ]
-        
-        history.append([update_belief(belief, play) for belief, play in zip(beliefs, plays)])
-    
-    return history
+
+        beliefs = [update_belief(belief, play) for belief, play in zip(beliefs, plays)]
+        yield beliefs

@@ -6,6 +6,7 @@ import numpy as np
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
+from .learning.fictitious_learning import fictitious_play
 
 
 class Game:
@@ -137,4 +138,31 @@ Column player:
         """
         return lemke_howson(
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
+        )
+
+    def fictitious_play(self, iterations, beliefs=None):
+        """
+        Return a given sequence of actions through fictitious play. The
+        implementation corresponds to the description of chapter 2 of
+        [Fudenberg1998]_.
+
+        1. Players have a belief of the strategy of the other player: a vector
+        representing the number of times the player has chosen a given strategy.
+        2. Players choose a best response to the belief.
+        3. Players update their belief based on the latest choice of the
+        opponent.
+
+        Parameters
+        ----------
+
+            iterations: int
+            beliefs: iterator
+
+        Returns
+        -------
+
+            plays: A generator
+        """
+        return fictitious_play(
+            *self.payoff_matrices, iterations=iterations, beliefs=beliefs
         )

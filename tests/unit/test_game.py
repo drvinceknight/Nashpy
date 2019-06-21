@@ -11,6 +11,7 @@ from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 
 import nashpy as nash
+import nashpy.learning
 
 
 class TestGame(unittest.TestCase):
@@ -401,3 +402,29 @@ Column player:
         self.assertTrue(
             np.array_equal(g[row_strategy, column_strategy], np.array((0, 0)))
         )
+
+    @given(
+        A=arrays(np.int8, (4, 5)),
+        B=arrays(np.int8, (4, 5)),
+        seed=integers(min_value=0, max_value=2 ** 32 - 1),
+    )
+    def test_fictitious_play(self, A, B, seed):
+        """Test for the fictitious play algorithm"""
+        g = nash.Game(A, B)
+        iterations = 25
+        np.random.seed(seed)
+        expected_outcome = tuple(
+            nashpy.learning.fictitious_learning.fictitious_play(
+                *g.payoff_matrices, iterations=iterations
+            )
+        )
+        np.random.seed(seed)
+        outcome = tuple(g.fictitious_play(iterations=iterations))
+        assert len(outcome) == iterations + 1
+        assert len(expected_outcome) == iterations + 1
+        for plays, expected_plays in zip(outcome, expected_outcome):
+            row_play, column_play = plays
+            expected_row_play, expected_column_play = expected_plays
+            assert np.array_equal(row_play, expected_row_play)
+            assert np.array_equal(column_play, expected_column_play)
+        # assert expected_outcome == outcome

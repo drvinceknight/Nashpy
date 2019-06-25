@@ -20,10 +20,10 @@
 import os
 import sys
 
-import nashpy as nash
 
 sys.path.insert(0, os.path.abspath("../src/"))
 
+import nashpy as nash
 
 # -- General configuration ------------------------------------------------
 

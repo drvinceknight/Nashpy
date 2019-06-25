@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     nashpy.algorithms
+    nashpy.learning
 
 Submodules
 ----------

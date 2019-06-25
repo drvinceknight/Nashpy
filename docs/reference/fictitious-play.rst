@@ -58,7 +58,7 @@ For example::
     >>> A = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]])
     >>> B = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
     >>> game = nash.Game(A, B)
-    >>> iterations = 10_000
+    >>> iterations = 10000
     >>> np.random.seed(0)
     >>> play_counts = tuple(game.fictitious_play(iterations=iterations))
     >>> play_counts[-1]

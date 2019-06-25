@@ -1,3 +1,7 @@
+# v0.0.19
+
+Add fictitious play learning algorithm and support for py3.7
+
 # v0.0.18
 
 Minor edits and final version of JOSS paper.

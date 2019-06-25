@@ -18,7 +18,10 @@ play_counts = tuple(game.fictitious_play(iterations=iterations))
 
 
 plt.figure()
-probabilities = [row_play_counts / np.sum(row_play_counts) for row_play_counts, col_play_counts in play_counts]
+probabilities = [
+    row_play_counts / np.sum(row_play_counts)
+    for row_play_counts, col_play_counts in play_counts
+]
 for number, strategy in enumerate(zip(*probabilities)):
     plt.plot(strategy, label=f"$s_{number}$")
 

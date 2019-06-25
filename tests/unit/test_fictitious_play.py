@@ -22,9 +22,6 @@ def test_property_find_best_response_to_play_count(M):
     best_response = get_best_response_to_play_count(M, play_count)
     assert best_response >= 0
     assert best_response <= M.shape[1] - 1
-    assert (type(best_response) is np.int64) or (
-        type(best_response) is np.int32
-    )  # For testing purposes on Windows
 
 
 def test_find_best_response_to_play_count():

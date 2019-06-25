@@ -14,4 +14,4 @@ formats: all
 
 # Setup conda environment
 conda:
-    file: environment.yml
+    environment: environment.yml

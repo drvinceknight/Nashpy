@@ -9,7 +9,7 @@ from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 
 import nashpy as nash
-from nashpy.learning.fictitious_learning import (
+from nashpy.learning.fictitious_play import (
     get_best_response_to_play_count,
     update_play_count,
     fictitious_play,

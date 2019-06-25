@@ -414,7 +414,7 @@ Column player:
         iterations = 25
         np.random.seed(seed)
         expected_outcome = tuple(
-            nashpy.learning.fictitious_learning.fictitious_play(
+            nashpy.learning.fictitious_play.fictitious_play(
                 *g.payoff_matrices, iterations=iterations
             )
         )

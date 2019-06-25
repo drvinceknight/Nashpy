@@ -6,7 +6,7 @@ import numpy as np
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
-from .learning.fictitious_learning import fictitious_play
+from .learning.fictitious_play import fictitious_play
 
 
 class Game:

@@ -7,7 +7,7 @@ Subpackages
 .. toctree::
 
     nashpy.algorithms
-    nashpy.fictitious_learning
+    nashpy.learning
 
 Submodules
 ----------

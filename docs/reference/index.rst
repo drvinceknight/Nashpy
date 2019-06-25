@@ -8,5 +8,6 @@ Reference
    vertex-enumeration.rst
    lemke-howson.rst
    degenerate-games.rst
+   fictitious-play.rst
    bibliography.rst
    source/nashpy.rst

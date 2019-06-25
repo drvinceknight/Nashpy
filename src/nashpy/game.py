@@ -140,7 +140,7 @@ Column player:
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
         )
 
-    def fictitious_play(self, iterations, beliefs=None):
+    def fictitious_play(self, iterations, play_counts=None):
         """
         Return a given sequence of actions through fictitious play. The
         implementation corresponds to the description of chapter 2 of
@@ -156,7 +156,7 @@ Column player:
         ----------
 
             iterations: int
-            beliefs: iterator
+            play_counts: iterator
 
         Returns
         -------
@@ -164,5 +164,7 @@ Column player:
             plays: A generator
         """
         return fictitious_play(
-            *self.payoff_matrices, iterations=iterations, beliefs=beliefs
+            *self.payoff_matrices,
+            iterations=iterations,
+            play_counts=play_counts
         )

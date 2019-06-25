@@ -12,3 +12,4 @@ How to:
    solve-with-support-enumeration.rst
    solve-with-vertex-enumeration.rst
    solve-with-lemke-howson.rst
+   use-fictitious-play.rst

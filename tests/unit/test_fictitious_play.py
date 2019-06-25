@@ -69,7 +69,7 @@ def test_property_fictitious_play(A, B, iterations):
 def test_fictitious_play():
     A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
     B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
-    iterations = 10_000
+    iterations = 10000
 
     np.random.seed(0)
     play_counts = tuple(fictitious_play(A, B, iterations=iterations))
@@ -87,7 +87,7 @@ def test_fictitious_play():
 def test_fictitious_play_with_asymetric_game_and_initial_play_counts():
     A = np.array([[1 / 2, 2, 0, 0], [0, 1 / 2, 1, 1], [1, 0, 1 / 2, 0]])
     B = np.array([[1 / 2, 0, 1 / 2, 1], [1 / 2, 1 / 2, 0, 1], [0, 1, 1 / 2, 2]])
-    iterations = 10_000
+    iterations = 10000
     play_counts = tuple(
         fictitious_play(
             A,

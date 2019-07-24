@@ -8,7 +8,7 @@ one described in [Nisan2007]_.
 
 The algorithm is as follows:
 
-For a degenerate 2 player game :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2`
+For a degenerate or non-degenerate 2 player game :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2`
 the following algorithm returns all nash equilibria:
 
 1. For all :math:`1\leq k_1\leq m` and :math:`1\leq k_2\leq n`;

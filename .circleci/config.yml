@@ -46,7 +46,8 @@ jobs:
             . venv/bin/activate
             python setup.py develop
             pytest .
-            black -l 80 . --check
+            black -l 80 src/ --check
+            black -l 80 tests/ --check
             python doctests.py  # Run doctests
 
 

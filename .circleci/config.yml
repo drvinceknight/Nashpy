@@ -28,6 +28,7 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
             pip install pytest
+            pip install hypothesis
             pip install black
 
       - save_cache:

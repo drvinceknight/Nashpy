@@ -89,7 +89,7 @@ Discussion
        >>> A = np.array([[3, 1], [1, 3]])
        >>> halfspaces = nash.polytope.build_halfspaces(A)
        >>> vertices = nash.polytope.non_trivial_vertices(halfspaces)
-       >>> for vertex in vertices:
+       >>> for vertex in vertices:  # doctest: +SKIP
        ...     print(vertex)
        (array([0.333..., 0...]), {0, 3})
        (array([0..., 0.333...]), {1, 2})

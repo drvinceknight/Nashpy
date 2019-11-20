@@ -96,6 +96,25 @@ class TestSupportEnumeration(unittest.TestCase):
             ],
         )
 
+        A = np.array(
+            [
+                [52.46337363, 69.47195938, 0.0, 54.14372075],
+                [77.0, 88.0, 84.85714286, 92.4],
+                [77.78571429, 87.35294118, 93.5, 91.38461538],
+                [66.37100751, 43.4530444, 0.0, 60.36191831],
+            ]
+        )
+        B = np.array(
+            [
+                [23.52690518, 17.35459006, 88.209, 20.8021711],
+                [16.17165, 0.0, 14.00142857, 6.46866],
+                [0.0, 5.76529412, 0.0, 0.0],
+                [15.68327304, 40.68156322, 84.00857143, 11.06596804],
+            ]
+        )
+        number_of_potential_supports = len(list(potential_support_pairs(A, B)))
+        assert number_of_potential_supports == 225
+
     def test_potential_supports_with_non_degenerate_flag(self):
         """Test for the enumeration of potential supports when constrained to
         non degenerate games"""

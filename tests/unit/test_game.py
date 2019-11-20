@@ -263,6 +263,47 @@ Column player:
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
 
+    def test_support_enumeration_for_particular_game(self):
+        """
+        This particular game was raised in
+        https://github.com/drvinceknight/Nashpy/issues/67. Two users reported
+        that it
+        did not return any equilibria under support enumeration. I was unable to
+        reproduce this error locally as I was using a pre compiled install of
+        numpy. However when using a pip installed version I was able to
+        reproduce the error.
+
+        Rounding the particular input matrices to 5 decimal places however fixes
+        the error. This is an underlying precision error related to numpy (I
+        think).
+        """
+        A = [
+            [52.46337363, 69.47195938, 0.0, 54.14372075],
+            [77.0, 88.0, 84.85714286, 92.4],
+            [77.78571429, 87.35294118, 93.5, 91.38461538],
+            [66.37100751, 43.4530444, 0.0, 60.36191831],
+        ]
+        B = [
+            [23.52690518, 17.35459006, 88.209, 20.8021711],
+            [16.17165, 0.0, 14.00142857, 6.46866],
+            [0.0, 5.76529412, 0.0, 0.0],
+            [15.68327304, 40.68156322, 84.00857143, 11.06596804],
+        ]
+        A = np.round(A, 5)
+        B = np.round(B, 5)
+        game = nash.Game(A, B)
+        eqs = list(game.support_enumeration())
+        assert len(eqs) == 1
+        row_strategy, col_strategy = eqs[0]
+        expected_row_strategy, expected_column_strategy = (
+            np.array(
+                [7.33134761e-17, 2.62812089e-01, 7.37187911e-01, 0.00000000e00]
+            ),
+            np.array([0.4516129, 0.5483871, 0.0, 0.0]),
+        )
+        assert np.all(np.isclose(row_strategy, expected_row_strategy))
+        assert np.all(np.isclose(col_strategy, expected_column_strategy))
+
     def test_vertex_enumeration_for_bi_matrix(self):
         """Test for the equilibria calculation using vertex enumeration"""
         A = np.array(

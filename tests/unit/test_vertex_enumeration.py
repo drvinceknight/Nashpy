@@ -46,4 +46,4 @@ class TestVertexEnumeration(unittest.TestCase):
         for strategy, expected_strategy in zip(
             equilibrium, expected_equilibrium
         ):
-            self.assertTrue(all(np.isclose(strategy, expected_strategy)))
+            assert all(np.isclose(strategy, expected_strategy)), strategy

@@ -10,7 +10,6 @@ def load_tests(loader, tests, ignore):
         if "venv" not in root:
             for f in files:
                 if f.endswith(".rst") or f.endswith(".md"):
-                    print(dirs)
                     tests.addTests(
                         doctest.DocFileSuite(
                             os.path.join(root, f), optionflags=doctest.ELLIPSIS

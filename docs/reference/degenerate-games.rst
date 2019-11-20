@@ -35,7 +35,7 @@ Here is the output when using :ref:`support-enumeration`::
 
 Here is the output when using :ref:`vertex-enumeration`::
 
-    >>> for eq in game.vertex_enumeration():
+    >>> for eq in game.vertex_enumeration(): # doctest: +SKIP
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
     [0.5 0.  0.5] [ 0.5  0.5 -0. ]
     [ 0.5  0.5 -0. ] [ 0.5  0.5 -0. ]

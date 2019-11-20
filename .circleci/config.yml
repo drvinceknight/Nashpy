@@ -27,6 +27,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install pytest
             pip install black
 
       - save_cache:
@@ -44,6 +45,7 @@ jobs:
           command: |
             . venv/bin/activate
             python setup.py develop
+            pytest .
             black -l 80 . --check
             python doctests.py  # Run doctests
 

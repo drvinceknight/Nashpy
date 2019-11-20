@@ -8,7 +8,7 @@ import warnings
 def load_tests(loader, tests, ignore):
     for root, dirs, files in os.walk("."):
         for f in files:
-            if f.endswith(".rst") or f.endswith(".md"):
+            if f.endswith(".rst") or f.endswith(".md") and ("venv" not in dirs):
                 tests.addTests(
                     doctest.DocFileSuite(
                         os.path.join(root, f), optionflags=doctest.ELLIPSIS

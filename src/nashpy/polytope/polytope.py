@@ -102,4 +102,6 @@ def non_trivial_vertices(halfspaces):
     feasible_point = find_feasible_point(halfspaces)
     hs = HalfspaceIntersection(halfspaces, feasible_point)
     hs.close()
-    return ((v, labels(v, halfspaces)) for v in hs.intersections if max(v) > 0)
+    return ((v, labels(v, halfspaces)) for v in hs.intersections if 
+            not np.all(np.isclose(v, 0))
+            and max(v) < np.inf)

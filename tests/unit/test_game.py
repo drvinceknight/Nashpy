@@ -269,7 +269,13 @@ Column player:
         https://github.com/drvinceknight/Nashpy/issues/67. Two users reported
         that it
         did not return any equilibria under support enumeration. I was unable to
-        reproduce this error locally.
+        reproduce this error locally as I was using a pre compiled install of
+        numpy. However when using a pip installed version I was able to
+        reproduce the error.
+
+        Rounding the particular input matrices to 5 decimal places however fixes
+        the error. This is an underlying precision error related to numpy (I
+        think).
         """
         A = [
             [52.46337363, 69.47195938, 0.0, 54.14372075],
@@ -283,6 +289,8 @@ Column player:
             [0.0, 5.76529412, 0.0, 0.0],
             [15.68327304, 40.68156322, 84.00857143, 11.06596804],
         ]
+        A = np.round(A, 5)
+        B = np.round(B, 5)
         game = nash.Game(A, B)
         eqs = list(game.support_enumeration())
         assert len(eqs) == 1

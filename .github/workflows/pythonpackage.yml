@@ -30,19 +30,17 @@ jobs:
         pip install black
         pip install coverage
         pip install coveralls
-    - name: Test with pytest 
+    - name: Test with pytest
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         python setup.py develop
         pytest --cov=nashpy tests/
-        coverage report -m
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        coveralls
     - name: Check format
       run: |
         black -l 80 . --check
     - name: Doctest
       run: |
-        python doctests.py 
-    
+        python doctests.py
+

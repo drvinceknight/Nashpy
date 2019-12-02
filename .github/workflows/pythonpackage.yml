@@ -1,15 +1,16 @@
-name: Test Python Package on MacOS
+name: Test on MacOS and ubuntu
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7]
+        os: [ubuntu-latest, macOS-latest]
+        python-version: [3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v1
@@ -30,7 +31,7 @@ jobs:
         pip install black
         pip install coverage
         pip install coveralls
-    - name: Test with pytest 
+    - name: Test with pytest
       run: |
         python setup.py develop
         pytest --cov=nashpy --cov-report=xml tests/
@@ -45,5 +46,4 @@ jobs:
         black -l 80 . --check
     - name: Doctest
       run: |
-        python doctests.py 
-    
+        python doctests.py

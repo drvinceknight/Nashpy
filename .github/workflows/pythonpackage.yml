@@ -22,6 +22,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Install testing dependencies
+      run: |
         pip install pytest
         pip install hypothesis
         pip install matplotlib>=3.0.2
@@ -35,7 +36,9 @@ jobs:
         coverage report -m
         coveralls
     - name: Check format
+      run: |
         black -l 80 . --check
     - name: Doctest
+      run: |
         python doctests.py 
     

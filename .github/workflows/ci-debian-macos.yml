@@ -32,13 +32,17 @@ jobs:
         pip install coverage
         pip install coveralls
     - name: Test with pytest
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         python setup.py develop
         pytest --cov=nashpy tests/
+    - name: Report coverage to coveralls (only on py3.8 and ubuntu)
+      if: matrix.python-version == 3.8 && matrix.os == 'ubuntu-latest'
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
         coveralls
-    - name: Check format
+    - name: Check format (only on py3.8 and ubuntu)
+      if: matrix.python-version == 3.8 && matrix.os == 'ubuntu-latest'
       run: |
         black -l 80 . --check
     - name: Doctest

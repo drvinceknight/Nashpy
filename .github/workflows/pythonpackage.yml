@@ -40,7 +40,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: .coverage
+        path-to-lcov: coverage.xml
     - name: Check format
       run: |
         black -l 80 . --check

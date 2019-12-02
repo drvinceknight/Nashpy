@@ -33,7 +33,7 @@ jobs:
     - name: Test with pytest 
       run: |
         python setup.py develop
-        pytest --cov=nashpy tests/
+        pytest --cov=nashpy --cov-report=xml tests/
         coverage report -m
     - name: Coveralls
       uses: coverallsapp/github-action@master

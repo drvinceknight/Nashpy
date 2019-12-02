@@ -24,6 +24,7 @@ jobs:
     - name: Install testing dependencies
       run: |
         pip install pytest
+        pip install pytest-cov
         pip install hypothesis
         pip install matplotlib>=3.0.2
         pip install black

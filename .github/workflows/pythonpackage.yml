@@ -35,7 +35,10 @@ jobs:
         python setup.py develop
         pytest --cov=nashpy tests/
         coverage report -m
-        coveralls
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Check format
       run: |
         black -l 80 . --check

@@ -1,6 +1,5 @@
 [![Coverage
 Status](https://coveralls.io/repos/github/drvinceknight/Nashpy/badge.svg?branch=master)](https://coveralls.io/github/drvinceknight/Nashpy?branch=master)
-[![Actions Status](https://github.com/drvinceknight/Nashpy/Test_on_MacOS_and_ubuntu/badge.svg)](https://github.com/drvinceknight/Nashpy/actions)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596758.svg)](https://doi.org/10.5281/zenodo.596758)
 [![Join the chat at
 https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](https://gitter.im/Nashpy/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

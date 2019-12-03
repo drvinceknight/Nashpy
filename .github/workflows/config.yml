@@ -1,14 +1,15 @@
-name: Test on Windows
+name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
       matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         python-version: [3.6, 3.7, 3.8]
 
     steps:
@@ -26,10 +27,15 @@ jobs:
         pip install pytest
         pip install hypothesis
         pip install matplotlib>=3.0.2
+        pip install black
+    - name: Check format (only on py3.8 and ubuntu)
+      if: matrix.python-version == 3.8 && matrix.os == 'ubuntu-latest'
+      run: |
+        black -l 80 . --check
     - name: Test with pytest
       run: |
         python setup.py develop
-        pytest tests/
+        pytest .
     - name: Doctest
       run: |
         python doctests.py

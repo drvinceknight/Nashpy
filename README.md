@@ -1,6 +1,7 @@
 [![Coverage
 Status](https://coveralls.io/repos/github/drvinceknight/Nashpy/badge.svg?branch=master)](https://coveralls.io/github/drvinceknight/Nashpy?branch=master)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596758.svg)](https://doi.org/10.5281/zenodo.596758)
+![](https://github.com/drvinceknight/Nashpy/workflows/CI/badge.svg)
 [![Join the chat at
 https://gitter.im/Nashpy/Lobby](https://badges.gitter.im/Nashpy/Lobby.svg)](https://gitter.im/Nashpy/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00904/status.svg)](https://doi.org/10.21105/joss.00904)

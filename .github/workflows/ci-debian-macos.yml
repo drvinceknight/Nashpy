@@ -1,4 +1,4 @@
-name: Test on MacOS and ubuntu
+name: Test_on_MacOS_and_ubuntu
 
 on: [push, pull_request]
 

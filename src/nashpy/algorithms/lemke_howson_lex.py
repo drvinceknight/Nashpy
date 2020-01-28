@@ -7,7 +7,8 @@ import numpy as np
 from nashpy.integer_pivoting import (
 	make_tableau,
 	non_basic_variables,
-	pivot_tableau
+	zero_basic_variables,
+	pivot_tableau_lex
 )
 
 
@@ -33,7 +34,7 @@ def shift_tableau(tableau, shape):
 	)
 
 
-def tableau_to_strategy(tableau, basic_labels, strategy_labels):
+def tableau_to_strategy_lex(tableau, basic_labels, strategy_labels):
 	"""
 	Return a strategy vector from a tableau
 
@@ -58,15 +59,12 @@ def tableau_to_strategy(tableau, basic_labels, strategy_labels):
 		else:
 			vertex.append(0)
 	strategy = np.array(vertex)
-	return strategy / sum(strategy)
+	return np.divide(strategy, sum(strategy))
 
-
-def lemke_howson(A, B, initial_dropped_label=0):
+def lemke_howson_lex(A, B, initial_dropped_label=0):
 	"""
 	Obtain the Nash equilibria using the Lemke Howson algorithm implemented
 	using integer pivoting.
-
-	Algorithm implemented here is Algorithm 3.6 of [Nisan2007]_.
 
 	1. Start at the artificial equilibrium (which is fully labeled)
 	2. Choose an initial label to drop and move in the polytope for which
@@ -86,6 +84,12 @@ def lemke_howson(A, B, initial_dropped_label=0):
 	-------
 
 		equilibria: A tuple.
+
+	========
+
+		* Edited such that zero basic variables are considered in nash equilibrium 
+		and integer pivoting is done using lexicographical ordering
+
 	"""
 
 	if np.min(A) <= 0:
@@ -99,28 +103,49 @@ def lemke_howson(A, B, initial_dropped_label=0):
 	row_tableau = make_tableau(B.transpose())
 	full_labels = set(range(sum(A.shape)))
 
+	# slack variables
+	row_slack_variables = range(B.shape[0],sum(B.shape))
+	col_slack_variables = range(A.shape[0])
+
 	if initial_dropped_label in non_basic_variables(row_tableau):
-		tableux = cycle((row_tableau, col_tableau))
+		tableux = cycle((	(row_tableau,row_slack_variables),
+							(col_tableau,col_slack_variables)))
 	else:
-		tableux = cycle((col_tableau, row_tableau))
+		tableux = cycle((	(col_tableau,col_slack_variables),
+							(row_tableau,row_slack_variables)))
 
 	# First pivot (to drop a label)
-	entering_label = pivot_tableau(next(tableux), initial_dropped_label)
+	next_tableux = next(tableux)
+	entering_label = pivot_tableau_lex(next_tableux[0], initial_dropped_label, next_tableux[1])
 	while (
-		non_basic_variables(row_tableau).union(non_basic_variables(col_tableau))
+		non_basic_variables(row_tableau).union(
+				non_basic_variables(col_tableau),
+				zero_basic_variables(row_tableau),
+				zero_basic_variables(col_tableau))
 		!= full_labels
 	):
-		entering_label = pivot_tableau(
-			next(tableux), next(iter(entering_label))
-		)
+		next_tableux = next(tableux)
 
-	row_strategy = tableau_to_strategy(
-		row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
+		#error handling to deal with games that are 'too degenerate(?)'
+		try:
+			entering_label = pivot_tableau_lex(
+				next_tableux[0], next(iter(entering_label)), next_tableux[1]
+			)
+		except StopIteration:
+			msg = """The algorithm has not found a new label after pivoting. 
+			This indicates an error. Your game could be degenerate."""
+			warnings.warn(msg, RuntimeWarning)
+			raise Exception('No new label found. Terminating algorithm.')
+
+	row_strategy = tableau_to_strategy_lex(
+		row_tableau, 
+		full_labels - non_basic_variables(row_tableau) - zero_basic_variables(row_tableau), 
+		range(A.shape[0])
 	)
-	col_strategy = tableau_to_strategy(
+	col_strategy = tableau_to_strategy_lex(
 		col_tableau,
-		non_basic_variables(row_tableau),
-		range(A.shape[0], sum(A.shape)),
+		full_labels - non_basic_variables(col_tableau) - zero_basic_variables(col_tableau),
+		range(A.shape[0], sum(A.shape))
 	)
 
 	if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (

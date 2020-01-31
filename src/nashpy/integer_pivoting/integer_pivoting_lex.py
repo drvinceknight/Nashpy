@@ -16,7 +16,9 @@ def make_tableau(M):
        Mx <= 1 and x >= 0
     """
     return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1), np.ones((M.shape[0], 1)), axis=1,
+        np.append(M, np.eye(M.shape[0]), axis=1),
+        np.ones((M.shape[0], 1)),
+        axis=1,
     )
 
 
@@ -41,12 +43,16 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
 
     # catch divide by zero warning
     with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", r"invalid value encountered in true_divide")
+        warnings.filterwarnings(
+            "ignore", r"invalid value encountered in true_divide"
+        )
 
         ratio = np.divide(Cq, pivot_column)
 
     # filters for column coefficients <=0 (to preserve feasibility)
-    filtered_ratio = np.where(pivot_column <= 0, np.full(ratio.shape, np.inf), ratio)
+    filtered_ratio = np.where(
+        pivot_column <= 0, np.full(ratio.shape, np.inf), ratio
+    )
 
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
 
@@ -68,14 +74,19 @@ def zero_basic_variables(tableau):
 
     Cq = tableau[:, -1]
     zero_rows = set(np.where(Cq == 0)[0])
-    basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables(tableau)
+    basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables(
+        tableau
+    )
 
     # gives list of pairs (basic_col_index, non-zero row index)
     basic_variable_rows = [
         (col, np.where(tableau[:, col] != 0)[0][0]) for col in basic_variables
     ]
     return set(
-        map(lambda x: x[0], filter(lambda x: x[1] in zero_rows, basic_variable_rows))
+        map(
+            lambda x: x[0],
+            filter(lambda x: x[1] in zero_rows, basic_variable_rows),
+        )
     )
 
 

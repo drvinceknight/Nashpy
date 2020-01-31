@@ -14,7 +14,9 @@ def make_tableau(M):
        Mx <= 1 and x >= 0
     """
     return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1), np.ones((M.shape[0], 1)), axis=1,
+        np.append(M, np.eye(M.shape[0]), axis=1),
+        np.ones((M.shape[0], 1)),
+        axis=1,
     )
 
 

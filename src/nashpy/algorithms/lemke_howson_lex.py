@@ -28,7 +28,9 @@ def shift_tableau(tableau, shape):
 		tableau: a numpy array
 	"""
     return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1), np.ones((shape[0], 1)), axis=1,
+        np.roll(tableau[:, :-1], shape[0], axis=1),
+        np.ones((shape[0], 1)),
+        axis=1,
     )
 
 
@@ -108,11 +110,17 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
 
     if initial_dropped_label in non_basic_variables(row_tableau):
         tableux = cycle(
-            ((row_tableau, row_slack_variables), (col_tableau, col_slack_variables))
+            (
+                (row_tableau, row_slack_variables),
+                (col_tableau, col_slack_variables),
+            )
         )
     else:
         tableux = cycle(
-            ((col_tableau, col_slack_variables), (row_tableau, row_slack_variables))
+            (
+                (col_tableau, col_slack_variables),
+                (row_tableau, row_slack_variables),
+            )
         )
 
     # First pivot (to drop a label)
@@ -156,7 +164,9 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         range(A.shape[0], sum(A.shape)),
     )
 
-    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):
+    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (
+        A.shape[0],
+    ):
         msg = """The Lemke Howson algorithm has returned probability vectors of 
 incorrect shapes. This indicates an error. Your game could be degenerate."""
 

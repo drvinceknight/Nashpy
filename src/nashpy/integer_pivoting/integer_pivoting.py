@@ -14,9 +14,7 @@ def make_tableau(M):
        Mx <= 1 and x >= 0
     """
     return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1),
-        np.ones((M.shape[0], 1)),
-        axis=1,
+        np.append(M, np.eye(M.shape[0]), axis=1), np.ones((M.shape[0], 1)), axis=1,
     )
 
 
@@ -28,7 +26,8 @@ def find_pivot_row(tableau, column_index):
     implemented to calculate the maximum ratio test to avoid divide by zero
     errors).
     """
-    return np.argmax(tableau[:, column_index]/ tableau[:, -1])
+    return np.argmax(tableau[:, column_index] / tableau[:, -1])
+
 
 def non_basic_variables(tableau):
     """
@@ -38,6 +37,7 @@ def non_basic_variables(tableau):
     columns = tableau[:, :-1].transpose()
     return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
+
 def pivot_tableau(tableau, column_index):
     """
     Pivots the tableau and returns the dropped label
@@ -45,7 +45,6 @@ def pivot_tableau(tableau, column_index):
     original_labels = non_basic_variables(tableau)
     pivot_row_index = find_pivot_row(tableau, column_index)
     pivot_element = tableau[pivot_row_index, column_index]
-
 
     for i, _ in enumerate(tableau):
         if i != pivot_row_index:
@@ -55,4 +54,3 @@ def pivot_tableau(tableau, column_index):
             )
 
     return non_basic_variables(tableau) - original_labels
-

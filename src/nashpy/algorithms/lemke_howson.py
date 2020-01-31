@@ -4,7 +4,11 @@ from itertools import cycle
 
 import numpy as np
 
-from nashpy.integer_pivoting import make_tableau, non_basic_variables, pivot_tableau
+from nashpy.integer_pivoting import (
+    make_tableau,
+    non_basic_variables,
+    pivot_tableau,
+)
 
 
 def shift_tableau(tableau, shape):
@@ -23,7 +27,9 @@ def shift_tableau(tableau, shape):
 		tableau: a numpy array
 	"""
     return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1), np.ones((shape[0], 1)), axis=1,
+        np.roll(tableau[:, :-1], shape[0], axis=1),
+        np.ones((shape[0], 1)),
+        axis=1,
     )
 
 
@@ -104,16 +110,22 @@ def lemke_howson(A, B, initial_dropped_label=0):
         non_basic_variables(row_tableau).union(non_basic_variables(col_tableau))
         != full_labels
     ):
-        entering_label = pivot_tableau(next(tableux), next(iter(entering_label)))
+        entering_label = pivot_tableau(
+            next(tableux), next(iter(entering_label))
+        )
 
     row_strategy = tableau_to_strategy(
         row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
     )
     col_strategy = tableau_to_strategy(
-        col_tableau, non_basic_variables(row_tableau), range(A.shape[0], sum(A.shape)),
+        col_tableau,
+        non_basic_variables(row_tableau),
+        range(A.shape[0], sum(A.shape)),
     )
 
-    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):
+    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (
+        A.shape[0],
+    ):
         msg = """The Lemke Howson algorithm has returned probability vectors of 
 incorrect shapes. This indicates an error. Your game could be degenerate."""
 

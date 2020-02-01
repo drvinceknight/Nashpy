@@ -13,19 +13,19 @@ from nashpy.integer_pivoting import (
 
 def shift_tableau(tableau, shape):
     """
-	Shift a tableau to ensure labels of pairs of tableaux coincide
+    Shift a tableau to ensure labels of pairs of tableaux coincide
 
-	Parameters
-	----------
+    Parameters
+    ----------
 
-		tableau: a numpy array
-		shape: a tuple
+        tableau: a numpy array
+        shape: a tuple
 
-	Returns
-	-------
+    Returns
+    -------
 
-		tableau: a numpy array
-	"""
+        tableau: a numpy array
+    """
     return np.append(
         np.roll(tableau[:, :-1], shape[0], axis=1),
         np.ones((shape[0], 1)),
@@ -35,20 +35,20 @@ def shift_tableau(tableau, shape):
 
 def tableau_to_strategy(tableau, basic_labels, strategy_labels):
     """
-	Return a strategy vector from a tableau
+    Return a strategy vector from a tableau
 
-	Parameters
-	----------
+    Parameters
+    ----------
 
-		tableau: a numpy array
-		basic_labels: a set
-		strategy_labels: a set
+        tableau: a numpy array
+        basic_labels: a set
+        strategy_labels: a set
 
-	Returns
-	-------
+    Returns
+    -------
 
-		strategy: a numpy array
-	"""
+        strategy: a numpy array
+    """
     vertex = []
     for column in strategy_labels:
         if column in basic_labels:
@@ -63,30 +63,30 @@ def tableau_to_strategy(tableau, basic_labels, strategy_labels):
 
 def lemke_howson(A, B, initial_dropped_label=0):
     """
-	Obtain the Nash equilibria using the Lemke Howson algorithm implemented
-	using integer pivoting.
+    Obtain the Nash equilibria using the Lemke Howson algorithm implemented
+    using integer pivoting.
 
-	Algorithm implemented here is Algorithm 3.6 of [Nisan2007]_.
+    Algorithm implemented here is Algorithm 3.6 of [Nisan2007]_.
 
-	1. Start at the artificial equilibrium (which is fully labeled)
-	2. Choose an initial label to drop and move in the polytope for which
-	   the vertex has that label to the edge
-	   that does not share that label. (This is implemented using integer
-	   pivoting)
-	3. A label will now be duplicated in the other polytope, drop it in a
-	   similar way.
-	4. Repeat steps 2 and 3 until have Nash Equilibrium.
+    1. Start at the artificial equilibrium (which is fully labeled)
+    2. Choose an initial label to drop and move in the polytope for which
+       the vertex has that label to the edge
+       that does not share that label. (This is implemented using integer
+       pivoting)
+    3. A label will now be duplicated in the other polytope, drop it in a
+       similar way.
+    4. Repeat steps 2 and 3 until have Nash Equilibrium.
 
-	Parameters
-	----------
+    Parameters
+    ----------
 
-		initial_dropped_label: int
+        initial_dropped_label: int
 
-	Returns
-	-------
+    Returns
+    -------
 
-		equilibria: A tuple.
-	"""
+        equilibria: A tuple.
+    """
 
     if np.min(A) <= 0:
         A = A + abs(np.min(A)) + 1

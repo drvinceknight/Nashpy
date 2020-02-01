@@ -3,9 +3,7 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 from nashpy import *
 
-import time
 import numpy as np
-from test_variables import *
 
 """
 Demo for lemke_howson_lex vs lemke_howson
@@ -42,27 +40,31 @@ def test(A, B, test_name, answer):
 """
 Normal game solvable by both
 ----------------------------
-
-prisoner_A = np.array([	[3,0],
-						[5,1]])
-prisoner_B = np.array([	[3,5],
-						[0,1]])
 """
-test(*prisoner_test_1)
+prisoner_A = np.array([[3, 0], [5, 1]])
+prisoner_B = np.array([[3, 5], [0, 1]])
+prisoner_test_1 = (
+    prisoner_A,
+    prisoner_B,
+    "prisoner_test_1",
+    (np.array([0, 1]), np.array([0, 1])),
+)
 
 
 """
 Degenerate game solvable by lemke_howson_lex but not lemke_howson
 -----------------------------------------------------------------
-
-degen_A_3 = np.array([	[1,3,3],
-						[3,1,3],
-						[1,3,3]])
-degen_B_3 = np.array([	[3,3,1],
-						[1,1,3],
-						[3,1,3]])
-
 """
+
+degen_A_3 = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
+degen_B_3 = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
+degen_test_3 = (
+    degen_A_3,
+    degen_B_3,
+    "degen_test_3",
+    (np.array([0.5, 0.5, 0]), np.array([0, 0, 1])),
+)
+
 test(*degen_test_3)
 
 
@@ -70,11 +72,13 @@ test(*degen_test_3)
 Degenerate game not solveable by both (Don't understand why)
 -------------------------------------
 
-prisoner_A = np.array([	[3,0],
-						[5,1]])
-prisoner_degen_B = np.array([	[3,3],
-								[1,1]])
-
+prisoner_degen_B = np.array([[3, 3], [1, 1]])
+prisoner_degen_test_1 = (
+    prisoner_A,
+    prisoner_degen_B,
+    "prisoner_degen_test_1",
+    (np.array([0, 1]), np.array([1, 0])),
+)
 """
 
 # test(*prisoner_degen_test_1)

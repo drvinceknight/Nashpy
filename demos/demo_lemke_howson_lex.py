@@ -50,6 +50,7 @@ prisoner_test_1 = (
     (np.array([0, 1]), np.array([0, 1])),
 )
 
+test(*prisoner_test_1)
 
 """
 Degenerate game solvable by lemke_howson_lex but not lemke_howson

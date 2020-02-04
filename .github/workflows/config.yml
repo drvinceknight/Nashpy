@@ -25,6 +25,7 @@ jobs:
     - name: Install testing dependencies
       run: |
         pip install pytest
+        pip install pytest-cov
         pip install hypothesis
         pip install matplotlib>=3.0.2
         pip install black
@@ -35,7 +36,14 @@ jobs:
     - name: Test with pytest
       run: |
         python setup.py develop
-        pytest .
+        pytest --cov=nashpy .
+    - name: Report coverage with Codecov (only on py3.8 and ubuntu)
+      if: matrix.python-version == 3.7 && matrix.os == 'ubuntu-latest'
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        flags: unittests
     - name: Doctest
       run: |
         python doctests.py

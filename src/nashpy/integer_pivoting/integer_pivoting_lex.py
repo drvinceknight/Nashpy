@@ -1,25 +1,12 @@
 """
-A class for integer pivoting. Used for an implementation of the Lemke Howson
+A class for integer pivoting. Used for an implementation of the lemke_howson_lex
 algorithm.
 """
 import numpy as np
 
 import warnings
 
-
-def make_tableau(M):
-    """
-    Make a tableau for the given matrix M.
-
-    This tableau corresponds to the polytope of the form:
-
-       Mx <= 1 and x >= 0
-    """
-    return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1),
-        np.ones((M.shape[0], 1)),
-        axis=1,
-    )
+from .integer_pivoting import make_tableau, non_basic_variables
 
 
 def find_pivot_row_lex(tableau, column_index, slack_variables):
@@ -27,9 +14,21 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     """
     Find the index of the row to pivot.
 
-    Identifies the row to pivot by finding the first fow in a lexicographical 
+    Identifies the row to pivot by finding the first row in a lexicographical 
     ordering of rows. (First checks minimum ratio test, then uses lexicographical
-     ordering to break ties)
+    ordering to break ties)
+
+    Lexicographical ordering implementation is described in pg 20 of the text below:
+    B. von Stengel (2007), Equilibrium computation for two-player games in strategic 
+    and extensive form. Chapter 3, Algorithmic Game Theory, eds. N. Nisan, T. 
+    Roughgarden, E. Tardos, and V. Vazirani, Cambridge Univ. Press, Cambridge, 53-78. 
+    http://www.maths.lse.ac.uk/personal/stengel/TEXTE/agt-stengel.pdf
+    
+    C describes the transformations on the system, as stored by the coefficients of 
+    the slack variables (which is initially the identity matrix). This is required in 
+    order to keep track of lexicographical ordering after pivoting.
+
+    Cq is the rightmost column of the tableau, used in the minimum ration test.
     """
 
     # gets correct lexicographical ordering
@@ -55,15 +54,6 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     )
 
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
-
-
-def non_basic_variables(tableau):
-    """
-    Identifies the non basic variables of a tableau,
-    these correspond to the labels.
-    """
-    columns = tableau[:, :-1].transpose()
-    return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
 
 def zero_basic_variables(tableau):

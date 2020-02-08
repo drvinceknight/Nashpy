@@ -1,4 +1,4 @@
-"""A class for the Lemke Howson algorithm"""
+"""A class for the Lemke Howson algorithm with lexicographical ordering"""
 import warnings
 from itertools import cycle
 
@@ -10,56 +10,7 @@ from nashpy.integer_pivoting import (
     zero_basic_variables,
     pivot_tableau_lex,
 )
-
-
-def shift_tableau(tableau, shape):
-    """
-	Shift a tableau to ensure labels of pairs of tableaux coincide
-
-	Parameters
-	----------
-
-		tableau: a numpy array
-		shape: a tuple
-
-	Returns
-	-------
-
-		tableau: a numpy array
-	"""
-    return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1),
-        np.ones((shape[0], 1)),
-        axis=1,
-    )
-
-
-def tableau_to_strategy_lex(tableau, basic_labels, strategy_labels):
-    """
-	Return a strategy vector from a tableau
-
-	Parameters
-	----------
-
-		tableau: a numpy array
-		basic_labels: a set
-		strategy_labels: a set
-
-	Returns
-	-------
-
-		strategy: a numpy array
-	"""
-    vertex = []
-    for column in strategy_labels:
-        if column in basic_labels:
-            for i, row in enumerate(tableau[:, column]):
-                if row != 0:
-                    vertex.append(tableau[i, -1] / row)
-        else:
-            vertex.append(0)
-    strategy = np.array(vertex)
-    return np.divide(strategy, sum(strategy))
+from .lemke_howson import shift_tableau, tableau_to_strategy
 
 
 def lemke_howson_lex(A, B, initial_dropped_label=0):
@@ -124,9 +75,9 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         )
 
     # First pivot (to drop a label)
-    next_tableux = next(tableux)
+    next_tableau = next(tableux)
     entering_label = pivot_tableau_lex(
-        next_tableux[0], initial_dropped_label, next_tableux[1]
+        next_tableau[0], initial_dropped_label, next_tableau[1]
     )
     while (
         non_basic_variables(row_tableau).union(
@@ -136,12 +87,12 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         )
         != full_labels
     ):
-        next_tableux = next(tableux)
+        next_tableau = next(tableux)
 
         # error handling to deal with games that are 'too degenerate(?)'
         try:
             entering_label = pivot_tableau_lex(
-                next_tableux[0], next(iter(entering_label)), next_tableux[1]
+                next_tableau[0], next(iter(entering_label)), next_tableau[1]
             )
         except StopIteration:
             msg = """The algorithm has not found a new label after pivoting. 
@@ -149,14 +100,14 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
             warnings.warn(msg, RuntimeWarning)
             raise Exception("No new label found. Terminating algorithm.")
 
-    row_strategy = tableau_to_strategy_lex(
+    row_strategy = tableau_to_strategy(
         row_tableau,
         full_labels
         - non_basic_variables(row_tableau)
         - zero_basic_variables(row_tableau),
         range(A.shape[0]),
     )
-    col_strategy = tableau_to_strategy_lex(
+    col_strategy = tableau_to_strategy(
         col_tableau,
         full_labels
         - non_basic_variables(col_tableau)

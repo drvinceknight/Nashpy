@@ -7,10 +7,11 @@ from nashpy.algorithms.lemke_howson_lex import lemke_howson_lex
 
 
 class TestLemkeHowsonLex(unittest.TestCase):
+    def test_particular_lemke_howson_with_lexicographic_ratio_test(self):
+        """
+        Tests for Lemke Howson with lexographical ordering in a non-degenerate case
+        """
 
-    # tests with non-degenerate case
-
-    def test_particular_lemke_howson(self):
         A = np.array([[3, 3], [2, 5], [0, 6]])
         B = np.array([[3, 2], [2, 6], [3, 1]])
         for label, output in [
@@ -31,12 +32,14 @@ class TestLemkeHowsonLex(unittest.TestCase):
                     all(np.isclose(eq, np.array([1 / 2, 1 / 2]))), msg=str(eq)
                 )
 
-    """
-    Tests for Lemke Howson with lexographical ordering
-    """
-
-    def test_particular_lemke_howson_lex(self):
-        # testing on a degenerate game
+    def test_particular_lemke_howson_with_lexicographic_ratio_test_with_degenerate_games(
+        self,
+    ):
+        """
+        Tests for Lemke Howson with lexographical ordering in a degenerate case
+        Test is taken from
+        https://github.com/drvinceknight/Nashpy/issues/65
+        """
         A = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
         B = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
         for label, output in [

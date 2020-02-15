@@ -1,5 +1,4 @@
 """A class for the Lemke Howson algorithm with lexicographical ordering"""
-import warnings
 from itertools import cycle
 
 import numpy as np
@@ -59,67 +58,53 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
     row_slack_variables = range(B.shape[0], sum(B.shape))
     col_slack_variables = range(A.shape[0])
 
-    if initial_dropped_label in non_basic_variables(row_tableau):
+    # non-basic variables
+    row_non_basic_variables = full_labels - set(row_slack_variables)
+    col_non_basic_variables = full_labels - set(col_slack_variables)
+
+    # print(initial_dropped_label)
+    if initial_dropped_label in row_non_basic_variables:
         tableux = cycle(
             (
-                (row_tableau, row_slack_variables),
-                (col_tableau, col_slack_variables),
+                (row_tableau, row_slack_variables, row_non_basic_variables),
+                (col_tableau, col_slack_variables, col_non_basic_variables),
             )
         )
     else:
         tableux = cycle(
             (
-                (col_tableau, col_slack_variables),
-                (row_tableau, row_slack_variables),
+                (col_tableau, col_slack_variables, col_non_basic_variables),
+                (row_tableau, row_slack_variables, row_non_basic_variables),
             )
         )
 
     # First pivot (to drop a label)
     next_tableau = next(tableux)
-    entering_label = pivot_tableau_lex(
-        next_tableau[0], initial_dropped_label, next_tableau[1]
+
+    entering_label, exiting_label = pivot_tableau_lex(
+        next_tableau[0], initial_dropped_label, next_tableau[1], next_tableau[2]
     )
-    while (
-        non_basic_variables(row_tableau).union(
-            non_basic_variables(col_tableau),
-            zero_basic_variables(row_tableau),
-            zero_basic_variables(col_tableau),
-        )
-        != full_labels
-    ):
+    next_tableau[2].remove(exiting_label)
+    next_tableau[2].add(entering_label)
+
+    while col_non_basic_variables.union(row_non_basic_variables) != full_labels:
         next_tableau = next(tableux)
 
-        # error handling to deal with games that are 'too degenerate(?)'
-        try:
-            entering_label = pivot_tableau_lex(
-                next_tableau[0], next(iter(entering_label)), next_tableau[1]
-            )
-        except StopIteration:
-            msg = """The algorithm has not found a new label after pivoting. 
-			This indicates an error. Your game could be degenerate."""
-            warnings.warn(msg, RuntimeWarning)
-            raise Exception("No new label found. Terminating algorithm.")
+        entering_label, exiting_label = pivot_tableau_lex(
+            next_tableau[0], entering_label, next_tableau[1], next_tableau[2]
+        )
+
+        next_tableau[2].add(entering_label)
+        next_tableau[2].remove(exiting_label)
 
     row_strategy = tableau_to_strategy(
-        row_tableau,
-        full_labels
-        - non_basic_variables(row_tableau)
-        - zero_basic_variables(row_tableau),
-        range(A.shape[0]),
+        row_tableau, full_labels - row_non_basic_variables, range(A.shape[0]),
     )
+
     col_strategy = tableau_to_strategy(
         col_tableau,
-        full_labels
-        - non_basic_variables(col_tableau)
-        - zero_basic_variables(col_tableau),
+        full_labels - col_non_basic_variables,
         range(A.shape[0], sum(A.shape)),
     )
 
-    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (
-        A.shape[0],
-    ):
-        msg = """The Lemke Howson algorithm has returned probability vectors of 
-incorrect shapes. This indicates an error. Your game could be degenerate."""
-
-        warnings.warn(msg, RuntimeWarning)
     return row_strategy, col_strategy

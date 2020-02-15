@@ -56,7 +56,7 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
 
 
-def zero_basic_variables(tableau):
+def zero_basic_variables(tableau):  # ASSESS WHETHER STILL NECESSARY
     """
     Identifies basic variables equal to 0.
     Needed to find solutions of degenerate games
@@ -80,13 +80,26 @@ def zero_basic_variables(tableau):
     )
 
 
-def pivot_tableau_lex(tableau, column_index, slack_variables):
+def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
+    basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables
+    for i in basic_variables:
+        if tableau[pivot_row_index, i] != 0:
+            entering_variable = i
+    return entering_variable
+
+
+def pivot_tableau_lex(
+    tableau, column_index, slack_variables, non_basic_variables
+):
     """
     Pivots the tableau and returns the dropped label
     """
-    original_labels = non_basic_variables(tableau)
+    original_labels = non_basic_variables
     pivot_row_index = find_pivot_row_lex(tableau, column_index, slack_variables)
     pivot_element = tableau[pivot_row_index, column_index]
+    entering_variable = find_entering_variable(
+        tableau, pivot_row_index, original_labels
+    )
 
     for i, _ in enumerate(tableau):
         if i != pivot_row_index:
@@ -95,4 +108,4 @@ def pivot_tableau_lex(tableau, column_index, slack_variables):
                 - tableau[pivot_row_index, :] * tableau[i, column_index]
             )
 
-    return non_basic_variables(tableau) - original_labels
+    return entering_variable, column_index

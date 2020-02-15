@@ -35,20 +35,25 @@ class TestLemkeHowsonLex(unittest.TestCase):
     def test_particular_lemke_howson_with_lexicographic_ratio_test_with_degenerate_games(
         self,
     ):
+        A = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
+        B = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
+        for label in range(6):
+            for eq, expected_eq in zip(
+                lemke_howson_lex(A, B, label),
+                (np.array([0.5, 0.5, 0]), np.array([0, 0, 1])),
+            ):
+                self.assertTrue(all(np.isclose(eq, expected_eq)))
         """
         Tests for Lemke Howson with lexographical ordering in a degenerate case
         Test is taken from
         https://github.com/drvinceknight/Nashpy/issues/65
         """
-        A = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
-        B = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
-        for label, output in [
-            (0, (np.array([0.5, 0.5, 0]), np.array([0, 0, 1]))),
-            (1, (np.array([0, 1, 0]), np.array([0, 0, 1]))),
-            (2, (np.array([0, 0, 1]), np.array([0, 0, 1]))),
-            (3, (np.array([0, 1, 0]), np.array([0, 0, 1]))),
-            (4, (np.array([1, 0, 0]), np.array([0, 1, 0]))),
-            (5, (np.array([0.5, 0.5, 0]), np.array([0, 0, 1]))),
-        ]:
-            for eq, expected_eq in zip(lemke_howson_lex(A, B, label), output):
+
+        A = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
+        B = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
+        for label in range(6):
+            for eq, expected_eq in zip(
+                lemke_howson_lex(A, B, label),
+                (np.array([0, 1, 0]), np.array([1, 0, 0])),
+            ):
                 self.assertTrue(all(np.isclose(eq, expected_eq)))

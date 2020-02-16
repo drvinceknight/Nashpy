@@ -6,7 +6,7 @@ import numpy as np
 
 import warnings
 
-from .integer_pivoting import make_tableau, non_basic_variables
+from .integer_pivoting import make_tableau
 
 
 def find_pivot_row_lex(tableau, column_index, slack_variables):
@@ -56,31 +56,11 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
 
 
-def zero_basic_variables(tableau):  # ASSESS WHETHER STILL NECESSARY
-    """
-    Identifies basic variables equal to 0.
-    Needed to find solutions of degenerate games
-    """
-
-    Cq = tableau[:, -1]
-    zero_rows = set(np.where(Cq == 0)[0])
-    basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables(
-        tableau
-    )
-
-    # gives list of pairs (basic_col_index, non-zero row index)
-    basic_variable_rows = [
-        (col, np.where(tableau[:, col] != 0)[0][0]) for col in basic_variables
-    ]
-    return set(
-        map(
-            lambda x: x[0],
-            filter(lambda x: x[1] in zero_rows, basic_variable_rows),
-        )
-    )
-
-
 def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
+    """
+    Finds the non-basic varible which becomes basic after pivoting
+    """
+
     basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables
     for i in basic_variables:
         if tableau[pivot_row_index, i] != 0:

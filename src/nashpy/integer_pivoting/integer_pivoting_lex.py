@@ -43,7 +43,8 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     # catch divide by zero warning
     with warnings.catch_warnings():
         warnings.filterwarnings(
-            "ignore", r"invalid value encountered in true_divide"
+            "ignore",
+            r"invalid value encountered in true_divide|divide by zero encountered in true_divide",
         )
 
         ratio = np.divide(Cq, pivot_column)
@@ -64,8 +65,7 @@ def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
     basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables
     for i in basic_variables:
         if tableau[pivot_row_index, i] != 0:
-            entering_variable = i
-    return entering_variable
+            return i
 
 
 def pivot_tableau_lex(
@@ -88,4 +88,4 @@ def pivot_tableau_lex(
                 - tableau[pivot_row_index, :] * tableau[i, column_index]
             )
 
-    return entering_variable, column_index
+    return entering_variable

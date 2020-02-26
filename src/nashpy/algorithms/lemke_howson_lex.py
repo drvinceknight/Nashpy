@@ -33,13 +33,6 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
 	-------
 
 		equilibria: A tuple.
-
-	========
-
-		* Edited such that non-basic variables are kept track of manually and 
-        integer pivoting is done using lexicographical ordering. This enables
-        it to solve degenerate games that lemke_howson cannot.
-
 	"""
 
     if np.min(A) <= 0:

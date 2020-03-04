@@ -60,7 +60,7 @@ Assuming you have those installed, to install Nashpy:
 
 and type::
 
-    $ pip install nashpy
+    $ python -m pip install nashpy
 
 If this does not work, you might not have Python or one of the other
 dependencies. You might also have problems due to :code:`pip` not being

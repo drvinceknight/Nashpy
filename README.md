@@ -22,7 +22,7 @@ and `scipy` so is straightforward to install on all operating systems.
 pypi:
 
 ```bash
-$ pip install nashpy
+$ python -m pip install nashpy
 ```
 
 ## Usage

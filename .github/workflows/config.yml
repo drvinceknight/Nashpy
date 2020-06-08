@@ -26,6 +26,7 @@ jobs:
       run: |
         python -m pip install pytest
         python -m pip install pytest-cov
+        python -m pip install pytest-sugar
         python -m pip install hypothesis
         python -m pip install matplotlib>=3.0.2
         python -m pip install black

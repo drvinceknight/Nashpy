@@ -13,12 +13,12 @@ games:
 - Best response polytope vertex enumeration
 - Lemke Howson algorithm
 
-**Nashpy** has a simple set of Python dependencies: it only requires `numpy`
+Nashpy has a simple set of Python dependencies: it only requires `numpy`
 and `scipy` so is straightforward to install on all operating systems.
 
 ## Installation
 
-**By design Nashpy** is easy to install: the easiest way to install is from
+By design Nashpy is easy to install: the easiest way to install is from
 pypi:
 
 ```bash

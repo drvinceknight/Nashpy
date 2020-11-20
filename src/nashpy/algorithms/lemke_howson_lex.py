@@ -12,28 +12,28 @@ from .lemke_howson import shift_tableau, tableau_to_strategy
 
 def lemke_howson_lex(A, B, initial_dropped_label=0):
     """
-	Obtain the Nash equilibria using the Lemke Howson algorithm implemented
-	using lexicographical integer pivoting. (Able to solve degenerate games)
+     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
+     using lexicographical integer pivoting. (Able to solve degenerate games)
 
-	1. Start at the artificial equilibrium (which is fully labeled)
-	2. Choose an initial label to drop and move in the polytope for which
-	   the vertex has that label to the edge that does not share that label.
-       (This is implemented using integer pivoting and the choice of label
-       to drop is implemented using lexicographical ordering)
-	3. A label will now be duplicated in the other polytope, drop it in a
-	   similar way.
-	4. Repeat steps 2 and 3 until have Nash Equilibrium.
+     1. Start at the artificial equilibrium (which is fully labeled)
+     2. Choose an initial label to drop and move in the polytope for which
+        the vertex has that label to the edge that does not share that label.
+    (This is implemented using integer pivoting and the choice of label
+    to drop is implemented using lexicographical ordering)
+     3. A label will now be duplicated in the other polytope, drop it in a
+        similar way.
+     4. Repeat steps 2 and 3 until have Nash Equilibrium.
 
-	Parameters
-	----------
+     Parameters
+     ----------
 
-		initial_dropped_label: int
+             initial_dropped_label: int
 
-	Returns
-	-------
+     Returns
+     -------
 
-		equilibria: A tuple.
-	"""
+             equilibria: A tuple.
+    """
 
     if np.min(A) <= 0:
         A = A + abs(np.min(A)) + 1
@@ -105,7 +105,9 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         next_non_basic_variables.remove(just_entered_label)
 
     row_strategy = tableau_to_strategy(
-        row_tableau, full_labels - row_non_basic_variables, range(A.shape[0]),
+        row_tableau,
+        full_labels - row_non_basic_variables,
+        range(A.shape[0]),
     )
 
     col_strategy = tableau_to_strategy(

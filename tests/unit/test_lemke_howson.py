@@ -84,7 +84,7 @@ class TestLemkeHowson(unittest.TestCase):
 
     def test_particular_lemke_howson_raises_warning(self):
         """
-        This is a degenerate game so the algorithm fails. 
+        This is a degenerate game so the algorithm fails.
         This was raised in
         https://github.com/drvinceknight/Nashpy/issues/35
         """

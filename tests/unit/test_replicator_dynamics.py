@@ -9,7 +9,7 @@ from hypothesis.extra.numpy import arrays
 #from hypothesis.strategies import integers
 from nashpy.learning.replicator_dynamics import (
     get_derivative_of_fitness,
-    get_xs_over_time,
+    replicator_dynamics,
 )
 
 @given(M=arrays(np.int8, (3, 3)))
@@ -17,7 +17,7 @@ def test_property_get_derivative_of_fitness(M):
     t = 0
     x = np.zeros(M.shape[1])
     derivative_of_fitness = get_derivative_of_fitness(x, t, M)
-    #assert derivative_of_fitness >= 0
+
     assert len(derivative_of_fitness) == len(x)
 
 
@@ -46,11 +46,11 @@ def test_get_derivative_of_fitness():
         derivative = get_derivative_of_fitness(x=x_value, t=0, A=M)
         assert np.allclose(derivative, expected_derivative), x_value
 
-#copied in new here from fictitious play
-def test_get_xs_over_time():
+
+def test_replicator_dynamics():
     M = np.array([[3, 2], [4, 1] ])
-    epsilon = 10 ** -1
-    t = np.linspace(0, 10, 100)
+    y0=[0.9, 0.1]
+    timepoints = np.linspace(0, 10, 100)
 
         
 
@@ -155,5 +155,5 @@ def test_get_xs_over_time():
     [0.50472445, 0.49527555],
     [0.50449178, 0.49550822]],)
 
-    xs = get_xs_over_time(get_derivative_of_fitness=get_derivative_of_fitness, epsilon=epsilon, t=t, A=M)
+    xs = replicator_dynamics(y0=y0, timepoints=timepoints, A=M)
     assert np.allclose(xs, expected_xs_over_time)

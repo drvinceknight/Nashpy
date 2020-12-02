@@ -11,6 +11,9 @@ def get_derivative_of_fitness(x, t, A):
     return x * (f - phi)
 
 
-def get_xs_over_time(get_derivative_of_fitness, epsilon, t, A):
-    xs = odeint(func=get_derivative_of_fitness, y0=[1 - epsilon, epsilon], t=t, args=(A,))
-    return xs
+def replicator_dynamics(A, y0, timepoints):
+    """
+    Implement replicator dynamics
+    """
+    xs = odeint(func=get_derivative_of_fitness, y0=y0, t=timepoints, args=(A,))
+    return xs 

@@ -47,6 +47,10 @@ def test_get_derivative_of_fitness():
         assert np.allclose(derivative, expected_derivative), x_value
 
 
+@given(M=arrays(np.int8, (3, 3)))
+def test_replicator_dynamics(M):
+    assert len(y0) == 3
+
 def test_replicator_dynamics():
     M = np.array([[3, 2], [4, 1] ])
     y0=[0.9, 0.1]

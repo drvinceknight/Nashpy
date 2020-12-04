@@ -48,13 +48,20 @@ def test_get_derivative_of_fitness():
 
 
 @given(M=arrays(np.int8, (3, 3)))
-def test_replicator_dynamics(M):
-    assert len(y0) == 3
+def test_replicator_dynamics_dog(M):
+    xs = replicator_dynamics(M)
+    assert all(len(x) == 3 for x in xs)
+
+
+@given(M=arrays(np.int8, (4, 4)))
+def test_replicator_dynamics_duck(M):
+    xs = replicator_dynamics(M)
+    assert all(len(x) == 4 for x in xs)
 
 def test_replicator_dynamics():
     M = np.array([[3, 2], [4, 1] ])
-    y0=[0.9, 0.1]
-    timepoints = np.linspace(0, 10, 100)
+    y0=np.array([0.9, 0.1])
+    timepoints =np.linspace(0, 10, 100)
  
     expected_xs_over_time = np.array([[0.9,        0.1       ],
     [0.89256013, 0.10743987],
@@ -163,8 +170,8 @@ def test_replicator_dynamics():
 
 def test_replicator_dynamics_1():
     M = np.array([[3, 2], [4, 1] ])
-    y0=[0.65, 0.35]
-    timepoints = np.linspace(0, 10, 100)
+    y0=np.array([0.65, 0.35])
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[0.65      , 0.35      ],
        [0.64323298, 0.35676702],
@@ -272,7 +279,7 @@ def test_replicator_dynamics_1():
 
 def test_replicator_dynamics_2():
     M = np.array([[8, 2], [5, 3] ])
-    timepoints = np.linspace(0, 10, 100)
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[ 5.00000000e-01,  5.00000000e-01],
     [ 5.26546322e-01,  4.73453678e-01],
@@ -380,8 +387,8 @@ def test_replicator_dynamics_2():
 
 def test_replicator_dynamics_3():
     M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
-    y0=[0.2, 0.1, 0.7]
-    timepoints = np.linspace(0, 10, 100)
+    y0=np.array([0.2, 0.1, 0.7])
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[0.2       , 0.1       , 0.7       ],
     [0.2246603 , 0.09886608, 0.67647362],
@@ -491,8 +498,8 @@ def test_replicator_dynamics_3():
 
 def test_replicator_dynamics_4():
     M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
-    y0=[0.5, 0.1, 0.4]
-    timepoints = np.linspace(0, 10, 100)
+    y0=np.array([0.5, 0.1, 0.4])
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[0.5       , 0.1       , 0.4       ],
     [0.52559968, 0.10135984, 0.37304048],
@@ -600,7 +607,7 @@ def test_replicator_dynamics_4():
 
 def test_replicator_dynamics_5():
     M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
-    timepoints = np.linspace(0, 10, 100)
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[0.33333333, 0.33333333, 0.33333333],
     [0.34828459, 0.3262229 , 0.32549251],
@@ -708,8 +715,8 @@ def test_replicator_dynamics_5():
 
 def test_replicator_dynamics_6():
     M = np.array([[3, 2, 4, 2], [5, 1, 1, 3], [6, 2, 3, 2], [1, 3, 4, 7] ])
-    y0=[0.2, 0.2, 0.5, 0.1]
-    timepoints = np.linspace(0, 10, 100)
+    y0=np.array([0.2, 0.2, 0.5, 0.1])
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time = np.array([[ 2.00000000e-01,  2.00000000e-01,  5.00000000e-01,
       1.00000000e-01],
@@ -917,9 +924,8 @@ def test_replicator_dynamics_6():
 
 def test_replicator_dynamics_7():
     M = np.array([[3, 2, 4, 2], [5, 1, 1, 3], [6, 2, 3, 2], [1, 3, 4, 7] ])
-    y0=[0.6, 0.1, 0.2, 0.1]
-    timepoints = np.linspace(0, 10, 100)
-
+    y0=np.array([0.6, 0.1, 0.2, 0.1])
+    timepoints =np.linspace(0, 10, 100)
     expected_xs_over_time = np.array([[6.00000000e-01, 1.00000000e-01, 2.00000000e-01, 1.00000000e-01],
     [5.80420179e-01, 1.02112104e-01, 2.26438063e-01, 9.10296545e-02],
     [5.60703224e-01, 1.02764556e-01, 2.53803256e-01, 8.27289637e-02],
@@ -1027,7 +1033,7 @@ def test_replicator_dynamics_7():
 
 def test_replicator_dynamics_8():
     M = np.array([[3, 2, 4, 2], [5, 1, 1, 3], [6, 2, 3, 2], [1, 3, 4, 7] ])
-    timepoints = np.linspace(0, 10, 100)
+    timepoints =np.linspace(0, 10, 100)
 
     expected_xs_over_time=np.array([[ 2.50000000e-01,  2.50000000e-01,  2.50000000e-01,
       2.50000000e-01],

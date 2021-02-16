@@ -26,13 +26,13 @@ of the row player, we have:
 Where :math:`f\in\mathbb{R}^{m\times 1}` corresponds to the fitness of each strategy 
 and :math:`x\in\mathbb{R}^{m\times 1}` corresponds to the population size of each strategy  
 
-Equivalently:
+Equivalently, where :math:`\phi` equals the average fitness of the population, we have: 
 
 .. math::
 
    \phi = fx
 
-We get:
+In matrix formation we can calculate the rate of change of the strategies:
 
 .. math::
 
@@ -40,4 +40,58 @@ We get:
 
 Discussion
 ----------
+
+Stability is acheived in replicator dynamics when :math:`\frac{dx}{dt} = 0`.
+Every stable steady state is a Nash equilibria, and every Nash equilibria is a steady 
+state in replicator dynamics. 
+
+Stability is obtained when either:
+
+- An entire population plays the same strategy
+- A population plays a mixture of the strategies (such that there is indifference between the fitness)
+
+It is possible that the game does not converge to a steady state.
+
+Below shows an example of a stable steady state::
+
+>>> import numpy as np
+>>> import nashpy as nash
+>>> import matplotlib.pyplot as plt
+>>> A = np.array([[4, 3], [2, 3]])
+>>> game = nash.Game(A)
+>>> y0 = np.array([1 / 2, 1 / 2])
+>>> timepoints = np.linspace(0, 10, 1000)
+
+>>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints));
+>>> plt.xlabel("Timepoints")
+>>> plt.ylabel("Probability")
+>>> plt.title("Probability distribution of strategies over time")
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]);
+
+.. image:: /_static/learning/evolutionary_dynamics/steady_state_example/main.svg
+
+Evolutionary stable strategies (ESS) remain stable subject to small evolutionary change. This means that 
+the strategy cannot be invaded by any of the other strategies in the population.
+Every ESS is an asymptotically stable steady state of the replicator dynamic, but the converse does not 
+necessarily hold.
+
+We can visualise an example of ESS below::
+
+>>> import numpy as np
+>>> import nashpy as nash
+>>> import matplotlib.pyplot as plt
+>>> A = np.array([[4, 3], [2, 3]])
+>>> game=nash.Game(A)
+>>> y0 = np.array([1/6, 5/6])
+>>> timepoints = np.linspace(0, 10, 1000)
+
+>>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints));
+>>> plt.xlabel("Timepoints")  
+>>> plt.ylabel("Probability")  
+>>> plt.title("Probability distribution of strategies over time")
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]);
+
+.. image:: /_static/learning/evolutionary_dynamics/ess_example/main.svg
+
+
 

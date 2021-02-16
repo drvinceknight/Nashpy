@@ -62,11 +62,11 @@ Below shows an example of a stable steady state::
 >>> y0 = np.array([1 / 2, 1 / 2])
 >>> timepoints = np.linspace(0, 10, 1000)
 
->>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints));
->>> plt.xlabel("Timepoints")
->>> plt.ylabel("Probability")
->>> plt.title("Probability distribution of strategies over time")
->>> plt.legend([f"$s_{0}$", f"$s_{1}$"]);
+>>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints)) # doctest: +SKIP
+>>> plt.xlabel("Timepoints") # doctest: +SKIP
+>>> plt.ylabel("Probability") # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
 
 .. image:: /_static/learning/evolutionary_dynamics/steady_state_example/main.svg
 
@@ -85,11 +85,11 @@ We can visualise an example of ESS below::
 >>> y0 = np.array([1/6, 5/6])
 >>> timepoints = np.linspace(0, 10, 1000)
 
->>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints));
->>> plt.xlabel("Timepoints")  
->>> plt.ylabel("Probability")  
->>> plt.title("Probability distribution of strategies over time")
->>> plt.legend([f"$s_{0}$", f"$s_{1}$"]);
+>>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints)) # doctest: +SKIP
+>>> plt.xlabel("Timepoints") # doctest: +SKIP
+>>> plt.ylabel("Probability") # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
 
 .. image:: /_static/learning/evolutionary_dynamics/ess_example/main.svg
 

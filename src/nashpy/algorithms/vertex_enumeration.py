@@ -43,4 +43,4 @@ def vertex_enumeration(A, B):
 
         for col_v, col_l in non_trivial_vertices(col_halfspaces):
             if adjusted_row_l.union(col_l) == full_labels:
-                yield row_v / sum(row_v), col_v / sum(col_v)
+                yield row_v / (sum(row_v) + np.finfo(row_v.dtype).eps), col_v / (sum(col_v) + np.finfo(col_v.dtype).eps)

@@ -166,7 +166,9 @@ Column player:
             plays: A generator
         """
         return fictitious_play(
-            *self.payoff_matrices, iterations=iterations, play_counts=play_counts
+            *self.payoff_matrices,
+            iterations=iterations,
+            play_counts=play_counts
         )
 
     def replicator_dynamics(self, y0=None, timepoints=None):

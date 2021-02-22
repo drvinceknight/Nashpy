@@ -1,7 +1,6 @@
 """
 Tests for Replicator Dynamics
 """
-# import types
 import nashpy as nash
 import numpy as np
 import pytest

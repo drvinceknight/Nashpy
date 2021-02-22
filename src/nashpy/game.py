@@ -177,7 +177,7 @@ Column player:
         Return an array showing probability of each strategy being played over
         time.
         The total population is constant. Strategies can either stay constant
-        if equilibria is acheived, replicate or die.
+        if equilibria is achieved, replicate or die.
 
         Parameters
         ----------

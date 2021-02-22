@@ -7,7 +7,6 @@ import pytest
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
-# from hypothesis.strategies import integers
 from nashpy.learning.replicator_dynamics import (
     get_derivative_of_fitness,
     replicator_dynamics,

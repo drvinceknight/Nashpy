@@ -75,14 +75,15 @@ the strategy cannot be invaded by any of the other strategies in the population.
 Every ESS is an asymptotically stable steady state of the replicator dynamic, but the converse does not 
 necessarily hold.
 
-We can visualise an example of ESS below::
+To visualise an example of ESS consider the matrix :math:`A = \begin{pmatrix} 4 & 3 \\ 2 & 3\end{pmatrix}`. It can be shown that :math:`(1, 0)` is an ESS for this game. Below we take a small change from this strategy and note that the replicator dynamics guide us back to it.
 
 >>> import numpy as np
 >>> import nashpy as nash
 >>> import matplotlib.pyplot as plt
 >>> A = np.array([[4, 3], [2, 3]])
 >>> game=nash.Game(A)
->>> y0 = np.array([1/6, 5/6])
+>>> epsilon = 1 / 10
+>>> y0 = np.array([1 - epsilon, 0 + epsilon])
 >>> timepoints = np.linspace(0, 10, 1000)
 
 >>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints)) # doctest: +SKIP
@@ -92,5 +93,4 @@ We can visualise an example of ESS below::
 >>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
 
 .. image:: /_static/learning/evolutionary_dynamics/ess_example/main.svg
-
 

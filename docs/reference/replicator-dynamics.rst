@@ -85,6 +85,8 @@ To visualise an example of ESS consider the matrix :math:`A = \begin{pmatrix} 4 
 >>> epsilon = 1 / 10
 >>> y0 = np.array([1 - epsilon, 0 + epsilon])
 >>> timepoints = np.linspace(0, 10, 1000)
+>>> timepoints[-1]
+
 
 >>> plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints)) # doctest: +SKIP
 >>> plt.xlabel("Timepoints") # doctest: +SKIP
@@ -93,4 +95,3 @@ To visualise an example of ESS consider the matrix :math:`A = \begin{pmatrix} 4 
 >>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
 
 .. image:: /_static/learning/evolutionary_dynamics/ess_example/main.svg
-

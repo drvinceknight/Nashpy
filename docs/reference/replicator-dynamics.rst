@@ -36,7 +36,7 @@ In matrix formation we can calculate the rate of change of the strategies:
 
 .. math::
 
-   \frac{dx}{dt} = x(f - \phi)
+   \frac{dx}{dt}_i = x_i(f_i - \phi)\text{ for all }i
 
 Discussion
 ----------
@@ -92,6 +92,5 @@ We can visualise an example of ESS below::
 >>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
 
 .. image:: /_static/learning/evolutionary_dynamics/ess_example/main.svg
-
 
 

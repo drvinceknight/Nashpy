@@ -20,7 +20,7 @@ def replicator_dynamics(A, y0=None, timepoints=None):
     """
 
     if timepoints is None:
-        timepoints = np.linspace(0, 10, 100)
+        timepoints = np.linspace(0, 10, 1000)
 
     if y0 is None:
         number_of_strategies = len(A)

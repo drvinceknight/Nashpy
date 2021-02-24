@@ -623,9 +623,12 @@ def test_replicator_dynamics_game_size_3_example_default_timepoints():
             [0.52171238, 0.46937475, 0.00891287],
         ]
     )
-
+    expected_x_1 = np.array([[0.20237066, 0.09988063, 0.69774871]])
+    expected_x_1000 = np.array([[0.52171238, 0.46937475, 0.00891287]])
     xs = replicator_dynamics(y0=y0, A=M)
-    assert np.allclose(xs, expected_xs_over_time)
+    assert np.allclose(xs[1], expected_x_1)
+    assert np.allclose(xs[-1], expected_x_1000)
+    assert len(xs) == 1000
 
 
 def test_replicator_dynamics_game_size_3_example_2():

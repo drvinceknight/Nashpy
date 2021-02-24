@@ -50,7 +50,23 @@ Stability is obtained when either:
 - An entire population plays the same strategy
 - A population plays a mixture of the strategies (such that there is indifference between the fitness)
 
-It is possible that the game does not converge to a steady state.
+It is possible that the game does not converge to a steady state. See below an example of a game of Rock, 
+Paper, Scissors that does not converge::
+
+>>> import numpy as np
+>>> import nashpy as nash
+>>> import matplotlib.pyplot as plt
+>>> A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
+>>> game = nash.Game(A)
+>>> y0 = np.array([0.3, 0.35, 0.35])
+
+>>> plt.plot(game.replicator_dynamics(y0=y0)) # doctest: +SKIP
+>>> plt.xlabel("Timepoints") # doctest: +SKIP
+>>> plt.ylabel("Probability") # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$", f"$s_{2}$"], loc='upper left') # doctest: +SKIP
+
+.. image:: /_static/learning/evolutionary_dynamics/non_convergence_example/main.svg
 
 Below shows an example of a stable steady state::
 
@@ -75,7 +91,9 @@ the strategy cannot be invaded by any of the other strategies in the population.
 Every ESS is an asymptotically stable steady state of the replicator dynamic, but the converse does not 
 necessarily hold.
 
-To visualise an example of ESS consider the matrix :math:`A = \begin{pmatrix} 4 & 3 \\ 2 & 3\end{pmatrix}`. It can be shown that :math:`(1, 0)` is an ESS for this game. Below we take a small change from this strategy and note that the replicator dynamics guide us back to it.
+To visualise an example of ESS consider the matrix :math:`A = \begin{pmatrix} 4 & 3 \\ 2 & 3\end{pmatrix}`.
+It can be shown that :math:`(1, 0)` is an ESS for this game. Below we take a small change from this strategy 
+and note that the replicator dynamics guide us back to it.
 
 >>> import numpy as np
 >>> import nashpy as nash

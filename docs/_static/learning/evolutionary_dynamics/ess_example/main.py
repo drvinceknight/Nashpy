@@ -11,7 +11,8 @@ import matplotlib.pyplot as plt
 
 A = np.array([[4, 3], [2, 3]])
 game = nash.Game(A)
-y0 = np.array([1 / 6, 5 / 6])
+epsilon = 1 / 10
+y0 = np.array([1 - epsilon, 0 + epsilon])
 timepoints = np.linspace(0, 10, 1000)
 
 plt.plot(game.replicator_dynamics(y0=y0, timepoints=timepoints))

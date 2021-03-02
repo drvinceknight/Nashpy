@@ -76,7 +76,7 @@ We can visualise the lack of convergence::
     >>> plt.title("Actions taken by row player")  # doctest: +SKIP
     >>> plt.legend()  # doctest: +SKIP
 
-.. image:: /_static/learning/divergent_example/main.svg
+.. image:: /_static/learning/fictitious_play/divergent_example/main.svg
 
 If we modify the game slightly we obtain a different outcome::
 
@@ -100,4 +100,4 @@ With a clear convergence now visible::
     >>> plt.title("Actions taken by row player")  # doctest: +SKIP
     >>> plt.legend()  # doctest: +SKIP
 
-.. image:: /_static/learning/convergent_example/main.svg
+.. image:: /_static/learning/fictitious_play/convergent_example/main.svg

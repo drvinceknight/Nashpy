@@ -14,18 +14,18 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     """
     Find the index of the row to pivot.
 
-    Identifies the row to pivot by finding the first row in a lexicographical 
+    Identifies the row to pivot by finding the first row in a lexicographical
     ordering of rows. (First checks minimum ratio test, then uses lexicographical
     ordering to break ties)
 
     Lexicographical ordering implementation is described in pg 20 of the text below:
-    B. von Stengel (2007), Equilibrium computation for two-player games in strategic 
-    and extensive form. Chapter 3, Algorithmic Game Theory, eds. N. Nisan, T. 
-    Roughgarden, E. Tardos, and V. Vazirani, Cambridge Univ. Press, Cambridge, 53-78. 
+    B. von Stengel (2007), Equilibrium computation for two-player games in strategic
+    and extensive form. Chapter 3, Algorithmic Game Theory, eds. N. Nisan, T.
+    Roughgarden, E. Tardos, and V. Vazirani, Cambridge Univ. Press, Cambridge, 53-78.
     http://www.maths.lse.ac.uk/personal/stengel/TEXTE/agt-stengel.pdf
-    
-    C describes the transformations on the system, as stored by the coefficients of 
-    the slack variables (which is initially the identity matrix). This is required in 
+
+    C describes the transformations on the system, as stored by the coefficients of
+    the slack variables (which is initially the identity matrix). This is required in
     order to keep track of lexicographical ordering after pivoting.
 
     Cq is the rightmost column of the tableau, used in the minimum ration test.

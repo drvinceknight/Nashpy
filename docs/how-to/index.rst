@@ -13,3 +13,4 @@ How to:
    solve-with-vertex-enumeration.rst
    solve-with-lemke-howson.rst
    use-fictitious-play.rst
+   use-replicator-dynamics.rst

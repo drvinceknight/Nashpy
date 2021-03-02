@@ -8,6 +8,7 @@ from .algorithms.lemke_howson_lex import lemke_howson_lex
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
 from .learning.fictitious_play import fictitious_play
+from .learning.replicator_dynamics import replicator_dynamics
 
 
 class Game:
@@ -169,3 +170,23 @@ Column player:
             iterations=iterations,
             play_counts=play_counts
         )
+
+    def replicator_dynamics(self, y0=None, timepoints=None):
+        """
+        Implement replicator dynamics
+        Return an array showing probability of each strategy being played over
+        time.
+        The total population is constant. Strategies can either stay constant
+        if equilibria is achieved, replicate or die.
+
+        Parameters
+        ----------
+            A: nxm array, where n=m
+            y0: array
+            timepoints: array
+        Returns
+        -------
+            xs: array
+        """
+        A, _ = self.payoff_matrices
+        return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)

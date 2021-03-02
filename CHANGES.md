@@ -1,3 +1,7 @@
+# v0.0.20
+
+Add replicator dynamics.
+
 # v0.0.19
 
 Add fictitious play learning algorithm and support for py3.7

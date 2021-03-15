@@ -21,8 +21,12 @@ def test_first():
 
 @given(M=arrays(np.int8, (2, 2)))
 def test_property_get_distribution_response_to_play_count(M):
-    play_count = np.zeros(M.shape[1])
-    distribution_response = get_distribution_response_to_play_count(M, play_count)
+    etha = 2
+    epsilon_bar = 2
+    play_count = np.ones(M.shape[1])
+    distribution_response = get_distribution_response_to_play_count(
+        M, play_count, epsilon_bar, etha
+    )
     assert len(distribution_response) == len(play_count)
     assert np.all(distribution_response) >= 0
-    # assert distribution_response <= M.shape[1] - 1
+    assert np.isclose(np.sum(distribution_response), 1)

@@ -34,17 +34,18 @@ def stochastic_fictitious_play(A, B, iterations, etha, epsilon_bar, play_counts=
             )
             for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
         ]
-    yield play_counts, distributions  # ADDED INTERMEDIATELY
+        #    yield play_counts, distributions  # ADDED INTERMEDIATELY
 
+        # pick move here
 
-#    # pick move here
-#    plays = [
-#        np.random.choice(range(len(distributions)), p=distributions)
-#        for distribution in distributions
-#    ]
-#
-#    play_counts = [
-#        update_play_count(play_count, play)
-#        for play_count, play in zip(play_counts, plays)
-#    ]
-#    yield play_counts, distributions
+        plays = [
+            np.random.choice(range(len(distribution)), p=distribution)
+            for distribution in distributions
+        ]
+        # yield play_counts, distributions, plays  #ADDED INTERMEDIATELY
+
+        play_counts = [
+            update_play_count(play_count, play)
+            for play_count, play in zip(play_counts, plays)
+        ]
+        yield play_counts, distributions

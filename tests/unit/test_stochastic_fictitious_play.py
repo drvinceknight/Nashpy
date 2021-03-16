@@ -95,10 +95,10 @@ def test_stochastic_fictitious_play():
             A=M, B=-M, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations
         )
     )
-    play, dist = x[-1]
-    r_play, c_play = play
+    playcounts, dist = x[-1]
+    r_playcounts, c_playcounts = playcounts
     r_dist, c_dist = dist
-    assert np.array_equal(play, [np.array([1, 1]), np.array([1, 1])])
-    assert np.array_equal(r_play, np.array([1, 1]))
-    assert np.allclose(r_dist, np.array([0.19469627, 0.80530373]))
-    assert np.allclose(c_dist, np.array([0.44098391, 0.55901609]))
+    assert np.array_equal(playcounts, [np.array([2.0, 3.0]), np.array([1.0, 4.0])])
+    assert np.array_equal(r_playcounts, np.array([2.0, 3.0]))
+    assert np.allclose(r_dist, np.array([0.08646736, 0.91353264]))
+    assert np.allclose(c_dist, np.array([0.37376622, 0.62623378]))

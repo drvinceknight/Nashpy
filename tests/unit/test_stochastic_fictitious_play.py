@@ -86,8 +86,19 @@ def test_get_distribution_response_to_play_count_2():
 
 def test_stochastic_fictitious_play():
     np.random.seed(0)
+    iterations = 3
     M = np.array([[3, 2], [7, 6]])
-    x = tuple(stochastic_fictitious_play(A=M))
+    etha = 2
+    epsilon_bar = 2
+    x = tuple(
+        stochastic_fictitious_play(
+            A=M, B=-M, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations
+        )
+    )
     play, dist = x[-1]
+    r_play, c_play = play
+    r_dist, c_dist = dist
     assert np.array_equal(play, [np.array([1, 1]), np.array([1, 1])])
-    assert np.array_equal(dist, (None, None))
+    assert np.array_equal(r_play, np.array([1, 1]))
+    assert np.allclose(r_dist, np.array([0.19469627, 0.80530373]))
+    assert np.allclose(c_dist, np.array([0.44098391, 0.55901609]))

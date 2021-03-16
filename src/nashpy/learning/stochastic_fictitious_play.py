@@ -13,7 +13,7 @@ def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
     return logit_choice
 
 
-def stochastic_fictitious_play(A, play_counts=None):
+def stochastic_fictitious_play(A, B, iterations, etha, epsilon_bar, play_counts=None):
     """
     Implement fictitious play
     """
@@ -26,16 +26,17 @@ def stochastic_fictitious_play(A, play_counts=None):
 
     # FROM SIG A, B, iterations, etha, epsilon_bar,
 
-    # for repetition in range(iterations):
+    for repetition in range(iterations):
+
+        distributions = [
+            get_distribution_response_to_play_count(
+                matrix, play_count, etha, epsilon_bar
+            )
+            for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
+        ]
+    yield play_counts, distributions  # ADDED INTERMEDIATELY
 
 
-#
-#    distributions = [
-#        get_distribution_response_to_play_count(
-#            matrix, play_count, etha, epsilon_bar
-#        )
-#        for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
-#    ]
 #    # pick move here
 #    plays = [
 #        np.random.choice(range(len(distributions)), p=distributions)

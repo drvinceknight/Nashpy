@@ -1100,3 +1100,25 @@ def test_replicator_dynamics_with_incorrect_inputs():
     y0 = np.array([1, 0, 0])
     with pytest.raises(ValueError):
         replicator_dynamics(y0=y0, A=M)
+
+
+@given(A=arrays(np.int8, (3, 2)), B=arrays(np.int8, (3, 2)))
+def test_property_get_derivative_of_asymmetric_fitness(A, B):
+    """
+    Property-based test of get_derivative_of_asymmetric_fitness for a 3x2 game
+    """
+    t = 0
+    x = np.ones(A.shape[1] + A.shape[0])
+    derivative_of_fitness = get_derivative_of_asymmetric_fitness(x, t, A, B)
+
+    assert len(derivative_of_fitness) == len(x)
+
+
+@given(A=arrays(np.int8, (4, 2)), B=arrays(np.int8, (4, 2)))
+def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
+    """
+    Property-based test of asymmetric_replicator_dynamics for a 4x2 game
+    """
+    xs1, xs2 = replicator_dynamics(A, B)
+    assert all(len(x) == 4 for x in xs1)
+    assert all(len(x) == 2 for x in xs2)

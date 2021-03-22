@@ -9,6 +9,8 @@ from hypothesis.extra.numpy import arrays
 from nashpy.learning.replicator_dynamics import (
     get_derivative_of_fitness,
     replicator_dynamics,
+    get_derivative_of_asymmetric_fitness,
+    asymmetric_replicator_dynamics,
 )
 
 
@@ -1119,6 +1121,6 @@ def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     """
     Property-based test of asymmetric_replicator_dynamics for a 4x2 game
     """
-    xs1, xs2 = replicator_dynamics(A, B)
+    xs1, xs2 = asymmetric_replicator_dynamics(A, B)
     assert all(len(x) == 4 for x in xs1)
     assert all(len(x) == 2 for x in xs2)

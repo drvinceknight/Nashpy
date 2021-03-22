@@ -35,20 +35,20 @@ def get_derivative_of_asymmetric_fitness(x, t, A, B):
     Find the derivative of fitness function for the asymmetric replicator
     dynamics scenario
     """
-    separator = A.shape[0]
-    x1 = x[:separator]
-    x2 = x[separator:]
+    number_of_rows = A.shape[0]
+    row_vector = x[:number_of_rows]
+    col_vector = x[number_of_rows:]
 
-    f1 = np.dot(A, x2)
-    f2 = np.dot(x1, B)
+    f1 = A @ col_vector
+    f2 = row_vector @ B
 
-    phi1 = np.dot(f1, x1)
-    phi2 = np.dot(f2, x2)
+    phi1 = f1 @ row_vector
+    phi2 = f2 @ col_vector
 
-    x1_derivative = x1 * (f1 - phi1)
-    x2_derivative = x2 * (f2 - phi2)
+    row_derivative = row_vector * (f1 - phi1)
+    col_derivative = col_vector * (f2 - phi2)
 
-    return np.concatenate((x1_derivative, x2_derivative))
+    return np.concatenate((row_derivative, col_derivative))
 
 
 def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
@@ -71,11 +71,8 @@ def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
         func=get_derivative_of_asymmetric_fitness,
         y0=initial_values,
         t=timepoints,
-        args=(
-            A,
-            B,
-        ),
+        args=(A, B,),
     )
-    xs1 = np.array([iter[: A.shape[0]] for iter in xs])
-    xs2 = np.array([iter[A.shape[0] :] for iter in xs])
+    xs1 = xs[:, : A.shape[0]]
+    xs2 = xs[:, A.shape[0] :]
     return xs1, xs2

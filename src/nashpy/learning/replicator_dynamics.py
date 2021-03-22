@@ -71,7 +71,10 @@ def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
         func=get_derivative_of_asymmetric_fitness,
         y0=initial_values,
         t=timepoints,
-        args=(A, B,),
+        args=(
+            A,
+            B,
+        ),
     )
     xs1 = xs[:, : A.shape[0]]
     xs2 = xs[:, A.shape[0] :]

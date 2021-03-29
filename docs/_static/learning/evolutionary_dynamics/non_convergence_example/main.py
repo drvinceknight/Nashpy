@@ -5,9 +5,10 @@ This plots an example of non-convergence.
 
 The code should match the reference code in the documentation.
 """
-import numpy as np
-import nashpy as nash
 import matplotlib.pyplot as plt
+import numpy as np
+
+import nashpy as nash
 
 A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
 game = nash.Game(A)

@@ -4,13 +4,10 @@ Tests for the integer pivoting
 import unittest
 
 import numpy as np
-from hypothesis import given
-from hypothesis.extra.numpy import arrays
-from hypothesis.strategies import integers
 
 from nashpy.integer_pivoting.integer_pivoting_lex import (
-    find_pivot_row_lex,
     find_entering_variable,
+    find_pivot_row_lex,
     pivot_tableau_lex,
 )
 

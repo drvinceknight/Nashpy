@@ -4,11 +4,7 @@ from itertools import cycle
 
 import numpy as np
 
-from nashpy.integer_pivoting import (
-    make_tableau,
-    non_basic_variables,
-    pivot_tableau,
-)
+from nashpy.integer_pivoting import make_tableau, non_basic_variables, pivot_tableau
 
 
 def shift_tableau(tableau, shape):

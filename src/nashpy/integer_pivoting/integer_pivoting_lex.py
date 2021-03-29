@@ -2,11 +2,9 @@
 A class for integer pivoting. Used for an implementation of the lemke_howson_lex
 algorithm.
 """
-import numpy as np
-
 import warnings
 
-from .integer_pivoting import make_tableau
+import numpy as np
 
 
 def find_pivot_row_lex(tableau, column_index, slack_variables):

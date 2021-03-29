@@ -1,10 +1,7 @@
 """A class for a normal form game"""
-from itertools import combinations
-
 import numpy as np
 
 from .algorithms.lemke_howson import lemke_howson
-from .algorithms.lemke_howson_lex import lemke_howson_lex
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
 from .learning.fictitious_play import fictitious_play

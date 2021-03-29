@@ -6,8 +6,9 @@ This plots a divergent fictitious play example.
 The code should match the reference code in the documentation.
 """
 import matplotlib.pyplot as plt
-import nashpy as nash
 import numpy as np
+
+import nashpy as nash
 
 A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
 B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])

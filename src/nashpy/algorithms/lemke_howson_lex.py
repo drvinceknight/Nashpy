@@ -3,10 +3,8 @@ from itertools import cycle
 
 import numpy as np
 
-from nashpy.integer_pivoting import (
-    make_tableau,
-    pivot_tableau_lex,
-)
+from nashpy.integer_pivoting import make_tableau, pivot_tableau_lex
+
 from .lemke_howson import shift_tableau, tableau_to_strategy
 
 

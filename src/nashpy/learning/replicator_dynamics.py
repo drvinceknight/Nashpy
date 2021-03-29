@@ -1,6 +1,5 @@
 """Code to carry out replicator dynamics"""
 import numpy as np
-
 # from scipy.integrate import solve_ivp (will change program to use solve_ivp later)
 from scipy.integrate import odeint
 

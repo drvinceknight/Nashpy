@@ -8,7 +8,6 @@ import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
-from scipy.spatial import HalfspaceIntersection
 
 from nashpy.polytope.polytope import (
     build_halfspaces,
@@ -107,9 +106,9 @@ class TestPolytope(unittest.TestCase):
         vertices_generator = non_trivial_vertices(halfspaces)
         number_of_strategies, dimension = A.shape
         self.assertIsInstance(vertices_generator, GeneratorType)
-        for vertex, labels in vertices_generator:
+        for vertex, labels_set in vertices_generator:
             self.assertEqual(len(vertex), dimension)
-            for label in labels:
+            for label in labels_set:
                 self.assertGreaterEqual(label, 0)
                 self.assertLessEqual(label, number_of_strategies + dimension)
 

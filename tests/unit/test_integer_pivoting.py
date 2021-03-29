@@ -6,7 +6,6 @@ import unittest
 import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
-from hypothesis.strategies import integers
 
 from nashpy.integer_pivoting.integer_pivoting import (
     find_pivot_row,

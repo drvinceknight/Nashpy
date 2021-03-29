@@ -8,3 +8,4 @@ docs/_build/
 *mypy*
 .wily/
 coverage.xml
+build/

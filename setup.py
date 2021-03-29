@@ -1,7 +1,3 @@
-import doctest
-import os
-import unittest
-
 from setuptools import find_packages, setup
 
 # Read in the version number
@@ -12,7 +8,7 @@ requirements = ["numpy>=1.12.1", "scipy>=0.19.0"]
 
 setup(
     name="nashpy",
-    version=__version__,
+    version=__version__,  # noqa: F821
     install_requires=requirements,
     author="Vince Knight, James Campbell",
     author_email=("knightva@cardiff.ac.uk"),

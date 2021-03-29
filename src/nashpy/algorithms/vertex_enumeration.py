@@ -1,6 +1,4 @@
 """A class for the vertex enumeration algorithm"""
-from itertools import product
-
 import numpy as np
 
 from nashpy.polytope import build_halfspaces, non_trivial_vertices

@@ -35,6 +35,10 @@ jobs:
       if: matrix.python-version == 3.8 && matrix.os == 'ubuntu-latest'
       run: |
         python -m black -l 80 . --check
+    - name: Interrogate docstrings
+      run: |
+        pip install interrogate
+        python -m interrogate -v --ignore-init-method --ignore-init-module --fail-under 100 src/nashpy --exclude src/nashpy/version.py --ignore-magic
     - name: Test with pytest
       run: |
         python setup.py develop

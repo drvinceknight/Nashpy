@@ -9,6 +9,7 @@ from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
 from .learning.fictitious_play import fictitious_play
 from .learning.replicator_dynamics import replicator_dynamics
+from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 
 
 class Game:
@@ -166,9 +167,22 @@ Column player:
             plays: A generator
         """
         return fictitious_play(
+            *self.payoff_matrices, iterations=iterations, play_counts=play_counts
+        )
+
+    def stochastic_fictitious_play(
+        self, iterations, play_counts=None, etha=None, epsilon_bar=None
+    ):
+        if etha is None:
+            etha = 10 ** -1
+        if epsilon_bar is None:
+            epsilon_bar = 10 ** -2
+        return stochastic_fictitious_play(
             *self.payoff_matrices,
             iterations=iterations,
-            play_counts=play_counts
+            play_counts=play_counts,
+            etha=etha,
+            epsilon_bar=epsilon_bar
         )
 
     def replicator_dynamics(self, y0=None, timepoints=None):

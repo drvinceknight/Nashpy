@@ -3,7 +3,8 @@ Tests for Replicator Dynamics
 """
 import numpy as np
 import pytest
-from hypothesis import given
+from hypothesis import given, settings
+from hypothesis.strategies import integers
 from hypothesis.extra.numpy import arrays
 
 from nashpy.learning.replicator_dynamics import (
@@ -1116,7 +1117,42 @@ def test_property_get_derivative_of_asymmetric_fitness(A, B):
     assert len(derivative_of_fitness) == len(x)
 
 
-@given(A=arrays(np.int8, (4, 2)), B=arrays(np.int8, (4, 2)))
+def test_get_derivative_of_asymmetric_fitness_example():
+    """
+    Test for the asymmetric derivative of fitness function
+    """
+    M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
+    N = np.array([[1, 2, 3], [3, 2, 1], [2, 1, 3]])
+
+    x_values = (
+        np.array([1, 0, 0, 1, 0, 0]),
+        np.array([1 / 2, 1 / 2, 0, 1 / 2, 1 / 2, 0]),
+        np.array([0, 1 / 4, 3 / 4, 0, 1 / 4, 3 / 4]),
+        np.array([1 / 5, 2 / 5, 2 / 5, 1 / 5, 2 / 5, 2 / 5]),
+        np.array([1 / 2, 0, 1 / 2, 1 / 2, 0, 1 / 2]),
+        np.array([2 / 4, 1 / 4, 1 / 4, 2 / 4, 1 / 4, 1 / 4]),
+    )
+    derivative_values = (
+        np.array([0, 0, 0, 0, 0, 0]),
+        np.array([0, 0, 0, 0, 0, 0]),
+        np.array([0.0, -0.09375, 0.09375, 0.0, -0.234375, 0.234375]),
+        np.array([0.128, -0.144, 0.016, 0.048, -0.144, 0.096]),
+        np.array([0.375, 0.0, -0.375, -0.375, 0.0, 0.375]),
+        np.array([0.125, 0.0, -0.125, -0.09375, -0.046875, 0.140625]),
+    )
+
+    for x_value, expected_derivative in zip(x_values, derivative_values):
+        derivative = get_derivative_of_asymmetric_fitness(
+            x=x_value, t=0, A=M, B=N
+        )
+        assert np.allclose(derivative, expected_derivative), x_value
+
+
+@settings(max_examples=10)
+@given(
+    A=arrays(np.int8, (4, 2), elements=integers(0, 100)),
+    B=arrays(np.int8, (4, 2), elements=integers(0, 100)),
+)
 def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     """
     Property-based test of asymmetric_replicator_dynamics for a 4x2 game
@@ -1124,3 +1160,162 @@ def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     xs1, xs2 = asymmetric_replicator_dynamics(A, B)
     assert all(len(x) == 4 for x in xs1)
     assert all(len(x) == 2 for x in xs2)
+
+
+@given(A=arrays(np.int8, shape=(2, 2), elements=integers(0, 20)))
+def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
+    """
+    Tests that when we have two populations with identical strategies then the
+    output of the asymmetric_replicator_dynamics for both populations is the
+    same as using just one population in replicator_dynamics. The test is
+    carried out for 2x2 matrices with elements from 0-20
+    """
+    B = A.transpose()
+
+    symmetric = replicator_dynamics(A)
+    asymmetric = asymmetric_replicator_dynamics(A, B)
+    asymmetric_A = asymmetric[0]
+    asymmetric_B = asymmetric[1]
+
+    assert np.allclose(asymmetric_A, asymmetric_B, rtol=0.001)
+    assert np.allclose(symmetric, asymmetric_A, rtol=0.001)
+    assert np.allclose(symmetric, asymmetric_B, rtol=0.001)
+
+
+def test_asymmetric_replicator_dynamics_size_2_3_default_values():
+    """
+    Test the asymmetric replicaotr dynamics function for a 2x3 game by using
+    the default values
+    """
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    B = np.array([[7, 8, 9], [10, 11, 12]])
+
+    xs_A, xs_B = asymmetric_replicator_dynamics(A, B)
+
+    assert np.allclose(xs_A[1], np.array([0.49249308, 0.50750692]))
+    assert np.allclose(xs_A[-1], np.array([9.33624531e-14, 1]))
+    assert np.allclose(xs_B[1], np.array([0.33000229, 0.3333222, 0.33667551]))
+    assert np.allclose(
+        xs_B[-1], np.array([2.04812640e-09, 4.53898590e-05, 9.99954607e-01])
+    )
+
+
+def test_asymmetric_replicator_dynamics_size_2_3_given_timepoints():
+    """
+    Test the asymmetric replicaotr dynamics function for a 2x3 game and not
+    using the default timepoints
+    """
+    timepoints = np.linspace(0, 10, 10)
+
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    B = np.array([[7, 8, 9], [10, 11, 12]])
+
+    xs_A, xs_B = asymmetric_replicator_dynamics(A, B, timepoints=timepoints)
+
+    expected_xs_A = np.array(
+        [
+            [5.00000000e-01, 5.00000000e-01],
+            [3.44452009e-02, 9.65554799e-01],
+            [1.27101562e-03, 9.98728984e-01],
+            [4.53987023e-05, 9.99954601e-01],
+            [1.61952459e-06, 9.99998380e-01],
+            [5.74645500e-08, 9.99999943e-01],
+            [2.04695828e-09, 9.99999998e-01],
+            [6.03093424e-11, 1.00000000e00],
+            [2.10390314e-12, 1.00000000e00],
+            [7.25889162e-14, 1.00000000e00],
+        ]
+    )
+
+    expected_xs_B = np.array(
+        [
+            [3.33333333e-01, 3.33333333e-01, 3.33333333e-01],
+            [7.53832522e-02, 2.28994097e-01, 6.95622651e-01],
+            [1.04843375e-02, 9.67475186e-02, 8.92768144e-01],
+            [1.22729161e-03, 3.44029192e-02, 9.64369789e-01],
+            [1.36295719e-04, 1.16057342e-02, 9.88257970e-01],
+            [1.48875419e-05, 3.85097626e-03, 9.96134067e-01],
+            [1.61729774e-06, 1.27100966e-03, 9.98727373e-01],
+            [1.75243052e-07, 4.18772030e-04, 9.99581073e-01],
+            [1.90062156e-08, 1.37903770e-04, 9.99862077e-01],
+            [2.05427839e-09, 4.53987815e-05, 9.99954600e-01],
+        ]
+    )
+
+    assert np.allclose(xs_A, expected_xs_A)
+    assert np.allclose(xs_B, expected_xs_B)
+
+
+def test_asymmetric_replicator_dynamics_size_4_6_given_x0_y0():
+    """
+    Test the asymmetric replicaotr dynamics function for a 4x6 game by
+    specifying values for x0 and y0
+    """
+    A = np.array(
+        [
+            [1, 20, 23, 21, 15, 4],
+            [9, 29, 0, 14, 19, 27],
+            [22, 28, 30, 12, 3, 25],
+            [5, 16, 8, 17, 11, 18],
+        ]
+    )
+    B = np.array(
+        [
+            [11, 39, 27, 15, 36, 35],
+            [1, 31, 2, 18, 10, 19],
+            [21, 38, 8, 24, 40, 32],
+            [22, 37, 25, 7, 30, 0],
+        ]
+    )
+    x0 = np.array([0.5, 0.2, 0.2, 0.1])
+    y0 = np.array([0.4, 0.1, 0.1, 0.1, 0.2, 0.1])
+
+    xs_A, xs_B = asymmetric_replicator_dynamics(A, B, x0=x0, y0=y0)
+
+    assert np.allclose(
+        xs_A[1], np.array([0.48729326, 0.20349646, 0.21191178, 0.0972985])
+    )
+    assert np.allclose(
+        xs_A[-1],
+        np.array(
+            [-2.50483397e-15, 9.99977992e-01, 2.20078313e-05, 1.18367977e-17]
+        ),
+    )
+    assert np.allclose(
+        xs_B[1],
+        np.array(
+            [
+                0.36455939,
+                0.11688505,
+                0.096508,
+                0.09537898,
+                0.22015362,
+                0.10651496,
+            ]
+        ),
+    )
+    assert np.allclose(
+        xs_B[-1],
+        np.array(
+            [
+                4.58211507e-12,
+                1.00000000e00,
+                8.73932312e-12,
+                1.58763628e-18,
+                -1.22965529e-14,
+                -9.91094095e-17,
+            ]
+        ),
+    )
+
+
+def test_asymmetric_repicator_dynamics_with_incorrect_dimensions():
+    """
+    Tests that when matrices with different dimensions are given the function
+    raise a ValueError
+    """
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    B = np.array([[1, 2], [3, 4]])
+
+    with pytest.raises(ValueError):
+        xs = asymmetric_replicator_dynamics(A, B)

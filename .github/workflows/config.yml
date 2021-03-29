@@ -39,13 +39,10 @@ jobs:
     - name: Interrogate docstrings
       run: |
         pip install interrogate
-        interrogate -v -f 100 .
+        python -m interrogate -v --ignore-init-method --ignore-init-module --fail-under 100 src/nashpy --exclude src/nashpy/version.py --ignore-magic
     - name: Test with pytest
       run: |
         python setup.py develop
-        python -m pip install pytest
-        python -m pip install pytest-cov
-        python -m pip install hypothesis
         python -m pytest --cov=nashpy --cov-fail-under=100
     - name: Doctest
       run: |

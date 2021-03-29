@@ -4,10 +4,7 @@ Tests for the game class
 import unittest
 
 import numpy as np
-from hypothesis import given
-from hypothesis.extra.numpy import arrays
 
-import nashpy as nash
 from nashpy.algorithms.support_enumeration import (
     indifference_strategies,
     is_ne,
@@ -237,8 +234,6 @@ class TestSupportEnumeration(unittest.TestCase):
 
     def test_obey_support(self):
         """Test for obey support"""
-        A = np.array([[2, 1], [0, 2]])
-        B = np.array([[2, 0], [1, 2]])
         self.assertFalse(obey_support(False, np.array([0, 1])))
         self.assertFalse(obey_support(np.array([1, 0]), np.array([0, 1])))
         self.assertFalse(obey_support(np.array([0, 0.5]), np.array([0])))
@@ -251,8 +246,6 @@ class TestSupportEnumeration(unittest.TestCase):
 
     def test_obey_support_with_high_tolerance(self):
         """Test for obey support"""
-        A = np.array([[2, 1], [0, 2]])
-        B = np.array([[2, 0], [1, 2]])
         tol = 1
         self.assertFalse(obey_support(False, np.array([0, 1])))
         self.assertFalse(

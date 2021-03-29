@@ -5,9 +5,10 @@ This plots an example of an evolutionary stable strategy.
 
 The code should match the reference code in the documentation.
 """
-import numpy as np
-import nashpy as nash
 import matplotlib.pyplot as plt
+import numpy as np
+
+import nashpy as nash
 
 A = np.array([[4, 3], [2, 3]])
 game = nash.Game(A)

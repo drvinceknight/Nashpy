@@ -8,11 +8,10 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
 
-import nashpy as nash
 from nashpy.learning.fictitious_play import (
+    fictitious_play,
     get_best_response_to_play_count,
     update_play_count,
-    fictitious_play,
 )
 
 
@@ -55,7 +54,7 @@ def test_property_update_belief(play):
 )
 def test_property_fictitious_play(A, B, iterations):
     play_counts = fictitious_play(A, B, iterations=iterations)
-    assert type(play_counts) is types.GeneratorType
+    assert isinstance(play_counts, types.GeneratorType)
     play_counts = tuple(play_counts)
     assert len(play_counts) == iterations + 1
     assert (

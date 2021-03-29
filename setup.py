@@ -1,7 +1,3 @@
-import doctest
-import os
-import unittest
-
 from setuptools import find_packages, setup
 
 # Read in the version number

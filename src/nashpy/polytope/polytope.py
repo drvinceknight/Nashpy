@@ -1,6 +1,4 @@
 """A class for a normal form game"""
-from itertools import product
-
 import numpy as np
 from scipy.optimize import linprog
 from scipy.spatial import HalfspaceIntersection

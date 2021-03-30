@@ -54,7 +54,10 @@ def test_get_distribution_response_to_play_count_3():
     assert np.allclose(r_dist, np.array([1.97718056e-09, 9.99999998e-01]))
 
     c_dist = get_distribution_response_to_play_count(
-        A=M.transpose(), play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+        A=M.transpose(),
+        play_count=play_count,
+        epsilon_bar=epsilon_bar,
+        etha=etha,
     )
     assert np.allclose(c_dist, np.array([0.99340266, 0.00659734]))
 

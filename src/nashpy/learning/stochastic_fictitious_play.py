@@ -23,7 +23,9 @@ def stochastic_fictitious_play(
     Implement stochastic_fictitious play
     """
     if play_counts is None:
-        play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
+        play_counts = [
+            np.array([0 for _ in range(dimension)]) for dimension in A.shape
+        ]
 
     distributions = None, None
 
@@ -33,7 +35,10 @@ def stochastic_fictitious_play(
 
         distributions = [
             get_distribution_response_to_play_count(
-                A=matrix, play_count=play_count, etha=etha, epsilon_bar=epsilon_bar
+                A=matrix,
+                play_count=play_count,
+                etha=etha,
+                epsilon_bar=epsilon_bar,
             )
             for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
         ]

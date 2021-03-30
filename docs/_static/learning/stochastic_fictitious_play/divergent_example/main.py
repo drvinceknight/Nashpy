@@ -6,8 +6,9 @@ This plots a non-convergent stochastic fictitious play example.
 The code should match the reference code in the documentation.
 """
 
-import numpy as np
+import matplotlib.pyplot as plt
 import nashpy as nash
+import numpy as np
 
 A = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]])
 B = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
@@ -17,8 +18,6 @@ np.random.seed(0)
 play_counts_and_distribuions = tuple(
     game.stochastic_fictitious_play(iterations=iterations)
 )
-
-import matplotlib.pyplot as plt
 
 plt.figure()
 probabilities = [

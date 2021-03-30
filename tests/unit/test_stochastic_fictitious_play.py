@@ -1,14 +1,10 @@
 """
 Tests for stochastic fictitious learning
 """
-import types
-
 import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
-from hypothesis.strategies import integers
 
-import nashpy as nash
 from nashpy.learning.stochastic_fictitious_play import (
     get_distribution_response_to_play_count,
     stochastic_fictitious_play,

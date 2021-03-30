@@ -64,10 +64,35 @@ using the default value of :code:`epsilon_bar`::
     >>> plt.ylabel("Probability") # doctest: +SKIP
     >>> plt.title("Actions taken by row player") # doctest: +SKIP
     >>> plt.legend() # doctest: +SKIP
-    .. image:: /_static/learning/stochastic_fictitious_play/divergent_example/main.svg
 
+.. image:: /_static/learning/stochastic_fictitious_play/divergent_example/main.svg
 
+When comparing the convergent example from the fictitious play discussion section, we can see below that 
+stochastic fictitious play does not have the same cyclical behaviour::
 
+    >>> A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
+    >>> B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
+    >>> game = nash.Game(A, B)
+    >>> iterations = 10000
+    >>> np.random.seed(0)
+    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations))
+    >>> play_counts_and_distribuions[-1]
+    ([array([3346., 3278., 3376.]), array([3338., 3407., 3255.])], [array([0.35888645, 0.32741658, 0.31369697]), array([0.30257911, 0.3463743 , 0.35104659])])
+    >>> import matplotlib.pyplot as plt
+    >>> plt.figure() # doctest: +SKIP
+    >>> probabilities = [
+    ...     row_play_counts / np.sum(row_play_counts)
+    ...     if np.sum(row_play_counts) != 0
+    ...     else row_play_counts + 1 / len(row_play_counts)
+    ...     for (row_play_counts, col_play_counts), _ in play_counts_and_distribuions]
+    >>> for number, strategy in enumerate(zip(*probabilities)):
+    ...     plt.plot(strategy, label=f"$s_{number}$") # doctest: +SKIP
+    >>> plt.xlabel("Iteration") # doctest: +SKIP
+    >>> plt.ylabel("Probability") # doctest: +SKIP
+    >>> plt.title("Actions taken by row player") # doctest: +SKIP
+    >>> plt.legend() # doctest: +SKIP
+
+.. image:: /_static/learning/stochastic_fictitious_play/convergent_example/main.svg
 
 
 

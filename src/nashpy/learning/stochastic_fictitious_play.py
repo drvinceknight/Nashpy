@@ -4,6 +4,7 @@ from nashpy.learning.fictitious_play import update_play_count
 
 
 def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
+    """Obtain a mixed strategy as a probability distribution as a response to a given play count"""
     if np.sum(play_count) == 0:
         strategies = play_count + 1 / len(play_count)
     else:
@@ -23,9 +24,7 @@ def stochastic_fictitious_play(
     Implement stochastic_fictitious play
     """
     if play_counts is None:
-        play_counts = [
-            np.array([0 for _ in range(dimension)]) for dimension in A.shape
-        ]
+        play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
 
     distributions = None, None
 

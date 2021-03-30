@@ -4,7 +4,7 @@ Stochastic fictitious play
 ==========================
 
 The stochastic fictitious play algorithm implemented in :code:`Nashpy` is based on the
-one described in [Hofbauer2002]_.
+one given in [Hofbauer2002]_.
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
 :math:`\kappa_t^{i}:S^{-1}\to\mathbb{N}` to be a function that in a given time
@@ -12,11 +12,10 @@ period :math:`t` for a player :math:`i` maps a strategy :math:`s` from the
 opponent's strategy space :math:`S^{-1}` to a number of total times the opponent
 has played :math:`s`.
 
-As per standard fictitious play, each player assumes their opponent is playing a mixed strategy 
+As per standard :ref:`fictitious-play`, each player assumes their opponent is playing a mixed strategy 
 based on :math:`\kappa_{t-1}`. If no play has taken place, then the probability of playing each 
 action is assumed to be equal. The assumed mixed strategies of a player's opponent are multplied 
 by the player's own payoff matrices to calculate the expected payoff of each action.  
-
 
 A stochastic pertubation :math:`\epsilon_i` is added to each expected payoff :math:`\pi_i` to give a 
 pertubated payoff.  Each :math:`\epsilon_i` is independent of each :math:`\pi_i` and is a random number 

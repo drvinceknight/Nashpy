@@ -12,7 +12,7 @@ class::
     >>> game = nash.Game(A, B)
 
 The :code:`stochastic_fictitious_play` method returns a generator of a given collection of
-learning steps, comprising of the play counts and the probability distribution with which each strategy is played by each player::
+learning steps, comprising of the play counts and the mixed strategy of each player::
 
     >>> np.random.seed(0)
     >>> iterations = 500
@@ -58,7 +58,7 @@ point for the algorithm::
     [  0. 999.] [  0. 999.]
     [   0. 1000.] [   0. 1000.]
 
-A value of :code:`etha` :code:`epsilon_bar` can be passed, which corresponds to the amount of stochasticity. 
+A value of :code:`etha` and :code:`epsilon_bar` can be passed. 
 See the :ref:`stochastic-fictitious-play` reference section for more information. The default values for etha and epsilon bar are 
 :math:`10^-1` and :math:`10^-2` respectively::
 

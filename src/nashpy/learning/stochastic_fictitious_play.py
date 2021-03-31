@@ -1,7 +1,6 @@
 """Code to carry out stochastic fictitious learning"""
 import numpy as np
 from nashpy.learning.fictitious_play import update_play_count
-from icecream import ic
 
 
 def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
@@ -25,9 +24,7 @@ def stochastic_fictitious_play(
     Implement stochastic_fictitious play
     """
     if play_counts is None:
-        play_counts = [
-            np.array([0 for _ in range(dimension)]) for dimension in A.shape
-        ]
+        play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
 
     distributions = None, None
 

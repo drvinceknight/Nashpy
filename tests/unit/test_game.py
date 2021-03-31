@@ -470,17 +470,15 @@ Column player:
             assert np.array_equal(column_play, expected_column_play)
         # assert expected_outcome == outcome
 
-    # @given(
-    #    A=arrays(np.int8, (4, 3)),
-    #    B=arrays(np.int8, (4, 3)),
-    #    seed=integers(min_value=0, max_value=2 ** 32 - 1),
-    # )
-    def test_stochastic_fictitious_play(self):
+    @given(
+        A=arrays(np.int8, (4, 3), elements=integers(1, 20)),
+        B=arrays(np.int8, (4, 3), elements=integers(1, 20)),
+        seed=integers(min_value=0, max_value=2 ** 32 - 1),
+    )
+    def test_stochastic_fictitious_play(self, A, B, seed):
         """Test for the stochastic fictitious play algorithm"""
-        np.random.seed(0)
+        np.random.seed(seed)
         iterations = 10
-        A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
-        B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
         g = nash.Game(A, B)
 
         expected_outcome = tuple(
@@ -488,7 +486,7 @@ Column player:
                 *g.payoff_matrices, iterations=iterations
             )
         )
-        np.random.seed(0)
+        np.random.seed(seed)
         outcome = tuple(g.stochastic_fictitious_play(iterations=iterations))
         assert len(outcome) == iterations + 1
         assert len(expected_outcome) == iterations + 1

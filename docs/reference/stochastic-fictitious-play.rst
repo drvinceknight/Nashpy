@@ -4,7 +4,11 @@ Stochastic fictitious play
 ==========================
 
 The stochastic fictitious play algorithm implemented in :code:`Nashpy` is based on the
-one given in [Hofbauer2002]_.
+one given in [Hofbauer2002]_. 
+
+The algorithm is designed to reach convergence in cases 
+where fictitious play does not converge. Note that in some cases this will require a 
+thoughtful choice of :code:`etha` and :code:`epsilon_bar` parameters.
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
 :math:`\kappa_t^{i}:S^{-1}\to\mathbb{N}` to be a function that in a given time
@@ -31,9 +35,6 @@ can be seen below:
 
 Discussion
 ----------
-
-Note that similarly to fictitious play, this algorithm will not always converge and sometimes it depends on 
-the form of the game.
 
 Using the same game from the fictitious play discussion section, we can visualise a lack of convergence when 
 using the default value of :code:`epsilon_bar`::
@@ -66,17 +67,18 @@ using the default value of :code:`epsilon_bar`::
 
 .. image:: /_static/learning/stochastic_fictitious_play/divergent_example/main.svg
 
-When comparing the convergent example from the fictitious play discussion section, we can see below that 
-stochastic fictitious play does not have the same cyclical behaviour::
+Observe below that the game converges when passing values for :code:`etha` and :code:`epsilon_bar`::
 
     >>> A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
     >>> B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
     >>> game = nash.Game(A, B)
     >>> iterations = 10000
+    >>> etha = 0.1
+    >>> epsilon_bar = 10**-1
     >>> np.random.seed(0)
-    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations))
+    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar))
     >>> play_counts_and_distribuions[-1]
-    ([array([3346., 3278., 3376.]), array([3338., 3407., 3255.])], [array([0.35888645, 0.32741658, 0.31369697]), array([0.30257911, 0.3463743 , 0.35104659])])
+    ([array([3300., 3293., 3407.]), array([3320., 3372., 3308.])], [array([0.33502382, 0.41533594, 0.24964024]), array([0.18890743, 0.42793694, 0.38315563])])
     >>> import matplotlib.pyplot as plt
     >>> plt.figure() # doctest: +SKIP
     >>> probabilities = [
@@ -92,6 +94,8 @@ stochastic fictitious play does not have the same cyclical behaviour::
     >>> plt.legend() # doctest: +SKIP
 
 .. image:: /_static/learning/stochastic_fictitious_play/convergent_example/main.svg
+
+
 
 
 

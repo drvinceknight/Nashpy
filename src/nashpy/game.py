@@ -173,7 +173,7 @@ Column player:
         )
 
     def stochastic_fictitious_play(
-        self, iterations, play_counts=None, etha=None, epsilon_bar=None
+        self, iterations, play_counts=None, etha=10 ** -1, epsilon_bar=10 ** -2
     ):
         """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
         implementation corresponds to the description given in [Hofbauer2002]_.
@@ -188,10 +188,6 @@ Column player:
         -------
             plays: A generator
         """
-        if etha is None:
-            etha = 10 ** -1
-        if epsilon_bar is None:
-            epsilon_bar = 10 ** -2
         return stochastic_fictitious_play(
             *self.payoff_matrices,
             iterations=iterations,

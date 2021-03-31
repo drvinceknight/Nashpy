@@ -11,7 +11,7 @@ in standard fictitious play, where a small change in the data can lead to an abr
 behaviour."
 
 The algorithm is designed to reach convergence in cases where fictitious play does not 
-converge. Note that in some cases this will require a thoughtful choice of :code:`etha` 
+converge. Note that in some cases this will require a thoughtful choice of the :code:`etha` 
 and :code:`epsilon_bar` parameters.
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
@@ -98,7 +98,6 @@ Observe below that the game converges when passing values for :code:`etha` and :
     >>> plt.legend() # doctest: +SKIP
 
 .. image:: /_static/learning/stochastic_fictitious_play/convergent_example/main.svg
-
 
 
 

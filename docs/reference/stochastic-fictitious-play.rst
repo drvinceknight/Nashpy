@@ -6,9 +6,13 @@ Stochastic fictitious play
 The stochastic fictitious play algorithm implemented in :code:`Nashpy` is based on the
 one given in [Hofbauer2002]_. 
 
-The algorithm is designed to reach convergence in cases 
-where fictitious play does not converge. Note that in some cases this will require a 
-thoughtful choice of :code:`etha` and :code:`epsilon_bar` parameters.
+As explained in [Fudenberg1998]_ stochastic fictitious play "avoids the discontinuity inherent 
+in standard fictitious play, where a small change in the data can lead to an abrupt change in 
+behaviour."
+
+The algorithm is designed to reach convergence in cases where fictitious play does not 
+converge. Note that in some cases this will require a thoughtful choice of :code:`etha` 
+and :code:`epsilon_bar` parameters.
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
 :math:`\kappa_t^{i}:S^{-1}\to\mathbb{N}` to be a function that in a given time

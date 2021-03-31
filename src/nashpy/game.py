@@ -6,6 +6,7 @@ from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
 from .learning.fictitious_play import fictitious_play
 from .learning.replicator_dynamics import replicator_dynamics
+from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 
 
 class Game:
@@ -166,6 +167,30 @@ Column player:
             *self.payoff_matrices,
             iterations=iterations,
             play_counts=play_counts
+        )
+
+    def stochastic_fictitious_play(
+        self, iterations, play_counts=None, etha=10 ** -1, epsilon_bar=10 ** -2
+    ):
+        """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
+        implementation corresponds to the description given in [Hofbauer2002]_.
+
+        Parameters
+        ----------
+            iterations: int
+            play_counts: iterator
+            etha: float
+            epsilon_bar: float
+        Returns
+        -------
+            plays: A generator
+        """
+        return stochastic_fictitious_play(
+            *self.payoff_matrices,
+            iterations=iterations,
+            play_counts=play_counts,
+            etha=etha,
+            epsilon_bar=epsilon_bar
         )
 
     def replicator_dynamics(self, y0=None, timepoints=None):

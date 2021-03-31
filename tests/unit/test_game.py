@@ -470,6 +470,39 @@ Column player:
             assert np.array_equal(column_play, expected_column_play)
         # assert expected_outcome == outcome
 
+    @given(
+        A=arrays(np.int8, (4, 3), elements=integers(1, 20)),
+        B=arrays(np.int8, (4, 3), elements=integers(1, 20)),
+        seed=integers(min_value=0, max_value=2 ** 32 - 1),
+    )
+    def test_stochastic_fictitious_play(self, A, B, seed):
+        """Test for the stochastic fictitious play algorithm"""
+        np.random.seed(seed)
+        iterations = 10
+        g = nash.Game(A, B)
+
+        expected_outcome = tuple(
+            nashpy.learning.stochastic_fictitious_play.stochastic_fictitious_play(
+                *g.payoff_matrices, iterations=iterations
+            )
+        )
+        np.random.seed(seed)
+        outcome = tuple(g.stochastic_fictitious_play(iterations=iterations))
+        assert len(outcome) == iterations + 1
+        assert len(expected_outcome) == iterations + 1
+        for (plays, distributions), (
+            expected_plays,
+            expected_distributions,
+        ) in zip(outcome, expected_outcome):
+            row_play, column_play = plays
+            expected_row_play, expected_column_play = expected_plays
+            row_dist, column_dist = distributions
+            expected_row_dist, expected_column_dist = expected_distributions
+        assert np.allclose(column_dist, expected_column_dist)
+        assert np.allclose(row_dist, expected_row_dist)
+        assert np.allclose(column_play, expected_column_play)
+        assert np.allclose(row_play, expected_row_play)
+
     def test_replicator_dynamics(self):
         """Test for the replicator dynamics algorithm"""
         A = np.array([[3, 2], [4, 1]])

@@ -9,6 +9,7 @@ Reference
    lemke-howson.rst
    degenerate-games.rst
    fictitious-play.rst
+   stochastic-fictitious-play.rst
    replicator-dynamics.rst
    bibliography.rst
    source/nashpy.rst

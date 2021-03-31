@@ -1,3 +1,7 @@
+# v0.0.21
+
+Add stochastic fictitious play.
+
 # v0.0.20
 
 Add replicator dynamics.

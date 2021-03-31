@@ -10,7 +10,7 @@ As explained in [Fudenberg1998]_ stochastic fictitious play "avoids the disconti
 in standard fictitious play, where a small change in the data can lead to an abrupt change in 
 behaviour."
 
-The algorithm is designed to reach convergence in cases where fictitious play does not 
+The algorithm is designed to converge in cases where fictitious play does not 
 converge. Note that in some cases this will require a thoughtful choice of the :code:`etha` 
 and :code:`epsilon_bar` parameters.
 
@@ -98,7 +98,6 @@ Observe below that the game converges when passing values for :code:`etha` and :
     >>> plt.legend() # doctest: +SKIP
 
 .. image:: /_static/learning/stochastic_fictitious_play/convergent_example/main.svg
-
 
 
 

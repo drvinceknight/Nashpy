@@ -45,7 +45,9 @@ Stability is acheived in replicator dynamics when :math:`\frac{dx}{dt} = 0`.
 Every stable steady state is a Nash equilibria, and every Nash equilibria is a steady 
 state in replicator dynamics. 
 
-Stability is obtained when either:
+A steady state is when the population shares of all strategies are constant.
+
+Steady states are reached when either:
 
 - An entire population plays the same strategy
 - A population plays a mixture of the strategies (such that there is indifference between the fitness)

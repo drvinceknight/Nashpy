@@ -1307,15 +1307,3 @@ def test_asymmetric_replicator_dynamics_size_4_6_given_x0_y0():
             ]
         ),
     )
-
-
-def test_asymmetric_repicator_dynamics_with_incorrect_dimensions():
-    """
-    Tests that when matrices with different dimensions are given the function
-    raise a ValueError
-    """
-    A = np.array([[1, 2, 3], [4, 5, 6]])
-    B = np.array([[1, 2], [3, 4]])
-
-    with pytest.raises(ValueError):
-        xs = asymmetric_replicator_dynamics(A, B)

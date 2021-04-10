@@ -55,10 +55,6 @@ def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
     """
     Implement asymmetric replicator dynamics
     """
-
-    if not A.shape == B.shape:
-        raise ValueError("Unequal dimensions for matrices A and B")
-
     if timepoints is None:
         timepoints = np.linspace(0, 10, 1000)
 

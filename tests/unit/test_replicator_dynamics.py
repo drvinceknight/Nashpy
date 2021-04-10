@@ -1172,19 +1172,17 @@ def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     """
     B = A.transpose()
 
-    symmetric = replicator_dynamics(A)
-    asymmetric = asymmetric_replicator_dynamics(A, B)
-    asymmetric_A = asymmetric[0]
-    asymmetric_B = asymmetric[1]
+    symmetric_xs = replicator_dynamics(A)
+    asymmetric_row_xs, asymmetric_col_xs = asymmetric_replicator_dynamics(A, B)
 
-    assert np.allclose(asymmetric_A, asymmetric_B, rtol=0.001)
-    assert np.allclose(symmetric, asymmetric_A, rtol=0.001)
-    assert np.allclose(symmetric, asymmetric_B, rtol=0.001)
+    assert np.allclose(asymmetric_row_xs, asymmetric_col_xs, rtol=0.001)
+    assert np.allclose(symmetric_xs, asymmetric_row_xs, rtol=0.001)
+    assert np.allclose(symmetric_xs, asymmetric_col_xs, rtol=0.001)
 
 
 def test_asymmetric_replicator_dynamics_size_2_3_default_values():
     """
-    Test the asymmetric replicaotr dynamics function for a 2x3 game by using
+    Test the asymmetric replicator dynamics function for a 2x3 game by using
     the default values
     """
     A = np.array([[1, 2, 3], [4, 5, 6]])
@@ -1202,7 +1200,7 @@ def test_asymmetric_replicator_dynamics_size_2_3_default_values():
 
 def test_asymmetric_replicator_dynamics_size_2_3_given_timepoints():
     """
-    Test the asymmetric replicaotr dynamics function for a 2x3 game and not
+    Test the asymmetric replicator dynamics function for a 2x3 game and not
     using the default timepoints
     """
     timepoints = np.linspace(0, 10, 10)
@@ -1248,7 +1246,7 @@ def test_asymmetric_replicator_dynamics_size_2_3_given_timepoints():
 
 def test_asymmetric_replicator_dynamics_size_4_6_given_x0_y0():
     """
-    Test the asymmetric replicaotr dynamics function for a 4x6 game by
+    Test the asymmetric replicator dynamics function for a 4x6 game by
     specifying values for x0 and y0
     """
     A = np.array(

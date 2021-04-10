@@ -1162,7 +1162,7 @@ def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     assert all(len(x) == 2 for x in xs2)
 
 
-@given(A=arrays(np.int8, shape=(2, 2), elements=integers(0, 20)))
+@given(A=arrays(np.int8, shape=(2, 2), elements=integers(1, 5)))
 def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     """
     Tests that when we have two populations with identical strategies then the

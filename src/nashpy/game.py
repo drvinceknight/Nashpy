@@ -24,7 +24,9 @@ class Game:
 
     def __init__(self, *args):
         if len(args) == 2:
-            if not args[0].shape == args[1].shape:
+            if (not len(args[0]) == len(args[1])) or (
+                not len(args[0][0]) == len(args[1][0])
+            ):
                 raise ValueError("Unequal dimensions for matrices A and B")
             self.payoff_matrices = tuple([np.asarray(m) for m in args])
         if len(args) == 1:

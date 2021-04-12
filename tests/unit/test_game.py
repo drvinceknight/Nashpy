@@ -9,6 +9,7 @@ import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 from hypothesis.strategies import integers
+import pytest
 
 import nashpy as nash
 import nashpy.learning
@@ -35,6 +36,14 @@ class TestGame(unittest.TestCase):
         g = nash.Game(A, B)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
         self.assertTrue(np.array_equal(g.payoff_matrices[1], np.asarray(B)))
+
+    def test_incorrect_dimensions_init(self):
+        """Tests that ValueError is raised for unequal dimensions"""
+        A = np.array([[1, 2, 3], [4, 5, 6]])
+        B = np.array([[1, 2], [3, 4]])
+
+        with pytest.raises(ValueError):
+            nash.Game(A, B)
 
     def test_bi_matrix_repr(self):
         """Test that can create a bi matrix game"""

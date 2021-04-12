@@ -69,7 +69,7 @@ We can visualise the lack of convergence::
     >>> import matplotlib.pyplot as plt
     >>> plt.figure() # doctest: +SKIP
     >>> probabilities = [row_play_counts / np.sum(row_play_counts) for row_play_counts, col_play_counts in play_counts]
-    >>> for strategy in zip(*probabilities):
+    >>> for number, strategy in enumerate(zip(*probabilities)):
     ...     plt.plot(strategy, label=f"$s_{number}$")  # doctest: +SKIP
     >>> plt.xlabel("Iteration")  # doctest: +SKIP
     >>> plt.ylabel("Probability")  # doctest: +SKIP
@@ -93,7 +93,7 @@ With a clear convergence now visible::
     >>> import matplotlib.pyplot as plt
     >>> plt.figure() # doctest: +SKIP
     >>> probabilities = [row_play_counts / np.sum(row_play_counts) for row_play_counts, col_play_counts in play_counts]
-    >>> for strategy in zip(*probabilities):
+    >>> for number, strategy in enumerate(zip(*probabilities)):
     ...     plt.plot(strategy, label=f"$s_{number}$")  # doctest: +SKIP
     >>> plt.xlabel("Iteration")  # doctest: +SKIP
     >>> plt.ylabel("Probability")  # doctest: +SKIP

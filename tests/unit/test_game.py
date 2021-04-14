@@ -549,3 +549,21 @@ Column player:
             ]
         )
         assert np.allclose(xs[-1], expected_xs)
+
+    def test_asymmetric_replicator_dynamics(self):
+        """Test for asymmetric replicator dynamics algorithm"""
+        A = np.array([[5, 1], [4, 2]])
+        B = np.array([[3, 5], [2, 1]])
+        game = nash.Game(A, B)
+
+        x0 = np.array([0.6, 0.4])
+        y0 = np.array([0.5, 0.5])
+        timepoints = np.linspace(0, 100, 100)
+        xs_A, xs_B = game.asymmetric_replicator_dynamics(
+            x0=x0, y0=y0, timepoints=timepoints
+        )
+
+        expected_A_xs = np.array([0.17404745, 0.82595255])
+        expected_B_xs = np.array([0.28121086, 0.71878914])
+        assert np.allclose(xs_A[-1], expected_A_xs)
+        assert np.allclose(xs_B[-1], expected_B_xs)

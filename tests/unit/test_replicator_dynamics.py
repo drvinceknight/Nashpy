@@ -1211,45 +1211,16 @@ def test_asymmetric_replicator_dynamics_size_2_3_given_timepoints():
     Test the asymmetric replicator dynamics function for a 2x3 game and not
     using the default timepoints
     """
-    timepoints = np.linspace(0, 10, 10)
-
-    A = np.array([[1, 2, 3], [4, 5, 6]])
-    B = np.array([[7, 8, 9], [10, 11, 12]])
+    timepoints = np.linspace(0, 100, 100)
+    A = np.array([[1, 1, 2], [2, 3, 2]])
+    B = np.array([[1, 2, 2], [2, 1, 3]])
 
     xs_A, xs_B = asymmetric_replicator_dynamics(A, B, timepoints=timepoints)
 
-    expected_xs_A = np.array(
-        [
-            [5.00000000e-01, 5.00000000e-01],
-            [3.44452009e-02, 9.65554799e-01],
-            [1.27101562e-03, 9.98728984e-01],
-            [4.53987023e-05, 9.99954601e-01],
-            [1.61952459e-06, 9.99998380e-01],
-            [5.74645500e-08, 9.99999943e-01],
-            [2.04695828e-09, 9.99999998e-01],
-            [6.03093424e-11, 1.00000000e00],
-            [2.10390314e-12, 1.00000000e00],
-            [7.25889162e-14, 1.00000000e00],
-        ]
-    )
-
-    expected_xs_B = np.array(
-        [
-            [3.33333333e-01, 3.33333333e-01, 3.33333333e-01],
-            [7.53832522e-02, 2.28994097e-01, 6.95622651e-01],
-            [1.04843375e-02, 9.67475186e-02, 8.92768144e-01],
-            [1.22729161e-03, 3.44029192e-02, 9.64369789e-01],
-            [1.36295719e-04, 1.16057342e-02, 9.88257970e-01],
-            [1.48875419e-05, 3.85097626e-03, 9.96134067e-01],
-            [1.61729774e-06, 1.27100966e-03, 9.98727373e-01],
-            [1.75243052e-07, 4.18772030e-04, 9.99581073e-01],
-            [1.90062156e-08, 1.37903770e-04, 9.99862077e-01],
-            [2.05427839e-09, 4.53987815e-05, 9.99954600e-01],
-        ]
-    )
-
-    assert np.allclose(xs_A, expected_xs_A)
-    assert np.allclose(xs_B, expected_xs_B)
+    assert np.allclose(xs_A[1], np.array([0.30904906, 0.69095094]))
+    assert np.allclose(xs_B[1], np.array([0.2196786, 0.1771107, 0.6032107]))
+    assert np.allclose(xs_A[-1], np.array([0.2, 0.8]))
+    assert np.allclose(xs_B[-1], np.array([-6.57013390e-14, 2.92761632e-17, 1]))
 
 
 def test_asymmetric_replicator_dynamics_size_4_6_given_x0_y0():

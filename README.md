@@ -25,6 +25,12 @@ pypi:
 $ python -m pip install nashpy
 ```
 
+To install Nashpy on Fedora, use:
+
+```sh
+$ dnf install python3-nashpy
+```
+
 ## Usage
 
 Create bi matrix games by passing two 2 dimensional arrays/lists:

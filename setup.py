@@ -3,7 +3,10 @@ from setuptools import find_packages, setup
 # Read in the version number
 exec(open("src/nashpy/version.py", "r").read())
 
-requirements = ["numpy>=1.12.1", "scipy>=0.19.0"]
+with open("requirements.txt") as f:
+    requirements = []
+    for library in f.read().splitlines():
+        requirements.append(library)
 
 
 setup(

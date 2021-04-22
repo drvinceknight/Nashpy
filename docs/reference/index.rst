@@ -11,5 +11,6 @@ Reference
    fictitious-play.rst
    stochastic-fictitious-play.rst
    replicator-dynamics.rst
+   asymmetric-replicator-dynamics.rst
    bibliography.rst
    source/nashpy.rst

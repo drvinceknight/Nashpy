@@ -7,6 +7,7 @@ This is a collection of various bibliographic items referenced in the
 documentation.
 
 .. [Dantzig2016] Dantzig, George. Linear programming and extensions. Princeton university press, 2016.  APA
+.. [Elvio2011] Elvio, Accinelli and Carrera, Edgar. 2011. Evolutionarily Stable Strategies and Replicator Dynamics in Asymmetric Two-Population Games. 10.1007/978-3-642-11456-4_3. 
 .. [Fudenberg1998] Fudenberg, Drew, et al. The theory of learning in games. Vol. 2. MIT press, 1998.
 .. [Hofbauer2002] Hofbauer, Josef, and William H. Sandholm. "On the global convergence of stochastic fictitious play." Econometrica 70.6 (2002): 2265-2294.
 .. [Knight2016] Knight, V. et al., (2016). An Open Framework for the Reproducible Study of the Iterated Prisoner’s Dilemma. Journal of Open Research Software. 4(1), p.e35. DOI: http://doi.org/10.5334/jors.125

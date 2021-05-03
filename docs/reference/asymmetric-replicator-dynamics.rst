@@ -50,3 +50,67 @@ individuals is captured by:
     \frac{dx}{dt}_i = x_i((f_x)_i - \phi_x) \text{ for all }i \\
     \frac{dy}{dt}_i = y_i((f_y)_i - \phi_y) \text{ for all }i
 
+
+Discussion
+----------
+
+Stability is achieved in asymmetric replicator dynamics when both
+:math:`\frac{dx}{dt} = 0` and :math:`\frac{dy}{dt} = 0`.
+Every stable steady state is a Nash equilibria, and every Nash equilibria
+is a steady state in asymmetric replicator dynamics.
+
+Similarly to :ref:`replicator-dynamics`, a game is not guaranteed to converge
+to a steady state.
+Find below the probability distributions for both the row player and the column 
+player over time, of a game that does not converge::
+
+
+>>> import matplotlib.pyplot as plt
+>>> import nashpy as nash
+>>> import numpy as np
+>>> A = np.array([[0, -1, 1], [1, 0, -1], [-1, 1, 0]])
+>>> B = A.transpose()
+>>> game = nash.Game(A, B)
+>>> x0 = np.array([0.3, 0.35, 0.35])
+>>> y0 = np.array([0.3, 0.35, 0.35])
+>>> xs, ys = game.asymmetric_replicator_dynamics(x0=x0, y0=y0)
+
+>>> plt.figure(figsize=(15, 5)) # doctest: +SKIP
+>>> plt.subplot(1, 2, 1) # doctest: +SKIP
+>>> plt.plot(xs) # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time for row player") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$", f"$s_{2}$"]) # doctest: +SKIP
+>>> plt.subplot(1, 2, 2) # doctest: +SKIP
+>>> plt.plot(ys) # doctest: +SKIP
+>>> plt.xlabel("Timepoints") # doctest: +SKIP
+>>> plt.ylabel("Probability") # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time for column player") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$", f"$s_{2}$"]) # doctest: +SKIP
+
+.. image:: /_static/learning/asymmetric_evolutionary_dynamics/non_convergence_example/main.svg
+
+Find below an example of a game that is able to reach a stable steady state::
+
+>>> import matplotlib.pyplot as plt
+>>> import nashpy as nash
+>>> import numpy as np
+>>> A = np.array([[2, 2], [3, 4]])
+>>> B = np.array([[4, 3], [3, 2]])
+>>> game = nash.Game(A, B)
+>>> x0 = np.array([0.9, 0.1])
+>>> y0 = np.array([0.3, 0.7])
+>>> xs, ys = game.asymmetric_replicator_dynamics(x0=x0, y0=y0)
+
+>>> plt.figure(figsize=(15, 5)) # doctest: +SKIP
+>>> plt.subplot(1, 2, 1) # doctest: +SKIP
+>>> plt.plot(xs) # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time for row player") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
+>>> plt.subplot(1, 2, 2) # doctest: +SKIP
+>>> plt.plot(ys) # doctest: +SKIP
+>>> plt.xlabel("Timepoints") # doctest: +SKIP
+>>> plt.ylabel("Probability") # doctest: +SKIP
+>>> plt.title("Probability distribution of strategies over time for column player") # doctest: +SKIP
+>>> plt.legend([f"$s_{0}$", f"$s_{1}$"]) # doctest: +SKIP
+
+.. image:: /_static/learning/asymmetric_evolutionary_dynamics/steady_state_example/main.svg

@@ -10,6 +10,17 @@ requires = [
     "numpy >=1.15.4",
     "scipy >=0.19.0",
 ]
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "pytest",
+    "pytest-cov",
+    "hypothesis",
+    "interrogate",
+    "pytest-flake8"
+]
+doc = ["sphinx", "sphinx-rtd-theme"]
+
 home-page = "https://vknight.org"
 requires-python= ">=3.8"
 description-file = "README.md"

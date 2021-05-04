@@ -1,3 +1,7 @@
+# v0.0.22
+
+Add asymmetric replicator dynamics.
+
 # v0.0.21
 
 Add stochastic fictitious play.

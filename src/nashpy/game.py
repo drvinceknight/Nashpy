@@ -5,7 +5,10 @@ from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
 from .learning.fictitious_play import fictitious_play
-from .learning.replicator_dynamics import replicator_dynamics
+from .learning.replicator_dynamics import (
+    asymmetric_replicator_dynamics,
+    replicator_dynamics,
+)
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 
 
@@ -24,6 +27,10 @@ class Game:
 
     def __init__(self, *args):
         if len(args) == 2:
+            if (not len(args[0]) == len(args[1])) or (
+                not len(args[0][0]) == len(args[1][0])
+            ):
+                raise ValueError("Unequal dimensions for matrices A and B")
             self.payoff_matrices = tuple([np.asarray(m) for m in args])
         if len(args) == 1:
             self.payoff_matrices = np.asarray(args[0]), -np.asarray(args[0])
@@ -212,3 +219,25 @@ Column player:
         """
         A, _ = self.payoff_matrices
         return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)
+
+    def asymmetric_replicator_dynamics(self, x0=None, y0=None, timepoints=None):
+        """
+        Returns two arrays, corresponding to the two players, showing the
+        probability of each strategy being played over time using the asymmetric
+        replicator dynamics algorithm.
+
+        Parameters
+        ----------
+            x0 : array, optional
+            y0 : array, optional
+            timepoints : array, optional
+
+        Returns
+        -------
+            xs1 : array
+            xs2 : array
+        """
+        A, B = self.payoff_matrices
+        return asymmetric_replicator_dynamics(
+            A=A, B=B, x0=x0, y0=y0, timepoints=timepoints
+        )

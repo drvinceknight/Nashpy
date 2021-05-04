@@ -15,3 +15,4 @@ How to:
    use-fictitious-play.rst
    use-stochastic-fictitious-play.rst
    use-replicator-dynamics.rst
+   use-asymmetric-replicator-dynamics.rst

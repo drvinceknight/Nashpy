@@ -1,3 +1,7 @@
+# v0.0.23
+
+A number of build improvements and fixes.
+
 # v0.0.22
 
 Add asymmetric replicator dynamics.

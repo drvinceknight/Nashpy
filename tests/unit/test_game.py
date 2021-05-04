@@ -66,18 +66,14 @@ Column player:
         """Test that can create a zero sum game"""
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], A))
-        self.assertTrue(
-            np.array_equal(g.payoff_matrices[0], -g.payoff_matrices[1])
-        )
+        self.assertTrue(np.array_equal(g.payoff_matrices[0], -g.payoff_matrices[1]))
         self.assertTrue(g.zero_sum)
 
         # Can also init with lists
         A = A.tolist()
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], np.asarray(A)))
-        self.assertTrue(
-            np.array_equal(g.payoff_matrices[0], -g.payoff_matrices[1])
-        )
+        self.assertTrue(np.array_equal(g.payoff_matrices[0], -g.payoff_matrices[1]))
         self.assertTrue(g.zero_sum)
 
     def test_zero_sum_repr(self):
@@ -122,23 +118,17 @@ Column player:
 
     def test_support_enumeration_for_bi_matrix(self):
         """Test for the equilibria calculation support enumeration"""
-        A = np.array(
-            [[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]]
-        )
+        A = np.array([[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]])
         B = np.array([[2, 2, 2], [1, 0, 0], [3, 4, 1], [4, 1, 2]])
         g = nash.Game(A, B)
         expected_equilibria = [
             (np.array([0, 0, 3 / 4, 1 / 4]), np.array([1 / 28, 27 / 28, 0]))
         ]
-        for obtained, expected in zip(
-            g.support_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.support_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     np.array_equal(s1, s2),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
         A = np.array([[1, 0], [-2, 3]])
@@ -149,15 +139,11 @@ Column player:
             (np.array([0, 1]), np.array([0, 1])),
             (np.array([1 / 2, 1 / 2]), np.array([1 / 2, 1 / 2])),
         ]
-        for obtained, expected in zip(
-            g.support_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.support_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     np.array_equal(s1, s2),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
         A = np.array([[2, 1], [0, 2]])
@@ -168,15 +154,11 @@ Column player:
             (np.array([0, 1]), np.array([0, 1])),
             (np.array([1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
         ]
-        for obtained, expected in zip(
-            g.support_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.support_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     np.array_equal(s1, s2),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
     def test_support_enumeration_for_degenerate_bi_matrix_game(self):
@@ -191,15 +173,11 @@ Column player:
         ]
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration())
-            for obtained, expected in zip(
-                obtained_equilibria, expected_equilibria
-            ):
+            for obtained, expected in zip(obtained_equilibria, expected_equilibria):
                 for s1, s2 in zip(obtained, expected):
                     self.assertTrue(
                         np.array_equal(s1, s2),
-                        msg="obtained: {} !=expected: {}".format(
-                            obtained, expected
-                        ),
+                        msg="obtained: {} !=expected: {}".format(obtained, expected),
                     )
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
@@ -213,15 +191,11 @@ Column player:
         ]
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration())
-            for obtained, expected in zip(
-                obtained_equilibria, expected_equilibria
-            ):
+            for obtained, expected in zip(obtained_equilibria, expected_equilibria):
                 for s1, s2 in zip(obtained, expected):
                     self.assertTrue(
                         np.allclose(s1, s2),
-                        msg="obtained: {} !=expected: {}".format(
-                            obtained, expected
-                        ),
+                        msg="obtained: {} !=expected: {}".format(obtained, expected),
                     )
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
@@ -237,15 +211,11 @@ Column player:
         ]
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration())
-            for obtained, expected in zip(
-                obtained_equilibria, expected_equilibria
-            ):
+            for obtained, expected in zip(obtained_equilibria, expected_equilibria):
                 for s1, s2 in zip(obtained, expected):
                     self.assertTrue(
                         np.allclose(s1, s2),
-                        msg="obtained: {} !=expected: {}".format(
-                            obtained, expected
-                        ),
+                        msg="obtained: {} !=expected: {}".format(obtained, expected),
                     )
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
@@ -255,9 +225,7 @@ Column player:
         A = np.array([[0, 0], [0, 0]])
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
-            obtained_equilibria = list(
-                g.support_enumeration(non_degenerate=True)
-            )
+            obtained_equilibria = list(g.support_enumeration(non_degenerate=True))
             self.assertEqual(len(obtained_equilibria), 4)
             self.assertGreater(len(w), 0)
             self.assertEqual(w[-1].category, RuntimeWarning)
@@ -305,9 +273,7 @@ Column player:
         assert len(eqs) == 1
         row_strategy, col_strategy = eqs[0]
         expected_row_strategy, expected_column_strategy = (
-            np.array(
-                [7.33134761e-17, 2.62812089e-01, 7.37187911e-01, 0.00000000e00]
-            ),
+            np.array([7.33134761e-17, 2.62812089e-01, 7.37187911e-01, 0.00000000e00]),
             np.array([0.4516129, 0.5483871, 0.0, 0.0]),
         )
         assert np.all(np.isclose(row_strategy, expected_row_strategy))
@@ -315,23 +281,17 @@ Column player:
 
     def test_vertex_enumeration_for_bi_matrix(self):
         """Test for the equilibria calculation using vertex enumeration"""
-        A = np.array(
-            [[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]]
-        )
+        A = np.array([[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]])
         B = np.array([[2, 2, 2], [1, 0, 0], [3, 4, 1], [4, 1, 2]])
         g = nash.Game(A, B)
         expected_equilibria = [
             (np.array([0, 0, 3 / 4, 1 / 4]), np.array([1 / 28, 27 / 28, 0]))
         ]
-        for obtained, expected in zip(
-            g.vertex_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.vertex_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     all(np.isclose(s1, s2)),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
         A = np.array([[1, 0], [-2, 3]])
@@ -342,15 +302,11 @@ Column player:
             (np.array([0, 1]), np.array([0, 1])),
             (np.array([1 / 2, 1 / 2]), np.array([1 / 2, 1 / 2])),
         ]
-        for obtained, expected in zip(
-            g.vertex_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.vertex_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     all(np.isclose(s1, s2)),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
         A = np.array([[2, 1], [0, 2]])
@@ -361,22 +317,16 @@ Column player:
             (np.array([0, 1]), np.array([0, 1])),
             (np.array([1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
         ]
-        for obtained, expected in zip(
-            g.vertex_enumeration(), expected_equilibria
-        ):
+        for obtained, expected in zip(g.vertex_enumeration(), expected_equilibria):
             for s1, s2 in zip(obtained, expected):
                 self.assertTrue(
                     all(np.isclose(s1, s2)),
-                    msg="obtained: {} !=expected: {}".format(
-                        obtained, expected
-                    ),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
     def test_lemke_howson_for_bi_matrix(self):
         """Test for the equilibria calculation using lemke howson"""
-        A = np.array(
-            [[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]]
-        )
+        A = np.array([[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]])
         B = np.array([[2, 2, 2], [1, 0, 0], [3, 4, 1], [4, 1, 2]])
         g = nash.Game(A, B)
         expected_equilibria = (
@@ -413,27 +363,17 @@ Column player:
             (np.array([0, 1]), np.array([0, 1])),
         ] * 2
         equilibria = g.lemke_howson_enumeration()
-        for equilibrium, expected_equilibrium in zip(
-            equilibria, expected_equilibria
-        ):
-            for strategy, expected_strategy in zip(
-                equilibrium, expected_equilibrium
-            ):
+        for equilibrium, expected_equilibrium in zip(equilibria, expected_equilibria):
+            for strategy, expected_strategy in zip(equilibrium, expected_equilibrium):
                 self.assertTrue(all(np.isclose(strategy, expected_strategy)))
 
         A = np.array([[3, 1], [1, 3]])
         B = np.array([[1, 3], [3, 1]])
         g = nash.Game(A, B)
-        expected_equilibria = [
-            (np.array([1 / 2, 1 / 2]), np.array([1 / 2, 1 / 2]))
-        ] * 4
+        expected_equilibria = [(np.array([1 / 2, 1 / 2]), np.array([1 / 2, 1 / 2]))] * 4
         equilibria = g.lemke_howson_enumeration()
-        for equilibrium, expected_equilibrium in zip(
-            equilibria, expected_equilibria
-        ):
-            for strategy, expected_strategy in zip(
-                equilibrium, expected_equilibrium
-            ):
+        for equilibrium, expected_equilibrium in zip(equilibria, expected_equilibria):
+            for strategy, expected_strategy in zip(equilibrium, expected_equilibrium):
                 self.assertTrue(all(np.isclose(strategy, expected_strategy)))
 
     def test_get_item(self):

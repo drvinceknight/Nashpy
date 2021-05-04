@@ -29,13 +29,9 @@ class TestPolytope(unittest.TestCase):
             (number_of_strategies, number_of_strategies + dimension + 1),
         )
         self.assertTrue(
-            np.array_equal(
-                tableau[:, dimension:-1], np.eye(number_of_strategies)
-            )
+            np.array_equal(tableau[:, dimension:-1], np.eye(number_of_strategies))
         )
-        self.assertTrue(
-            np.array_equal(tableau[:, -1], np.ones(number_of_strategies))
-        )
+        self.assertTrue(np.array_equal(tableau[:, -1], np.ones(number_of_strategies)))
 
     def test_creationg_of_particular_tableaux(self):
         M = np.array([[3, 3], [2, 5], [0, 6]])
@@ -65,17 +61,13 @@ class TestPolytope(unittest.TestCase):
             ]
         )
         for column, row in [(0, 0), (1, 2), (2, 0), (3, 1), (4, 2)]:
-            self.assertEqual(
-                find_pivot_row(tableau=tableau, column_index=column), row
-            )
+            self.assertEqual(find_pivot_row(tableau=tableau, column_index=column), row)
 
         tableau = np.array(
             [[3.0, 2.0, 3.0, 1.0, 0.0, 1.0], [2.0, 6.0, 1.0, 0.0, 1.0, 1.0]]
         )
         for column, row in [(0, 0), (1, 1), (2, 0), (3, 0), (4, 1)]:
-            self.assertEqual(
-                find_pivot_row(tableau=tableau, column_index=column), row
-            )
+            self.assertEqual(find_pivot_row(tableau=tableau, column_index=column), row)
 
     def test_non_basic_variables(self):
         tableau = np.array(

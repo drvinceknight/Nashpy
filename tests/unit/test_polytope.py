@@ -31,9 +31,7 @@ class TestPolytope(unittest.TestCase):
             halfspace.shape, (number_of_strategies + dimension, dimension + 1)
         )
         self.assertTrue(
-            np.array_equal(
-                halfspace[number_of_strategies:, :-1], -np.eye(dimension)
-            )
+            np.array_equal(halfspace[number_of_strategies:, :-1], -np.eye(dimension))
         )
 
     def test_creation_of_particular_halfspaces(self):

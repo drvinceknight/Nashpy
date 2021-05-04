@@ -69,9 +69,7 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         )
 
     # First pivot (to drop a label)
-    next_tableau, next_slack_variables, next_non_basic_variables = next(
-        tableaux
-    )
+    next_tableau, next_slack_variables, next_non_basic_variables = next(tableaux)
 
     entering_label = pivot_tableau_lex(
         next_tableau,
@@ -85,9 +83,7 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
     next_non_basic_variables.remove(initial_dropped_label)
 
     while col_non_basic_variables.union(row_non_basic_variables) != full_labels:
-        next_tableau, next_slack_variables, next_non_basic_variables = next(
-            tableaux
-        )
+        next_tableau, next_slack_variables, next_non_basic_variables = next(tableaux)
 
         # the first label is 'entering' in the sense that it will enter the next
         # tableau's set of basic variables

@@ -7,9 +7,7 @@ def get_best_response_to_play_count(A, play_count):
     Returns the best response to a belief based on the playing distribution of the opponent
     """
     utilities = A @ play_count
-    return np.random.choice(
-        np.argwhere(utilities == np.max(utilities)).transpose()[0]
-    )
+    return np.random.choice(np.argwhere(utilities == np.max(utilities)).transpose()[0])
 
 
 def update_play_count(play_count, play):
@@ -26,9 +24,7 @@ def fictitious_play(A, B, iterations, play_counts=None):
     Implement fictitious play
     """
     if play_counts is None:
-        play_counts = [
-            np.array([0 for _ in range(dimension)]) for dimension in A.shape
-        ]
+        play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
 
     yield play_counts
 

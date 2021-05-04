@@ -1142,9 +1142,7 @@ def test_get_derivative_of_asymmetric_fitness_example():
     )
 
     for x_value, expected_derivative in zip(x_values, derivative_values):
-        derivative = get_derivative_of_asymmetric_fitness(
-            x=x_value, t=0, A=M, B=N
-        )
+        derivative = get_derivative_of_asymmetric_fitness(x=x_value, t=0, A=M, B=N)
         assert np.allclose(derivative, expected_derivative), x_value
 
 
@@ -1254,9 +1252,7 @@ def test_asymmetric_replicator_dynamics_size_4_6_given_x0_y0():
     )
     assert np.allclose(
         xs_A[-1],
-        np.array(
-            [-2.50483397e-15, 9.99977992e-01, 2.20078313e-05, 1.18367977e-17]
-        ),
+        np.array([-2.50483397e-15, 9.99977992e-01, 2.20078313e-05, 1.18367977e-17]),
     )
     assert np.allclose(
         xs_B[1],

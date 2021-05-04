@@ -48,9 +48,7 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
         ratio = np.divide(Cq, pivot_column)
 
     # filters for column coefficients <=0 (to preserve feasibility)
-    filtered_ratio = np.where(
-        pivot_column <= 0, np.full(ratio.shape, np.inf), ratio
-    )
+    filtered_ratio = np.where(pivot_column <= 0, np.full(ratio.shape, np.inf), ratio)
 
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
 
@@ -66,9 +64,7 @@ def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
             return i
 
 
-def pivot_tableau_lex(
-    tableau, column_index, slack_variables, non_basic_variables
-):
+def pivot_tableau_lex(tableau, column_index, slack_variables, non_basic_variables):
     """
     Pivots the tableau and returns the dropped label
     """

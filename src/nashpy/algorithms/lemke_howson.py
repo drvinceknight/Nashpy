@@ -110,9 +110,7 @@ def lemke_howson(A, B, initial_dropped_label=0):
         non_basic_variables(row_tableau).union(non_basic_variables(col_tableau))
         != full_labels
     ):
-        entering_label = pivot_tableau(
-            next(tableux), next(iter(entering_label))
-        )
+        entering_label = pivot_tableau(next(tableux), next(iter(entering_label)))
 
     row_strategy = tableau_to_strategy(
         row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
@@ -123,9 +121,7 @@ def lemke_howson(A, B, initial_dropped_label=0):
         range(A.shape[0], sum(A.shape)),
     )
 
-    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (
-        A.shape[0],
-    ):
+    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):
         msg = """The Lemke Howson algorithm has returned probability vectors of 
 incorrect shapes. This indicates an error. Your game could be degenerate."""
 

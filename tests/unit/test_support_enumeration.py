@@ -173,13 +173,9 @@ class TestSupportEnumeration(unittest.TestCase):
             (np.array([0, 1]), np.array([0, 1])),
             (np.array([1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
         ]
-        obtained_indifference = [
-            out[:2] for out in indifference_strategies(A, B)
-        ]
+        obtained_indifference = [out[:2] for out in indifference_strategies(A, B)]
         self.assertEqual(len(obtained_indifference), len(expected_indifference))
-        for obtained, expected in zip(
-            obtained_indifference, expected_indifference
-        ):
+        for obtained, expected in zip(obtained_indifference, expected_indifference):
             self.assertTrue(
                 np.array_equal(obtained, expected),
                 msg="obtained: {} !=expected: {}".format(obtained, expected),
@@ -197,13 +193,10 @@ class TestSupportEnumeration(unittest.TestCase):
             (np.array([1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
         ]
         obtained_indifference = [
-            out[:2]
-            for out in indifference_strategies(A, B, non_degenerate=True)
+            out[:2] for out in indifference_strategies(A, B, non_degenerate=True)
         ]
         self.assertEqual(len(obtained_indifference), len(expected_indifference))
-        for obtained, expected in zip(
-            obtained_indifference, expected_indifference
-        ):
+        for obtained, expected in zip(obtained_indifference, expected_indifference):
             self.assertTrue(
                 np.array_equal(obtained, expected),
                 msg="obtained: {} !=expected: {}".format(obtained, expected),
@@ -224,9 +217,7 @@ class TestSupportEnumeration(unittest.TestCase):
             out[:2] for out in indifference_strategies(A, B, tol=10 ** -2)
         ]
         self.assertEqual(len(obtained_indifference), len(expected_indifference))
-        for obtained, expected in zip(
-            obtained_indifference, expected_indifference
-        ):
+        for obtained, expected in zip(obtained_indifference, expected_indifference):
             self.assertTrue(
                 np.array_equal(obtained, expected),
                 msg="obtained: {} !=expected: {}".format(obtained, expected),
@@ -248,19 +239,11 @@ class TestSupportEnumeration(unittest.TestCase):
         """Test for obey support"""
         tol = 1
         self.assertFalse(obey_support(False, np.array([0, 1])))
-        self.assertFalse(
-            obey_support(np.array([1, 0]), np.array([0, 1]), tol=tol)
-        )
+        self.assertFalse(obey_support(np.array([1, 0]), np.array([0, 1]), tol=tol))
         self.assertFalse(obey_support(np.array([1, 0]), np.array([0]), tol=tol))
-        self.assertFalse(
-            obey_support(np.array([0, 0.5]), np.array([1]), tol=tol)
-        )
-        self.assertFalse(
-            obey_support(np.array([0.5, 0]), np.array([0]), tol=tol)
-        )
-        self.assertFalse(
-            obey_support(np.array([0.5, 0.5]), np.array([0, 1]), tol=tol)
-        )
+        self.assertFalse(obey_support(np.array([0, 0.5]), np.array([1]), tol=tol))
+        self.assertFalse(obey_support(np.array([0.5, 0]), np.array([0]), tol=tol))
+        self.assertFalse(obey_support(np.array([0.5, 0.5]), np.array([0, 1]), tol=tol))
 
     def test_is_ne(self):
         """Test if is ne"""
@@ -300,9 +283,7 @@ class TestSupportEnumeration(unittest.TestCase):
         support_pair = [0], [0]
         self.assertFalse(is_ne(strategy_pair, support_pair, (A, -A)))
 
-        A = np.array(
-            [[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]]
-        )
+        A = np.array([[160, 205, 44], [175, 180, 45], [201, 204, 50], [120, 207, 49]])
         B = np.array([[2, 2, 2], [1, 0, 0], [3, 4, 1], [4, 1, 2]])
         self.assertTrue(
             is_ne(

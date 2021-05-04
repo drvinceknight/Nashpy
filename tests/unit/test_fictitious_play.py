@@ -42,9 +42,7 @@ def test_property_update_belief(play):
     updated_play_count = update_play_count(play_count, play)
     assert play_count[play] + 1 == updated_play_count[play]
     assert np.array_equal(play_count[:play], updated_play_count[:play])
-    assert np.array_equal(
-        play_count[play + 1 :], updated_play_count[play + 1 :]
-    )
+    assert np.array_equal(play_count[play + 1 :], updated_play_count[play + 1 :])
 
 
 @given(
@@ -57,11 +55,7 @@ def test_property_fictitious_play(A, B, iterations):
     assert isinstance(play_counts, types.GeneratorType)
     play_counts = tuple(play_counts)
     assert len(play_counts) == iterations + 1
-    assert (
-        max(tuple(map(len, play_counts)))
-        == min(tuple(map(len, play_counts)))
-        == 2
-    )
+    assert max(tuple(map(len, play_counts))) == min(tuple(map(len, play_counts))) == 2
 
 
 def test_fictitious_play():

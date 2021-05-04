@@ -100,9 +100,7 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
         s1 = solve_indifference(B.T, *(pair[::-1]))
         s2 = solve_indifference(A, *pair)
 
-        if obey_support(s1, pair[0], tol=tol) and obey_support(
-            s2, pair[1], tol=tol
-        ):
+        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
             yield s1, s2, pair[0], pair[1]
 
 

@@ -29,12 +29,8 @@ class TestVertexEnumeration(unittest.TestCase):
         equilibria = sorted(
             vertex_enumeration(A, B), key=lambda a: list(np.round(a[0], 4))
         )
-        for equilibrium, expected_equilibrium in zip(
-            equilibria, expected_equilibria
-        ):
-            for strategy, expected_strategy in zip(
-                equilibrium, expected_equilibrium
-            ):
+        for equilibrium, expected_equilibrium in zip(equilibria, expected_equilibria):
+            for strategy, expected_strategy in zip(equilibrium, expected_equilibrium):
                 self.assertTrue(all(np.isclose(strategy, expected_strategy)))
 
     def test_with_negative_utilities(self):
@@ -43,7 +39,5 @@ class TestVertexEnumeration(unittest.TestCase):
 
         expected_equilibrium = (np.array([0.5, 0.5]), np.array([0.5, 0.5]))
         equilibrium = next(vertex_enumeration(A, B))
-        for strategy, expected_strategy in zip(
-            equilibrium, expected_equilibrium
-        ):
+        for strategy, expected_strategy in zip(equilibrium, expected_equilibrium):
             assert all(np.isclose(strategy, expected_strategy)), strategy

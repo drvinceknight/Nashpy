@@ -171,9 +171,7 @@ Column player:
             plays: A generator
         """
         return fictitious_play(
-            *self.payoff_matrices,
-            iterations=iterations,
-            play_counts=play_counts
+            *self.payoff_matrices, iterations=iterations, play_counts=play_counts
         )
 
     def stochastic_fictitious_play(

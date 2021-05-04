@@ -1,0 +1,16 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "nashpy"
+author = "Vince Knight, James Campbell"
+author-email = "vince@vknight.org"
+requires = [
+    "numpy >=1.15.4",
+    "scipy >=0.19.0",
+]
+home-page = "https://vknight.org"
+requires-python= ">=3.8"
+description-file = "README.md"
+classifiers = [ "License :: OSI Approved :: MIT License",]

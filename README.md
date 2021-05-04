@@ -65,21 +65,33 @@ Full documentation is available here: http://nashpy.readthedocs.io/
 
 ## Development
 
-To install a development version of this library:
+Clone the repository and create a virtual environment:
+
+```bash
+$ git clone https://github.com/drvinceknight/nashpy.git
+$ cd nashpy
+$ python -m venv env
 
 ```
-$ python setup.py develop
+
+Activate the virtual environment and install [`tox`](https://tox.readthedocs.io/en/latest/):
+
+```bash
+$ source env/bin/activate
+$ python -m pip install tox
+
 ```
 
-To run the full test suite (install `pytest`: `pip install pytest`) and run:
+Make modifications.
+
+To run the tests:
+
+```bash
+$ python -m tox
 
 ```
-$ pytest .
-```
 
-All contributions are welcome, although this is meant to be a simple library,
-for more detailed game theoretic contribution please see
-[gambit](https://github.com/gambitproject/gambit).
+Pull requests are welcome.
 
 ## Code of conduct
 

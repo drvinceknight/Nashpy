@@ -9,3 +9,5 @@ docs/_build/
 .wily/
 coverage.xml
 build/
+env/
+.tox/

@@ -6,8 +6,6 @@
 Welcome to Nashpy's documentation!
 ==================================
 
-TODO Delete this.
-
 This is a Python library used for the computation of equilibria in 2 player
 strategic form games.
 

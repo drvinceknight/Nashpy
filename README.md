@@ -91,6 +91,20 @@ $ python -m tox
 
 ```
 
+To build the documentation. First install the software which also installs the
+documentation build requirements.
+
+```bash
+$ python -m flit install --symlink
+```
+
+Then:
+
+```bash
+$ cd docs
+$ make html
+```
+
 Pull requests are welcome.
 
 ## Code of conduct

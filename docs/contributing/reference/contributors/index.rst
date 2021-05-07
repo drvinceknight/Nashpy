@@ -1,4 +1,4 @@
 List of contributors
 --------------------
 
-- `@drvinceknigght <https://github.com/drvinceknight>`_
+- `@drvinceknight <https://github.com/drvinceknight>`_

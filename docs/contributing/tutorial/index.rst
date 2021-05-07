@@ -9,11 +9,11 @@ Forking the repository
 Navigate to http://github.com and create an account. If you are in education you
 can apply for a specific education account here: https://education.github.com.
 
-Navigate to the github repository for Nashpy:
+Navigate to the Github repository for Nashpy:
 https://github.com/drvinceknight/Nashpy. This is the hub for development of the
 source code. You cannot make modification to this copy of the source code so you
-need to create your own copy under your github account. You do this by creating
-a **fork**. Do this by clicking the :code:`fork` button and following the
+need to create your own copy under your Github account. You do this by creating
+a **fork**. Do this by clicking the :code:`Fork` button and following the
 instructions:
 
 .. image:: /_static/contributing/tutorial/forking/main.png
@@ -21,7 +21,7 @@ instructions:
 Cloning the repository
 ----------------------
 
-Once we have a fork of the repository on **your** github account, create a copy
+Once we have a fork of the repository on **your** Github account, create a copy
 of it to your computer. This is called cloning. Do this by clicking the `Code`
 button and copying the address of the repository to your clipboard:
 
@@ -30,7 +30,7 @@ button and copying the address of the repository to your clipboard:
 If you have not installed :code:`git` go to https://git-scm.com and install.
 
 Now to create a clone of the source code open your command line tool and type
-the following (**replace** :code:`<your username>` with your github username):
+the following (**replace** :code:`<your username>` with your Github username):
 
     $ git clone https://github.com/<your username>/Nashpy.git
 
@@ -71,7 +71,7 @@ have a preferred editor `Visual Studio Code <https://code.visualstudio.com>`_ is
 recommended.
 
 Now add you name to the file (**replace** :code:`<your username>`
-with your github username)::
+with your Github username)::
 
     List of contributors
     --------------------
@@ -136,8 +136,8 @@ not caused any problems::
     $ python -m pip install tox
     $ python -m tox
 
-Committing this change
-----------------------
+Committing the change
+---------------------
 
 Now you need to **stage** this file::
 
@@ -155,8 +155,8 @@ This will open a text editor where you can write your commit title and message::
 
 Closing the editor will commit the changes you made.
 
-Pushing our changes to Github
------------------------------
+Pushing the change to Github
+----------------------------
 
 Now that all that is done, you are going to send the changes back to your copy
 of the source code on Github::
@@ -167,23 +167,26 @@ Opening a Pull Request
 ----------------------
 
 You now have 2 copies of the modified source code of Nashpy. One locally on your
-computer, the other under your github account. In order to include those changes
+computer, the other under your Github account. In order to include those changes
 in to the main source code of Nashpy you will open a Pull request.
 
 To do this, go to your fork of the Nashpy repository:
 :code:`https://github.com/<your username>/Nashpy`. You should see a :code:`Open
-Pull request` button.
+Pull request` button:
 
-Then click on ...
+.. image:: /_static/contributing/tutorial/before_pr/main.png
+
+Once you have clicked on that, you can review your changes and then eventually
+click on :code:`Open PR` to open the Pull Request.
 
 Making further modifications
 ----------------------------
 
-Once a Pull Requestion is opened, a number of automated checks will start. This
+Once a Pull Request is opened, a number of automated checks will start. This
 will check the various software tests but also build a viewable version of the
 documentation.
 
-You can click on all these:
+You can click on the corresponding :code:`details` button to see any of these:
 
 .. image:: /_static/contributing/tutorial/ci/main.png
 
@@ -201,7 +204,7 @@ Then stage and commit the files::
 This will open a text editor where you can write your commit title and message
 (similarly to before).
 
-Once this is done, push the code to github which will automatically update the
+Once this is done, push the code to Github which will automatically update the
 pull request::
 
     $ git push origin add-name-to-contributors-list

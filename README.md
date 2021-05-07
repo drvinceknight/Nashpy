@@ -95,6 +95,7 @@ To build the documentation. First install the software which also installs the
 documentation build requirements.
 
 ```bash
+$ python -m pip install flit
 $ python -m flit install --symlink
 ```
 

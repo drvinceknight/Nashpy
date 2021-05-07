@@ -3,25 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Nashpy's documentation!
-==================================
+Contributor documentation
+=========================
 
-This is a Python library used for the computation of equilibria in 2 player
-strategic form games.
-
-This is a library with simple dependencies (it only requires :code:`numpy` and
-:code:`scipy`) so that it is pip installable.
+This is guide explains the various tools and steps used to contribute code to
+Nashpy.
 
 .. toctree::
    :maxdepth: 2
 
    tutorial/index.rst
    how-to/index.rst
-   reference/index.rst
    discussion/index.rst
-   contributing/index.rst
-
-
+   reference/index.rst
 
 
 Indices and tables

@@ -14,3 +14,6 @@ home-page = "https://vknight.org"
 requires-python= ">=3.8"
 description-file = "README.md"
 classifiers = [ "License :: OSI Approved :: MIT License",]
+
+[tool.flit.metadata.requires-extra]
+doc = ["sphinx", "sphinx-rtd-theme"]

@@ -39,7 +39,7 @@ Advanced settings for your project on Read the docs:
 Setting up the web hooks correctly is described here:
 https://docs.readthedocs.io/en/latest/pull-requests.html
 
-This is what the `Applications settings
+When done correctly this is what `Applications settings
 <https://github.com/settings/applications?o=used-desc>`_ should look like:
 
 .. image:: /_static/contributing/discussion/readthedocs/web_hook/main.png
@@ -53,7 +53,7 @@ should have the following 4 boxes ticked:
 - Pull requests
 - Pushes
 
-This is shown here:
+When done correctly this should look like:
 
 .. image:: /_static/contributing/discussion/readthedocs/github_settings_branches/main.png
 .. image:: /_static/contributing/discussion/readthedocs/github_settings_PRs_and_pushes/main.png

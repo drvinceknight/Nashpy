@@ -174,4 +174,38 @@ To do this, go to your fork of the Nashpy repository:
 :code:`https://github.com/<your username>/Nashpy`. You should see a :code:`Open
 Pull request` button.
 
-Then click on :code:``...
+Then click on ...
+
+Making further modifications
+----------------------------
+
+Once a Pull Requestion is opened, a number of automated checks will start. This
+will check the various software tests but also build a viewable version of the
+documentation.
+
+You can click on all these:
+
+.. image:: /_static/contributing/tutorial/ci/main.png
+
+Your modification will also be reviewed:
+
+.. image:: /_static/contributing/tutorial/review/main.png
+
+To make any required changes, **modify the files**.
+
+Then stage and commit the files::
+
+    $ git add docs/contributing/reference/contributors/index.rst
+    $ git commit
+
+This will open a text editor where you can write your commit title and message
+(similarly to before).
+
+Once this is done, push the code to github which will automatically update the
+pull request::
+
+    $ git push origin add-name-to-contributors-list
+
+This final process of making further modifications might repeat itself and
+eventually the Pull Request will be **merged** and your changes included in the
+main version of the Nashpy source code.

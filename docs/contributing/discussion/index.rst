@@ -13,5 +13,7 @@ Discussion
    black/index.rst
    flake8/index.rst
    interrogate/index.rst
+   sphinx/index.rst
    doctests/index.rst
    github_actions/index.rst
+   readthedocs/index.rst

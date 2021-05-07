@@ -106,6 +106,9 @@ $ cd docs
 $ make html
 ```
 
+Full contribution documentation is available at
+https://nashpy.readthedocs.io/en/latest/contributing/index.html 
+
 Pull requests are welcome.
 
 ## Code of conduct

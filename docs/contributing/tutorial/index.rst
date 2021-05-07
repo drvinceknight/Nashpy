@@ -171,13 +171,13 @@ computer, the other under your Github account. In order to include those changes
 in to the main source code of Nashpy you will open a Pull request.
 
 To do this, go to your fork of the Nashpy repository:
-:code:`https://github.com/<your username>/Nashpy`. You should see a :code:`Open
-Pull request` button:
+:code:`https://github.com/<your username>/Nashpy`. You should see a
+:code:`Compare and Pull Request` button:
 
 .. image:: /_static/contributing/tutorial/before_pr/main.png
 
 Once you have clicked on that, you can review your changes and then eventually
-click on :code:`Open PR` to open the Pull Request.
+click on :code:`Create pull request` to create the Pull Request.
 
 Making further modifications
 ----------------------------

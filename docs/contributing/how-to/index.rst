@@ -8,6 +8,7 @@ How to:
 
    how-to-fork-the-repository/index.rst
    how-to-clone-the-repository/index.rst
+   how-to-update-from-upstream/index.rst
    how-to-create-a-branch/index.rst
    how-to-install-the-library-from-source/index.rst
    how-to-run-tests/index.rst

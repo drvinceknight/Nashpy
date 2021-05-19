@@ -1,4 +1,8 @@
 How to clone the repository
 ===========================
 
-TODO
+In order to obtain a copy of
+:ref:`your fork of the repository on github <how-to-fork>` to your local
+run the following at your command line::
+
+    $ git clone https://github.com/<username>/Nashpy.git

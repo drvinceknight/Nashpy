@@ -11,3 +11,4 @@ coverage.xml
 build/
 env/
 .tox/
+*.DS_Store

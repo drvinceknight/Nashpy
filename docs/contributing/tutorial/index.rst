@@ -66,7 +66,7 @@ Modifying the documentation
 ---------------------------
 
 Using your preferred editor, open the file
-:code:`Nashpy/docs/contributing/reference/contributors/main.rst`. If you do not
+:code:`Nashpy/docs/contributing/reference/contributors/index.rst`. If you do not
 have a preferred editor `Visual Studio Code <https://code.visualstudio.com>`_ is
 recommended.
 
@@ -81,7 +81,7 @@ with your Github username)::
 
 Checking the modification
 -------------------------
- 
+
 To build the documentation, first create a virtual environment specifically for
 purposes to work on Nashpy::
 
@@ -90,7 +90,13 @@ purposes to work on Nashpy::
 This creates a directory :code:`env` which holds a separate version of python.
 To tell your command line tool to now use this version::
 
+On Linux or macOS type::
+
     $ source env/bin/activate
+
+On Windows type::
+
+    $ env\Scripts\activate
 
 Now install the Nashpy software in to this environment::
 
@@ -100,7 +106,7 @@ Now install the Nashpy software in to this environment::
 To build the documentation::
 
     $ cd docs
-    $ make html
+    $ sphinx-build -b html . _build/html
     Running Sphinx v3.1.2
     loading pickled environment... done
     building [mo]: targets for 0 po files that are out of date

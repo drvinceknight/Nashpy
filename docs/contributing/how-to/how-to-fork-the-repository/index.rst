@@ -1,3 +1,5 @@
+.. _how-to-fork:
+
 How to fork the repository
 ==========================
 

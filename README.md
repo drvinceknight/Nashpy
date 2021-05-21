@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596758.svg)](https://doi.org/10.5281/zenodo.596758)
 ![](https://github.com/drvinceknight/Nashpy/workflows/CI/badge.svg)
-[![Discord](https://img.shields.io/discord/803236282088161321?logo=discord)](https://discord.gg/wZsv6s8TTB)
+[![Discord](https://img.shields.io/discord/753185848337367060)](https://discord.gg/wZsv6s8TTB)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00904/status.svg)](https://doi.org/10.21105/joss.00904)
 
 # Nashpy: a python library for the computation of equilibria of 2 player strategic games.

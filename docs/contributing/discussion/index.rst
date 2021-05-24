@@ -8,6 +8,7 @@ Discussion
    pytest/index.rst
    tox/index.rst
    flit/index.rst
+   virtualenv/index.rst
    coverage/index.rst
    hypothesis/index.rst
    black/index.rst

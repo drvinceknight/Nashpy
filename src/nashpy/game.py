@@ -76,8 +76,8 @@ Column player:
 
         Returns
         -------
-
-            equilibria: A generator.
+        generator
+            The equilibria.
         """
         return vertex_enumeration(*self.payoff_matrices)
 
@@ -92,10 +92,18 @@ Column player:
         3. Solve indifference conditions
         4. Check that have Nash Equilibrium.
 
+        Parameters
+        ----------
+        non_degenerate : bool
+            Whether or not to consider supports of equal size. By default
+            (False) only considers supports of equal size.
+        tol : float
+            A tolerance parameter for equality.
+
         Returns
         -------
-
-            equilibria: A generator.
+        generator
+            The equilibria.
         """
         return support_enumeration(
             *self.payoff_matrices, non_degenerate=non_degenerate, tol=tol
@@ -109,10 +117,10 @@ Column player:
 
         Note: this is not guaranteed to find all equilibria.
 
-        Returns
-        -------
-
-            equilibria: A generator
+        Yields
+        ------
+        Tuple
+            An equilibria
         """
         for label in range(sum(self.payoff_matrices[0].shape)):
             yield self.lemke_howson(initial_dropped_label=label)
@@ -135,13 +143,13 @@ Column player:
 
         Parameters
         ----------
-
-            initial_dropped_label: int
+        initial_dropped_label: int
+            The initial dropped label.
 
         Returns
         -------
-
-            equilibria: A tuple.
+        Tuple
+            An equilibria
         """
         return lemke_howson(
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
@@ -161,14 +169,15 @@ Column player:
 
         Parameters
         ----------
-
-            iterations: int
-            play_counts: iterator
+        iterations : int
+            The number of iterations of the algorithm.
+        play_counts : array
+            The play counts.
 
         Returns
         -------
-
-            plays: A generator
+        Generator
+            The play counts
         """
         return fictitious_play(
             *self.payoff_matrices, iterations=iterations, play_counts=play_counts
@@ -180,15 +189,22 @@ Column player:
         """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
         implementation corresponds to the description given in [Hofbauer2002]_.
 
+
         Parameters
         ----------
-            iterations: int
-            play_counts: iterator
-            etha: float
-            epsilon_bar: float
+        iterations : int
+            The number of iterations of the algorithm.
+        play_counts : array
+            The play counts.
+        etha : float
+            The noise parameter for the logit choice function.
+        epsilon_bar : float
+            The maximum stochastic perturbation.
+
         Returns
         -------
-            plays: A generator
+        Generator
+            The play counts
         """
         return stochastic_fictitious_play(
             *self.payoff_matrices,
@@ -208,12 +224,15 @@ Column player:
 
         Parameters
         ----------
-            A: nxm array, where n=m
-            y0: array
-            timepoints: array
+        y0 : array
+            The initial population distribution.
+        timepoints: array
+            The iterable of timepoints.
+
         Returns
         -------
-            xs: array
+        array
+            The population distributions over time.
         """
         A, _ = self.payoff_matrices
         return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)
@@ -226,14 +245,17 @@ Column player:
 
         Parameters
         ----------
-            x0 : array, optional
-            y0 : array, optional
-            timepoints : array, optional
+        x0 : array
+            The initial population distribution of the row player.
+        y0 : array
+            The initial population distribution of the column player.
+        timepoints: array
+            The iterable of timepoints.
 
         Returns
         -------
-            xs1 : array
-            xs2 : array
+        Tuple
+            The 2 population distributions over time.
         """
         A, B = self.payoff_matrices
         return asymmetric_replicator_dynamics(

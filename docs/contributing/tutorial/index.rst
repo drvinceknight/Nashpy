@@ -1,5 +1,5 @@
-Tutorial: making a contribution to the documentation
-====================================================
+Tutorial: make a contribution to the documentation
+==================================================
 
 In this tutorial we will make a contribution to the documentation of Nashpy.
 

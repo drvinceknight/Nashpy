@@ -57,6 +57,6 @@ is also the convention chosen for the entire Nashpy source code.
 Running darglint as part of the test suite
 ------------------------------------------
 
-If darglint is installed it will automatically run as part of the flake8 check
-check. For Nashpy this is done as part of the pytest run which is all
-configured using tox.
+If darglint is installed it will automatically run as part of the flake8 check.
+For Nashpy this is done as part of the pytest run which is all configured using
+tox.

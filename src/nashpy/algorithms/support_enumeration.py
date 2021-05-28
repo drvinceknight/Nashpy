@@ -12,6 +12,16 @@ def powerset(n):
     Based on recipe from python itertools documentation:
 
     https://docs.python.org/2/library/itertools.html#recipes
+
+    Parameters
+    ----------
+    n : int
+        The defining parameter of the powerset.
+
+    Returns
+    -------
+    generator
+        The powerset
     """
     return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
 
@@ -26,17 +36,17 @@ def solve_indifference(A, rows=None, columns=None):
 
     Parameters
     ----------
-
-        A: a 2 dimensional numpy array (A payoff matrix for the row player)
-        rows: the support played by the row player
-        columns: the support player by the column player
+    A : array
+        The row player utility matrix.
+    rows : array
+        Array of integers corresponding to rows to consider.
+    columns : array
+        Array of integers corresponding to columns to consider.
 
     Returns
     -------
-
-        A numpy array:
-        A probability vector for the column player that makes the row
-        player indifferent. Will return False if all entries are not >= 0.
+    array
+        The solution to the indifference equations.
     """
     # Ensure differences between pairs of pure strategies are the same
     M = (A[np.array(rows)] - np.roll(A[np.array(rows)], 1, axis=0))[:-1]
@@ -67,10 +77,21 @@ def potential_support_pairs(A, B, non_degenerate=False):
     """
     A generator for the potential support pairs
 
-    Returns
-    -------
 
-        A generator of all potential support pairs
+    Parameters
+    ----------
+    A : array
+        The row player utility matrix.
+    B : array
+        The column player utility matrix
+    non_degenerate : bool
+        Whether or not to consider supports of equal size. By default
+        (False) only considers supports of equal size.
+
+    Yields
+    -------
+    tuple
+        A pair of possible supports.
     """
     p1_num_strategies, p2_num_strategies = A.shape
     for support1 in (s for s in powerset(p1_num_strategies) if len(s) > 0):
@@ -86,9 +107,21 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
     """
     A generator for the strategies corresponding to the potential supports
 
-    Returns
-    -------
+    Parameters
+    ----------
+    A : array
+        The row player utility matrix.
+    B : array
+        The column player utility matrix
+    non_degenerate : bool
+        Whether or not to consider supports of equal size. By default
+        (False) only considers supports of equal size.
+    tol : float
+        A tolerance parameter for equality.
 
+    Yields
+    ------
+    tuple
         A generator of all potential strategies that are indifferent on each
         potential support. Return False if they are not valid (not a
         probability vector OR not fully on the given support).
@@ -110,17 +143,17 @@ def obey_support(strategy, support, tol=10 ** -16):
 
     Parameters
     ----------
-
-        strategy: a numpy array
-            A given strategy vector
-        support: a numpy array
-            A strategy support
+    strategy: array
+        A given strategy vector
+    support: array
+        A strategy support
+    tol : float
+        A tolerance parameter for equality.
 
     Returns
     -------
-
-        A boolean: whether or not that strategy does indeed have the given
-        support
+    bool
+        whether or not that strategy does indeed have the given support
     """
     if strategy is False:
         return False
@@ -138,9 +171,17 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
 
     Parameters
     ----------
+    strategy_pair: tuple
+        a 2-tuple of numpy arrays.
+    support_pair: tuple
+        a 2-tuple of numpy arrays of integers.
+    payoff_matrices: tuple
+        a 2-tuple of numpy array of payoff matrices.
 
-        strategy_pair: a 2-tuple of numpy arrays
-        support_pair: a 2-tuple of numpy arrays
+    Returns
+    -------
+    bool
+        True if a given strategy pair is a pair of best responses.
     """
     A, B = payoff_matrices
     # Payoff against opponents strategies:
@@ -171,10 +212,22 @@ def support_enumeration(A, B, non_degenerate=False, tol=10 ** -16):
     3. Solve indifference conditions
     4. Check that have Nash Equilibrium.
 
-    Returns
-    -------
+    Parameters
+    ----------
+    A : array
+        The row player utility matrix.
+    B : array
+        The column player utility matrix
+    non_degenerate : bool
+        Whether or not to consider supports of equal size. By default
+        (False) only considers supports of equal size.
+    tol : float
+        A tolerance parameter for equality.
 
-        equilibria: A generator.
+    Yields
+    -------
+    tuple
+        The equilibria.
     """
     count = 0
     for s1, s2, sup1, sup2 in indifference_strategies(

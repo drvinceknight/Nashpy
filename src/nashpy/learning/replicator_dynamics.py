@@ -8,6 +8,21 @@ from scipy.integrate import odeint
 def get_derivative_of_fitness(x, t, A):
     """
     Find the derivative of fitness function
+
+    Parameters
+    ----------
+    x : array
+        A population distribution.
+    t : float
+        A time point. This is not actually used but is needed in the function
+        signature.
+    A : array
+        The payoff matrix
+
+    Returns
+    -------
+    array
+        The derivative of the population distribution.
     """
     f = np.dot(A, x)
     phi = np.dot(f, x)
@@ -17,6 +32,20 @@ def get_derivative_of_fitness(x, t, A):
 def replicator_dynamics(A, y0=None, timepoints=None):
     """
     Implement replicator dynamics
+
+    Parameters
+    ----------
+    A : array
+        The payoff matrix
+    y0 : array
+        The initial population distribution.
+    timepoints: array
+        The iterable of timepoints.
+
+    Returns
+    -------
+    array
+        The population distributions over time.
     """
 
     if timepoints is None:
@@ -34,6 +63,23 @@ def get_derivative_of_asymmetric_fitness(x, t, A, B):
     """
     Find the derivative of fitness function for the asymmetric replicator
     dynamics scenario
+
+    Parameters
+    ----------
+    x : array
+        A vector combining both population distributions.
+    t : float
+        A time point. This is not actually used but is needed in the function
+        signature.
+    A : array
+        The row player payoff matrix
+    B : array
+        The column player payoff matrix
+
+    Returns
+    -------
+    array
+        The derivative of both population distributions.
     """
     number_of_rows = A.shape[0]
     row_vector = x[:number_of_rows]
@@ -54,6 +100,24 @@ def get_derivative_of_asymmetric_fitness(x, t, A, B):
 def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
     """
     Implement asymmetric replicator dynamics
+
+    Parameters
+    ----------
+    A : array
+        The row player payoff matrix
+    B : array
+        The column player payoff matrix
+    x0 : array
+        The initial population distribution of the row player.
+    y0 : array
+        The initial population distribution of the column player.
+    timepoints: array
+        The iterable of timepoints.
+
+    Returns
+    -------
+    Tuple
+        The 2 population distributions over time.
     """
     if timepoints is None:
         timepoints = np.linspace(0, 10, 1000)

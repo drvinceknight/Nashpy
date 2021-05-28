@@ -17,14 +17,15 @@ def shift_tableau(tableau, shape):
 
     Parameters
     ----------
-
-        tableau: a numpy array
-        shape: a tuple
+    tableau : array
+        a tableau corresponding to a vertex of a polytope.
+    shape : tuple
+        the required shape of the tableau
 
     Returns
     -------
-
-        tableau: a numpy array
+    array
+        The shifted tableau
     """
     return np.append(
         np.roll(tableau[:, :-1], shape[0], axis=1),
@@ -39,15 +40,17 @@ def tableau_to_strategy(tableau, basic_labels, strategy_labels):
 
     Parameters
     ----------
-
-        tableau: a numpy array
-        basic_labels: a set
-        strategy_labels: a set
+    tableau : array
+        a tableau corresponding to a vertex of a polytope.
+    basic_labels : set
+        the set of basic labels.
+    strategy_labels : set
+        the set of labels that correspond to strategies.
 
     Returns
     -------
-
-        strategy: a numpy array
+    array
+        A strategy.
     """
     vertex = []
     for column in strategy_labels:
@@ -79,13 +82,17 @@ def lemke_howson(A, B, initial_dropped_label=0):
 
     Parameters
     ----------
-
-        initial_dropped_label: int
+    A : array
+        The row player payoff matrix
+    B : array
+        The column player payoff matrix
+    initial_dropped_label: int
+        The initial dropped label.
 
     Returns
     -------
-
-        equilibria: A tuple.
+    Tuple
+        An equilibria
     """
 
     if np.min(A) <= 0:

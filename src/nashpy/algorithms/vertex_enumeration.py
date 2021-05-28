@@ -16,10 +16,18 @@ def vertex_enumeration(A, B):
     3. Check if pair is fully labelled
     4. Return the normalised pair
 
-    Returns
-    -------
+    Parameters
+    ----------
+    A : array
+        The row player utility matrix.
+    B : array
+        The column player utility matrix
 
-        equilibria: A generator.
+
+    Yields
+    -------
+    tuple
+        The equilibria.
     """
 
     if np.min(A) < 0:

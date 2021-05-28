@@ -20,13 +20,13 @@ def build_halfspaces(M):
 
     Parameters
     ----------
+    M : array
+        A matrix with linear coefficients defining the polytope.
 
-        M: a numpy array
-
-    Returns:
-    --------
-
-        Numpy array
+    Returns
+    -------
+    array
+        The half spaces.
     """
     number_of_strategies, dimension = M.shape
     b = np.append(-np.ones(number_of_strategies), np.zeros(dimension))
@@ -45,13 +45,13 @@ def find_feasible_point(halfspaces):
 
     Parameters
     ----------
+    halfspaces : array
+        a matrix representation of halfspaces.
 
-        halfspaces: a matrix representation of halfspaces
-
-    Returns:
-    --------
-
-        numpy array
+    Returns
+    -------
+    array
+        A feasible point inside the halfspace.
     """
     norm_vector = np.reshape(
         np.linalg.norm(halfspaces[:, :-1], axis=1), (halfspaces.shape[0], 1)
@@ -67,18 +67,19 @@ def find_feasible_point(halfspaces):
 def labels(vertex, halfspaces):
     """
     Return the labels of the facets on which lie a given vertex. This is
-    calculated by carrying out the matrix multiplictation.
+    calculated by carrying out the matrix multiplication.
 
     Parameters
     ----------
-
-        vertex: a numpy array
-        halfspaces: a numpy array
+    vertex: array
+        A given vertex of a polytope.
+    halfspaces: array
+        A halfspace definition of a polytope.
 
     Returns
     -------
-
-       set
+    set
+        The set of labels of the vertex.
     """
     b = halfspaces[:, -1]
     M = halfspaces[:, :-1]
@@ -89,13 +90,15 @@ def non_trivial_vertices(halfspaces):
     """
     Returns all vertex, label pairs (ignoring the origin).
 
-    Parameters:
+    Parameters
+    ----------
+    halfspaces: array
+        A halfspace definition of a polytope.
 
-        halfspaces: a numpy array
-
-    Returns:
-
-        generator
+    Returns
+    -------
+    generator
+        A generator of non trivial vertices and their labels.
     """
     feasible_point = find_feasible_point(halfspaces)
     hs = HalfspaceIntersection(halfspaces, feasible_point)

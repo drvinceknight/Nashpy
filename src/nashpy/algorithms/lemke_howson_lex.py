@@ -22,15 +22,19 @@ def lemke_howson_lex(A, B, initial_dropped_label=0):
         similar way.
      4. Repeat steps 2 and 3 until have Nash Equilibrium.
 
-     Parameters
-     ----------
+    Parameters
+    ----------
+    A : array
+        The row player payoff matrix
+    B : array
+        The column player payoff matrix
+    initial_dropped_label: int
+        The initial dropped label.
 
-             initial_dropped_label: int
-
-     Returns
-     -------
-
-             equilibria: A tuple.
+    Returns
+    -------
+    Tuple
+        An equilibria
     """
 
     if np.min(A) <= 0:

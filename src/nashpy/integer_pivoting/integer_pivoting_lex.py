@@ -27,6 +27,20 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     order to keep track of lexicographical ordering after pivoting.
 
     Cq is the rightmost column of the tableau, used in the minimum ration test.
+
+    Parameters
+    ----------
+    tableau : array
+        A tableau corresponding to a vertex of a Polytope.
+    column_index : int
+        The index of a tableau on which to pivot.
+    slack_variables : iterable
+        The collection of slack variables
+
+    Returns
+    -------
+    int
+        The dropped label.
     """
 
     # gets correct lexicographical ordering
@@ -55,7 +69,21 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
 
 def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
     """
-    Finds the non-basic varible which becomes basic after pivoting
+    Finds the non-basic variable which becomes basic after pivoting
+
+    Parameters
+    ----------
+    tableau : array
+        A tableau corresponding to a vertex of a Polytope.
+    pivot_row_index : int
+        The index of the pivot row
+    non_basic_variables : set
+        The set of non basic variables
+
+    Returns
+    -------
+    int
+        The integer of the entering variable.
     """
 
     basic_variables = set(range(tableau.shape[1] - 1)) - non_basic_variables
@@ -67,6 +95,22 @@ def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
 def pivot_tableau_lex(tableau, column_index, slack_variables, non_basic_variables):
     """
     Pivots the tableau and returns the dropped label
+
+    Parameters
+    ----------
+    tableau : array
+        A tableau corresponding to a vertex of a Polytope.
+    column_index : int
+        The index of a tableau on which to pivot.
+    slack_variables : iterable
+        The collection of slack variables
+    non_basic_variables : set
+        The set of non basic variables
+
+    Returns
+    -------
+    int
+        The dropped label.
     """
     original_labels = non_basic_variables
     pivot_row_index = find_pivot_row_lex(tableau, column_index, slack_variables)

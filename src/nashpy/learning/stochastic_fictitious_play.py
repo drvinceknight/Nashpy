@@ -4,7 +4,25 @@ from nashpy.learning.fictitious_play import update_play_count
 
 
 def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
-    """Obtain a mixed strategy as a probability distribution as a response to a given play count"""
+    """
+    Obtain a mixed strategy as a probability distribution as a response to a given play count
+
+    Parameters
+    ----------
+    A : array
+        The utility matrix.
+    play_count : array
+        The play counts.
+    etha : float
+        The noise parameter for the logit choice function.
+    epsilon_bar : float
+        The maximum stochastic perturbation.
+
+    Returns
+    -------
+    int
+        The action that corresponds to the best response.
+    """
     if np.sum(play_count) == 0:
         strategies = play_count + 1 / len(play_count)
     else:
@@ -20,8 +38,29 @@ def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
 def stochastic_fictitious_play(
     A, B, iterations, etha=10 ** -1, epsilon_bar=10 ** -2, play_counts=None
 ):
-    """
-    Implement stochastic_fictitious play
+    """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
+    implementation corresponds to the description given in [Hofbauer2002]_.
+
+
+    Parameters
+    ----------
+    A : array
+        The row player payoff matrix
+    B : array
+        The column player payoff matrix
+    iterations : int
+        The number of iterations of the algorithm.
+    play_counts : array
+        The play counts.
+    etha : float
+        The noise parameter for the logit choice function.
+    epsilon_bar : float
+        The maximum stochastic perturbation.
+
+    Yields
+    ------
+    tuple
+        The play counts
     """
     if play_counts is None:
         play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]

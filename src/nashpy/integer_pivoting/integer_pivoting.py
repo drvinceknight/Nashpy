@@ -41,9 +41,9 @@ def find_pivot_row(tableau, column_index):
     Parameters
     ----------
     tableau : array
-        A tableau corresponding to a vertex of a Polytope.
+        a tableau corresponding to a vertex of a polytope.
     column_index : int
-        The index of a tableau on which to pivot.
+        the index of a tableau on which to pivot.
 
     Returns
     -------

@@ -1,3 +1,5 @@
+.. _how-to-run-tests:
+
 How to run tests
 ================
 

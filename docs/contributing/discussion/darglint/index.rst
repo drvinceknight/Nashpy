@@ -30,7 +30,7 @@ If we check the format of this file against the Google style guide::
 
 we get two errors, we can cross reference the error codes :code:`DAR101` and
 :code:`DAR201` at
-<https://github.com/terrencepreilly/darglint#error-codes>`_.
+`<https://github.com/terrencepreilly/darglint#error-codes>`_.
 
 - :code:`DAR101`: "The docstring is missing a parameter in the definition."
 - :code:`DAR201`: "The docstring is missing a return from definition."

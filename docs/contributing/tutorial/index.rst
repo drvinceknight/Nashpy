@@ -88,7 +88,7 @@ purposes to work on Nashpy::
     $ python -m venv env
 
 This creates a directory :code:`env` which holds a separate version of python.
-To tell your command line tool to now use this version::
+To tell your command line tool to now use this version:
 
 On Linux or macOS type::
 

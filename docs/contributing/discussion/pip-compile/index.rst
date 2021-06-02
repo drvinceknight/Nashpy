@@ -22,4 +22,4 @@ Then install :code:`pip-tools`::
 
 Then use :code:`pip-compile` to generate :code:`requirements.txt`::
 
-    $ pip-compile pyproject.toml > requirements.txt
+    $ pip-compile pyproject.toml

@@ -16,4 +16,5 @@ How to:
    how-to-write-a-docstring/index.rst
    how-to-write-tests/index.rst
    how-to-make-a-commit/index.rst
+   how-to-push-changes/index.rst
    how-to-open-a-pull-request/index.rst

@@ -124,6 +124,13 @@ The :code:`pyproject.toml` file
 
 Contains all the build instructions for packaging Nashpy.
 
+The :code:`requirements.txt` file
+*********************************
+
+This is necessary for the online service that hosts the documentation
+:ref:`read the docs <readthedocs-discussion>` and is :ref:`automatically
+generated <pip-compile-discussion>` from :code:`pyproject.toml`.
+
 The :code:`setup.cfg` file
 **************************
 

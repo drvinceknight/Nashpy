@@ -1,7 +1,7 @@
 .. _pip-compile-discussion:
 
-Auto generating requirements.txt
-================================
+Auto generating requirements.txt with pip-compile
+=================================================
 
 :ref:`Read the docs <readthedocs-discussion>` requires a :code:`requirements.txt`
 file to build the documentation. Nashpy uses :ref:`flit <flit-discussion>` for
@@ -23,3 +23,6 @@ Then install :code:`pip-tools`::
 Then use :code:`pip-compile` to generate :code:`requirements.txt`::
 
     $ pip-compile pyproject.toml
+
+Note that in practice this only needs to be done when the requirements in
+:code:`pyproject.toml` are modified.

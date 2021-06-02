@@ -19,3 +19,4 @@ Discussion
    doctests/index.rst
    github_actions/index.rst
    readthedocs/index.rst
+   pip-compile/index.rst

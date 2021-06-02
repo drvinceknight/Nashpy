@@ -1,3 +1,5 @@
+.. _how-to-env:
+
 How to create a virtual environment
 ===================================
 

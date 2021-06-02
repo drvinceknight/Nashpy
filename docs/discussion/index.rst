@@ -2,8 +2,13 @@ Discussion
 ==========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   john-nash.rst
-   gambit.rst
-   other-python-game-theory-libraries.rst
+   support-enumeration.rst
+   vertex-enumeration.rst
+   lemke-howson.rst
+   degenerate-games.rst
+   fictitious-play.rst
+   stochastic-fictitious-play.rst
+   replicator-dynamics.rst
+   asymmetric-replicator-dynamics.rst

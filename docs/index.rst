@@ -17,8 +17,8 @@ This is a library with simple dependencies (it only requires :code:`numpy` and
 
    tutorial/index.rst
    how-to/index.rst
-   reference/index.rst
    discussion/index.rst
+   reference/index.rst
    contributing/index.rst
 
 

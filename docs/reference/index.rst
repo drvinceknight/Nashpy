@@ -7,5 +7,5 @@ Reference
    john-nash.rst
    gambit.rst
    other-python-game-theory-libraries.rst
-   contributing-bibliography.rst
+   bibliography.rst
    source/nashpy.rst

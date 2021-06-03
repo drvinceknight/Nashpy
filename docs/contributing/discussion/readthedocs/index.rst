@@ -21,6 +21,25 @@ The default version (ie when going to https://nashpy.readthedocs.io/) is the
 You can view the version of the documentation currently on the :code:`main`
 branch by going to: https://nashpy.readthedocs.io/latest.
 
+Configuration file
+------------------
+
+Read the docs can have specific settings set in a :code:`.readthedocs.yml` file.
+Details on this can be found here:
+https://docs.readthedocs.io/en/stable/config-file/v2.html#packages
+
+One specific setting used by Nashpy is::
+
+    python:
+       version: 3.8
+       install:
+         - method: pip
+           path: .
+
+This ensures Read the docs does not look for a :code:`requirements.txt` file to
+install the library. Instead it runs :code:`pip install .` which uses 
+:ref:`pyproject.toml-file`.
+
 A powerful feature offered by Read the docs is that it can build documentation
 in pull requests.
 

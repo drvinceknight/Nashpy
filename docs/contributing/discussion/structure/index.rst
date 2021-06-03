@@ -16,7 +16,7 @@ The directory structure for Nashpy is::
     ├── paper.bib
     ├── paper.md
     ├── pyproject.toml
-    ├── requirements.txt
+    ├── .readthedocs.yml
     ├── setup.cfg
     └── tox.ini
 
@@ -117,19 +117,21 @@ The :code:`paper.bib` and :code:`paper.md` files
 ************************************************
 
 These are the source files for the `Journal of Open Source Software
-<https://joss.theoj.org>` paper written about Nashpy: [Knight2018]_.
+<https://joss.theoj.org>`_ paper written about Nashpy: [Knight2018]_.
+
+.. _pyproject.toml-file:
 
 The :code:`pyproject.toml` file
 *******************************
 
-Contains all the build instructions for packaging Nashpy.
+Contains all the build instructions for packaging Nashpy and is used by
+:ref:`flit <flit-discussion>`.
 
-The :code:`requirements.txt` file
+The :code:`.readthedocs.yml` file
 *********************************
 
-This is necessary for the online service that hosts the documentation
-:ref:`read the docs <readthedocs-discussion>` and is :ref:`automatically
-generated <pip-compile-discussion>` from :code:`pyproject.toml`.
+This includes configuration settings  for the online service that hosts the
+documentation :ref:`read the docs <readthedocs-discussion>`.
 
 The :code:`setup.cfg` file
 **************************

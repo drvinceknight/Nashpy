@@ -1,7 +1,7 @@
-.. _bibliography:
+.. _contributing-bibliography:
 
-Bibliography
-============
+Contributing Bibliography
+=========================
 
 This is a collection of various bibliographic items referenced in the
 contributor documentation.

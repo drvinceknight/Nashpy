@@ -1,4 +1,4 @@
-.. _contributing-bibliography:
+.. _bibliography:
 
 Bibliography
 ============

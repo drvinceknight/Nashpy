@@ -4,5 +4,5 @@ Reference
 .. toctree::
    :maxdepth: 2
 
-   bibliography.rst
+   contributing-bibliography.rst
    contributors/index.rst

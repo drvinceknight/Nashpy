@@ -181,7 +181,7 @@ Suppose two birds of prey must share a limited resource. The birds can act like
 a hawk or a dove. Hawks always fight over the resource to the point of
 exterminating another hawk (both hawks get a utility value of 0) and/or take a
 majority of the resource from a dove (the hawk gets a utility value of 3 and the
-dove a utility value of 1) Two doves can share the resource (both getting a
+dove a utility value of 1). Two doves can share the resource (both getting a
 utility value of 2).
 
 .. admonition:: Question

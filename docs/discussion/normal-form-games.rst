@@ -339,4 +339,4 @@ Using Nashpy
 ------------
 
 See :ref:`how-to-create-a-normal-form-game` for guidance of how to use Nashpy to
-xreate a Normal form game.
+create a Normal form game.

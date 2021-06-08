@@ -4,6 +4,7 @@ Discussion
 .. toctree::
    :maxdepth: 2
 
+   normal-form-games.rst
    support-enumeration.rst
    vertex-enumeration.rst
    lemke-howson.rst

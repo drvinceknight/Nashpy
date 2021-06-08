@@ -1,9 +1,10 @@
-Create a game
-=============
+.. _how-to-create-a-normal-form-game:
+
+Create a Normal Form Game
+=========================
 
 A game in :code:`Nashpy` is created by passing 1 or 2 matrices to the
-:code:`nash.Game` class. Here is the zero sum game `matching pennies
-<https://en.wikipedia.org/wiki/Matching_pennies>`_::
+:code:`nash.Game` class. Here is the zero sum game :ref:`matching-pennies`::
 
     >>> import nashpy as nash
     >>> import numpy as np
@@ -20,8 +21,7 @@ A game in :code:`Nashpy` is created by passing 1 or 2 matrices to the
     [[-1  1]
      [ 1 -1]]
 
-Here is the **non** zero sum game `prisoners
-dilemma <https://en.wikipedia.org/wiki/Prisoner%27s_dilemma>`_::
+Here is the **non** zero sum game :ref:`prisoners-dilemma`::
 
     >>> import nashpy as nash
     >>> import numpy as np

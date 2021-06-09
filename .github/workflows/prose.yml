@@ -18,6 +18,10 @@ jobs:
       run: |
         npm install alex --global
 
-    - name: Run alex
+    - name: Run alex on documentation
       run: |
         alex docs/**/*.rst
+
+    - name: Run alex on README.md
+      run: |
+        alex README.md

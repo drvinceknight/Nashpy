@@ -61,6 +61,4 @@ ignore a specific use of the word "bi":
 
    ## Usage
 
-   <!--alex ignore bi-->
-
-   Create bi matrix games by passing two 2 dimensional arrays/lists:
+   Create bi-matrix games by passing two 2 dimensional arrays/lists:

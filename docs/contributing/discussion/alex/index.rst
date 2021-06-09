@@ -42,3 +42,17 @@ It is possible to ignore certain checks `using a configuration file
 <https://github.com/get-alex/alex#configuration>`_ but as described in :ref:`the
 how to guide <how-to-check-for-insensitive-language>` it is also possible to
 annotate the file itself. This is preferred as it makes exceptions explicit.
+
+FAQ
+---
+
+The Frequently asked questions about alex can be found here: https://github.com/get-alex/alex#faq
+This includes:
+
+    Q: This is stupid!
+
+    A: Not a question. And yeah, alex isn’t very smart. People are much better
+    at this. But people make mistakes, and alex is there to help
+
+The Nashpy library uses alex for exactly this reason, it is one of many efforts
+made to ensure the project is inclusive.

@@ -61,7 +61,7 @@ Discussion
    The difficulty with using the best response Polyhedron is that the upper
    bound on the utilities of both players (:math:`u, v`) is not known.
    Importantly, we do not need to know it. Thus, we assume that in both cases:
-   :math:`u=v=1` (this simply corresponds to a scaling of our strategy vectors).
+   :math:`u=v=1` (this corresponds to a scaling of our strategy vectors).
 
    This allows us to define the best response Polytopes:
 
@@ -75,7 +75,7 @@ Discussion
 
 
 2. Step 2: The vertices of these polytopes are the points that will have labels
-   (they are the points that lie at the intersection of the underlying
+   (they are the points that are at the intersection of the underlying
    halfspaces [Ziegler2012]_).
 
    To find these vertices, :code:`nashpy` uses :code:`scipy` which has a handy

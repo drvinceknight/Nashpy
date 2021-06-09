@@ -1,6 +1,8 @@
 Discussion
 ==========
 
+.. <!--alex ignore black-->
+
 .. toctree::
    :maxdepth: 1
 

@@ -1,11 +1,11 @@
-Tutorial: building and finding the equilibrium for  a simple game
-=================================================================
+Tutorial: building and finding the equilibrium for  a game
+==========================================================
 
 Introduction to game theory
 ---------------------------
 
 Game theory is the study of strategic interactions between rational agents.
-Simply put that means that it's the study of interactions when the involved
+This means that it is the study of interactions when the involved
 parties try and do what is best from their point of view.
 
 As an example let us consider `Rock Paper Scissors
@@ -94,7 +94,7 @@ We can create this game using Nashpy::
 
 The string representation of the game also contains some information. For
 example, it is also showing the matrix that corresponds to the utility of the
-column player. In this case that is just :math:`-A` but that does not always
+column player. In this case that is :math:`-A` but that does not always
 have to be the case.
 
 We can in fact pass a pair of matrices to the game class to create the same
@@ -154,7 +154,7 @@ We can use Nashpy to find these utilities::
     >>> rps[sigma_r, sigma_c]
     array([ 1, -1])
 
-Players can of course choose to play randomly, in which case the utility
+Players can choose to play randomly, in which case the utility
 corresponds to the long term average. This is where our representation of
 strategies and utility calculations becomes particularly useful. For example,
 let us assume the column player decides to play Rock and Paper "randomly". This

@@ -53,16 +53,16 @@ We see that the `lemke-howson` algorithm fails but also that the
 equilibria: there is in fact a range of strategies the row player can play
 against :code:`[ 0.5 0.5 0]` that is still a best response.
 
-The :ref:`support-enumeration` algorithm can be executed with two optional
-arguments that allow for control of it's execution:
+The :ref:`support-enumeration` algorithm can be run with two optional
+arguments:
 
 - :code:`non_degenerate=True` (:code:`False` is the default) will only consider
   supports of equal size. If you know your game is non degenerate this will make
-  support enumeration execute less checks.
+  support enumeration make less checks.
 - :code:`tol=0` (:code:`10 ** -16` is the default), when considering the
   underlying linear system :code:`tol` is considered to be a lower bound for
-  difference between two real numbers. Using :code:`tol=0` ensures a very strict
-  execution of the algorithm.
+  difference between two real numbers. Using :code:`tol=0` ensures a strict
+  run of the algorithm.
 
 Here is an example::
 

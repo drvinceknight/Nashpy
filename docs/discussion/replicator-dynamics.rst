@@ -88,7 +88,7 @@ Below shows an example of a stable steady state::
 
 .. image:: /_static/learning/evolutionary_dynamics/steady_state_example/main.svg
 
-Evolutionary stable strategies (ESS) remain stable subject to small evolutionary change. This means that 
+Evolutionary stable strategies (ESS) stay stable subject to small evolutionary change. This means that 
 the strategy cannot be invaded by any of the other strategies in the population.
 Every ESS is an asymptotically stable steady state of the replicator dynamic, but the converse does not 
 necessarily hold.

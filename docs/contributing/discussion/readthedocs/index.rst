@@ -3,8 +3,12 @@
 Hosting documentation on Read The Docs
 ======================================
 
+.. <!--alex disable hostesses-hosts-->
+
 Read the docs is a web service that builds and hosts documentation. You can read
 more about the service here: https://readthedocs.org
+
+.. <!--alex enable hostesses-hosts-->
 
 The documentation contained in :code:`docs/` is automatically built and can be
 viewed at https://nashpy.readthedocs.io/en/stable/.
@@ -37,7 +41,7 @@ One specific setting used by Nashpy is::
            path: .
 
 This ensures Read the docs does not look for a :code:`requirements.txt` file to
-install the library. Instead it runs :code:`pip install .` which uses 
+install the library. Instead it runs :code:`pip install .` which uses
 :ref:`pyproject.toml-file`.
 
 A powerful feature offered by Read the docs is that it can build documentation
@@ -48,17 +52,25 @@ Building documentation in pull requests
 
 To set this up you need to ensure the following things are done:
 
+.. <!--alex disable hook-->
+
 1. The repository settings on Read the docs instruct pull requests to be built.
 2. The correct web hook is in place on Github.
 3. The correct settings of the web hook are done on the Github repository.
+
+.. <!--alex enable hook-->
 
 To instruct pull requests to be built ensure the following box is ticked in the
 Advanced settings for your project on Read the docs:
 
 .. image:: /_static/contributing/discussion/readthedocs/instruction/main.png
 
+.. <!--alex disable hooks-->
+
 Setting up the web hooks correctly is described here:
 https://docs.readthedocs.io/en/latest/pull-requests.html
+
+.. <!--alex enable hooks-->
 
 When done correctly this is what `Applications settings
 <https://github.com/settings/applications?o=used-desc>`_ should look like:

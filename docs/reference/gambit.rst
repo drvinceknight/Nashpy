@@ -14,8 +14,8 @@ In those instances you can use `Game Theory Explorer
 <http://gte.csc.liv.ac.uk/index/>`_ which is a great web point and click
 Graphical User Interface (GUI) to Gambit.
 
-The main mission statement of :code:`Nashpy` is to provide a simple to install
-Python library that implements algorithms that are simple to implement using the
+The main mission statement of :code:`Nashpy` is to provide a
+Python library that implements algorithms that are implemented using the
 scientific Python stack (:code:`numpy` and :code:`scipy`).
 
 This is motivated by the fact that `I <http://vknight.org/>`_ wanted a Python
@@ -35,5 +35,6 @@ functionality of :code:`scipy`) which is not efficient.
   `Gambit <http://www.gambit-project.org/>`_.
 - If you are happy to use a GUI use `Game Theory Explorer
   <http://gte.csc.liv.ac.uk/index/>`_.
-- If you would like an easy to install Python library for two player games you
+- If you would like a Python library that only requires the common scientific
+  python stack for two player games you
   can use :code:`Nashpy`.

@@ -4,33 +4,33 @@ Stochastic fictitious play
 ==========================
 
 The stochastic fictitious play algorithm implemented in :code:`Nashpy` is based on the
-one given in [Hofbauer2002]_. 
+one given in [Hofbauer2002]_.
 
-As explained in [Fudenberg1998]_ stochastic fictitious play "avoids the discontinuity inherent 
-in standard fictitious play, where a small change in the data can lead to an abrupt change in 
+As explained in [Fudenberg1998]_ stochastic fictitious play "avoids the discontinuity inherent
+in standard fictitious play, where a small change in the data can lead to an abrupt change in
 behaviour."
 
-The algorithm is designed to converge in cases where fictitious play does not 
-converge. Note that in some cases this will require a thoughtful choice of the :code:`etha` 
+The algorithm is designed to converge in cases where fictitious play does not
+converge. Note that in some cases this will require a thoughtful choice of the :code:`etha`
 and :code:`epsilon_bar` parameters.
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
 :math:`\kappa_t^{i}:S^{-1}\to\mathbb{N}` to be a function that in a given time
-period :math:`t` for a player :math:`i` maps a strategy :math:`s` from the
+interval :math:`t` for a player :math:`i` maps a strategy :math:`s` from the
 opponent's strategy space :math:`S^{-1}` to a number of total times the opponent
 has played :math:`s`.
 
-As per standard :ref:`fictitious-play`, each player assumes their opponent is playing a mixed strategy 
-based on :math:`\kappa_{t-1}`. If no play has taken place, then the probability of playing each 
-action is assumed to be equal. The assumed mixed strategies of a player's opponent are multplied 
-by the player's own payoff matrices to calculate the expected payoff of each action.  
+As per standard :ref:`fictitious-play`, each player assumes their opponent is playing a mixed strategy
+based on :math:`\kappa_{t-1}`. If no play has taken place, then the probability of playing each
+action is assumed to be equal. The assumed mixed strategies of a player's opponent are multplied
+by the player's own payoff matrices to calculate the expected payoff of each action.
 
-A stochastic pertubation :math:`\epsilon_i` is added to each expected payoff :math:`\pi_i` to give a 
-pertubated payoff.  Each :math:`\epsilon_i` is independent of each :math:`\pi_i` and is a random number 
-between 0 and :code:`epsilon_bar`. 
+A stochastic pertubation :math:`\epsilon_i` is added to each expected payoff :math:`\pi_i` to give a
+pertubated payoff.  Each :math:`\epsilon_i` is independent of each :math:`\pi_i` and is a random number
+between 0 and :code:`epsilon_bar`.
 
-A logit choice function is used to map the pertubated payoff to a non-negative probability distribution, 
-corresponding to the probability with which each strategy is chosen by the player. The logit choice function 
+A logit choice function is used to map the pertubated payoff to a non-negative probability distribution,
+corresponding to the probability with which each strategy is chosen by the player. The logit choice function
 can be seen below:
 
 .. math::
@@ -40,7 +40,7 @@ can be seen below:
 Discussion
 ----------
 
-Using the same game from the fictitious play discussion section, we can visualise a lack of convergence when 
+Using the same game from the fictitious play discussion section, we can visualise a lack of convergence when
 using the default value of :code:`epsilon_bar`::
 
     >>> import numpy as np

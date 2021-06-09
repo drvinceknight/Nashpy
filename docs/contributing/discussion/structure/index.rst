@@ -130,8 +130,12 @@ Contains all the build instructions for packaging Nashpy and is used by
 The :code:`.readthedocs.yml` file
 *********************************
 
+.. <!--alex disable hostesses-hosts-->
+
 This includes configuration settings  for the online service that hosts the
 documentation :ref:`read the docs <readthedocs-discussion>`.
+
+.. <!--alex enable hostesses-hosts-->
 
 The :code:`setup.cfg` file
 **************************

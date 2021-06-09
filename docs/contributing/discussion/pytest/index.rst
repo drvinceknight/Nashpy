@@ -30,7 +30,7 @@ does two things (for Nashpy):
 
 1. It randomly shuffles the order of tests: this ensures that tests passing is
    not dependent on the order in which they run.
-2. It seeds stochastic tests to ensure that any failures are reproducible. In
+2. It seeds stochastic tests to ensure that any exceptions are reproducible. In
    practice this has little effect here as ideally stochastic tests are seeded
    or written with :ref:`hypothesis <hypothesis-discussion>`.
 

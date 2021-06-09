@@ -1,6 +1,8 @@
 Discussion
 ==========
 
+.. <!--alex ignore black-->
+
 .. toctree::
    :maxdepth: 1
 
@@ -17,5 +19,6 @@ Discussion
    darglint/index.rst
    sphinx/index.rst
    doctests/index.rst
+   alex/index.rst
    github_actions/index.rst
    readthedocs/index.rst

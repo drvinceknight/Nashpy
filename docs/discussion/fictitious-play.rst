@@ -10,7 +10,7 @@ The algorithm is as follows:
 
 For a game :math:`(A, B)\in\mathbb{R}^{m\times n}` define
 :math:`\kappa_t^{i}:S^{-1}\to\mathbb{N}` to be a function that in a given time
-period :math:`t` for a player :math:`i` maps a strategy :math:`s` from the
+interval :math:`t` for a player :math:`i` maps a strategy :math:`s` from the
 opponent's strategy space :math:`S^{-1}` to a number of total times the opponent
 has played :math:`s`.
 

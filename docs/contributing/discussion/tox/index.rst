@@ -18,6 +18,9 @@ with :ref:`black <black-discussion>` and presence of docstrings with
 :ref:`interrogate <interrogate-discussion>`. Running all the checks is done
 with a single standard command: :code:`python -m tox`.
 
+Note that :ref:`checking for insensitive language in documentation
+<how-to-check-for-insensitive-language>` is not configured or run by tox.
+
 Test across multiple python versions
 ------------------------------------
 

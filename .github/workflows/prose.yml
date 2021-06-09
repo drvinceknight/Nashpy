@@ -1,0 +1,27 @@
+name: Prose
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+
+    - name: Install alex - checker for inconsiderate / insensitive writing
+      run: |
+        npm install alex --global
+
+    - name: Run alex on documentation
+      run: |
+        alex docs/**/*.rst
+
+    - name: Run alex on README.md
+      run: |
+        alex README.md

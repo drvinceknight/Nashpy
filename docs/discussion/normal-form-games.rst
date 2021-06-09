@@ -3,10 +3,10 @@
 Normal Form Games
 =================
 
-.. _motivating-example-battle-of-the-sexes:
+.. _motivating-example-coordination-game:
 
-Motivating example: Battle of the Sexes
----------------------------------------
+Motivating example: Coordination Game
+-------------------------------------
 
 Game theory is the study of interactive decision making. One example of this is
 the following situation:
@@ -27,7 +27,7 @@ possible outcomes:
 4. Alice and Bob both watch a comedy: Alice receives a utility of 2 and Bob
    a utility of 3.
 
-This particular example is referred to as the "battle of the sexes" and will be
+This particular example will be
 represented using two matrices.
 
 :math:`A` will represent the utilities of Alice:
@@ -72,7 +72,7 @@ An :math:`N` play normal form game consists of:
 .. admonition:: Question
    :class: note
 
-   For the :ref:`Battle of the sexes game <motivating-example-battle-of-the-sexes>`:
+   For the :ref:`Coordination game <motivating-example-coordination-game>`:
 
    1. What is the finite set of players?
    2. What are the action sets?
@@ -110,12 +110,12 @@ sum if and only if:
 .. admonition:: Question
    :class: note
 
-   Is the :ref:`Battle of the sexes game <motivating-example-battle-of-the-sexes>` zero sum?
+   Is the :ref:`Coordination game <motivating-example-coordination-game>` zero sum?
 
 .. admonition:: Answer
    :class: caution, dropdown
 
-   :math:`A\ne -B` so the Battle of the sexes is not Zero sum.
+   :math:`A\ne -B` so the Coordination game is not Zero sum.
 
 
 Examples of other Normal Form Games
@@ -178,7 +178,7 @@ Hawk Dove Game
 **************
 
 Suppose two birds of prey must share a limited resource. The birds can act like
-a hawk or a dove. Hawks always fight over the resource to the point of
+a hawk or a dove. Hawks always act aggressively over the resource to the point of
 exterminating another hawk (both hawks get a utility value of 0) and/or take a
 majority of the resource from a dove (the hawk gets a utility value of 3 and the
 dove a utility value of 1). Two doves can share the resource (both getting a

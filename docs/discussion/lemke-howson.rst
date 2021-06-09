@@ -93,7 +93,7 @@ This algorithm is implemented using integer pivoting.
 
    First we need to identify which vertex has that label. The labels of a
    tableau correspond to the non basic variables: these are the columns with
-   more than just a single non zero variable:
+   more than a single non zero variable:
 
    - The labels of :math:`T_c` are thus :math:`\{2, 3\}`::
 

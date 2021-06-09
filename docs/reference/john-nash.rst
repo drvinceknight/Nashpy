@@ -1,3 +1,5 @@
+.. _john-nash-reference:
+
 John Nash
 =========
 

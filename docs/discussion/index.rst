@@ -5,6 +5,7 @@ Discussion
    :maxdepth: 2
 
    normal-form-games.rst
+   strategies.rst
    support-enumeration.rst
    vertex-enumeration.rst
    lemke-howson.rst

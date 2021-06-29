@@ -127,6 +127,7 @@ Linear algebraic calculation of expected utilities
 
 Given a game :math:`(A, B) \in \mathbb{R} ^{(m\times n) ^ 2}`, considering
 :math:`\sigma_r` and :math:`\sigma_c` as vectors in :math:`mathbb{R}^m` and
+:math:`\sigma_r` and :math:`\sigma_c` as vectors in :math:`\mathbb{R}^m` and
 :math:`\mathbb{R}^n`. The expected utilities can be written as the matrix vector
 product:
 
@@ -137,6 +138,7 @@ product:
    :class: note
 
    For :ref:`Rock Papoer Scissors <motivating-example-strategy-for-rps>`:
+   For :ref:`Rock Paper Scissors <motivating-example-strategy-for-rps>`:
 
    Calculate the expected utilities to both players if :math:`\sigma_r=(1/3, 0, 2/3)` 
    and :math:`\sigma_c=(1/3, 1/3, 1/3)` using a linear algebraic approach.

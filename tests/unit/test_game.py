@@ -507,3 +507,16 @@ Column player:
         expected_B_xs = np.array([0.28121086, 0.71878914])
         assert np.allclose(xs_A[-1], expected_A_xs)
         assert np.allclose(xs_B[-1], expected_B_xs)
+
+    def test_is_best_response(self):
+        """Test for the best response check"""
+        A = np.array([[3, 0], [5, 1]])
+        B = np.array([[3, 5], [0, 1]])
+        game = nash.Game(A, B)
+
+        sigma_r = np.array([0, 1])
+        sigma_c = np.array([1, 0])
+
+        row_check, column_check = game.is_best_response(sigma_r, sigma_c)
+        assert row_check is True
+        assert column_check is False

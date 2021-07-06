@@ -48,7 +48,7 @@ the expected outcome of any one game between them?
 - The expected score of the column player will be: :math:`1 \times 1/2 + 0 \times 1/2 = 1/2`.
 
 In Game theoretic terms, the behaviours described above are referred to as
-**strategies**. Strategies map information to actions. In this particular case,
+**strategies**. **Strategies map information to actions.** In this particular case,
 the only available information is the game itself and the actions are
 :math:`\mathcal{A}_1=\mathcal{A}_2`.
 
@@ -126,7 +126,6 @@ Linear algebraic calculation of expected utilities
 --------------------------------------------------
 
 Given a game :math:`(A, B) \in \mathbb{R} ^{(m\times n) ^ 2}`, considering
-:math:`\sigma_r` and :math:`\sigma_c` as vectors in :math:`mathbb{R}^m` and
 :math:`\sigma_r` and :math:`\sigma_c` as vectors in :math:`\mathbb{R}^m` and
 :math:`\mathbb{R}^n`. The expected utilities can be written as the matrix vector
 product:
@@ -137,10 +136,9 @@ product:
 .. admonition:: Question
    :class: note
 
-   For :ref:`Rock Papoer Scissors <motivating-example-strategy-for-rps>`:
    For :ref:`Rock Paper Scissors <motivating-example-strategy-for-rps>`:
 
-   Calculate the expected utilities to both players if :math:`\sigma_r=(1/3, 0, 2/3)` 
+   Calculate the expected utilities to both players if :math:`\sigma_r=(1/3, 0, 2/3)`
    and :math:`\sigma_c=(1/3, 1/3, 1/3)` using a linear algebraic approach.
 
 .. admonition:: Answer
@@ -154,6 +152,10 @@ product:
 
       u_c(\sigma_r, \sigma_c) = (1/3, 0, 2/3) B \begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = (2/3, -1/3, -1/3)\begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = 0
 
+Strategy spaces for Normal form Games
+-------------------------------------
+
+.. TODO
 
 Using Nashpy
 ------------

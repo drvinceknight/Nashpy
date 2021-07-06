@@ -304,5 +304,5 @@ We know that :math:`u - (A\sigma_c^T)_i\geq 0`, thus the largest
 Using Nashpy
 ------------
 
-See :ref:`how-to-check-if-a-strategy-is-a-best-response` for guidance of how to
+See :ref:`how-to-check-best-responses` for guidance of how to
 use Nashpy to check if a strategy is a best response.

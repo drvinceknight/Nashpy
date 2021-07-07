@@ -6,6 +6,7 @@ Discussion
 
    normal-form-games.rst
    strategies.rst
+   best-responses.rst
    support-enumeration.rst
    vertex-enumeration.rst
    lemke-howson.rst

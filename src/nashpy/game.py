@@ -10,6 +10,7 @@ from .learning.replicator_dynamics import (
     replicator_dynamics,
 )
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
+from .utils.is_best_response import is_best_response
 
 
 class Game:
@@ -261,3 +262,34 @@ Column player:
         return asymmetric_replicator_dynamics(
             A=A, B=B, x0=x0, y0=y0, timepoints=timepoints
         )
+
+    def is_best_response(self, sigma_r, sigma_c):
+        """
+        Checks if sigma_r is a best response to sigma_c  and vice versa.
+
+        Parameters
+        ----------
+        sigma_r : array
+            The row player strategy
+        sigma_c : array
+            The column player strategy
+
+        Returns
+        -------
+        tuple
+            A pair of booleans, the first indicates if sigma_r is a best
+            response to sigma_c. The second indicates if sigma_c is a best
+            response to sigma_r.
+        """
+        A, B = self.payoff_matrices
+        is_row_strategy_best_response = is_best_response(
+            A=A,
+            sigma_c=sigma_c,
+            sigma_r=sigma_r,
+        )
+        is_column_strategy_best_response = is_best_response(
+            A=B.T,
+            sigma_c=sigma_r,
+            sigma_r=sigma_c,
+        )
+        return (is_row_strategy_best_response, is_column_strategy_best_response)

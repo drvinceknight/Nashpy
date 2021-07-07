@@ -20,4 +20,4 @@ not vice versa::
     >>> sigma_r = np.array([0, 1])
     >>> sigma_c = np.array([1, 0])
     >>> prisoners_dilemma.is_best_response(sigma_r, sigma_c)
-    True, False
+    (True, False)

@@ -1,3 +1,8 @@
+# v0.0.24
+
+Add best response check functionality, a large amount of documentation and some
+CI improvements.
+
 # v0.0.23
 
 A number of build improvements and fixes.

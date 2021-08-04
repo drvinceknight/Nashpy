@@ -1,3 +1,7 @@
+# v0.0.25
+
+Fix a bug in the documentation.
+
 # v0.0.24
 
 Add best response check functionality, a large amount of documentation and some

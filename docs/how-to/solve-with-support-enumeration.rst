@@ -1,3 +1,5 @@
+.. _how-to-use-support-enumeration:
+
 Solve with support enumeration
 ==============================
 

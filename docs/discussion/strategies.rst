@@ -81,6 +81,12 @@ Typically a strategy is denoted by :math:`\sigma \in [0, 1]^{|\mathcal{A}|}_{\ma
    1. :math:`\sigma_r = (0, 1, 0)`
    2. :math:`\sigma_c = (1 / 2, 1 / 2, 0)`
 
+Definition of support of a strategy
+-----------------------------------
+
+.. TODO
+
+
 Calculation of expected utilities
 ---------------------------------
 

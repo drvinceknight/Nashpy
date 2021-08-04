@@ -199,6 +199,8 @@ The best response :math:`\sigma_r^*` is given by:
       plt.title("Utility to column player")
       plt.legend()
 
+.. best_response_condition::
+
 General condition for a best response
 -------------------------------------
 

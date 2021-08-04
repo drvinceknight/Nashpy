@@ -1,4 +1,4 @@
-.. _degenerate-games:
+.. _degenerate-games-discussion:
 
 Degenerate games
 ================
@@ -26,7 +26,7 @@ When dealing with *degenerate* games unexpected results can occur::
     >>> A = np.array([[0, -1, 1], [-1, 0, 1], [-1, 0, 1]])
     >>> game = nash.Game(A)
 
-Here is the output when using :ref:`support-enumeration`::
+Here is the output when using :ref:`support-enumeration-discussion`::
 
     >>> for eq in game.support_enumeration():
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
@@ -49,11 +49,11 @@ Here is the output when using the :ref:`lemke-howson`::
 
 
 We see that the `lemke-howson` algorithm fails but also that the
-:ref:`support-enumeration` and :ref:`vertex-enumeration` fail to find some
+:ref:`support-enumeration-discussion` and :ref:`vertex-enumeration` fail to find some
 equilibria: there is in fact a range of strategies the row player can play
 against :code:`[ 0.5 0.5 0]` that is still a best response.
 
-The :ref:`support-enumeration` algorithm can be run with two optional
+The :ref:`support-enumeration-discussion` algorithm can be run with two optional
 arguments:
 
 - :code:`non_degenerate=True` (:code:`False` is the default) will only consider

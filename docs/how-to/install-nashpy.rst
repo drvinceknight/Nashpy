@@ -10,4 +10,5 @@ To install a development version from source::
 
     $ git clone https://github.com/drvinceknight/Nashpy.git
     $ cd nashpy
-    $ python setup.py develop
+    $ python -m pip install flit
+    $ python -m flit install --symlink

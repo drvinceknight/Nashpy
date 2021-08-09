@@ -1,5 +1,8 @@
 .. _support-enumeration-discussion:
 
+Support enumeration
+===================
+
 .. _motivating-example-coordination-game-nash-equilibria:
 
 Motivating example: Coordination Game
@@ -133,7 +136,7 @@ which in turn corresponds to:
 Thus :math:`\sigma_c = (y, 1 - y)` with :math:`0<y<1` is a best response to
 :math:`\sigma_r` if and only if :math:`\sigma_r = (3/4, 1/4)`.
 
-There are 3 spairs of strategies that are best responses to each other:
+There are 3 pairs of strategies that are best responses to each other:
 
 - :math:`\sigma_r=(1,0)` and :math:`\sigma_c=(1,0)`.
 - :math:`\sigma_r=(0,1)` and :math:`\sigma_c=(0,1)`.
@@ -153,7 +156,8 @@ For a non :ref:`Degenerate <degenerate-games-discussion>` 2 player game
 pairs of best responses:
 
 1. For all :math:`1\leq k_1\leq m` and :math:`1\leq k_2\leq n`;
-2. For all pairs of support :math:`(I, J)` with :math:`|I|=k_1` and
+2. For all pairs of :ref:`support <definition-of-support-of-a-strategy>`
+   :math:`(I, J)` with :math:`|I|=k_1` and
    :math:`|J|=k_2`.
 3. Solve the following equations (this ensures we have best responses):
 
@@ -177,20 +181,173 @@ Repeat steps 3,4 and 5 for all potential support pairs.
 .. admonition:: Question
    :class: note
 
-   Use suppoert enumeration to find the Nash equilibria for...
+   Use support enumeration to find all Nash equilibria for the game given by
+   :math:`A=\begin{pmatrix} 1 & 1 & -1 \\ 2 & -1 & 0 \end{pmatrix}` and
+   :math:`B=\begin{pmatrix} 1/2 & -1 & -1/2 \\-1 & 3 & 2 \end{pmatrix}`.
 
 .. admonition:: Answer
    :class: caution, dropdown
 
-   Recalling that :math:`A` is given by:
+   1. It is immediate to note that there are no pairs of pure best responses.
+   2. All possible support pairs are:
 
-Definition of Nash equilibrium
-------------------------------
+      - :math:`I=\{1, 2\}` and :math:`J=\{1,2\}`
+      - :math:`I=\{1, 2\}` and :math:`J=\{1,3\}`
+      - :math:`I=\{1, 2\}` and :math:`J=\{2,3\}`
 
-In a two player game :math:`(A, B)\in {\mathbb{R}^{m \times n}} ^ 2`,
-:math:`(\sigma_r, \sigma_c)` is a Nash equilibria if :math:`\sigma_r` is a best
-response to :math:`\sigma_c` and :math:`\sigma_c` is a best response to
-:math:`\sigma_r`.
+   3. Let us solve the corresponding linear equations:
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{1, 2\}`:
+
+        .. math::
+
+           1/2{\sigma_{r}}_1-{\sigma_{r}}_2=-{\sigma_{r}}_1+3{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{r}}_1=8/3{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{c}}_1+{\sigma_{c}}_2=2{\sigma_{c}}_1-{\sigma_{c}}_2
+
+        .. math::
+
+           {\sigma_{c}}_1=2{\sigma_{c}}_2
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{1,3\}`:
+
+        .. math::
+
+           1/2{\sigma_{r}}_1-{\sigma_{r}}_2=-1/2{\sigma_{r}}_1+2{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{r}}_1=3{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{c}}_1-{\sigma_{c}}_3=2{\sigma_{c}}_1+0{\sigma_{c}}_3
+
+        .. math::
+
+           {\sigma_{c}}_1=-{\sigma_{c}}_3
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{2,3\}`:
+
+        .. math::
+
+           -{\sigma_{r}}_1+3{\sigma_{r}}_2=-1/2{\sigma_{r}}_1+2{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{r}}_1=2{\sigma_{r}}_2
+
+        .. math::
+
+           {\sigma_{c}}_2-{\sigma_{c}}_3=-{\sigma_{c}}_2+0{\sigma_{c}}_3
+
+        .. math::
+
+           2{\sigma_{c}}_2={\sigma_{c}}_3
+
+   4. We check which supports give valid strategies:
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{1, 2\}`:
+
+        .. math::
+
+           \sigma_r=(8/11, 3/11)
+
+        .. math::
+
+           \sigma_c=(2/3, 1/3, 0)
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{1, 3\}`:
+
+        .. math::
+
+           \sigma_r=(3/4, 1/4)
+
+        .. math::
+
+           \sigma_c=(k, 0, -k)
+
+        **which is not a valid strategy.**
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{2, 3\}`:
+
+        .. math::
+
+           \sigma_r=(2/3, 1/3)
+
+        .. math::
+
+           \sigma_c=(0, 1/3, 2/3)
+
+   5. Let us verify the best response condition:
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{1, 2\}`:
+
+        .. math::
+
+           \sigma_c=(2/3, 1/3, 0)
+
+        .. math::
+
+           A\sigma_c^T=
+           \begin{pmatrix}
+           1\\
+           1
+           \end{pmatrix}
+
+        Thus :math:`\sigma_r` is a best response to :math:`\sigma_c`
+
+        .. math::
+
+           \sigma_r=(8/11, 3/11)
+
+        .. math::
+
+           \sigma_r B=(1/11, 1/11, 2/11)
+
+        Thus :math:`\sigma_c` is not a best response to :math:`\sigma_r`
+        (because there is a better response outside of the support of
+        :math:`\sigma_c`).
+
+
+      - :math:`I=\{1, 2\}` and :math:`J=\{2, 3\}`:
+
+        .. math::
+
+           \sigma_c=(0, 1/3, 2/3)
+
+        .. math::
+
+           A\sigma_c^T=
+           \begin{pmatrix}
+           -1/3\\
+           -1/3
+           \end{pmatrix}
+
+        Thus :math:`\sigma_r` is a best response to :math:`\sigma_c`
+
+        .. math::
+
+           \sigma_r=(2/3, 1/3)
+
+        .. math::
+
+           \sigma_r B=(0, 1/3, 1/3)
+
+        Thus :math:`\sigma_c` is a best response to :math:`\sigma_r`.
+
+       Thus the (unique) Nash equilibrium for this game is:
+
+       .. math::
+
+          ((2/3, 1/3), (0, 1/3, 2/3))
+
 
 Using Nashpy
 ------------

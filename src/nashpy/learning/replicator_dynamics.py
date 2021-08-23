@@ -3,9 +3,9 @@ import numpy as np
 
 # from scipy.integrate import solve_ivp (will change program to use solve_ivp later)
 from scipy.integrate import odeint
+from typing import Iterable,List,Optional,Tuple,Union
 
-
-def get_derivative_of_fitness(x, t, A):
+def get_derivative_of_fitness(x:np.ndarray, t:float, A:np.ndarray)->np.ndarray:
     """
     Find the derivative of fitness function
 
@@ -29,7 +29,8 @@ def get_derivative_of_fitness(x, t, A):
     return x * (f - phi)
 
 
-def replicator_dynamics(A, y0=None, timepoints=None):
+def replicator_dynamics(A:np.ndarray, y0:np.ndarray=None, timepoints:np.ndarray=None)-> Tuple[
+    Union[np.ndarray, Iterable, int, float], dict]:
     """
     Implement replicator dynamics
 
@@ -59,7 +60,7 @@ def replicator_dynamics(A, y0=None, timepoints=None):
     return xs
 
 
-def get_derivative_of_asymmetric_fitness(x, t, A, B):
+def get_derivative_of_asymmetric_fitness(x:np.ndarray, t:float, A:np.ndarray, B:np.ndarray)->np.ndarray:
     """
     Find the derivative of fitness function for the asymmetric replicator
     dynamics scenario
@@ -97,7 +98,7 @@ def get_derivative_of_asymmetric_fitness(x, t, A, B):
     return np.concatenate((row_derivative, col_derivative))
 
 
-def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
+def asymmetric_replicator_dynamics(A:np.ndarray, B:np.ndarray, x0:np.ndarray=None, y0:np.ndarray=None, timepoints:np.ndarray=None)->Tuple[tuple,tuple]:
     """
     Implement asymmetric replicator dynamics
 

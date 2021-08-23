@@ -1,8 +1,8 @@
 """Code to carry out fictitious learning"""
 import numpy as np
+from typing import Iterable,Any,Optional,Generator,Union,List
 
-
-def get_best_response_to_play_count(A, play_count):
+def get_best_response_to_play_count(A:np.ndarray, play_count:np.ndarray)->int:
     """
     Returns the best response to a belief based on the playing distribution of the opponent
 
@@ -22,7 +22,7 @@ def get_best_response_to_play_count(A, play_count):
     return np.random.choice(np.argwhere(utilities == np.max(utilities)).transpose()[0])
 
 
-def update_play_count(play_count, play):
+def update_play_count(play_count:np.ndarray, play:int)->np.ndarray:
     """
     Update a belief vector with a given play
 
@@ -43,7 +43,7 @@ def update_play_count(play_count, play):
     return play_count + extra_play
 
 
-def fictitious_play(A, B, iterations, play_counts=None):
+def fictitious_play(A:np.ndarray, B:np.ndarray, iterations:int, play_counts:Iterable=None)->Union[List[np.ndarray],np.ndarray]:
     """
     Implement fictitious play
 

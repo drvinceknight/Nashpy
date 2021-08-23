@@ -5,10 +5,10 @@ import numpy as np
 
 from nashpy.integer_pivoting import make_tableau, pivot_tableau_lex
 
-from .lemke_howson import shift_tableau, tableau_to_strategy
+from lemke_howson import shift_tableau, tableau_to_strategy
+from typing import Iterator,Tuple,Set,List
 
-
-def lemke_howson_lex(A, B, initial_dropped_label=0):
+def lemke_howson_lex(A:np.ndarray, B:np.ndarray, initial_dropped_label:int=0)->Tuple[np.ndarray,np.ndarray]:
     """
      Obtain the Nash equilibria using the Lemke Howson algorithm implemented
      using lexicographical integer pivoting. (Able to solve degenerate games)

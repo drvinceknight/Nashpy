@@ -5,9 +5,9 @@ algorithm.
 import warnings
 
 import numpy as np
+from typing import Iterable
 
-
-def find_pivot_row_lex(tableau, column_index, slack_variables):
+def find_pivot_row_lex(tableau:np.ndarray, column_index:int, slack_variables:Iterable[np.ndarray])->int:
 
     """
     Find the index of the row to pivot.
@@ -67,7 +67,7 @@ def find_pivot_row_lex(tableau, column_index, slack_variables):
     return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
 
 
-def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
+def find_entering_variable(tableau:np.ndarray, pivot_row_index:int, non_basic_variables:set)->int:
     """
     Finds the non-basic variable which becomes basic after pivoting
 
@@ -92,7 +92,7 @@ def find_entering_variable(tableau, pivot_row_index, non_basic_variables):
             return i
 
 
-def pivot_tableau_lex(tableau, column_index, slack_variables, non_basic_variables):
+def pivot_tableau_lex(tableau:np.ndarray, column_index:int, slack_variables:Iterable[np.ndarray], non_basic_variables:set)->int:
     """
     Pivots the tableau and returns the dropped label
 

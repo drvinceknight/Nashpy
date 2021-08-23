@@ -1,9 +1,9 @@
 """Code to carry out stochastic fictitious learning"""
 import numpy as np
 from nashpy.learning.fictitious_play import update_play_count
+from typing import Tuple,List,Optional,Iterator,Generator,Any
 
-
-def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
+def get_distribution_response_to_play_count(A:np.ndarray, play_count:np.ndarray, epsilon_bar:float, etha:float)->int:
     """
     Obtain a mixed strategy as a probability distribution as a response to a given play count
 
@@ -36,8 +36,8 @@ def get_distribution_response_to_play_count(A, play_count, epsilon_bar, etha):
 
 
 def stochastic_fictitious_play(
-    A, B, iterations, etha=10 ** -1, epsilon_bar=10 ** -2, play_counts=None
-):
+    A:np.ndarray, B:np.ndarray, iterations:int, etha:float=10 ** -1, epsilon_bar:float=10 ** -2, play_counts:float=None
+)->Generator[Tuple[np.ndarray]]:
     """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
     implementation corresponds to the description given in [Hofbauer2002]_.
 

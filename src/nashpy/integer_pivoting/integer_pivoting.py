@@ -5,7 +5,7 @@ algorithm.
 import numpy as np
 
 
-def make_tableau(M):
+def make_tableau(M:np.ndarray)->np.ndarray:
     """
     Make a tableau for the given matrix M.
 
@@ -30,7 +30,7 @@ def make_tableau(M):
     )
 
 
-def find_pivot_row(tableau, column_index):
+def find_pivot_row(tableau:np.ndarray, column_index:int)-> np.ndarray:
     """
     Find the index of the row to pivot.
 
@@ -53,7 +53,7 @@ def find_pivot_row(tableau, column_index):
     return np.argmax(tableau[:, column_index] / tableau[:, -1])
 
 
-def non_basic_variables(tableau):
+def non_basic_variables(tableau:np.ndarray)->set:
     """
     Identifies the non basic variables of a tableau,
     these correspond to the labels.
@@ -72,7 +72,7 @@ def non_basic_variables(tableau):
     return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
 
-def pivot_tableau(tableau, column_index):
+def pivot_tableau(tableau:np.ndarray, column_index:int)->set:
     """
     Pivots the tableau and returns the dropped label
 

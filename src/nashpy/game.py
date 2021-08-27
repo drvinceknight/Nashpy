@@ -11,7 +11,8 @@ from .learning.replicator_dynamics import (
 )
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 from .utils.is_best_response import is_best_response
-from typing import Any,Generator,Tuple,Iterator,Iterable,Union,List
+from typing import Any, Generator, Tuple, Iterator, Iterable, Union, List
+
 
 class Game:
     """
@@ -26,7 +27,7 @@ class Game:
           zero sum game.
     """
 
-    def __init__(self, *args:Any)->None:
+    def __init__(self, *args: Any) -> None:
         if len(args) == 2:
             if (not len(args[0]) == len(args[1])) or (
                 not len(args[0][0]) == len(args[1][0])
@@ -39,7 +40,7 @@ class Game:
             self.payoff_matrices[0], -self.payoff_matrices[1]
         )
 
-    def __repr__(self)->str:
+    def __repr__(self) -> str:
         if self.zero_sum:
             tpe = "Zero sum"
         else:
@@ -54,7 +55,7 @@ Column player:
             tpe, *self.payoff_matrices
         )
 
-    def __getitem__(self, key:Any)->np.ndarray:
+    def __getitem__(self, key: Any) -> np.ndarray:
         row_strategy, column_strategy = key
         return np.array(
             [
@@ -63,7 +64,7 @@ Column player:
             ]
         )
 
-    def vertex_enumeration(self)->Any:
+    def vertex_enumeration(self) -> Any:
         """
         Obtain the Nash equilibria using enumeration of the vertices of the best
         response polytopes.
@@ -82,7 +83,9 @@ Column player:
         """
         return vertex_enumeration(*self.payoff_matrices)
 
-    def support_enumeration(self, non_degenerate:bool=False, tol:float=10 ** -16)->Any:
+    def support_enumeration(
+        self, non_degenerate: bool = False, tol: float = 10 ** -16
+    ) -> Any:
         """
         Obtain the Nash equilibria using support enumeration.
 
@@ -110,7 +113,7 @@ Column player:
             *self.payoff_matrices, non_degenerate=non_degenerate, tol=tol
         )
 
-    def lemke_howson_enumeration(self)->Tuple[int]:
+    def lemke_howson_enumeration(self) -> Tuple[int]:
         """
         Obtain Nash equilibria for all possible starting dropped labels
         using the lemke howson algorithm. See `Game.lemke_howson` for more
@@ -126,7 +129,7 @@ Column player:
         for label in range(sum(self.payoff_matrices[0].shape)):
             yield self.lemke_howson(initial_dropped_label=label)
 
-    def lemke_howson(self, initial_dropped_label:int)->Tuple[np.ndarray,np.ndarray]:
+    def lemke_howson(self, initial_dropped_label: int) -> Tuple[np.ndarray, np.ndarray]:
         """
         Obtain the Nash equilibria using the Lemke Howson algorithm implemented
         using integer pivoting.
@@ -156,7 +159,9 @@ Column player:
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
         )
 
-    def fictitious_play(self, iterations:int, play_counts:np.ndarray=None)-> Union[List[ndarray], ndarray]:
+    def fictitious_play(
+        self, iterations: int, play_counts: np.ndarray = None
+    ) -> Union[List[ndarray], ndarray]:
         """
         Return a given sequence of actions through fictitious play. The
         implementation corresponds to the description of chapter 2 of
@@ -185,8 +190,12 @@ Column player:
         )
 
     def stochastic_fictitious_play(
-        self, iterations:int, play_counts:np.ndarray=None, etha:float=10 ** -1, epsilon_bar:float=10 ** -2
-    )-> Generator[Tuple[np.ndarray],Any,Any]:
+        self,
+        iterations: int,
+        play_counts: np.ndarray = None,
+        etha: float = 10 ** -1,
+        epsilon_bar: float = 10 ** -2,
+    ) -> Generator[Tuple[np.ndarray], Any, Any]:
         """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
         implementation corresponds to the description given in [Hofbauer2002]_.
 
@@ -215,7 +224,9 @@ Column player:
             epsilon_bar=epsilon_bar
         )
 
-    def replicator_dynamics(self, y0:np.ndarray=None, timepoints:np.ndarray=None)->Iterable[np.ndarray]:
+    def replicator_dynamics(
+        self, y0: np.ndarray = None, timepoints: np.ndarray = None
+    ) -> Iterable[np.ndarray]:
         """
         Implement replicator dynamics
         Return an array showing probability of each strategy being played over
@@ -238,7 +249,12 @@ Column player:
         A, _ = self.payoff_matrices
         return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)
 
-    def asymmetric_replicator_dynamics(self, x0:np.ndarray=None, y0:np.ndarray=None, timepoints:np.ndarray=None)->Tuple[tuple,tuple]:
+    def asymmetric_replicator_dynamics(
+        self,
+        x0: np.ndarray = None,
+        y0: np.ndarray = None,
+        timepoints: np.ndarray = None,
+    ) -> Tuple[tuple, tuple]:
         """
         Returns two arrays, corresponding to the two players, showing the
         probability of each strategy being played over time using the asymmetric
@@ -263,7 +279,9 @@ Column player:
             A=A, B=B, x0=x0, y0=y0, timepoints=timepoints
         )
 
-    def is_best_response(self, sigma_r:np.ndarray, sigma_c:np.ndarray)->Tuple[bool,bool]:
+    def is_best_response(
+        self, sigma_r: np.ndarray, sigma_c: np.ndarray
+    ) -> Tuple[bool, bool]:
         """
         Checks if sigma_r is a best response to sigma_c  and vice versa.
 
@@ -283,13 +301,9 @@ Column player:
         """
         A, B = self.payoff_matrices
         is_row_strategy_best_response = is_best_response(
-            A=A,
-            sigma_c=sigma_c,
-            sigma_r=sigma_r,
+            A=A, sigma_c=sigma_c, sigma_r=sigma_r,
         )
         is_column_strategy_best_response = is_best_response(
-            A=B.T,
-            sigma_c=sigma_r,
-            sigma_r=sigma_c,
+            A=B.T, sigma_c=sigma_r, sigma_r=sigma_c,
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)

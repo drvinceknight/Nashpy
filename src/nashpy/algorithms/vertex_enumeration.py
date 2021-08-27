@@ -1,10 +1,12 @@
 """A class for the vertex enumeration algorithm"""
 import numpy as np
-from typing import Tuple,Generator,Any
+from typing import Tuple, Generator, Any
 from nashpy.polytope import build_halfspaces, non_trivial_vertices
 
 
-def vertex_enumeration(A:np.ndarray, B:np.ndarray)->Generator[Tuple[float,float],Any,None]:
+def vertex_enumeration(
+    A: np.ndarray, B: np.ndarray
+) -> Generator[Tuple[float, float], Any, None]:
     """
     Obtain the Nash equilibria using enumeration of the vertices of the best
     response polytopes.

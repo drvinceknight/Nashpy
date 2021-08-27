@@ -6,9 +6,12 @@ import numpy as np
 from nashpy.integer_pivoting import make_tableau, pivot_tableau_lex
 
 from lemke_howson import shift_tableau, tableau_to_strategy
-from typing import Iterator,Tuple,Set,List
+from typing import Iterator, Tuple, Set, List
 
-def lemke_howson_lex(A:np.ndarray, B:np.ndarray, initial_dropped_label:int=0)->Tuple[np.ndarray,np.ndarray]:
+
+def lemke_howson_lex(
+    A: np.ndarray, B: np.ndarray, initial_dropped_label: int = 0
+) -> Tuple[np.ndarray, np.ndarray]:
     """
      Obtain the Nash equilibria using the Lemke Howson algorithm implemented
      using lexicographical integer pivoting. (Able to solve degenerate games)
@@ -103,9 +106,7 @@ def lemke_howson_lex(A:np.ndarray, B:np.ndarray, initial_dropped_label:int=0)->T
         next_non_basic_variables.remove(just_entered_label)
 
     row_strategy = tableau_to_strategy(
-        row_tableau,
-        full_labels - row_non_basic_variables,
-        range(A.shape[0]),
+        row_tableau, full_labels - row_non_basic_variables, range(A.shape[0]),
     )
 
     col_strategy = tableau_to_strategy(

@@ -5,7 +5,7 @@ algorithm.
 import numpy as np
 
 
-def make_tableau(M:np.ndarray)->np.ndarray:
+def make_tableau(M: np.ndarray) -> np.ndarray:
     """
     Make a tableau for the given matrix M.
 
@@ -24,13 +24,11 @@ def make_tableau(M:np.ndarray)->np.ndarray:
         The tableau that corresponds to the polytope.
     """
     return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1),
-        np.ones((M.shape[0], 1)),
-        axis=1,
+        np.append(M, np.eye(M.shape[0]), axis=1), np.ones((M.shape[0], 1)), axis=1,
     )
 
 
-def find_pivot_row(tableau:np.ndarray, column_index:int)-> np.ndarray:
+def find_pivot_row(tableau: np.ndarray, column_index: int) -> np.ndarray:
     """
     Find the index of the row to pivot.
 
@@ -53,7 +51,7 @@ def find_pivot_row(tableau:np.ndarray, column_index:int)-> np.ndarray:
     return np.argmax(tableau[:, column_index] / tableau[:, -1])
 
 
-def non_basic_variables(tableau:np.ndarray)->set:
+def non_basic_variables(tableau: np.ndarray) -> set:
     """
     Identifies the non basic variables of a tableau,
     these correspond to the labels.
@@ -72,7 +70,7 @@ def non_basic_variables(tableau:np.ndarray)->set:
     return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
 
-def pivot_tableau(tableau:np.ndarray, column_index:int)->set:
+def pivot_tableau(tableau: np.ndarray, column_index: int) -> set:
     """
     Pivots the tableau and returns the dropped label
 

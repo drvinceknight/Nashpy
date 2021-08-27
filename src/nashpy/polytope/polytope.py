@@ -2,9 +2,10 @@
 import numpy as np
 from scipy.optimize import linprog
 from scipy.spatial import HalfspaceIntersection
-from typing import Iterator,Tuple,Any,Generator,Set
+from typing import Iterator, Tuple, Any, Generator, Set
 
-def build_halfspaces(M:np.ndarray)->np.ndarray:
+
+def build_halfspaces(M: np.ndarray) -> np.ndarray:
     """
     Build a matrix representation for a halfspace corresponding to:
 
@@ -35,7 +36,7 @@ def build_halfspaces(M:np.ndarray)->np.ndarray:
     return halfspaces
 
 
-def find_feasible_point(halfspaces:np.ndarray)->np.ndarray:
+def find_feasible_point(halfspaces: np.ndarray) -> np.ndarray:
     """
     Use linear programming to find a point inside the halfspaces (needed to
     define it).
@@ -64,7 +65,7 @@ def find_feasible_point(halfspaces:np.ndarray)->np.ndarray:
     return res.x[:-1]
 
 
-def labels(vertex:np.ndarray, halfspaces:np.ndarray)->Set[np.ndarray]:
+def labels(vertex: np.ndarray, halfspaces: np.ndarray) -> Set[np.ndarray]:
     """
     Return the labels of the facets on which lie a given vertex. This is
     calculated by carrying out the matrix multiplication.
@@ -86,7 +87,9 @@ def labels(vertex:np.ndarray, halfspaces:np.ndarray)->Set[np.ndarray]:
     return set(np.where(np.isclose(np.dot(M, vertex), -b))[0])
 
 
-def non_trivial_vertices(halfspaces:np.ndarray)-> Generator[Tuple[Any, set], Any, None]:
+def non_trivial_vertices(
+    halfspaces: np.ndarray,
+) -> Generator[Tuple[Any, set], Any, None]:
     """
     Returns all vertex, label pairs (ignoring the origin).
 

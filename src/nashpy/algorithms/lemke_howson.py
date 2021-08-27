@@ -5,7 +5,7 @@ from itertools import cycle
 
 import numpy as np
 
-from typing import List,Tuple,Union,Dict,Sequence,Set,Any
+from typing import List, Tuple, Union, Dict, Sequence, Set, Any
 
 from nashpy.integer_pivoting import (
     make_tableau,
@@ -14,10 +14,7 @@ from nashpy.integer_pivoting import (
 )
 
 
-
-
-
-def shift_tableau(tableau:np.ndarray, shape:Tuple[int,int,int])-> np.ndarray:
+def shift_tableau(tableau: np.ndarray, shape: Tuple[int, int, int]) -> np.ndarray:
     """
     Shift a tableau to ensure labels of pairs of tableaux coincide
 
@@ -34,13 +31,13 @@ def shift_tableau(tableau:np.ndarray, shape:Tuple[int,int,int])-> np.ndarray:
         The shifted tableau
     """
     return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1),
-        np.ones((shape[0], 1)),
-        axis=1,
+        np.roll(tableau[:, :-1], shape[0], axis=1), np.ones((shape[0], 1)), axis=1,
     )
 
 
-def tableau_to_strategy(tableau:np.ndarray, basic_labels:Set[Any], strategy_labels:Set[Any])->np.ndarray:
+def tableau_to_strategy(
+    tableau: np.ndarray, basic_labels: Set[Any], strategy_labels: Set[Any]
+) -> np.ndarray:
     """
     Return a strategy vector from a tableau
 
@@ -70,7 +67,9 @@ def tableau_to_strategy(tableau:np.ndarray, basic_labels:Set[Any], strategy_labe
     return strategy / sum(strategy)
 
 
-def lemke_howson(A:np.ndarray, B:np.ndarray, initial_dropped_label:int=0)->Tuple[np.ndarray,np.ndarray]:
+def lemke_howson(
+    A: np.ndarray, B: np.ndarray, initial_dropped_label: int = 0
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
     using integer pivoting.
@@ -129,9 +128,7 @@ def lemke_howson(A:np.ndarray, B:np.ndarray, initial_dropped_label:int=0)->Tuple
         row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
     )
     col_strategy = tableau_to_strategy(
-        col_tableau,
-        non_basic_variables(row_tableau),
-        range(A.shape[0], sum(A.shape)),
+        col_tableau, non_basic_variables(row_tableau), range(A.shape[0], sum(A.shape)),
     )
 
     if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):

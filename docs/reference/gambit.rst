@@ -26,7 +26,7 @@ machines (without difficulty).
 
 All the algorithms in :code:`Nashpy` are implemented with readability as the
 main motivation. This at times comes at an efficiency cost. For example,
-:ref:`support-enumeration` builds the entire Polytope representation (using
+:code:`support-enumeration` builds the entire Polytope representation (using
 functionality of :code:`scipy`) which is not efficient.
 
 **To summarise:**

@@ -161,7 +161,7 @@ Column player:
 
     def fictitious_play(
         self, iterations: int, play_counts: np.ndarray = None
-    ) -> Union[List[ndarray], ndarray]:
+    ) -> Union[List[np.ndarray], np.ndarray]:
         """
         Return a given sequence of actions through fictitious play. The
         implementation corresponds to the description of chapter 2 of

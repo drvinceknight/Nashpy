@@ -15,6 +15,8 @@ their own choice.
 
 This can be represented pictorially as follows:
 
+.. image:: /_static/discussion/extensive-form-games/main.png
+
 .. _definition-of-extensive-form-game:
 
 Definition of an Extensive Form Game
@@ -22,8 +24,25 @@ Definition of an Extensive Form Game
 
 .. _equivalence-of-extensive-and-normal-form-games:
 
-Equivalent of Extensive and Normal Form Games
----------------------------------------------
+Equivalence of Extensive and Normal Form Games
+----------------------------------------------
+
+Consider the game given by the tree in the following image:
+
+.. admonition:: Question
+   :class: note
+
+   Obtain the Normal Form Game representation corresponding to this game and
+   find the Nash equilibria.
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+
+   Well....
+
+Representation of information sets
+----------------------------------
 
 Consider the game given by the tree in the following image:
 

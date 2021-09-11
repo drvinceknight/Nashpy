@@ -62,7 +62,7 @@ Typically a strategy is denoted by :math:`\sigma \in [0, 1]^{|\mathcal{A}|}_{\ma
 
 .. math::
 
-   \sum_{i=1}^{\mathcal{S}}\sigma_i = 1
+   \sum_{i=1}^{\mathcal{A}}\sigma_i = 1
 
 .. admonition:: Question
    :class: note
@@ -80,6 +80,46 @@ Typically a strategy is denoted by :math:`\sigma \in [0, 1]^{|\mathcal{A}|}_{\ma
 
    1. :math:`\sigma_r = (0, 1, 0)`
    2. :math:`\sigma_c = (1 / 2, 1 / 2, 0)`
+
+.. _definition-of-support-of-a-strategy:
+
+Definition of support of a strategy
+-----------------------------------
+
+For a given strategy :math:`\sigma`, the support of :math:`\sigma`:
+:math:`\mathcal{S}(\sigma)` is the set of actions :math:`i\in\mathcal{A}` for
+which :math:`\sigma_i > 0`.
+
+.. admonition:: Question
+   :class: note
+
+   For the following strategies :math:`\sigma` obtain
+   :math:`\mathcal{S}(\sigma)`:
+
+   1. :math:`\sigma = (1, 0, 0)`
+   2. :math:`\sigma = (1/3, 1/3, 1/3)`
+   3. :math:`\sigma = (2/5, 0, 3/5)`
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   1. :math:`\mathcal{S}(\sigma) = \{1\}`
+   2. :math:`\mathcal{S}(\sigma) = \{1, 2, 3\}`
+   3. :math:`\mathcal{S}(\sigma) = \{1, 3\}`
+
+   Note here that as no specific action sets are given the integers are used.
+
+.. _definition-of-strategy-spaces-in-normal-form-games:
+
+Strategy spaces for Normal form Games
+-------------------------------------
+
+Given a set of actions :math:`\mathcal{A}` the space of all strategies
+:math:`\mathcal{S}` is defined as:
+
+.. math::
+
+  \mathcal{S} = \left\{\sigma \in [0, 1]^{|\mathcal{A}|}_{\mathbb{R}}\;\left|\; \sum_{i=1}^{\mathcal{A}}\sigma_i = 1\right.\right\}
 
 Calculation of expected utilities
 ---------------------------------
@@ -152,10 +192,6 @@ product:
 
       u_c(\sigma_r, \sigma_c) = (1/3, 0, 2/3) B \begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = (2/3, -1/3, -1/3)\begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = 0
 
-Strategy spaces for Normal form Games
--------------------------------------
-
-.. TODO
 
 Using Nashpy
 ------------

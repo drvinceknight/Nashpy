@@ -29,9 +29,9 @@ is maximised by playing :math:`\sigma_r=(0, 1)`.
 In this case :math:`\sigma_r` is referred to as a **best response** to
 :math:`\sigma_c`.
 
-Alternatively, if the column player knows that the row player is playing the :ref:`strategy
-<strategies-discussion>` :math:`\sigma_r=(0, 1)` the column player's best
-response is :math:`\sigma_c=(1, 0)`.
+Alternatively, if the column player knows that the row player is playing the
+:ref:`strategy <strategies-discussion>` :math:`\sigma_r=(0, 1)` the column
+player's best response is :math:`\sigma_c=(1, 0)`.
 
 .. _definition-of-best-response:
 
@@ -45,6 +45,10 @@ strategy :math:`\sigma_c` if and only if:
 .. math::
 
    \sigma_r^*=\text{argmax}_{\sigma_r\in \mathcal{S}_1}\sigma_rA\sigma_c^T.
+
+Where :math:`\mathcal{S}_1` denotes the :ref:`space of all
+strategies<definition-of-strategy-spaces-in-normal-form-games>` for the first
+player.
 
 Similarly a mixed strategy :math:`\sigma_c^*`  of the column player is a best
 response to a row players' strategy :math:`\sigma_r` if and only if:
@@ -199,6 +203,8 @@ The best response :math:`\sigma_r^*` is given by:
       plt.title("Utility to column player")
       plt.legend()
 
+.. _best_response_condition:
+
 General condition for a best response
 -------------------------------------
 
@@ -300,6 +306,14 @@ We know that :math:`u - (A\sigma_c^T)_i\geq 0`, thus the largest
       \text{max}(\sigma_r B)` thus :math:`\sigma_c` **is a best response to**
       :math:`\sigma_r`.
 
+
+Definition of Nash equilibrium
+------------------------------
+
+In a two player game :math:`(A, B)\in {\mathbb{R}^{m \times n}} ^ 2`,
+:math:`(\sigma_r, \sigma_c)` is a Nash equilibria if :math:`\sigma_r` is a best
+response to :math:`\sigma_c` and :math:`\sigma_c` is a best response to
+:math:`\sigma_r`.
 
 Using Nashpy
 ------------

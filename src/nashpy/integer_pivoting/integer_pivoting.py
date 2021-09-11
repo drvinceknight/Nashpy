@@ -24,7 +24,9 @@ def make_tableau(M: np.ndarray) -> np.ndarray:
         The tableau that corresponds to the polytope.
     """
     return np.append(
-        np.append(M, np.eye(M.shape[0]), axis=1), np.ones((M.shape[0], 1)), axis=1,
+        np.append(M, np.eye(M.shape[0]), axis=1),
+        np.ones((M.shape[0], 1)),
+        axis=1,
     )
 
 

@@ -301,9 +301,13 @@ Column player:
         """
         A, B = self.payoff_matrices
         is_row_strategy_best_response = is_best_response(
-            A=A, sigma_c=sigma_c, sigma_r=sigma_r,
+            A=A,
+            sigma_c=sigma_c,
+            sigma_r=sigma_r,
         )
         is_column_strategy_best_response = is_best_response(
-            A=B.T, sigma_c=sigma_r, sigma_r=sigma_c,
+            A=B.T,
+            sigma_c=sigma_r,
+            sigma_r=sigma_c,
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)

@@ -31,7 +31,9 @@ def shift_tableau(tableau: np.ndarray, shape: Tuple[int, int, int]) -> np.ndarra
         The shifted tableau
     """
     return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1), np.ones((shape[0], 1)), axis=1,
+        np.roll(tableau[:, :-1], shape[0], axis=1),
+        np.ones((shape[0], 1)),
+        axis=1,
     )
 
 
@@ -128,7 +130,9 @@ def lemke_howson(
         row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
     )
     col_strategy = tableau_to_strategy(
-        col_tableau, non_basic_variables(row_tableau), range(A.shape[0], sum(A.shape)),
+        col_tableau,
+        non_basic_variables(row_tableau),
+        range(A.shape[0], sum(A.shape)),
     )
 
     if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):

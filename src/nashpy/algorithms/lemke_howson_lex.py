@@ -106,7 +106,9 @@ def lemke_howson_lex(
         next_non_basic_variables.remove(just_entered_label)
 
     row_strategy = tableau_to_strategy(
-        row_tableau, full_labels - row_non_basic_variables, range(A.shape[0]),
+        row_tableau,
+        full_labels - row_non_basic_variables,
+        range(A.shape[0]),
     )
 
     col_strategy = tableau_to_strategy(

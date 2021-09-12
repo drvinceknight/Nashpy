@@ -45,7 +45,7 @@ def stochastic_fictitious_play(
     etha: float = 10 ** -1,
     epsilon_bar: float = 10 ** -2,
     play_counts: float = None,
-) -> Generator[Tuple[np.ndarray]]:
+) -> Tuple[np.ndarray]:
     """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
     implementation corresponds to the description given in [Hofbauer2002]_.
 

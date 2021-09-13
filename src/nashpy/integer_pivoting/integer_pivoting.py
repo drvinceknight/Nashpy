@@ -5,7 +5,7 @@ algorithm.
 import numpy as np
 
 
-def make_tableau(M):
+def make_tableau(M:np.ndarray)->np.ndarray:
     """
     Make a tableau for the given matrix M.
 

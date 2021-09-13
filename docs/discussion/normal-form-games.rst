@@ -63,7 +63,7 @@ a :ref:`Normal Form Game <definition-of-normal-form-game>`
 Definition of Normal Form Game
 ------------------------------
 
-An :math:`N` play normal form game consists of:
+An :math:`N` player normal form game consists of:
 
 - A finite set of :math:`N` players.
 - Action set for the players: :math:`\{\mathcal{A}_1, \mathcal{A}_2, \dots \mathcal{A}_N\}`

@@ -5,6 +5,7 @@ algorithm.
 import numpy as np
 import numpy.typing as npt
 
+
 def make_tableau(M: npt.ArrayLike) -> npt.ArrayLike:
     """
     Make a tableau for the given matrix M.

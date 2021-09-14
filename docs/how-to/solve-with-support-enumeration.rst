@@ -4,7 +4,7 @@ Solve with support enumeration
 ==============================
 
 One of the algorithms implemented in :code:`Nashpy` is called
-:ref:`support-enumeration`, this is implemented as a method on the :code:`Game`
+:code:`support-enumeration`, this is implemented as a method on the :code:`Game`
 class::
 
     >>> import nashpy as nash

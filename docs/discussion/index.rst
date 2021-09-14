@@ -9,6 +9,7 @@ Discussion
    best-responses.rst
    support-enumeration.rst
    vertex-enumeration.rst
+   extensive-form-games.rst
    lemke-howson.rst
    degenerate-games.rst
    fictitious-play.rst

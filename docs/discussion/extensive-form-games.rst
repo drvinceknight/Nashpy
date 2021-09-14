@@ -91,7 +91,7 @@ to indicate which vertices have the same information.
 
 This can be represented pictorially as follows:
 
-.. image:: /_static/discussion/extensive-form-games_with_imperfect_information/main.png
+.. image:: /_static/discussion/extensive-form-games-with-imperfect-information/main.png
 
 This indicates that Bob makes a decision at both nodes in :math:`\{B_1, B_2\}`
 without knowing at which of the two vertices they are. The set :math:`\{B_1,
@@ -100,29 +100,139 @@ B_2\}` is called an information set.
 Definition of an information set
 --------------------------------
 
-Given a game in extensive form: 
+Given a game in extensive form:
 :math:`(\mathcal{N}, G, (V_i)_{i\in \mathcal{N}}, O, u)`
+the set of information sets :math:`v_i` of player :math:`i \in \mathcal{N}` is a partition of
+:math:`V_{i}`.
+Each element of :math:`v_i`
+denotes a set of nodes at which a player is unable to distinguish when
+choosing an action.
 
-Definition of a strategy in an extensive form game
---------------------------------------------------
+This implies that:
 
-Equivalence of Extensive and Normal Form Games
-----------------------------------------------
-
-Consider the game given by the tree in the following image:
+- Every information set contains vertices for a single player.
+- All vertices in an information set must have the same number of successors
+  (with the same action labels).
 
 .. admonition:: Question
    :class: note
 
-   Obtain the Normal Form Game representation corresponding to this game and
-   find the Nash equilibria.
+   For the following games with :math:`\mathcal{N} = \{\text{Alice},
+   \text{Bob}\}`, assume that decision nodes :math:`A_i` are Alice's and
+   :math:`B_i` are Bob's. Obtain all information sets:
+
+   1. .. image:: /_static/discussion/extensive-form-games/main.png
+   2. .. image:: /_static/discussion/extensive-form-games-with-imperfect-information/main.png
+   3. .. image:: /_static/discussion/extensive-form-game-example-with-perfect-information/main.png
+   4. .. image:: /_static/discussion/extensive-form-game-example-with-imperfect-information/main.png
+   5. .. image:: /_static/discussion/extensive-form-game-incoherent-example-with-imperfect-information/main.png
 
 .. admonition:: Answer
    :class: caution, dropdown
 
+   1. :math:`v_{\text{Alice}}=\{\{A\}\}` :math:`v_{\text{Bob}}=\{\{B_1\}, \{B_2\}\}`
+   2. :math:`v_{\text{Alice}}=\{\{A\}\}` :math:`v_{\text{Bob}}=\{\{B_1, B_2\}\}`
+   3. :math:`v_{\text{Alice}}=\{\{A_1\}, \{A_2\}\}` :math:`v_{\text{Bob}}=\{\{B_1\}, \{B_2\}\}`
+   4. :math:`v_{\text{Alice}}=\{\{A_1\}, \{A_2\}\}` :math:`v_{\text{Bob}}=\{\{B_1, B_2\}\}`
+   5. This game has incoherent information sets: the two vertices :math:`B_1` and
+      :math:`B_2` have different actions.
 
-   Well....
+Definition of a strategy in an extensive form game
+--------------------------------------------------
 
+A strategy for a player in an extensive form is collection of probability
+distribution over the action set of each information set.
+
+Equivalence of Extensive and Normal Form Games
+----------------------------------------------
+
+A game in extensive form can be mapped to a game in normal form by enumerating
+all possible strategies that indicate single actions at each information set.
+This set of possible strategies corresponds to the actions in the normal form
+game.
+
+These strategies can be thought of as vectors in the space of the cross product
+of the sets of actions available at every information set.
+For player :math:`i\in \mathcal{N}` with information sets :math:`v_i=((v_i)_1,
+(v_i)_2, \dots, (v_i)_n)` a strategy :math:`s=(s_1, s_2, \dots, s_n` indicates
+what action to take at each information set. So :math:`s_2` will prescribe which
+action to take at all vertices contained in :math:`(v_i)_2`.
+
+
+As an example consider the
+:ref:`modified coordination game <motivating-example-modified-coordination-game>`.
+The full enumeration of strategies that indicate single actions for Alice is:
+
+.. math::
+
+   \mathcal{A}_1 = \{(\text{Sports}), (\text{Comedy})\}
+
+The full enumeration of strategies that indicate single actions for Bob is:
+
+.. math::
+
+   \mathcal{A}_2 = \{(\text{Sports}, \text{Sports}), (\text{Sports}, \text{Comedy}), (\text{Comedy}, \text{Sports}), (\text{Comedy}, \text{Comedy})\}
+
+So :math:`(\text{Sports}, \text{Comedy})` indicates to choose Sports at
+:math:`B_1` and Comedy at :math:`B_2`.
+
+Using this enumeration the payoff functions can be given by the matrices
+:math:`A, B`:
+
+.. math::
+
+   A = \begin{pmatrix}
+   3  & 3 & 1 & 1\\
+   0  & 2 & 0 & 2\\
+   \end{pmatrix}
+
+.. math::
+
+   B = \begin{pmatrix}
+   2  & 2 & 1 & 1\\
+   0  & 3 & 0 & 3\\
+   \end{pmatrix}
+
+.. admonition:: Question
+   :class: note
+
+   Obtain the Normal Form Game representation corresponding to
+
+   .. image:: /_static/discussion/extensive-form-games-with-imperfect-information/main.png
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   The full enumeration of strategies that indicate single actions for Alice is:
+
+   .. math::
+
+      \mathcal{A}_1 = \{(\text{Sports}), (\text{Comedy})\}
+
+   The full enumeration of strategies that indicate single actions for Bob is:
+
+   .. math::
+
+      \mathcal{A}_2 = \{(\text{Sports}), (\text{Comedy})\}
+
+   This is because there is a single information set for Bob.
+
+   Using this enumeration the payoff functions can be given by the matrices
+   :math:`A, B`:
+
+   .. math::
+
+      A = \begin{pmatrix}
+      3 & 1\\
+      0 & 2\\
+      \end{pmatrix}
+
+   .. math::
+
+      B = \begin{pmatrix}
+      2 & 1\\
+      0 & 3\\
+      \end{pmatrix}
 
 Using Nashpy
 ------------

@@ -1,8 +1,9 @@
 """A class for the Lemke Howson algorithm"""
 import warnings
 from itertools import cycle
-
 import numpy as np
+import numpy.typing as npt
+from typing import Tuple, Set, Any
 
 from nashpy.integer_pivoting import (
     make_tableau,
@@ -11,7 +12,7 @@ from nashpy.integer_pivoting import (
 )
 
 
-def shift_tableau(tableau, shape):
+def shift_tableau(tableau: npt.NDArray, shape: Tuple[int, int, int]) -> npt.NDArray:
     """
     Shift a tableau to ensure labels of pairs of tableaux coincide
 
@@ -34,7 +35,9 @@ def shift_tableau(tableau, shape):
     )
 
 
-def tableau_to_strategy(tableau, basic_labels, strategy_labels):
+def tableau_to_strategy(
+    tableau: npt.NDArray, basic_labels: Set[Any], strategy_labels: Set[Any]
+) -> npt.NDArray:
     """
     Return a strategy vector from a tableau
 
@@ -64,7 +67,9 @@ def tableau_to_strategy(tableau, basic_labels, strategy_labels):
     return strategy / sum(strategy)
 
 
-def lemke_howson(A, B, initial_dropped_label=0):
+def lemke_howson(
+    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0
+) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
     using integer pivoting.

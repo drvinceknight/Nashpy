@@ -1,11 +1,12 @@
 """A class for a normal form game"""
 import warnings
 from itertools import chain, combinations
-
+import numpy.typing as npt
+from typing import Iterator, Optional, Generator, Tuple, Any
 import numpy as np
 
 
-def powerset(n):
+def powerset(n: int) -> Iterator[tuple]:
     """
     A power set of range(n)
 
@@ -26,7 +27,9 @@ def powerset(n):
     return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
 
 
-def solve_indifference(A, rows=None, columns=None):
+def solve_indifference(
+    A: npt.NDArray, rows: npt.NDArray = None, columns: Iterator[Optional[int]] = None
+) -> bool:
     """
     Solve the indifference for a payoff matrix assuming support for the
     strategies given by columns
@@ -73,7 +76,9 @@ def solve_indifference(A, rows=None, columns=None):
         return False
 
 
-def potential_support_pairs(A, B, non_degenerate=False):
+def potential_support_pairs(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False
+) -> Generator[Tuple[tuple, tuple], Any, None]:
     """
     A generator for the potential support pairs
 
@@ -103,7 +108,9 @@ def potential_support_pairs(A, B, non_degenerate=False):
             yield support1, support2
 
 
-def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
+def indifference_strategies(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+) -> Tuple[bool, bool, int, int]:
     """
     A generator for the strategies corresponding to the potential supports
 
@@ -137,7 +144,9 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
             yield s1, s2, pair[0], pair[1]
 
 
-def obey_support(strategy, support, tol=10 ** -16):
+def obey_support(
+    strategy: npt.NDArray, support: npt.NDArray, tol: float = 10 ** -16
+) -> bool:
     """
     Test if a strategy obeys its support
 
@@ -165,7 +174,11 @@ def obey_support(strategy, support, tol=10 ** -16):
     return True
 
 
-def is_ne(strategy_pair, support_pair, payoff_matrices):
+def is_ne(
+    strategy_pair: Tuple[npt.NDArray, npt.NDArray],
+    support_pair: Tuple[npt.NDArray, npt.NDArray],
+    payoff_matrices: Tuple[npt.NDArray, npt.NDArray],
+) -> bool:
     """
     Test if a given strategy pair is a pair of best responses
 
@@ -201,7 +214,9 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
     )
 
 
-def support_enumeration(A, B, non_degenerate=False, tol=10 ** -16):
+def support_enumeration(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+) -> Generator[Tuple[bool, bool], Any, None]:
     """
     Obtain the Nash equilibria using support enumeration.
 

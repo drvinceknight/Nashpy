@@ -3,9 +3,10 @@ A class for integer pivoting. Used for an implementation of the Lemke Howson
 algorithm.
 """
 import numpy as np
+import numpy.typing as npt
 
 
-def make_tableau(M):
+def make_tableau(M: npt.NDArray) -> npt.NDArray:
     """
     Make a tableau for the given matrix M.
 

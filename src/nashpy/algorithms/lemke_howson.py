@@ -4,7 +4,7 @@ from itertools import cycle
 
 import numpy as np
 import numpy.typing as npt
-from typing import Tuple, Set, Any, Iterable
+from typing import Tuple, Set, Iterable
 from nashpy.integer_pivoting import (
     make_tableau,
     non_basic_variables,

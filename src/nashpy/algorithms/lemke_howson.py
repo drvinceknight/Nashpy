@@ -4,7 +4,7 @@ from itertools import cycle
 
 import numpy as np
 import numpy.typing as npt
-from typing import Tuple, Set, Any
+from typing import Tuple, Set, Any,Iterable
 from nashpy.integer_pivoting import (
     make_tableau,
     non_basic_variables,
@@ -36,7 +36,7 @@ def shift_tableau(tableau: npt.NDArray, shape: Tuple[int, ...]) -> npt.NDArray:
 
 
 def tableau_to_strategy(
-    tableau: npt.NDArray, basic_labels: Set[Any], strategy_labels: range
+    tableau: npt.NDArray, basic_labels: Set[int], strategy_labels: Iterable
 ) -> npt.NDArray:
     """
     Return a strategy vector from a tableau
@@ -47,7 +47,7 @@ def tableau_to_strategy(
         a tableau corresponding to a vertex of a polytope.
     basic_labels : set
         the set of basic labels.
-    strategy_labels : set
+    strategy_labels : Iterable
         the set of labels that correspond to strategies.
 
     Returns

@@ -1,5 +1,5 @@
-How to write a typehint
-=======================
+How to write a type hint
+========================
 
 Type hints allow to annotate code in a machine and human readable way so as to
 indicate the types of each variable. The general syntax of this is::

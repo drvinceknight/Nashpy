@@ -15,7 +15,6 @@ Discussion
    hypothesis/index.rst
    black/index.rst
    flake8/index.rst
-   mypy/index.rst
    interrogate/index.rst
    darglint/index.rst
    mypy/index.rst

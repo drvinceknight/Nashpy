@@ -1,12 +1,13 @@
 from typing import Iterable
 
+
 def get_mean(collection: Iterable) -> float:
     """
     Obtain the average of a collection of objects.
 
     Parameters
     ----------
-    collection : list
+    collection : Iterable
         A list of numbers
 
     Returns

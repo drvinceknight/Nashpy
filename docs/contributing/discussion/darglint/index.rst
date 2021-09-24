@@ -1,3 +1,5 @@
+.. _darglint_discussion:
+
 Checking the format of docstrings with darglint
 ===============================================
 

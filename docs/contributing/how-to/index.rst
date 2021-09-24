@@ -15,6 +15,7 @@ How to:
    how-to-run-tests/index.rst
    how-to-check-for-insensitive-language/index.rst
    how-to-write-a-docstring/index.rst
+   how-to-write-a-typehint/index.rst
    how-to-write-tests/index.rst
    how-to-make-a-commit/index.rst
    how-to-push-changes/index.rst

@@ -5,7 +5,6 @@ nashpy.egg-info
 dist/
 .hypothesis/
 docs/_build/
-*mypy*
 .wily/
 coverage.xml
 build/

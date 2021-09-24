@@ -18,6 +18,7 @@ Discussion
    mypy/index.rst
    interrogate/index.rst
    darglint/index.rst
+   mypy/index.rst
    sphinx/index.rst
    doctests/index.rst
    alex/index.rst

@@ -2,13 +2,16 @@
 from itertools import cycle
 
 import numpy as np
-
+import numpy.typing as npt
+from typing import Tuple
 from nashpy.integer_pivoting import make_tableau, pivot_tableau_lex
 
 from .lemke_howson import shift_tableau, tableau_to_strategy
 
 
-def lemke_howson_lex(A, B, initial_dropped_label=0):
+def lemke_howson_lex(
+    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0
+) -> Tuple[npt.NDArray, npt.NDArray]:
     """
      Obtain the Nash equilibria using the Lemke Howson algorithm implemented
      using lexicographical integer pivoting. (Able to solve degenerate games)

@@ -15,9 +15,9 @@ Discussion
    hypothesis/index.rst
    black/index.rst
    flake8/index.rst
-   types/index.rst
    interrogate/index.rst
    darglint/index.rst
+   mypy/index.rst
    sphinx/index.rst
    doctests/index.rst
    alex/index.rst

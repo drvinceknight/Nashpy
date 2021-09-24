@@ -1,7 +1,7 @@
 How to write a docstring
 ========================
 
-All functionality needs have a documentation string (`docstrings
+All functionality needs to have a documentation string (`docstrings
 <https://www.python.org/dev/peps/pep-0257/>`_). The convention used in Nashpy is
 to follow `Numpy's docstring convention
 <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`_::
@@ -29,6 +29,7 @@ to follow `Numpy's docstring convention
 If the function/method does not return anything but is instead a **generator**
 then :code:`Returns` should be replaced with :code:`Yields`.
 
+
 How to check dosctrings in a module
 -----------------------------------
 
@@ -39,4 +40,4 @@ If you want to check a specific file, use `darglint
 <https://github.com/terrencepreilly/darglint>`_::
 
     $ python -m pip install darglint
-    $ dargline -s numpy <path_to_file>
+    $ darglint -s numpy <path_to_file>

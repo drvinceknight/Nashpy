@@ -73,7 +73,7 @@ def find_pivot_row_lex(
 
 def find_entering_variable(
     tableau: npt.NDArray, pivot_row_index: int, non_basic_variables: set
-) ->Any:
+) -> Any:
     """
     Finds the non-basic variable which becomes basic after pivoting
 

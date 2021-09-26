@@ -1,7 +1,6 @@
 """A class for a normal form game"""
 import numpy as np
-import numpy.typing as npt
-from typing import Any, Generator, Tuple
+
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
@@ -27,7 +26,7 @@ class Game:
           zero sum game.
     """
 
-    def __init__(self, *args: Any) -> None:
+    def __init__(self, *args):
         if len(args) == 2:
             if (not len(args[0]) == len(args[1])) or (
                 not len(args[0][0]) == len(args[1][0])
@@ -40,7 +39,7 @@ class Game:
             self.payoff_matrices[0], -self.payoff_matrices[1]
         )
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         if self.zero_sum:
             tpe = "Zero sum"
         else:
@@ -64,7 +63,7 @@ Column player:
             ]
         )
 
-    def vertex_enumeration(self) -> Any:
+    def vertex_enumeration(self):
         """
         Obtain the Nash equilibria using enumeration of the vertices of the best
         response polytopes.
@@ -83,9 +82,7 @@ Column player:
         """
         return vertex_enumeration(*self.payoff_matrices)
 
-    def support_enumeration(
-        self, non_degenerate: bool = False, tol: float = 10 ** -16
-    ) -> Any:
+    def support_enumeration(self, non_degenerate=False, tol=10 ** -16):
         """
         Obtain the Nash equilibria using support enumeration.
 
@@ -113,7 +110,7 @@ Column player:
             *self.payoff_matrices, non_degenerate=non_degenerate, tol=tol
         )
 
-    def lemke_howson_enumeration(self) -> Generator[Any, Any, None]:
+    def lemke_howson_enumeration(self):
         """
         Obtain Nash equilibria for all possible starting dropped labels
         using the lemke howson algorithm. See `Game.lemke_howson` for more
@@ -123,15 +120,13 @@ Column player:
 
         Yields
         ------
-        Generator
+        Tuple
             An equilibria
         """
         for label in range(sum(self.payoff_matrices[0].shape)):
             yield self.lemke_howson(initial_dropped_label=label)
 
-    def lemke_howson(
-        self, initial_dropped_label: int
-    ) -> Tuple[npt.NDArray, npt.NDArray]:
+    def lemke_howson(self, initial_dropped_label):
         """
         Obtain the Nash equilibria using the Lemke Howson algorithm implemented
         using integer pivoting.
@@ -161,9 +156,7 @@ Column player:
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
         )
 
-    def fictitious_play(
-        self, iterations: int, play_counts: npt.NDArray = None
-    ) -> Generator[Any, Any, None]:
+    def fictitious_play(self, iterations, play_counts=None):
         """
         Return a given sequence of actions through fictitious play. The
         implementation corresponds to the description of chapter 2 of
@@ -192,12 +185,8 @@ Column player:
         )
 
     def stochastic_fictitious_play(
-        self,
-        iterations: int,
-        play_counts: npt.NDArray = None,
-        etha: float = 10 ** -1,
-        epsilon_bar: float = 10 ** -2,
-    ) -> Generator[Tuple[npt.NDArray], Any, None]:
+        self, iterations, play_counts=None, etha=10 ** -1, epsilon_bar=10 ** -2
+    ):
         """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
         implementation corresponds to the description given in [Hofbauer2002]_.
 
@@ -226,9 +215,7 @@ Column player:
             epsilon_bar=epsilon_bar
         )
 
-    def replicator_dynamics(
-        self, y0: npt.NDArray = None, timepoints: npt.NDArray = None
-    ) -> npt.NDArray:
+    def replicator_dynamics(self, y0=None, timepoints=None):
         """
         Implement replicator dynamics
         Return an array showing probability of each strategy being played over
@@ -251,12 +238,7 @@ Column player:
         A, _ = self.payoff_matrices
         return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)
 
-    def asymmetric_replicator_dynamics(
-        self,
-        x0: npt.NDArray = None,
-        y0: npt.NDArray = None,
-        timepoints: npt.NDArray = None,
-    ) -> Tuple[tuple, tuple]:
+    def asymmetric_replicator_dynamics(self, x0=None, y0=None, timepoints=None):
         """
         Returns two arrays, corresponding to the two players, showing the
         probability of each strategy being played over time using the asymmetric
@@ -281,7 +263,7 @@ Column player:
             A=A, B=B, x0=x0, y0=y0, timepoints=timepoints
         )
 
-    def is_best_response(self, sigma_r: npt.NDArray, sigma_c: npt.NDArray) -> tuple:
+    def is_best_response(self, sigma_r, sigma_c):
         """
         Checks if sigma_r is a best response to sigma_c  and vice versa.
 

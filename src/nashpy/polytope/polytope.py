@@ -1,7 +1,7 @@
 """A class for a normal form game"""
 import numpy as np
 import numpy.typing as npt
-from typing import Generator, Tuple, Any, Iterable, Set
+from typing import Generator, Any, Set
 from scipy.optimize import linprog
 from scipy.spatial import HalfspaceIntersection
 
@@ -90,7 +90,7 @@ def labels(vertex: npt.NDArray, halfspaces: npt.NDArray) -> Set[npt.NDArray]:
 
 def non_trivial_vertices(
     halfspaces: npt.NDArray,
-) -> Generator[Tuple[Any, Iterable], Any, None]:
+) -> Generator[tuple, Any, None]:
     """
     Returns all vertex, label pairs (ignoring the origin).
 

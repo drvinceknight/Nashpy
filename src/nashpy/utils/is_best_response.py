@@ -1,8 +1,11 @@
 """Functions for testing of best responses"""
 import numpy as np
+import numpy.typing as npt
 
 
-def is_best_response(A, sigma_c, sigma_r):
+def is_best_response(
+    A: npt.NDArray, sigma_c: npt.NDArray, sigma_r: npt.NDArray
+) -> bool:
     """
     Checks if sigma_r is a best response to sigma_c when A is the payoff matrix
     for the player playing sigma_r.

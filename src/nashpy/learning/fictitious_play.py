@@ -1,7 +1,7 @@
 """Code to carry out fictitious learning"""
 import numpy as np
 import numpy.typing as npt
-from typing import Generator, Iterable
+from typing import Generator, Optional, Any
 
 
 def get_best_response_to_play_count(A: npt.NDArray, play_count: npt.NDArray) -> int:
@@ -46,7 +46,7 @@ def update_play_count(play_count: npt.NDArray, play: int) -> npt.NDArray:
 
 
 def fictitious_play(
-    A: npt.NDArray, B: npt.NDArray, iterations: int, play_counts: Iterable = None
+    A: npt.NDArray, B: npt.NDArray, iterations: int, play_counts: Optional[Any] = None
 ) -> Generator:
     """
     Implement fictitious play
@@ -59,7 +59,7 @@ def fictitious_play(
         The column player payoff matrix.
     iterations : int
         The number of iterations of the algorithm.
-    play_counts : Iterable
+    play_counts : Optional
         The play counts.
 
     Yields

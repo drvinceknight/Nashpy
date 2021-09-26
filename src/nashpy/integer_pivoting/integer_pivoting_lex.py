@@ -99,11 +99,11 @@ def find_entering_variable(
 
 
 def pivot_tableau_lex(
-    tableau: npt.NDArray,
-    column_index: int,
-    slack_variables: Iterable[npt.NDArray],
-    non_basic_variables: set,
-) -> int:
+    tableau,
+    column_index,
+    slack_variables,
+    non_basic_variables,
+):
     """
     Pivots the tableau and returns the dropped label
 

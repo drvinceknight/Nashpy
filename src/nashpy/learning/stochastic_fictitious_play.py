@@ -2,7 +2,6 @@
 import numpy as np
 from nashpy.learning.fictitious_play import update_play_count
 import numpy.typing as npt
-from typing import Generator, Tuple, Any, Optional
 
 
 def get_distribution_response_to_play_count(

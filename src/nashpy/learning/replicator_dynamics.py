@@ -1,11 +1,13 @@
 """Code to carry out replicator dynamics"""
 import numpy as np
+import numpy.typing as npt
+from typing import Tuple
 
 # from scipy.integrate import solve_ivp (will change program to use solve_ivp later)
 from scipy.integrate import odeint
 
 
-def get_derivative_of_fitness(x, t, A):
+def get_derivative_of_fitness(x: npt.NDArray, t: float, A: npt.NDArray) -> npt.NDArray:
     """
     Find the derivative of fitness function
 
@@ -29,7 +31,9 @@ def get_derivative_of_fitness(x, t, A):
     return x * (f - phi)
 
 
-def replicator_dynamics(A, y0=None, timepoints=None):
+def replicator_dynamics(
+    A: npt.NDArray, y0: npt.NDArray = None, timepoints: npt.NDArray = None
+) -> npt.NDArray:
     """
     Implement replicator dynamics
 
@@ -59,7 +63,9 @@ def replicator_dynamics(A, y0=None, timepoints=None):
     return xs
 
 
-def get_derivative_of_asymmetric_fitness(x, t, A, B):
+def get_derivative_of_asymmetric_fitness(
+    x: npt.NDArray, t: float, A: npt.NDArray, B: npt.NDArray
+) -> npt.NDArray:
     """
     Find the derivative of fitness function for the asymmetric replicator
     dynamics scenario
@@ -97,7 +103,13 @@ def get_derivative_of_asymmetric_fitness(x, t, A, B):
     return np.concatenate((row_derivative, col_derivative))
 
 
-def asymmetric_replicator_dynamics(A, B, x0=None, y0=None, timepoints=None):
+def asymmetric_replicator_dynamics(
+    A: npt.NDArray,
+    B: npt.NDArray,
+    x0: npt.NDArray = None,
+    y0: npt.NDArray = None,
+    timepoints: npt.NDArray = None,
+) -> Tuple[tuple, tuple]:
     """
     Implement asymmetric replicator dynamics
 

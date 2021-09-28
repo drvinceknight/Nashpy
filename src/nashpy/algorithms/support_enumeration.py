@@ -3,9 +3,11 @@ import warnings
 from itertools import chain, combinations
 
 import numpy as np
+import numpy.typing as npt
+from typing import Generator, Any, Iterator, Tuple, Union, Iterable, List, Optional
 
 
-def powerset(n):
+def powerset(n: int) -> Iterator[Tuple[Any, ...]]:
     """
     A power set of range(n)
 
@@ -20,13 +22,15 @@ def powerset(n):
 
     Returns
     -------
-    generator
+    Iterator
         The powerset
     """
     return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
 
 
-def solve_indifference(A, rows=None, columns=None):
+def solve_indifference(
+    A: npt.NDArray, rows: npt.NDArray = None, columns=None
+) -> Union[bool, Any]:
     """
     Solve the indifference for a payoff matrix assuming support for the
     strategies given by columns
@@ -45,7 +49,7 @@ def solve_indifference(A, rows=None, columns=None):
 
     Returns
     -------
-    array
+    Union
         The solution to the indifference equations.
     """
     # Ensure differences between pairs of pure strategies are the same
@@ -73,7 +77,9 @@ def solve_indifference(A, rows=None, columns=None):
         return False
 
 
-def potential_support_pairs(A, B, non_degenerate=False):
+def potential_support_pairs(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False
+) -> Generator[tuple, Any, None]:
     """
     A generator for the potential support pairs
 
@@ -90,7 +96,7 @@ def potential_support_pairs(A, B, non_degenerate=False):
 
     Yields
     -------
-    tuple
+    Generator
         A pair of possible supports.
     """
     p1_num_strategies, p2_num_strategies = A.shape
@@ -103,7 +109,9 @@ def potential_support_pairs(A, B, non_degenerate=False):
             yield support1, support2
 
 
-def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
+def indifference_strategies(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+) -> Generator[Tuple[bool, bool, Any, Any], Any, None]:
     """
     A generator for the strategies corresponding to the potential supports
 
@@ -121,7 +129,7 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
 
     Yields
     ------
-    tuple
+    Generator
         A generator of all potential strategies that are indifferent on each
         potential support. Return False if they are not valid (not a
         probability vector OR not fully on the given support).
@@ -137,7 +145,7 @@ def indifference_strategies(A, B, non_degenerate=False, tol=10 ** -16):
             yield s1, s2, pair[0], pair[1]
 
 
-def obey_support(strategy, support, tol=10 ** -16):
+def obey_support(strategy, support: npt.NDArray, tol: float = 10 ** -16) -> bool:
     """
     Test if a strategy obeys its support
 
@@ -165,7 +173,11 @@ def obey_support(strategy, support, tol=10 ** -16):
     return True
 
 
-def is_ne(strategy_pair, support_pair, payoff_matrices):
+def is_ne(
+    strategy_pair: tuple,
+    support_pair: Tuple[npt.NDArray, npt.NDArray],
+    payoff_matrices: Tuple[npt.NDArray, npt.NDArray],
+) -> bool:
     """
     Test if a given strategy pair is a pair of best responses
 
@@ -201,7 +213,9 @@ def is_ne(strategy_pair, support_pair, payoff_matrices):
     )
 
 
-def support_enumeration(A, B, non_degenerate=False, tol=10 ** -16):
+def support_enumeration(
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+) -> Generator[Tuple[bool, bool], Any, None]:
     """
     Obtain the Nash equilibria using support enumeration.
 
@@ -226,7 +240,7 @@ def support_enumeration(A, B, non_degenerate=False, tol=10 ** -16):
 
     Yields
     -------
-    tuple
+    Generator
         The equilibria.
     """
     count = 0

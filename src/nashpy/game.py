@@ -1,6 +1,7 @@
 """A class for a normal form game"""
 import numpy as np
-
+import numpy.typing as npt
+from typing import Any
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
@@ -26,7 +27,7 @@ class Game:
           zero sum game.
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args:Any)->None:
         if len(args) == 2:
             if (not len(args[0]) == len(args[1])) or (
                 not len(args[0][0]) == len(args[1][0])
@@ -39,7 +40,7 @@ class Game:
             self.payoff_matrices[0], -self.payoff_matrices[1]
         )
 
-    def __repr__(self):
+    def __repr__(self)->str:
         if self.zero_sum:
             tpe = "Zero sum"
         else:
@@ -54,7 +55,7 @@ Column player:
             tpe, *self.payoff_matrices
         )
 
-    def __getitem__(self, key):
+    def __getitem__(self, key:Any)->npt.NDArray:
         row_strategy, column_strategy = key
         return np.array(
             [

@@ -4,6 +4,7 @@ algorithm.
 """
 import numpy as np
 import numpy.typing as npt
+from typing import Any
 
 
 def make_tableau(M: npt.NDArray) -> npt.NDArray:
@@ -31,7 +32,7 @@ def make_tableau(M: npt.NDArray) -> npt.NDArray:
     )
 
 
-def find_pivot_row(tableau, column_index):
+def find_pivot_row(tableau: npt.NDArray, column_index: int) -> Any:
     """
     Find the index of the row to pivot.
 
@@ -48,13 +49,13 @@ def find_pivot_row(tableau, column_index):
 
     Returns
     -------
-    int
+    Any(signedinterger)
         The row on which to pivot.
     """
     return np.argmax(tableau[:, column_index] / tableau[:, -1])
 
 
-def non_basic_variables(tableau):
+def non_basic_variables(tableau: npt.NDArray) -> set:
     """
     Identifies the non basic variables of a tableau,
     these correspond to the labels.
@@ -73,7 +74,7 @@ def non_basic_variables(tableau):
     return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
 
-def pivot_tableau(tableau, column_index):
+def pivot_tableau(tableau: npt.NDArray, column_index: int) -> set:
     """
     Pivots the tableau and returns the dropped label
 
@@ -86,7 +87,7 @@ def pivot_tableau(tableau, column_index):
 
     Returns
     -------
-    int
+    set
         The dropped label.
     """
     original_labels = non_basic_variables(tableau)

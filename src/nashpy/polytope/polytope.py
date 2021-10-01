@@ -1,10 +1,12 @@
 """A class for a normal form game"""
 import numpy as np
+import numpy.typing as npt
+from typing import Generator, Any, Set
 from scipy.optimize import linprog
 from scipy.spatial import HalfspaceIntersection
 
 
-def build_halfspaces(M):
+def build_halfspaces(M: npt.NDArray) -> npt.NDArray:
     """
     Build a matrix representation for a halfspace corresponding to:
 
@@ -35,7 +37,7 @@ def build_halfspaces(M):
     return halfspaces
 
 
-def find_feasible_point(halfspaces):
+def find_feasible_point(halfspaces: npt.NDArray) -> npt.NDArray:
     """
     Use linear programming to find a point inside the halfspaces (needed to
     define it).
@@ -64,7 +66,7 @@ def find_feasible_point(halfspaces):
     return res.x[:-1]
 
 
-def labels(vertex, halfspaces):
+def labels(vertex: npt.NDArray, halfspaces: npt.NDArray) -> Set[npt.NDArray]:
     """
     Return the labels of the facets on which lie a given vertex. This is
     calculated by carrying out the matrix multiplication.
@@ -86,7 +88,9 @@ def labels(vertex, halfspaces):
     return set(np.where(np.isclose(np.dot(M, vertex), -b))[0])
 
 
-def non_trivial_vertices(halfspaces):
+def non_trivial_vertices(
+    halfspaces: npt.NDArray,
+) -> Generator[tuple, Any, None]:
     """
     Returns all vertex, label pairs (ignoring the origin).
 

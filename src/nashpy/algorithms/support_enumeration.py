@@ -4,7 +4,7 @@ from itertools import chain, combinations
 
 import numpy as np
 import numpy.typing as npt
-from typing import Generator, Any, Iterator, Tuple, Union, Iterable, List, Optional
+from typing import Generator, Any, Iterator, Tuple, Union
 
 
 def powerset(n: int) -> Iterator[Tuple[Any, ...]]:
@@ -28,9 +28,7 @@ def powerset(n: int) -> Iterator[Tuple[Any, ...]]:
     return chain.from_iterable(combinations(range(n), r) for r in range(n + 1))
 
 
-def solve_indifference(
-    A: npt.NDArray, rows: npt.NDArray = None, columns=None
-) -> Union[bool, Any]:
+def solve_indifference(A, rows=None, columns=None) -> Union[bool, Any]:
     """
     Solve the indifference for a payoff matrix assuming support for the
     strategies given by columns
@@ -73,7 +71,7 @@ def solve_indifference(
         if all(prob >= 0):
             return prob
         return False
-    except np.linalg.linalg.LinAlgError:
+    except np.linalg.LinAlgError:
         return False
 
 

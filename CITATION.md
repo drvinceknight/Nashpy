@@ -1,6 +1,6 @@
 Please use the following to cite the latest version of the Nashpy library::
 
-    @misc{axelrodproject,
+    @misc{nashpyproject,
       author       = {{ {The Nashpy project developers} }},
       title        = {Nashpy: <RELEASE TITLE>},
       month        = <MONTH>,

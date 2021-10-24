@@ -1,9 +1,8 @@
 Use Moran processes
 ===================
 
-Moran processes are implemented in :code:`Nashpy`
- as a method on the :code:`Game`
-class::
+Moran processes are implemented in :code:`Nashpy` as a method on the
+:code:`Game` class::
 
     >>> import nashpy as nash
     >>> import numpy as np

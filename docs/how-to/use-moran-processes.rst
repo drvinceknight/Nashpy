@@ -14,7 +14,7 @@ The :code:`moran_process` method returns a generator of a given collection of
 generations::
 
     >>> np.random.seed(0)
-    >>> generations = game.moran_process(initial_population=(1, 5))
+    >>> generations = game.moran_process(initial_population=(0, 0, 1))
     >>> for population in generations:
     ...     print(population)
     [0 0] [0 0]
@@ -26,7 +26,7 @@ generations::
 Note that this process is stochastic::
 
     >>> np.random.seed(1)
-    >>> generations = game.moran_process(initial_population=(1, 5))
+    >>> generations = game.moran_process(initial_population=(0, 0, 1))
     >>> for population in generations:
     ...     print(population)
     [0 0] [0 0]

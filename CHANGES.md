@@ -1,3 +1,7 @@
+# v0.0.26
+
+Add Moran process
+
 # v0.0.25
 
 Fix a bug in the documentation.

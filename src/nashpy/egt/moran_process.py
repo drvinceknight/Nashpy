@@ -91,6 +91,9 @@ def moran_process(
     population is when only a single type of individual is present in the
     population.
 
+    If an already fixed initial population is given then the generator will
+    return that same initial population.
+
     Parameters
     ----------
     A : array
@@ -105,9 +108,57 @@ def moran_process(
         The generations.
     """
     population = initial_population
-    while len(set(population)) != 1:
+    if len(set(population)) > 1:
+        while len(set(population)) != 1:
 
-        scores = score_all_individuals(A=A, population=population)
-        population = update_population(population=population, scores=scores)
+            scores = score_all_individuals(A=A, population=population)
+            population = update_population(population=population, scores=scores)
 
+            yield population
+    else:
         yield population
+
+
+def fixation_probabilities(
+    A: npt.NDArray,
+    initial_population: npt.NDArray,
+    iterations: int,
+) -> npt.NDArray:
+    """
+    Return the fixation probabilities for all types of individuals.
+
+    The returned array will have the same dimension as the number of rows or
+    columns as the payoff matrix A. The ith element of the returned array
+    corresponds to the probability that the ith strategy becomes fixed given the
+    initial population.
+
+    This is a stochastic algorithm and the probabilities are estimated over a
+    number of repetitions given by iterations.
+
+    Parameters
+    ----------
+    A : array
+        a payoff matrix
+    initial_population : array
+        the initial population
+    iterations : int
+        The number of iterations of the algorithm.
+
+
+    Returns
+    -------
+    array
+        The fixation probability of each type.
+    """
+    number_of_strategies = A.shape[0]
+    fixation_counts = np.array([0 for _ in range(number_of_strategies)])
+    for repetition in range(iterations):
+        generations = tuple(moran_process(A=A, initial_population=initial_population))
+        last_population = generations[-1]
+
+        assert len(set(last_population)) == 1
+        fixed_strategy = last_population[0]
+
+        fixation_counts[fixed_strategy] += 1
+
+    return fixation_counts / iterations

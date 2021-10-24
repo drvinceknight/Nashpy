@@ -2,6 +2,10 @@
 Tests for the moran process
 """
 import numpy as np
+import pytest
+
+from hypothesis import given
+from hypothesis.extra.numpy import arrays
 
 from nashpy.egt.moran_process import (
     score_all_individuals,
@@ -16,6 +20,28 @@ def test_score_all_individuals_in_3_by_3_game():
     expected_scores = np.array((18, 18, 18, 15, 15, 23, 23))
     scores = score_all_individuals(A=A, population=population)
     assert np.array_equal(expected_scores, scores)
+
+
+@given(M=arrays(np.int8, (3, 3), unique=True))
+def test_properties_of_scores(M):
+    """
+    Checks that if non negative valued matrices are passed then non negative
+    valued scored are calculated.
+
+    Parameters
+    ----------
+    M : array
+        a payoff matrix
+    """
+    if np.min(M) > 0:
+        population = np.array((0, 0, 1, 1, 2, 2))
+        scores = score_all_individuals(A=M, population=population)
+        assert np.min(scores) >= 0
+        assert np.sum(scores) > 0
+    else:
+        with pytest.raises(ValueError):
+            initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+            tuple(moran_process(A=M, initial_population=initial_population))
 
 
 def test_update_population_seed_0():
@@ -47,5 +73,48 @@ def test_update_population_with_uniform_population():
     assert np.array_equal(expected_new_population, new_population)
 
 
-def test_moran_process_in_3_by_3_game():
+@given(M=arrays(np.int8, (3, 3), unique=True))
+def test_moran_process_in_3_by_3_game(M):
+    """
+    This tests that the final population only has a single population in it and
+    that all generations have a population of the correct length and the correct
+    possible entries.
+
+    Note that only non negative sampled matrices are used for tests.
+
+    Parameters
+    ----------
+    M : array
+        a payoff matrix
+    """
+    if np.min(M) > 0:
+        initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+        generations = tuple(moran_process(A=M, initial_population=initial_population))
+        last_generation = generations[-1]
+        assert set(map(len, generations)) == {len(initial_population)}
+        assert all(set(population) <= {0, 1, 2} for population in generations)
+        assert set(last_generation) in ({0}, {1}, {2})
+    else:
+        with pytest.raises(ValueError):
+            initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+            tuple(moran_process(A=M, initial_population=initial_population))
+
+
+def test_specific_moran_process_seed_0():
     A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(0)
+    generations = tuple(moran_process(A=A, initial_population=initial_population))
+    last_generation = generations[-1]
+    expected_last_generation = np.array((1, 1, 1, 1, 1, 1, 1))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_seed_1():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(1)
+    generations = tuple(moran_process(A=A, initial_population=initial_population))
+    last_generation = generations[-1]
+    expected_last_generation = np.array((2, 2, 2, 2, 2, 2, 2))
+    assert np.array_equal(last_generation, expected_last_generation)

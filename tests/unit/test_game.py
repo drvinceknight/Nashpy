@@ -22,7 +22,16 @@ class TestGame(unittest.TestCase):
 
     @given(A=arrays(np.int8, (4, 5)), B=arrays(np.int8, (4, 5)))
     def test_bi_matrix_init(self, A, B):
-        """Test that can create a bi matrix game"""
+        """
+        Test that can create a bi matrix game
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        B : array
+            a payoff matrix
+        """
         g = nash.Game(A, B)
         self.assertEqual(g.payoff_matrices, (A, B))
         if np.array_equal(A, -B):  # Check if A or B are non zero
@@ -63,7 +72,14 @@ Column player:
 
     @given(A=arrays(np.int8, (4, 5)))
     def test_zero_sum_game_init(self, A):
-        """Test that can create a zero sum game"""
+        """
+        Test that can create a zero sum game
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        """
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], A))
         self.assertTrue(np.array_equal(g.payoff_matrices[0], -g.payoff_matrices[1]))
@@ -93,14 +109,30 @@ Column player:
 
     @given(A=arrays(np.int8, (4, 5)))
     def test_zero_sum_property_from_bi_matrix(self, A):
-        """Test that can create a zero sum game"""
+        """
+        Test that can create a zero sum game
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        """
         B = -A
         g = nash.Game(A, B)
         self.assertTrue(g.zero_sum)
 
     @given(A=arrays(np.int8, (3, 4)), B=arrays(np.int8, (3, 4)))
     def test_property_support_enumeration(self, A, B):
-        """Property based test for the equilibria calculation"""
+        """
+        Property based test for the equilibria calculation
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        B : array
+            a payoff matrix
+        """
         g = nash.Game(A, B)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -399,7 +431,18 @@ Column player:
         seed=integers(min_value=0, max_value=2 ** 32 - 1),
     )
     def test_fictitious_play(self, A, B, seed):
-        """Test for the fictitious play algorithm"""
+        """
+        Test for the fictitious play algorithm
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        B : array
+            a payoff matrix
+        seed : int
+            a random seed
+        """
         g = nash.Game(A, B)
         iterations = 25
         np.random.seed(seed)
@@ -425,7 +468,18 @@ Column player:
         seed=integers(min_value=0, max_value=2 ** 32 - 1),
     )
     def test_stochastic_fictitious_play(self, A, B, seed):
-        """Test for the stochastic fictitious play algorithm"""
+        """
+        Test for the stochastic fictitious play algorithm
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        B : array
+            a payoff matrix
+        seed : int
+            a random seed
+        """
         np.random.seed(seed)
         iterations = 10
         g = nash.Game(A, B)

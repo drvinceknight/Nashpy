@@ -24,7 +24,14 @@ class TestPolytope(unittest.TestCase):
 
     @given(A=arrays(np.int8, (4, 5)))
     def test_creation_of_halfspaces(self, A):
-        """Test that can create a bi matrix game"""
+        """
+        Test that can create a bi matrix game
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        """
         halfspace = build_halfspaces(A)
         number_of_strategies, dimension = A.shape
         self.assertEqual(
@@ -99,7 +106,14 @@ class TestPolytope(unittest.TestCase):
         )
     )
     def test_creation_of_non_trivial_vertices(self, A):
-        """Test that can create a bi matrix game"""
+        """
+        Test that can create a bi matrix game
+
+        Parameters
+        ----------
+        A : array
+            a payoff matrix
+        """
         halfspaces = build_halfspaces(A)
         vertices_generator = non_trivial_vertices(halfspaces)
         number_of_strategies, dimension = A.shape

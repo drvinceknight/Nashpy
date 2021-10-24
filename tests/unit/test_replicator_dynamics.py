@@ -1109,6 +1109,13 @@ def test_replicator_dynamics_with_incorrect_inputs():
 def test_property_get_derivative_of_asymmetric_fitness(A, B):
     """
     Property-based test of get_derivative_of_asymmetric_fitness for a 3x2 game
+
+    Parameters
+    ----------
+    A : array
+        a payoff matrix
+    B : array
+        a payoff matrix
     """
     t = 0
     x = np.ones(A.shape[1] + A.shape[0])
@@ -1154,6 +1161,13 @@ def test_get_derivative_of_asymmetric_fitness_example():
 def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     """
     Property-based test of asymmetric_replicator_dynamics for a 4x2 game
+
+    Parameters
+    ----------
+    A : array
+        a payoff matrix
+    B : array
+        a payoff matrix
     """
     xs1, xs2 = asymmetric_replicator_dynamics(A, B)
     assert all(len(x) == 4 for x in xs1)
@@ -1171,6 +1185,11 @@ def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     Note that the test hypothesis can find cases where this test can fail for
     larger elements or larger matrix sizes. One potenetial reason for this might
     be the fact that scipy.odeint() is a deprecated function.
+
+    Parameters
+    ----------
+    A : array
+        a payoff matrix
     """
     B = A.transpose()
 

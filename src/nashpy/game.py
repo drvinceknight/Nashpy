@@ -5,7 +5,7 @@ from typing import Any
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
-from .egt.moran_process import moran_process
+from .egt.moran_process import moran_process, fixation_probabilities
 from .learning.fictitious_play import fictitious_play
 from .learning.replicator_dynamics import (
     asymmetric_replicator_dynamics,
@@ -315,3 +315,33 @@ Column player:
         """
         A, _ = self.payoff_matrices
         return moran_process(A=A, initial_population=initial_population)
+
+    def fixation_probabilities(self, initial_population, iterations):
+        """
+        Return the fixation probabilities for all types of individuals.
+
+        The returned array will have the same dimension as the number of rows or
+        columns as the payoff matrix A. The ith element of the returned array
+        corresponds to the probability that the ith strategy becomes fixed given the
+        initial population.
+
+        This is a stochastic algorithm and the probabilities are estimated over a
+        number of repetitions given by iterations.
+
+        Parameters
+        ----------
+        initial_population : array
+            the initial population
+        iterations : int
+            The number of iterations of the algorithm.
+
+
+        Returns
+        -------
+        array
+            The fixation probability of each type.
+        """
+        A, _ = self.payoff_matrices
+        return fixation_probabilities(
+            A=A, initial_population=initial_population, iterations=iterations
+        )

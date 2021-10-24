@@ -11,6 +11,7 @@ from nashpy.egt.moran_process import (
     score_all_individuals,
     update_population,
     moran_process,
+    fixation_probabilities,
 )
 
 
@@ -118,3 +119,61 @@ def test_specific_moran_process_seed_1():
     last_generation = generations[-1]
     expected_last_generation = np.array((2, 2, 2, 2, 2, 2, 2))
     assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_with_already_fixed_initial_population():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0))
+    generations = tuple(moran_process(A=A, initial_population=initial_population))
+    assert len(generations) == 1
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 0))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_fixation_probablities_0():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(0)
+    iterations = 10
+    probabilities = fixation_probabilities(
+        A=A, initial_population=initial_population, iterations=iterations
+    )
+    expected_probabilities = np.array((0.5, 0.3, 0.2))
+    assert np.allclose(probabilities, expected_probabilities)
+
+
+def test_fixation_probablities_1():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(1)
+    iterations = 10
+    probabilities = fixation_probabilities(
+        A=A, initial_population=initial_population, iterations=iterations
+    )
+    expected_probabilities = np.array((0.2, 0.3, 0.5))
+    assert np.allclose(probabilities, expected_probabilities)
+
+
+def test_fixation_probablities_with_fixed_initial_population_0():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 0))
+    np.random.seed(1)
+    iterations = 10
+    probabilities = fixation_probabilities(
+        A=A, initial_population=initial_population, iterations=iterations
+    )
+    expected_probabilities = np.array((1, 0, 0))
+    assert np.array_equal(probabilities, expected_probabilities)
+
+
+def test_fixation_probablities_with_fixed_initial_population_2():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((2, 2, 2, 2, 2, 2))
+    np.random.seed(1)
+    iterations = 10
+    probabilities = fixation_probabilities(
+        A=A, initial_population=initial_population, iterations=iterations
+    )
+    expected_probabilities = np.array((0, 0, 1))
+    assert np.array_equal(probabilities, expected_probabilities)

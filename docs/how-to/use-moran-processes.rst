@@ -1,3 +1,5 @@
+.. _how-to-use-moran_process:
+
 Use Moran processes
 ===================
 

@@ -18,3 +18,4 @@ How to:
    use-replicator-dynamics.rst
    use-asymmetric-replicator-dynamics.rst
    use-moran-processes.rst
+   obtain-fixation-probabilities.rst

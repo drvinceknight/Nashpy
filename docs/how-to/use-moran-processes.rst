@@ -7,7 +7,7 @@ class::
 
     >>> import nashpy as nash
     >>> import numpy as np
-    >>> A = np.array([[3, 1], [0, 2]])
+    >>> A = np.array([[3, 1], [1, 2]])
     >>> game = nash.Game(A)
 
 The :code:`moran_process` method returns a generator of a given collection of
@@ -17,20 +17,30 @@ generations::
     >>> generations = game.moran_process(initial_population=(0, 0, 1))
     >>> for population in generations:
     ...     print(population)
-    [0 0] [0 0]
-    [1. 0.] [0. 1.]
+    [0 0 1]
+    [0 1 1]
+    [0 1 1]
     ...
-    [498.   1.] [497.   2.]
-    [499.   1.] [498.   2.]
+    [0 1 1]
+    [1 1 1]
 
 Note that this process is stochastic::
 
-    >>> np.random.seed(1)
+    >>> np.random.seed(2)
     >>> generations = game.moran_process(initial_population=(0, 0, 1))
     >>> for population in generations:
     ...     print(population)
-    [0 0] [0 0]
-    [1. 0.] [0. 1.]
-    ...
-    [498.   1.] [497.   2.]
-    [499.   1.] [498.   2.]
+    [0 0 1]
+    [0 0 1]
+    [0 0 0]
+
+Currently, only positive valued matrices are supported::
+
+    >>> A = np.array([[3, 0], [1, 2]])
+    >>> game = nash.Game(A)
+    >>> generations = game.moran_process(initial_population=(0, 0, 1))
+    >>> for population in generations:
+    ...     print(population)
+    Traceback (most recent call last):
+     ...
+    ValueError: Only positive valued payoff matrices are currently supported

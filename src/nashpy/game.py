@@ -5,6 +5,7 @@ from typing import Any
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
+from .egt.moran_process import moran_process
 from .learning.fictitious_play import fictitious_play
 from .learning.replicator_dynamics import (
     asymmetric_replicator_dynamics,
@@ -294,3 +295,23 @@ Column player:
             sigma_r=sigma_c,
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)
+
+    def moran_process(self, initial_population):
+        """
+        Return a generator of population across the Moran process. The last
+        population is when only a single type of individual is present in the
+        population.
+
+        Parameters
+        ----------
+        initial_population : array
+            the initial population
+
+
+        Returns
+        -------
+        Generator
+            The generations.
+        """
+        A, _ = self.payoff_matrices
+        return moran_process(A=A, initial_population=initial_population)

@@ -574,3 +574,13 @@ Column player:
         row_check, column_check = game.is_best_response(sigma_r, sigma_c)
         assert row_check is True
         assert column_check is False
+
+    def test_moran_process_seed_1(self):
+        A = np.array(((4, 3, 2, 1), (5, 1, 2, 5), (2, 6, 1, 3), (4, 10, 1, 1)))
+        game = nash.Game(A)
+        initial_population = np.array((0, 0, 1, 1, 2, 2, 3, 3))
+        np.random.seed(1)
+        generations = game.moran_process(initial_population=initial_population)
+        last_generation = tuple(generations)[-1]
+        expected_last_generation = np.array((3, 3, 3, 3, 3, 3, 3, 3))
+        assert np.array_equal(last_generation, expected_last_generation)

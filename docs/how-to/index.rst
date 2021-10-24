@@ -17,3 +17,4 @@ How to:
    use-stochastic-fictitious-play.rst
    use-replicator-dynamics.rst
    use-asymmetric-replicator-dynamics.rst
+   use-moran-processes.rst

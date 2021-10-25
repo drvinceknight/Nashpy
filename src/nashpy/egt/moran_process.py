@@ -122,7 +122,7 @@ def moran_process(
 def fixation_probabilities(
     A: npt.NDArray,
     initial_population: npt.NDArray,
-    iterations: int,
+    repetitions: int,
 ) -> npt.NDArray:
     """
     Return the fixation probabilities for all types of individuals.
@@ -133,7 +133,7 @@ def fixation_probabilities(
     initial population.
 
     This is a stochastic algorithm and the probabilities are estimated over a
-    number of repetitions given by iterations.
+    number of repetitions.
 
     Parameters
     ----------
@@ -141,8 +141,8 @@ def fixation_probabilities(
         a payoff matrix
     initial_population : array
         the initial population
-    iterations : int
-        The number of iterations of the algorithm.
+    repetitions : int
+        The number of repetitions of the algorithm.
 
 
     Returns
@@ -152,7 +152,7 @@ def fixation_probabilities(
     """
     number_of_strategies = A.shape[0]
     fixation_counts = np.array([0 for _ in range(number_of_strategies)])
-    for repetition in range(iterations):
+    for repetition in range(repetitions):
         generations = tuple(moran_process(A=A, initial_population=initial_population))
         last_population = generations[-1]
 
@@ -161,4 +161,4 @@ def fixation_probabilities(
 
         fixation_counts[fixed_strategy] += 1
 
-    return fixation_counts / iterations
+    return fixation_counts / repetitions

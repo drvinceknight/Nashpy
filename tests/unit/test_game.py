@@ -591,7 +591,7 @@ Column player:
         initial_population = np.array((0, 0, 1, 1, 2, 2, 3, 3))
         np.random.seed(1)
         probabilities = game.fixation_probabilities(
-            initial_population=initial_population, iterations=20
+            initial_population=initial_population, repetitions=20
         )
         expected_probabilities = np.array((0.1, 0, 0.45, 0.45))
         assert np.array_equal(probabilities, expected_probabilities)

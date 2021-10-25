@@ -316,7 +316,7 @@ Column player:
         A, _ = self.payoff_matrices
         return moran_process(A=A, initial_population=initial_population)
 
-    def fixation_probabilities(self, initial_population, iterations):
+    def fixation_probabilities(self, initial_population, repetitions):
         """
         Return the fixation probabilities for all types of individuals.
 
@@ -326,13 +326,13 @@ Column player:
         initial population.
 
         This is a stochastic algorithm and the probabilities are estimated over a
-        number of repetitions given by iterations.
+        number of repetitions.
 
         Parameters
         ----------
         initial_population : array
             the initial population
-        iterations : int
+        repetitions : int
             The number of iterations of the algorithm.
 
 
@@ -343,5 +343,5 @@ Column player:
         """
         A, _ = self.payoff_matrices
         return fixation_probabilities(
-            A=A, initial_population=initial_population, iterations=iterations
+            A=A, initial_population=initial_population, repetitions=repetitions
         )

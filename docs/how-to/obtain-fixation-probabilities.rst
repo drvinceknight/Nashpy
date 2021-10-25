@@ -13,7 +13,7 @@ The :code:`fixation` method returns an array with the fixation probabilities of
 each strategy given the initial population::
 
     >>> np.random.seed(0)
-    >>> probabilities = game.fixation_probabilities(initial_population=(0, 1, 1, 1), iterations=200)
+    >>> probabilities = game.fixation_probabilities(initial_population=(0, 1, 1, 1), repetitions=200)
     >>> probabilities
     array([0.235, 0.765])
 

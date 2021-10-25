@@ -1,3 +1,7 @@
+# v0.0.28
+
+Modify fixation probability api.
+
 # v0.0.27
 
 Add fixation probability calculation.

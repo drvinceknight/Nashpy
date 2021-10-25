@@ -1,3 +1,7 @@
+# v0.0.27
+
+Add fixation probability calculation.
+
 # v0.0.26
 
 Add Moran process

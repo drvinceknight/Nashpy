@@ -31,7 +31,7 @@ An extensive form game consists of:
   are not leaves.
 - :math:`O` is the set of possible game outcomes.
 - :math:`u` is a function mapping every leaf of :math:`G` to an element of
-  :math:`0`.
+  :math:`O`.
 
 .. admonition:: Question
    :class: note

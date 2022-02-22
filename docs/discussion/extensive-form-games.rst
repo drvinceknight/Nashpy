@@ -140,7 +140,7 @@ This implies that:
 Definition of a strategy in an extensive form game
 --------------------------------------------------
 
-A strategy for a player in an extensive form is collection of probability
+A strategy for a player in an extensive form is a collection of probability
 distribution over the action set of each information set.
 
 Equivalence of Extensive and Normal Form Games

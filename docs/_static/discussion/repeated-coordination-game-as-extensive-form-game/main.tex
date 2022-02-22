@@ -34,7 +34,7 @@
     \pic[scale=1.1]{stagegame};
 
     \tikzset{repeatedstagegame/.pic={
-        \tikzmath{\x1 = int(2 * #1);}
+        \tikzmath{\x1 = int(2 * #1 + 1);}
         \tikzmath{\x2 = int(\x1 + 1);}
         \tikzmath{\z1 = int(1 + 4 * (#1 - 1));}
         \tikzmath{\z2 = int(\z1 + 1);}

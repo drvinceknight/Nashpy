@@ -28,9 +28,11 @@ class TestGame(unittest.TestCase):
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         B : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
         """
         g = nash.Game(A, B)
         self.assertEqual(g.payoff_matrices, (A, B))
@@ -72,13 +74,13 @@ Column player:
 
     @given(A=arrays(np.int8, (4, 5)))
     def test_zero_sum_game_init(self, A):
-        """
-        Test that can create a zero sum game
+        """Test that can create a zero sum game
 
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         """
         g = nash.Game(A)
         self.assertTrue(np.array_equal(g.payoff_matrices[0], A))
@@ -115,7 +117,8 @@ Column player:
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         """
         B = -A
         g = nash.Game(A, B)
@@ -129,9 +132,11 @@ Column player:
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         B : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
         """
         g = nash.Game(A, B)
         with warnings.catch_warnings():
@@ -428,7 +433,7 @@ Column player:
     @given(
         A=arrays(np.int8, (4, 5)),
         B=arrays(np.int8, (4, 5)),
-        seed=integers(min_value=0, max_value=2 ** 32 - 1),
+        seed=integers(min_value=0, max_value=2**32 - 1),
     )
     def test_fictitious_play(self, A, B, seed):
         """
@@ -437,11 +442,13 @@ Column player:
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         B : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
         seed : int
-            a random seed
+            A seed for the random number generator
         """
         g = nash.Game(A, B)
         iterations = 25
@@ -465,7 +472,7 @@ Column player:
     @given(
         A=arrays(np.int8, (4, 3), elements=integers(1, 20)),
         B=arrays(np.int8, (4, 3), elements=integers(1, 20)),
-        seed=integers(min_value=0, max_value=2 ** 32 - 1),
+        seed=integers(min_value=0, max_value=2**32 - 1),
     )
     def test_stochastic_fictitious_play(self, A, B, seed):
         """
@@ -474,11 +481,13 @@ Column player:
         Parameters
         ----------
         A : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
         B : array
-            a payoff matrix
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
         seed : int
-            a random seed
+            A seed for the random number generator
         """
         np.random.seed(seed)
         iterations = 10

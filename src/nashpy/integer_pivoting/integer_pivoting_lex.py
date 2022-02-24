@@ -10,7 +10,7 @@ from typing import Iterable, Any
 
 
 def find_pivot_row_lex(
-    tableau: npt.NDArray, column_index: int, slack_variables: Iterable[npt.NDArray]
+    tableau: npt.NDArray, column_index: int, slack_variables: Any
 ) -> int:
 
     """
@@ -38,8 +38,8 @@ def find_pivot_row_lex(
         A tableau corresponding to a vertex of a Polytope.
     column_index : int
         The index of a tableau on which to pivot.
-    slack_variables : iterable
-        The collection of slack variables
+    slack_variables : Any
+        The iterable of slack variables  # FIX the type hint here to be iterable
 
     Returns
     -------

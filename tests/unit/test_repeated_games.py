@@ -9,9 +9,7 @@ import nashpy.repeated_games
 def test_obtain_states_after_1_repetition_for_2_by_2_game():
     A = np.array([[1, 2], [3, 4]])
     expected_states_after_1_repetition = [((), ())]
-    states = list(
-        nashpy.repeated_games.obtain_states(row_player_matrix=A, repetitions=1)
-    )
+    states = list(nashpy.repeated_games.obtain_states(A=A, repetitions=1))
     assert expected_states_after_1_repetition == states
 
 
@@ -24,7 +22,77 @@ def test_obtain_states_after_2_repetitions_for_2_by_2_game():
         ((1,), (0,)),
         ((1,), (1,)),
     ]
-    states = list(
-        nashpy.repeated_games.obtain_states(row_player_matrix=A, repetitions=2)
-    )
+    states = list(nashpy.repeated_games.obtain_states(A=A, repetitions=2))
     assert expected_states_after_2_repetitions == states
+
+
+def test_obtain_states_after_2_repetitions_for_2_by_3_game():
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    expected_states_after_2_repetitions = [
+        ((), ()),
+        ((0,), (0,)),
+        ((0,), (1,)),
+        ((0,), (2,)),
+        ((1,), (0,)),
+        ((1,), (1,)),
+        ((1,), (2,)),
+    ]
+    states = list(nashpy.repeated_games.obtain_states(A=A, repetitions=2))
+    assert expected_states_after_2_repetitions == states
+
+
+def test_obtain_strategy_space_after_1_repetition_for_2_by_2_game():
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    expected_strategy_space = [{((), ()): (1.0, 0.0)}, {((), ()): (0.0, 1.0)}]
+    strategy_space = list(
+        nashpy.repeated_games.obtain_strategy_space(A=A, repetitions=1)
+    )
+    assert expected_strategy_space == strategy_space
+
+
+def test_obtain_strategy_space_after_2_repetition_for_2_by_3_game():
+    """
+    This tests that the output is of the expected format: a dictionary of the
+    right size (in the case of a 2 by 3 game repeated twice this is
+
+    128 = 2 ^ (1 + 2 * 3)
+
+    The size of the state space is 1 + 2 * 3. There are two options for each of
+    the states giving 128.
+    """
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    repetitions = 2
+    count = 0
+    states = sorted(
+        list(nashpy.repeated_games.obtain_states(A=A, repetitions=repetitions))
+    )
+    for strategy in nashpy.repeated_games.obtain_strategy_space(
+        A=A, repetitions=repetitions
+    ):
+        assert sorted(strategy.keys()) == states
+        count += 1
+    assert count == 128
+
+
+def test_obtain_strategy_space_after_2_repetition_for_3_by_2_game():
+    """
+    This tests that the output is of the expected format: a dictionary of the
+    right size (in the case of a 2 by 3 game repeated twice this is
+
+    2187 = 3 ^ (1 + 2 * 3)
+
+    The size of the state space is 1 + 2 * 3. There are three options for each of
+    the states giving 2187
+    """
+    A = np.array([[1, 2], [3, 4], [5, 6]])
+    repetitions = 2
+    count = 0
+    states = sorted(
+        list(nashpy.repeated_games.obtain_states(A=A, repetitions=repetitions))
+    )
+    for strategy in nashpy.repeated_games.obtain_strategy_space(
+        A=A, repetitions=repetitions
+    ):
+        assert sorted(strategy.keys()) == states
+        count += 1
+    assert count == 2187

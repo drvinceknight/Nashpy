@@ -108,7 +108,7 @@ def potential_support_pairs(
 
 
 def indifference_strategies(
-    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10**-16
 ) -> Generator[Tuple[bool, bool, Any, Any], Any, None]:
     """
     A generator for the strategies corresponding to the potential supports
@@ -143,7 +143,7 @@ def indifference_strategies(
             yield s1, s2, pair[0], pair[1]
 
 
-def obey_support(strategy, support: npt.NDArray, tol: float = 10 ** -16) -> bool:
+def obey_support(strategy, support: npt.NDArray, tol: float = 10**-16) -> bool:
     """
     Test if a strategy obeys its support
 
@@ -212,7 +212,7 @@ def is_ne(
 
 
 def support_enumeration(
-    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10 ** -16
+    A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10**-16
 ) -> Generator[Tuple[bool, bool], Any, None]:
     """
     Obtain the Nash equilibria using support enumeration.

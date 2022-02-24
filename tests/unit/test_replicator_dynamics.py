@@ -1108,22 +1108,22 @@ def test_replicator_dynamics_with_incorrect_inputs():
 @given(A=arrays(np.int8, (3, 2)), B=arrays(np.int8, (3, 2)))
 def test_property_get_derivative_of_asymmetric_fitness(A, B):
     """
-    Property-based test of get_derivative_of_asymmetric_fitness for a 3x2 game
+        Property-based test of get_derivative_of_asymmetric_fitness for a 3x2 game
 
-    Parameters
-    ----------
-    A : array
-<<<<<<< HEAD
-        a payoff matrix
-    B : array
-        a payoff matrix
-=======
-        2 dimensional list/array representing the payoff matrix for a
-        the row player in a game.
-    B : array
-        2 dimensional list/array representing the payoff matrix for a
-        the column player in a game.
->>>>>>> 63f6b0f (Update testing suite.)
+        Parameters
+        ----------
+        A : array
+    <<<<<<< HEAD
+            a payoff matrix
+        B : array
+            a payoff matrix
+    =======
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
+        B : array
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
+    >>>>>>> 63f6b0f (Update testing suite.)
     """
     t = 0
     x = np.ones(A.shape[1] + A.shape[0])
@@ -1168,22 +1168,22 @@ def test_get_derivative_of_asymmetric_fitness_example():
 )
 def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     """
-    Property-based test of asymmetric_replicator_dynamics for a 4x2 game
+        Property-based test of asymmetric_replicator_dynamics for a 4x2 game
 
-    Parameters
-    ----------
-    A : array
-<<<<<<< HEAD
-        a payoff matrix
-    B : array
-        a payoff matrix
-=======
-        2 dimensional list/array representing the payoff matrix for a
-        the row player in a game.
-    B : array
-        2 dimensional list/array representing the payoff matrix for a
-        the column player in a game.
->>>>>>> 63f6b0f (Update testing suite.)
+        Parameters
+        ----------
+        A : array
+    <<<<<<< HEAD
+            a payoff matrix
+        B : array
+            a payoff matrix
+    =======
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
+        B : array
+            2 dimensional list/array representing the payoff matrix for a
+            the column player in a game.
+    >>>>>>> 63f6b0f (Update testing suite.)
     """
     xs1, xs2 = asymmetric_replicator_dynamics(A, B)
     assert all(len(x) == 4 for x in xs1)
@@ -1193,24 +1193,24 @@ def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
 @given(A=arrays(np.int8, shape=(2, 2), elements=integers(1, 5)))
 def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     """
-    Tests that when we have two populations with identical strategies then the
-    output of the asymmetric_replicator_dynamics for both populations is the
-    same as using just one population in replicator_dynamics. The test is
-    carried out for 2x2 matrices with elements from 1-5
+        Tests that when we have two populations with identical strategies then the
+        output of the asymmetric_replicator_dynamics for both populations is the
+        same as using just one population in replicator_dynamics. The test is
+        carried out for 2x2 matrices with elements from 1-5
 
-    Note that the test hypothesis can find cases where this test can fail for
-    larger elements or larger matrix sizes. One potenetial reason for this might
-    be the fact that scipy.odeint() is a deprecated function.
+        Note that the test hypothesis can find cases where this test can fail for
+        larger elements or larger matrix sizes. One potenetial reason for this might
+        be the fact that scipy.odeint() is a deprecated function.
 
-    Parameters
-    ----------
-    A : array
-<<<<<<< HEAD
-        a payoff matrix
-=======
-        2 dimensional list/array representing the payoff matrix for a
-        the row player in a game.
->>>>>>> 63f6b0f (Update testing suite.)
+        Parameters
+        ----------
+        A : array
+    <<<<<<< HEAD
+            a payoff matrix
+    =======
+            2 dimensional list/array representing the payoff matrix for a
+            the row player in a game.
+    >>>>>>> 63f6b0f (Update testing suite.)
     """
     B = A.transpose()
 

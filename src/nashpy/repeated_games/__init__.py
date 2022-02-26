@@ -1,9 +1,10 @@
 import itertools
 
 import numpy as np
+import nashpy as nash
 
 
-def obtain_states(A, repetitions):
+def obtain_states(A, repetitions, row_player=True):
     """
     Yield all possible states for the row player in a repeated game.
 
@@ -14,6 +15,9 @@ def obtain_states(A, repetitions):
         matrix for the row player in a game.
     repetitions : int
         The number of times to repeat the stage game.
+    row_player : bool
+        A boolean indicating if this assumes the strategy space is for the row
+        player. If False the states are reversed.
 
     Yields
     ------
@@ -34,10 +38,12 @@ def obtain_states(A, repetitions):
                 repeat=period,
             ),
         ):
+            if row_player is False:
+                pair = pair[1], pair[0]
             yield pair
 
 
-def obtain_strategy_space(A, repetitions):
+def obtain_strategy_space(A, repetitions, row_player=True):
     """
     Yield all possible states for the row player in a repeated game.
 
@@ -48,12 +54,18 @@ def obtain_strategy_space(A, repetitions):
         matrix for the row player in a game.
     repetitions : int
         The number of times to repeat the stage game.
+    row_player : bool
+        A boolean indicating if this assumes the strategy space is for the row
+        player. If False then the transpose of the matrix is used and the states
+        are reversed.
 
     Yields
     ------
     Dict
         A mapping from states of the repeated game to strategies.
     """
+    if row_player is False:
+        A = A.T
     size_row_strategy_space, size_col_strategy_space = A.shape
     row_strategy_space = np.eye(size_row_strategy_space)
     state_space_size = int(
@@ -64,7 +76,69 @@ def obtain_strategy_space(A, repetitions):
         yield {
             state: tuple(action)
             for state, action in zip(
-                obtain_states(A=A, repetitions=repetitions),
+                obtain_states(A=A, repetitions=repetitions, row_player=row_player),
                 strategy,
             )
         }
+
+
+def play_game(game, repetitions, row_strategy, col_strategy):
+    row_utility, col_utility = 0, 0
+    state = ((), ())
+    for _ in range(repetitions):
+
+        assert state in row_strategy, f"{state} not in row_strategy: {row_strategy}"
+        assert state in col_strategy, f"{state} not in col_strategy: {col_strategy}"
+        utilities = game[row_strategy[state], col_strategy[state]]
+
+        row_utility += utilities[0]
+        col_utility += utilities[1]
+        row_action = row_strategy[state].index(1)
+        col_action = col_strategy[state].index(1)
+        state = tuple(list(state[0]) + [row_action]), tuple(
+            list(state[1]) + [col_action]
+        )
+
+    return row_utility, col_utility
+
+
+def obtain_repeated_game(game, repetitions):
+    """
+    Obtain a nashpy.Game instance by repeating a given stage game.
+
+    Note that the returned game becomes large quickly.
+
+    Parameters
+    ----------
+    game : nashpy.Game
+           A stage game
+    repetitions : int
+                  The number of repetitions of the game.
+
+    Returns
+    -------
+    nashpy.Game
+    """
+
+    A, B = game.payoff_matrices
+    repeated_game_row_matrix = []
+    repeated_game_col_matrix = []
+
+    for row_strategy in obtain_strategy_space(A=A, repetitions=repetitions):
+        row_matrix_row = []
+        col_matrix_row = []
+        for col_strategy in obtain_strategy_space(
+            A=B, repetitions=repetitions, row_player=False
+        ):
+            row_util, col_util = play_game(
+                game=game,
+                repetitions=repetitions,
+                row_strategy=row_strategy,
+                col_strategy=col_strategy,
+            )
+            row_matrix_row.append(row_util)
+            col_matrix_row.append(col_util)
+        repeated_game_row_matrix.append(row_matrix_row)
+        repeated_game_col_matrix.append(col_matrix_row)
+
+    return nash.Game(repeated_game_row_matrix, repeated_game_col_matrix)

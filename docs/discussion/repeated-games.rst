@@ -1,4 +1,4 @@
-.. _repeated-gamesdiscussion:
+.. _repeated-games-discussion:
 
 Repeated Games
 ==============
@@ -25,7 +25,6 @@ to label the vertices correctly:
 .. image:: /_static/discussion/repeated-coordination-game-as-extensive-form-game/main.png
 
 .. _definition-of-repeated-games:
-
 
 Definition of a repeated games
 ------------------------------
@@ -100,6 +99,9 @@ play over all the repetitions.
       2 choices by the row player and 3 by the column player), each leave will
       in turn have 6 leaves in the second repetition. Thus, the total number of
       leaves will be 36.
+
+
+.. _definition-of-strategies-in-repeated-games:
 
 Strategies in a repeated game
 -----------------------------

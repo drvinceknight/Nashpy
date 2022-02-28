@@ -1,3 +1,7 @@
+# v0.0.29
+
+Add ability to create new games as repeated games.
+
 # v0.0.28
 
 Modify fixation probability api.

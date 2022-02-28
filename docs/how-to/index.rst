@@ -19,3 +19,4 @@ How to:
    use-asymmetric-replicator-dynamics.rst
    use-moran-processes.rst
    obtain-fixation-probabilities.rst
+   obtain-a-repeated-game.rst

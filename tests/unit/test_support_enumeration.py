@@ -214,7 +214,7 @@ class TestSupportEnumeration(unittest.TestCase):
             (np.array([1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
         ]
         obtained_indifference = [
-            out[:2] for out in indifference_strategies(A, B, tol=10 ** -2)
+            out[:2] for out in indifference_strategies(A, B, tol=10**-2)
         ]
         self.assertEqual(len(obtained_indifference), len(expected_indifference))
         for obtained, expected in zip(obtained_indifference, expected_indifference):

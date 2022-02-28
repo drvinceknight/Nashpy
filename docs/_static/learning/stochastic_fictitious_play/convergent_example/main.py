@@ -15,7 +15,7 @@ B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
 game = nash.Game(A, B)
 iterations = 10000
 etha = 0.1
-epsilon_bar = 10 ** -1
+epsilon_bar = 10**-1
 np.random.seed(0)
 play_counts_and_distribuions = tuple(
     game.stochastic_fictitious_play(

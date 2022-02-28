@@ -1113,9 +1113,11 @@ def test_property_get_derivative_of_asymmetric_fitness(A, B):
     Parameters
     ----------
     A : array
-        a payoff matrix
+        2 dimensional list/array representing the payoff matrix for a
+        the row player in a game.
     B : array
-        a payoff matrix
+        2 dimensional list/array representing the payoff matrix for a
+        the column player in a game.
     """
     t = 0
     x = np.ones(A.shape[1] + A.shape[0])
@@ -1165,9 +1167,11 @@ def test_property_of_output_dimension_for_asymmetric_games_of_size_4_2(A, B):
     Parameters
     ----------
     A : array
-        a payoff matrix
+        2 dimensional list/array representing the payoff matrix for a
+        the row player in a game.
     B : array
-        a payoff matrix
+        2 dimensional list/array representing the payoff matrix for a
+        the column player in a game.
     """
     xs1, xs2 = asymmetric_replicator_dynamics(A, B)
     assert all(len(x) == 4 for x in xs1)
@@ -1189,7 +1193,8 @@ def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     Parameters
     ----------
     A : array
-        a payoff matrix
+        2 dimensional list/array representing the payoff matrix for a
+        the row player in a game.
     """
     B = A.transpose()
 

@@ -7,6 +7,7 @@ Given a game in :code:`Nashpy` it is possible to create a new game by repeating
 it as described in :ref:`repeated-games-discussion`::
 
     >>> import nashpy as nash
+    >>> import nashpy.repeated_games
     >>> import numpy as np
     >>> A = np.array([[1, -1], [-1, 1]])
     >>> matching_pennies = nash.Game(A)
@@ -35,8 +36,7 @@ it as described in :ref:`repeated-games-discussion`::
 Note, that these games can become large even for small values of
 :code:`repetitions`. The above game has payoff matrices with size::
 
-    >>> A, B =  repeated_matching_pennies.payoff_matrices
-    >>> A.shape
+    >>> repeated_matching_pennies.payoff_matrices[0].shape
     (32, 32)
 
 When studying these large games direct computation of equilibria is unlikely to
@@ -48,4 +48,4 @@ actions<definition-of-strategies-in-repeated-games>`::
 
     >>> strategies = nash.repeated_games.obtain_strategy_space(A=A, repetitions=2)
     >>> next(strategies)
-    {((), ()): (1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), ((0,), (0,)): (1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+    {((), ()): (1.0, 0.0), ((0,), (0,)): (1.0, 0.0), ((0,), (1,)): (1.0, 0.0), ((1,), (0,)): (1.0, 0.0), ((1,), (1,)): (1.0, 0.0)}

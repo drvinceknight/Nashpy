@@ -39,7 +39,7 @@ play over all the repetitions.
    :class: note
 
    For the following values of :math:`T` and the following stage games, how many
-   leaves would the extensive form representation of the repeated game:
+   leaves would the extensive form representation of the repeated game have:
 
    1.
 

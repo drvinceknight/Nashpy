@@ -3,7 +3,7 @@
 Obtain a repeated game
 ======================
 
-Given a game in :code:`Nashpy` it is possible to create a new game by repeated
+Given a game in :code:`Nashpy` it is possible to create a new game by repeating
 it as described in :ref:`repeated-games-discussion`::
 
     >>> import nashpy as nash

@@ -45,7 +45,7 @@ def obtain_states(A, repetitions, row_player=True):
 
 def obtain_strategy_space(A, repetitions, row_player=True):
     """
-    Yield all possible states for the row player in a repeated game.
+    Yield all possible strategies for the row player in a repeated game.
 
     Parameters
     ----------
@@ -111,9 +111,9 @@ def obtain_repeated_game(game, repetitions):
     Parameters
     ----------
     game : nashpy.Game
-           A stage game
+        A stage game
     repetitions : int
-                  The number of repetitions of the game.
+        The number of repetitions of the game.
 
     Returns
     -------

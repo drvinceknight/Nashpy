@@ -76,7 +76,6 @@ An extensive form game consists of:
 
           u(O_1) = (3, 2) \qquad u(O_2) = (1, 1) \qquad u(O_3) = (0, 0) \qquad u(O_4) = (2, 3)
 
-.. _equivalence-of-extensive-and-normal-form-games:
 
 Imperfect information
 ---------------------
@@ -142,6 +141,8 @@ Definition of a strategy in an extensive form game
 
 A strategy for a player in an extensive form is a collection of probability
 distribution over the action set of each information set.
+
+.. _equivalence-of-extensive-and-normal-form-games:
 
 Equivalence of Extensive and Normal Form Games
 ----------------------------------------------

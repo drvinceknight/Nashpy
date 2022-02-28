@@ -83,6 +83,27 @@ def obtain_strategy_space(A, repetitions, row_player=True):
 
 
 def play_game(game, repetitions, row_strategy, col_strategy):
+    """
+    Obtain the utilities when repeating the game `game` for `repetitions`
+    repetitions as specified by the `row_strategy` and the `col_strategy`.
+
+    Parameters
+    ----------
+    game : nashpy.Game
+           The stage game
+    repetitions : int
+                  The number of times to play the game
+    row_strategy : dict
+                  A mapping from all possible histories of play to an action of
+                  the row player.
+    col_strategy : dict
+                  A mapping from all possible histories of play to an action of
+                  the column player.
+
+    Returns
+    -------
+    Tuple
+    """
     row_utility, col_utility = 0, 0
     state = ((), ())
     for _ in range(repetitions):
@@ -104,7 +125,10 @@ def play_game(game, repetitions, row_strategy, col_strategy):
 
 def obtain_repeated_game(game, repetitions):
     """
-    Obtain a nashpy.Game instance by repeating a given stage game.
+    Obtain a nashpy.Game instance by repeating a given stage game. The rows and
+    columns
+    correspond to strategies of the repeated game as given by
+    `nashpy.learning_games.obtain_strategy_space`.
 
     Note that the returned game becomes large quickly.
 

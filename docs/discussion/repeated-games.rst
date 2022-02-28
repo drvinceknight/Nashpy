@@ -94,7 +94,7 @@ play over all the repetitions.
       2 choices by each player), each leave will in turn
       have 4 leaves in the second repetition. In the final repetition each of
       those leaves will have 4 leaves. Thus, the total number of leaves will be
-      32.
+      64.
    4. The initial play of the game will have 6 leaves (corresponding to the
       2 choices by the row player and 3 by the column player), each leave will
       in turn have 6 leaves in the second repetition. Thus, the total number of
@@ -281,10 +281,14 @@ For the column player:
        (r_2, c_3) &\to c_1\\
    \end{align}
 
-This strategy corresponds to the following scenario:
+This pair of strategies correspond to the following scenario:
 
-Play :math:`(r_1,c_2)` in first stage and :math:`(r_2,c_3)` in second stage
-unless the row player does not cooperate in which case play :math:`(r_2, c_1)`.
+The row player plays :math:`r_1` and the column player plays :math:`c_2` in the
+first state. The row player plays :math:`r_2` and the column player plays
+:math:`c_3` in the second stage.
+
+Note that if the row player deviates and plays :math:`r_2` in the first stage
+then the column player will play :math:`c_1`.
 
 If both players play these strategies their utilities are: :math:`(11, 4)` which is
 better **for both players** then the utilities at any sequence of pure stage
@@ -303,5 +307,8 @@ can be built and cooperation can emerge from complex dynamics.
 Using Nashpy
 ------------
 
+Repeated games are a particularly compact way of representing a given subset of
+:ref:`extensive-form-games-discussion`. Thus, it is possible to study them as an
+equivalent :ref:`normal form game <equivalence-of-extensive-and-normal-form-games>`.
 See :ref:`how-to-obtain-a-repeated-game` for guidance of how to use Nashpy to
 generate a normal form game by repeating a stage game.

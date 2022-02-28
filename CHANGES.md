@@ -1,3 +1,7 @@
+# v0.0.30
+
+Fix an error in the docs for the repeated games.
+
 # v0.0.29
 
 Add ability to create new games as repeated games.

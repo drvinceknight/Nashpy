@@ -1,3 +1,7 @@
+# v0.0.31
+
+Add fixation with mutation.
+
 # v0.0.30
 
 Fix an error in the docs for the repeated games.

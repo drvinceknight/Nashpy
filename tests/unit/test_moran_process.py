@@ -49,9 +49,14 @@ def test_update_population_seed_0():
     population = np.array((0, 0, 0, 1, 1, 2, 2))
     scores = np.array((18, 18, 18, 15, 15, 23, 23))
     expected_new_population = np.array((0, 0, 0, 1, 1, 1, 2))
+    original_set_of_strategies = set(population)
 
     np.random.seed(0)
-    new_population = update_population(population=population, scores=scores)
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        original_set_of_strategies=original_set_of_strategies,
+    )
     assert np.array_equal(expected_new_population, new_population)
 
 
@@ -59,9 +64,46 @@ def test_update_population_seed_1():
     population = np.array((0, 0, 0, 1, 1, 2, 2))
     scores = np.array((18, 18, 18, 15, 15, 23, 23))
     expected_new_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    original_set_of_strategies = set(population)
 
     np.random.seed(1)
-    new_population = update_population(population=population, scores=scores)
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        original_set_of_strategies=original_set_of_strategies,
+    )
+    assert np.array_equal(expected_new_population, new_population)
+
+
+def test_update_population_seed_2():
+    population = np.array((0, 0, 0, 1, 1, 2, 2))
+    scores = np.array((18, 18, 18, 15, 15, 23, 23))
+    expected_new_population = np.array((0, 0, 0, 1, 1, 1, 2))
+    original_set_of_strategies = set(population)
+
+    np.random.seed(2)
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        original_set_of_strategies=original_set_of_strategies,
+    )
+    assert np.array_equal(expected_new_population, new_population)
+
+
+def test_update_population_with_mutation_probability_1_seed_2():
+    population = np.array((0, 0, 0, 1, 1, 2, 2))
+    scores = np.array((18, 18, 18, 15, 15, 23, 23))
+    mutation_probability = 1
+    expected_new_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    original_set_of_strategies = set(population)
+
+    np.random.seed(2)
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        mutation_probability=mutation_probability,
+        original_set_of_strategies=original_set_of_strategies,
+    )
     assert np.array_equal(expected_new_population, new_population)
 
 
@@ -69,8 +111,13 @@ def test_update_population_with_uniform_population():
     population = np.array((0, 0, 0, 0, 0, 0, 0))
     scores = np.array((18, 18, 18, 15, 15, 23, 23))
     expected_new_population = np.array((0, 0, 0, 0, 0, 0, 0))
+    original_set_of_strategies = set(population)
 
-    new_population = update_population(population=population, scores=scores)
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        original_set_of_strategies=original_set_of_strategies,
+    )
     assert np.array_equal(expected_new_population, new_population)
 
 
@@ -118,6 +165,54 @@ def test_specific_moran_process_seed_1():
     generations = tuple(moran_process(A=A, initial_population=initial_population))
     last_generation = generations[-1]
     expected_last_generation = np.array((2, 2, 2, 2, 2, 2, 2))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_with_mutation_seed_0():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    mutation_probability = 0.2
+    np.random.seed(0)
+    generator = moran_process(
+        A=A,
+        initial_population=initial_population,
+        mutation_probability=mutation_probability,
+    )
+    generations = [next(generator) for _ in range(10)]
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 0, 1, 1, 0, 0))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_with_mutation_seed_0_mutation_probability_1():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    mutation_probability = 1
+    np.random.seed(0)
+    generator = moran_process(
+        A=A,
+        initial_population=initial_population,
+        mutation_probability=mutation_probability,
+    )
+    generations = [next(generator) for _ in range(10)]
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 2, 1, 1, 1, 1))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_with_mutation_seed_2():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    mutation_probability = 0.2
+    np.random.seed(2)
+    generator = moran_process(
+        A=A,
+        initial_population=initial_population,
+        mutation_probability=mutation_probability,
+    )
+    generations = [next(generator) for _ in range(10)]
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 2, 1, 1, 1, 0))
     assert np.array_equal(last_generation, expected_last_generation)
 
 

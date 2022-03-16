@@ -35,6 +35,21 @@ Note that this process is stochastic::
     [0 0 1]
     [0 0 0]
 
+It is possible to pass a :code:`mutation_probability` to the process in
+which case it will not terminate::
+
+    >>> np.random.seed(2)
+    >>> number_of_generations = 5
+    >>> mutation_probability = 1
+    >>> generations = game.moran_process(initial_population=(0, 0, 1), mutation_probability=mutation_probability)
+    >>> for _ in range(number_of_generations):
+    ...     print(next(generations))
+    [0 0 1]
+    [1 0 1]
+    [1 1 1]
+    [0 1 1]
+    [0 1 0]
+
 Currently, only positive valued matrices are supported::
 
     >>> A = np.array([[3, 0], [1, 2]])

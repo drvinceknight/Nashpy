@@ -296,7 +296,7 @@ Column player:
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)
 
-    def moran_process(self, initial_population):
+    def moran_process(self, initial_population, mutation_probability=0):
         """
         Return a generator of population across the Moran process. The last
         population is when only a single type of individual is present in the
@@ -306,6 +306,10 @@ Column player:
         ----------
         initial_population : array
             the initial population
+        mutation_probability : float
+            the probability of an individual selected to be copied mutates to
+            another individual from the original set of strategies (even if they are
+            no longer present in the population).
 
 
         Returns
@@ -314,7 +318,11 @@ Column player:
             The generations.
         """
         A, _ = self.payoff_matrices
-        return moran_process(A=A, initial_population=initial_population)
+        return moran_process(
+            A=A,
+            initial_population=initial_population,
+            mutation_probability=mutation_probability,
+        )
 
     def fixation_probabilities(self, initial_population, repetitions):
         """

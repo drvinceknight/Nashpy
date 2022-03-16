@@ -50,6 +50,8 @@ def score_all_individuals(
 def update_population(
     population: npt.NDArray,
     scores: npt.NDArray,
+    original_set_of_strategies: set,
+    mutation_probability: float = 0,
 ) -> npt.NDArray:
     """
     Return the new population of all individuals given the scores of every
@@ -64,6 +66,12 @@ def update_population(
         the population
     scores : array
         the scores
+    original_set_of_strategies: set
+        the set of the strategies present in the initial population
+    mutation_probability : float
+        the probability of an individual selected to be copied mutates to
+        another individual from the original set of strategies (even if they are
+        no longer present in the population).
 
     Returns
     -------
@@ -77,7 +85,13 @@ def update_population(
     birth_index = np.random.choice(range(N), p=probabilities)
     death_index = np.random.randint(N)
 
-    next_population[death_index] = next_population[birth_index]
+    if (mutation_probability > 0) and (np.random.random() < mutation_probability):
+        birth_strategy = np.random.choice(
+            [n for n in original_set_of_strategies if n != birth_index]
+        )
+        next_population[death_index] = birth_strategy
+    else:
+        next_population[death_index] = next_population[birth_index]
 
     return next_population
 
@@ -85,6 +99,7 @@ def update_population(
 def moran_process(
     A: npt.NDArray,
     initial_population: npt.NDArray,
+    mutation_probability: float = 0,
 ) -> Generator[npt.NDArray, None, None]:
     """
     Return a generator of population across the Moran process. The last
@@ -100,6 +115,10 @@ def moran_process(
         a payoff matrix
     initial_population : array
         the initial population
+    mutation_probability : float
+        the probability of an individual selected to be copied mutates to
+        another individual from the original set of strategies (even if they are
+        no longer present in the population).
 
 
     Yields
@@ -109,10 +128,15 @@ def moran_process(
     """
     population = initial_population
     if len(set(population)) > 1:
-        while len(set(population)) != 1:
-
+        while (len(set(population)) != 1) or (mutation_probability > 0):
             scores = score_all_individuals(A=A, population=population)
-            population = update_population(population=population, scores=scores)
+
+            population = update_population(
+                population=population,
+                scores=scores,
+                mutation_probability=mutation_probability,
+                original_set_of_strategies=set(initial_population),
+            )
 
             yield population
     else:

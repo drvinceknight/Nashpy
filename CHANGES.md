@@ -1,3 +1,7 @@
+# v0.0.32
+
+Fix lower bound for numpy in setup configuration.
+
 # v0.0.31
 
 Add fixation with mutation.

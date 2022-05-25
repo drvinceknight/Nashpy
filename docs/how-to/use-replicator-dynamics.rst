@@ -1,3 +1,5 @@
+.. _how-to-use-replicator-dynamics:
+
 Use replicator dynamics
 =======================
 

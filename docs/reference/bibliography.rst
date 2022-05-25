@@ -13,9 +13,12 @@ documentation.
 .. [Knight2016] Knight, V. et al., (2016). An Open Framework for the Reproducible Study of the Iterated Prisoner’s Dilemma. Journal of Open Research Software. 4(1), p.e35. DOI: http://doi.org/10.5334/jors.125
 .. [Lemke1964] Lemke, Carlton E., and Joseph T. Howson, Jr. "Equilibrium points of bimatrix games." Journal of the Society for Industrial and Applied Mathematics 12.2 (1964): 413-423.
 .. [Maschler2013] Maschler, M., Eilon Solan, and Shmuel Zamir. "Game theory. Translated from the Hebrew by Ziv Hellman and edited by Mike Borns." (2013).
+.. [Maynard1974] Smith, J. Maynard. "The theory of games and the evolution of animal conflicts." Journal of theoretical biology 47.1 (1974): 209-221.
 .. [McKelvey2016] McKelvey, Richard D., McLennan, Andrew M., and Turocy, Theodore L. (2016). Gambit: Software Tools for Game Theory, Version 16.0.1. http://www.gambit-project.org.
 .. [Nasar2011] Nasar, Sylvia. A beautiful mind. Simon and Schuster, 2011.  APA
 .. [Nash1950] Nash, John F. "Equilibrium points in n-person games." Proceedings of the national academy of sciences 36.1 (1950): 48-49.
 .. [Nisan2007] Nisan, Noam, et al., eds. Algorithmic game theory. Vol. 1. Cambridge: Cambridge University Press, 2007.
+.. [Nowak2006] Nowak, Martin A. Evolutionary dynamics: exploring the equations of life. Harvard university press, 2006.
 .. [Savani2015] Rahul Savani and Bernhard von Stengel. Game Theory Explorer – Software for the Applied Game Theorist. Computational Management Science 12, 5-33, 2015
+.. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA

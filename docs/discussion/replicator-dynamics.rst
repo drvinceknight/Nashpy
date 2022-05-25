@@ -28,7 +28,7 @@ In this scenario: what is the likely long term effect of the genetic mutation?
 
 Over time will:
 
-- The population reject the mutation and all the animals continue to share their
+- The population resist the mutation and all the animals continue to share their
   food.
 - The population get taken over by the mutation and all animals become
   aggressive.

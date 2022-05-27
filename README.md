@@ -4,17 +4,7 @@
 [![Gitter](https://badges.gitter.im/drvinceknight/Nashpy.svg)](https://gitter.im/drvinceknight/Nashpy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00904/status.svg)](https://doi.org/10.21105/joss.00904)
 
-# Nashpy: a python library for the computation of equilibria of 2 player strategic games.
-
-This library implements the following algorithms for Nash equilibria on 2 player
-games:
-
-- Support enumeration
-- Best response polytope vertex enumeration
-- Lemke Howson algorithm
-
-**Nashpy** has a small set of Python dependencies: it only requires `numpy`
-and `scipy` so is straightforward to install on all operating systems.
+# Nashpy: a python library for 2 player games.
 
 ## Installation
 

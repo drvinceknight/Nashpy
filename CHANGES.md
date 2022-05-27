@@ -1,3 +1,7 @@
+# v0.0.33
+
+Documentation improvements and add replicator-mutator equation.
+
 # v0.0.32
 
 Fix lower bound for numpy in setup configuration.

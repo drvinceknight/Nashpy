@@ -1,4 +1,4 @@
-"""A library to compute equilibria of 2 player normal form games"""
+"""A library with algorithms on 2 player games."""
 from .game import Game
 
-__version__ = "0.0.32"
+__version__ = "0.0.33"

@@ -16,6 +16,7 @@ How to:
    use-fictitious-play.rst
    use-stochastic-fictitious-play.rst
    use-replicator-dynamics.rst
+   use-replicator-dynamics-with-mutation.rst
    use-asymmetric-replicator-dynamics.rst
    use-moran-processes.rst
    obtain-fixation-probabilities.rst

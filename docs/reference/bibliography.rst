@@ -22,3 +22,4 @@ documentation.
 .. [Savani2015] Rahul Savani and Bernhard von Stengel. Game Theory Explorer – Software for the Applied Game Theorist. Computational Management Science 12, 5-33, 2015
 .. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
+.. [Komarova2004] Komarova, Natalia L. "Replicator–mutator equation, universality property and population dynamics of learning." Journal of theoretical biology 230.2 (2004): 227-239.

@@ -487,7 +487,7 @@ An extension of the :ref:`replicator equation
 this case reproduction is imperfect and individuals of a given type can give
 individuals of another.
 
-This is expressed using a matrix :math:`Q` where $Q_{ij}$ denotes the
+This is expressed using a matrix :math:`Q` where :math:`Q_{ij}` denotes the
 probability of an individual of type :math:`j` is produced by an individual of
 type :math:`i`.
 

@@ -476,9 +476,110 @@ found in [Fudenberg1998]_, [Webb2007]_ and [Nowak2006]_.
 
 The replicator equations were first presented in [Maynard1974]_.
 
+.. _definition-of-the-replicator-mutation-dynamics-equation:
+
+The replicator-mutation dynamics equation
+-----------------------------------------
+
+An extension of the :ref:`replicator equation
+<definition-of-the-replicator-dynamics-equation>` is to allow for mutation
+[Komarova2004]_. In
+this case reproduction is imperfect and individuals of a given type can give
+individuals of another.
+
+This is expressed using a matrix :math:`Q` where $Q_{ij}$ denotes the
+probability of an individual of type :math:`j` is produced by an individual of
+type :math:`i`.
+
+In this case the replicator equation can be modified to give the
+replicator-mutation equation:
+
+.. math::
+
+   \frac{dx_i}{dt} = \sum_{j=1}^Nx_j f_j Q_{ji}- x_i\phi\text{ for all }i
+
+where, as before:
+
+.. math::
+
+   f = Ax \qquad \phi=x^TAx
+
+This can modify emergent behaviour. For the :ref:`Hawk Dove game
+<motivating-example-replicator-dynamics>` if there is a 10% change that
+aggressive individuals will produce sharing ones the matrix :math:`Q` is given
+by:
+
+.. math::
+
+   Q = \begin{pmatrix}
+            1 & 0\\
+            1 / 10 & 9 / 10
+       \end{pmatrix}
+
+The plot below shows the evolution of the system:
+
+.. plot::
+
+   import matplotlib.pyplot as plt
+   import nashpy as nash
+   import numpy as np
+
+   A = np.array([[2, 1], [3, 0]])
+   Q = np.array([[1, 0], [1 / 10, 9 / 10]])
+   game = nash.Game(A)
+   y0 = np.array([0.95, 0.05])
+   timepoints = np.linspace(0, 10, 1500)
+   sharing_population, aggressive_population = game.replicator_dynamics(y0=y0, timepoints=timepoints, mutation_matrix=Q).T
+   plt.plot(sharing_population, label="$x_1$")
+   plt.plot(aggressive_population, label="$x_2$")
+   plt.ylim(0, 1)
+   plt.ylabel("Population proportion")
+   plt.xlabel("Time")
+   plt.legend()
+
+.. admonition:: Question
+   :class: note
+
+   Show that for :math:`Q=I_N` (the identity matrix of size :math:`N`)
+   the replicator-mutation equation corresponds to the replicator equation.
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   The replicator-mutation equation is:
+
+   .. math::
+
+       \frac{dx_i}{dt} = \sum_{j=1}^Nx_j f_j Q_{ji}- x_i\phi\text{ for all }i
+
+   As :math:`Q=I_N`:
+
+   .. math::
+
+       Q_{ij} =
+        \begin{cases}
+            1 & \text{ if } i = j\\
+            0 & \text{ otherwise}
+        \end{cases}
+
+   This gives:
+
+   .. math::
+
+      \begin{align}
+          \frac{dx_i}{dt} &= x_i f_i Q_{ii}- x_i\phi\text{ for all }i && Q_{ij}=0\text{ for all } i\ne j\\
+          \frac{dx_i}{dt} &= x_i f_i - x_i\phi\text{ for all }i && Q_{ii}=1\\
+          \frac{dx_i}{dt} &= x_i (f_i - \phi)\text{ for all }i
+      \end{align}
+
+   As required.
+
+
 Using Nashpy
 ------------
 
 See :ref:`how-to-use-replicator-dynamics` for guidance of how to use Nashpy to
-obtain numerical solutions of the replicator dynamics equation. This is what is
-used to obtain all the plots above.
+obtain numerical solutions of the replicator dynamics equation. See
+:ref:`how-to-use-replicator-dynamics-with-mutation` for guidance of how to use
+Nashpy to obtain numerical solutions of the replicator-mutation dynamics
+equation.This is what is used to obtain all the plots above.

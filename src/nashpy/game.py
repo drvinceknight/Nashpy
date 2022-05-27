@@ -217,7 +217,7 @@ Column player:
             epsilon_bar=epsilon_bar
         )
 
-    def replicator_dynamics(self, y0=None, timepoints=None):
+    def replicator_dynamics(self, y0=None, timepoints=None, mutation_matrix=None):
         """
         Implement replicator dynamics
         Return an array showing probability of each strategy being played over
@@ -231,6 +231,10 @@ Column player:
             The initial population distribution.
         timepoints: array
             The iterable of timepoints.
+        mutation_matrix : array
+            The mutation rate matrix. Element [i, j] gives the probability of an
+            individual of type i mutating to an individual of type j. Default
+            behaviour is to be the identity matrix which corresponds to no mutation.
 
         Returns
         -------
@@ -238,7 +242,9 @@ Column player:
             The population distributions over time.
         """
         A, _ = self.payoff_matrices
-        return replicator_dynamics(A=A, y0=y0, timepoints=timepoints)
+        return replicator_dynamics(
+            A=A, y0=y0, timepoints=timepoints, mutation_matrix=mutation_matrix
+        )
 
     def asymmetric_replicator_dynamics(self, x0=None, y0=None, timepoints=None):
         """

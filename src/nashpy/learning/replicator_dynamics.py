@@ -7,7 +7,9 @@ from typing import Tuple
 from scipy.integrate import odeint
 
 
-def get_derivative_of_fitness(x: npt.NDArray, t: float, A: npt.NDArray) -> npt.NDArray:
+def get_derivative_of_fitness(
+    x: npt.NDArray, t: float, A: npt.NDArray, mutation_matrix: npt.NDArray = None
+) -> npt.NDArray:
     """
     Find the derivative of fitness function
 
@@ -20,19 +22,28 @@ def get_derivative_of_fitness(x: npt.NDArray, t: float, A: npt.NDArray) -> npt.N
         signature.
     A : array
         The payoff matrix
+    mutation_matrix : array
+        The mutation rate matrix. Element [i, j] gives the probability of an
+        individual of type i mutating to an individual of type j. Default
+        behaviour is to be the identity matrix which corresponds to no mutation.
 
     Returns
     -------
     array
         The derivative of the population distribution.
     """
-    f = np.dot(A, x)
-    phi = np.dot(f, x)
-    return x * (f - phi)
+    if mutation_matrix is None:
+        mutation_matrix = np.eye(len(A))
+    f = A @ x
+    phi = x.T @ f
+    return f * x @ mutation_matrix - x * phi
 
 
 def replicator_dynamics(
-    A: npt.NDArray, y0: npt.NDArray = None, timepoints: npt.NDArray = None
+    A: npt.NDArray,
+    y0: npt.NDArray = None,
+    timepoints: npt.NDArray = None,
+    mutation_matrix: npt.NDArray = None,
 ) -> npt.NDArray:
     """
     Implement replicator dynamics
@@ -45,6 +56,10 @@ def replicator_dynamics(
         The initial population distribution.
     timepoints: array
         The iterable of timepoints.
+    mutation_matrix : array
+        The mutation rate matrix. Element [i, j] gives the probability of an
+        individual of type i mutating to an individual of type j. Default
+        behaviour is to be the identity matrix which corresponds to no mutation.
 
     Returns
     -------
@@ -59,7 +74,9 @@ def replicator_dynamics(
         number_of_strategies = len(A)
         y0 = np.ones(number_of_strategies) / number_of_strategies
 
-    xs = odeint(func=get_derivative_of_fitness, y0=y0, t=timepoints, args=(A,))
+    xs = odeint(
+        func=get_derivative_of_fitness, y0=y0, t=timepoints, args=(A, mutation_matrix)
+    )
     return xs
 
 

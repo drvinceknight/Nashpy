@@ -49,6 +49,32 @@ def test_get_derivative_of_fitness():
         assert np.allclose(derivative, expected_derivative), x_value
 
 
+def test_get_derivative_of_fitness_with_mutation():
+    M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
+    Q = np.array([[9 / 10, 1 / 10, 0], [1 / 5, 3 / 5, 1 / 5], [1 / 3, 1 / 3, 1 / 3]])
+
+    x_values = (
+        np.array([1, 0, 0]),
+        np.array([1 / 2, 1 / 2, 0]),
+        np.array([0, 1 / 4, 3 / 4]),
+        np.array([1 / 5, 2 / 5, 2 / 5]),
+        np.array([1 / 2, 0, 1 / 2]),
+        np.array([2 / 4, 1 / 4, 1 / 4]),
+    )
+    derivative_values = (
+        np.array([-0.3, 0.3, 0]),
+        np.array([0.125, -0.375, 0.25]),
+        np.array([0.425, 0.18125, -0.60625]),
+        np.array([0.47066666666666684, -0.08133333333333337, -0.3893333333333334]),
+        np.array([0.4750000000000001, 0.4, -0.875]),
+        np.array([0.2791666666666668, 0.054166666666666585, -0.33333333333333337]),
+    )
+
+    for x_value, expected_derivative in zip(x_values, derivative_values):
+        derivative = get_derivative_of_fitness(x=x_value, t=0, A=M, mutation_matrix=Q)
+        assert np.allclose(derivative, expected_derivative), x_value
+
+
 @given(M=arrays(np.int8, (3, 3)))
 def test_property_of_output_dimension_for_games_of_size_3(M):
     xs = replicator_dynamics(M)
@@ -523,6 +549,21 @@ def test_replicator_dynamics_game_size_3_example_default_timepoints():
     expected_x_1 = np.array([[0.20237066, 0.09988063, 0.69774871]])
     expected_x_1000 = np.array([[0.52171238, 0.46937475, 0.00891287]])
     xs = replicator_dynamics(y0=y0, A=M)
+    assert np.allclose(xs[1], expected_x_1)
+    assert np.allclose(xs[-1], expected_x_1000)
+    assert len(xs) == 1000
+
+
+def test_replicator_dynamics_game_size_3_example_default_timepoints_with_mutation():
+    M = np.array([[3, 2, 3], [4, 1, 1], [2, 3, 1]])
+    y0 = np.array([0.2, 0.1, 0.7])
+    mutation_matrix = np.array(
+        [[9 / 10, 1 / 10, 0], [1 / 5, 3 / 5, 1 / 5], [1 / 3, 1 / 3, 1 / 3]]
+    )
+
+    expected_x_1 = np.array([[0.20537529, 0.10307503, 0.69154968]])
+    expected_x_1000 = np.array([[0.67670208, 0.2496027, 0.07369522]])
+    xs = replicator_dynamics(y0=y0, A=M, mutation_matrix=mutation_matrix)
     assert np.allclose(xs[1], expected_x_1)
     assert np.allclose(xs[-1], expected_x_1000)
     assert len(xs) == 1000
@@ -1187,7 +1228,7 @@ def test_equivalence_between_symmetric_and_asymmetric_replicator_dynamics(A):
     carried out for 2x2 matrices with elements from 1-5
 
     Note that the test hypothesis can find cases where this test can fail for
-    larger elements or larger matrix sizes. One potenetial reason for this might
+    larger elements or larger matrix sizes. One potential reason for this might
     be the fact that scipy.odeint() is a deprecated function.
 
     Parameters

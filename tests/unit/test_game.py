@@ -519,6 +519,17 @@ Column player:
         expected_xs = np.array([[0.50449178, 0.49550822]])
         assert np.allclose(xs[-1], expected_xs)
 
+    def test_replicator_dynamics_with_mutation(self):
+        """Test for the replicator dynamics algorithm with mutation"""
+        A = np.array([[3, 2], [4, 1]])
+        Q = np.array([[9 / 10, 1 / 10], [7 / 10, 3 / 10]])
+        game = nash.Game(A)
+        y0 = np.array([0.9, 0.1])
+        timepoints = np.linspace(0, 10, 100)
+        xs = game.replicator_dynamics(y0, timepoints, mutation_matrix=Q)
+        expected_xs = np.array([[0.86788696, 0.13211304]])
+        assert np.allclose(xs[-1], expected_xs)
+
     def test_replicator_dynamics_5x5(self):
         """Test for the replicator dynamics algorithm with a 5x5 matrix"""
         A = np.array(

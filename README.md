@@ -6,6 +6,36 @@
 
 # Nashpy: a python library for 2 player games.
 
+Nashpy is:
+
+- An [excellently documented library](https://nashpy.readthedocs.io/en/stable/):
+  - The [discussion
+    section](https://nashpy.readthedocs.io/en/stable/discussion/index.html) aims
+    to be a course text on the background theory.
+  - The [contributor
+    documentation](https://nashpy.readthedocs.io/en/stable/contributing/index.html)
+    aims to be a text on research software development and help **first time** open
+    source software contributions.
+- A [state of the art developed code
+  base](https://nashpy.readthedocs.io/en/stable/contributing/index.html) which
+  aims to use the best of available tools to ensure the code is correct,
+  readable and robust.
+- Feature rich, the following are implemented:
+    - Support enumeration [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/solve-with-support-enumeration.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/support-enumeration.html)
+    - Vertex enumeration [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/solve-with-vertex-enumeration.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/vertex-enumeration.html)
+    - Lemke-Howson algorithm [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/solve-with-lemke-howson.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/lemke-howson.html)
+    - Fictitious play [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-fictitious-play.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/fictitious-play.html)
+    - Stochastic fictitious play [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-stochastic-fictitious-play.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/stochastic-fictitious-play.html)
+   - Replicator dynamics [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-replicator-dynamics.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/replicator-dynamics.html)
+   - Replicator-mutation dynamics [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-replicator-dynamics-with-mutation.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/replicator-dynamics.html#the-replicator-mutation-dynamics-equation)
+   - Asymmetric replicator dynamics [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-asymmetric-replicator-dynamics.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/asymmetric-replicator-dynamics.html)
+   - Moran processes [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-processes.html)
+   - Generate games from repeated games [How to docs](https://nashpy.readthedocs.io/en/stable/how-to/obtain-a-repeated-game.html) [Theory docs](https://nashpy.readthedocs.io/en/stable/discussion/repeated-games.html)
+
+## Documentation
+
+Full documentation is available here: http://nashpy.readthedocs.io/
+
 ## Installation
 
 ```bash
@@ -38,10 +68,6 @@ Create bi matrix games by passing two 2 dimensional arrays/lists:
 array([3, 3])
 
 ```
-## Documentation
-
-Full documentation is available here: http://nashpy.readthedocs.io/
-
 ## Other game theoretic software
 
 - [Gambit](http://www.gambit-project.org/) is a library with a python api and

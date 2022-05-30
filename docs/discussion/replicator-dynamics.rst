@@ -127,7 +127,7 @@ The replicator dynamics equation
 
 Given a population with :math:`N` types of individuals. Where the fitness of an
 individual of type :math:`i` when interacting with an individual of type
-:math:`j` is given by :math:`A_{ij}` where `A\in\mathbb{R}^{N \times N}`.
+:math:`j` is given by :math:`A_{ij}` where :math:`A\in\mathbb{R}^{N \times N}`.
 The replicator dynamics equation is given by:
 
 .. math::

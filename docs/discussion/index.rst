@@ -17,3 +17,4 @@ Discussion
    stochastic-fictitious-play.rst
    replicator-dynamics.rst
    asymmetric-replicator-dynamics.rst
+   moran-process.rst

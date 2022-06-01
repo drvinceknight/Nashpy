@@ -28,12 +28,14 @@ def score_all_individuals(
     Raises
     ------
     ValueError
-        If the payoff matrix A has a non positive value. Currently only
-        positive valued matrices are supported.
+        If the payoff matrix A has a negative value. Currently only
+        non negative valued matrices are supported.
 
     """
-    if np.min(A) <= 0:
-        raise ValueError("Only positive valued payoff matrices are currently supported")
+    if np.min(A) < 0:
+        raise ValueError(
+            "Only non negative valued payoff matrices are currently supported"
+        )
 
     scores = []
 

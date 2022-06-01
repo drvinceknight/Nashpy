@@ -26,7 +26,7 @@ def test_score_all_individuals_in_3_by_3_game():
 @given(M=arrays(np.int8, (3, 3), unique=True))
 def test_properties_of_scores(M):
     """
-    Checks that if non negative valued matrices are passed then non negative
+    Checks that if negative valued matrices are passed then non negative
     valued scored are calculated.
 
     Parameters
@@ -34,7 +34,7 @@ def test_properties_of_scores(M):
     M : array
         a payoff matrix
     """
-    if np.min(M) > 0:
+    if np.min(M) >= 0:
         population = np.array((0, 0, 1, 1, 2, 2))
         scores = score_all_individuals(A=M, population=population)
         assert np.min(scores) >= 0
@@ -135,7 +135,7 @@ def test_moran_process_in_3_by_3_game(M):
     M : array
         a payoff matrix
     """
-    if np.min(M) > 0:
+    if np.min(M) >= 0:
         initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
         generations = tuple(moran_process(A=M, initial_population=initial_population))
         last_generation = generations[-1]

@@ -1,3 +1,5 @@
+.. _how-to-obtain-fixation-probabilities:
+
 Obtain fixation probabilities
 =============================
 

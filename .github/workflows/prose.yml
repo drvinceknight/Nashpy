@@ -25,3 +25,8 @@ jobs:
     - name: Run alex on README.md
       run: |
         alex README.md
+
+    - name: Check formatting of md files
+      run: |
+        python -m pip install mdformat
+        python -m mdformat --check .

@@ -23,3 +23,4 @@ Discussion
    alex/index.rst
    github_actions/index.rst
    readthedocs/index.rst
+   mdformat/index.rst

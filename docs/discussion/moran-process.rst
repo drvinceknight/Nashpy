@@ -58,6 +58,8 @@ that type as they interact with the population:
        f_2 = & \frac{3 v_1 + 1 (v_2 - 1)}{N - 1}
    \end{align}
 
+Note that :math:`f_i` is dependent on :math:`v`.
+
 The evolutionary process defined in this chapter will assume an individual will
 be selected for copy proportional to their fitness. The probability of picking
 an individual of a given type :math:`i` is thus given by:
@@ -143,12 +145,12 @@ The process is defined as follows, at each step:
 
 1. Every individual :math:`k` has their fitness :math:`f_k` calculated.
 2. An individual is randomly selected for copying. This selection is done
-   proportional to their fitness: `f_k`. Thus, the probability of selecting
-   individual `k` for copying is given by:
+   proportional to their fitness: :math:`f_k(v)`. Thus, the probability of selecting
+   individual :math:`k` for copying is given by:
 
    .. math::
 
-      \frac{f_k}{\sum_{h=1^N}f_h}
+      \frac{f_k(v)}{\sum_{h=1^N}f_h(v)}
 
 3. An individual is selected for removal. This selection is done uniformly
    randomly. Thus, the probability of selecting individual :math:`i` for removal
@@ -191,7 +193,7 @@ In this setting, the fitness of an individual of type :math:`i` is:
 
 .. math::
 
-   (v_{i} - 1)A_{ii} + \sum_{j\ne i, j=1}^{N}v_jA_{ij}
+   f_i(v) = (v_{i} - 1)A_{ii} + \sum_{j\ne i, j=1}^{N}v_jA_{ij}
 
 For example, if :math:`v=(4, 5, 1)` then the fitness of individuals of each type
 are given by:
@@ -381,22 +383,25 @@ The transition probabilities are then given by:
 .. math::
 
    \begin{align}
-       p_{i,i+1}&=\frac{if_{1i}}{if_{1i} + (N-i)f_{2i}}\frac{N-i}{N}\\
-       p_{i,i-1}&=\frac{(N-i)f_{2i}}{if_{1i} + (N-i)f_{2i}}\frac{i}{N}
+       p_{i,i+1}&=\frac{if_{1}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{N-i}{N}\\
+       p_{i,i-1}&=\frac{(N-i)f_{2}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{i}{N}
    \end{align}
 
 which gives:
 
 .. math::
 
-   \gamma_i=\frac{f_{2i}}{f_{1i}}
+   \begin{align}
+       \gamma_i&=\frac{p_{i, i - 1}}{p_{i, i +1}}\\
+               &=\frac{\frac{(N-i)f_{2}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{i}{N}}
+                      {\frac{if_{1}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{N-i}{N}}\\
+               &=\frac{(N-i)f_{2}(i)\frac{i}{N}}
+                      {if_{1}(i)\frac{N-i}{N}}\\
+               &=\frac{f_{2}(i)}{f_{1}(i)}
+   \end{align}
 
-thus:
-
-.. math::
-
-   x_i=\frac{1+\sum_{j=1}^{i-1}\prod_{k=1}^j\gamma_k}{1+\sum_{j=1}^{N-1}\prod_{k=1}^j\gamma_k}
-
+Thus, the formula for :math:`x_i` in the general birth death process can be used
+to obtain the fixation probability :math:`\rho=x_1`.
 
 .. admonition:: Question
    :class: note
@@ -416,8 +421,8 @@ thus:
     .. math::
 
        \begin{align*}
-           f_{1i} &= 2(i - 1)+1\times (N - i)=N + i - 2\\
-           f_{2i} &= 3i\\
+           f_{1}(i) &= 2(i - 1)+1\times (N - i)=N + i - 2\\
+           f_{2}(i) &= 3i\\
        \end{align*}
 
     1. For N = 2 we have:
@@ -425,9 +430,9 @@ thus:
         +------------------+--------------+
         |                  | :math:`i=1`  |
         +==================+==============+
-        | :math:`f_{1i}`   |      1       |
+        | :math:`f_{1}(i)` |      1       |
         +------------------+--------------+
-        | :math:`f_{2i}`   |      3       |
+        | :math:`f_{2}(i)` |      3       |
         +------------------+--------------+
         | :math:`\gamma_i` |      3       |
         +------------------+--------------+
@@ -443,9 +448,9 @@ thus:
         +------------------+--------------+--------------+
         |                  | :math:`i=1`  | :math:`i=2`  |
         +==================+==============+==============+
-        | :math:`f_{1i}`   |  1 + 1 = 2   |   1 + 2 = 3  |
+        | :math:`f_{1}(i)` |  1 + 1 = 2   |   1 + 2 = 3  |
         +------------------+--------------+--------------+
-        | :math:`f_{2i}`   |     3        |       6      |
+        | :math:`f_{2}(i)` |     3        |       6      |
         +------------------+--------------+--------------+
         | :math:`\gamma_i` |      3/2     |     6/3=2    |
         +------------------+--------------+--------------+
@@ -461,9 +466,9 @@ thus:
         +------------------+--------------+--------------+--------------+
         |                  | :math:`i=1`  | :math:`i=2`  | :math:`i=3`  |
         +==================+==============+==============+==============+
-        | :math:`f_{1i}`   |  2 + 1 = 3   |   2 + 2 = 4  |   2 + 3 = 5  |
+        | :math:`f_{1}(i)` |  2 + 1 = 3   |   2 + 2 = 4  |   2 + 3 = 5  |
         +------------------+--------------+--------------+--------------+
-        | :math:`f_{2i}`   |      3       |       6      |      9       |
+        | :math:`f_{2}(i)` |      3       |       6      |      9       |
         +------------------+--------------+--------------+--------------+
         | :math:`\gamma_i` |      1       |    6/4=3/2   |      9/5     |
         +------------------+--------------+--------------+--------------+
@@ -514,7 +519,7 @@ thus:
 
        A = np.array([[2, 1], [3, 0]])
        np.random.seed(0)
-       N_values = range(2, 15)
+       N_values = range(2, 16)
        repetitions = 100
        probabilities = [approximate_fixation(N, i=1, A=A, repetitions=repetitions) for N in N_values]
        plt.scatter(N_values, probabilities, label=f"Simulated over {repetitions} repetitions")

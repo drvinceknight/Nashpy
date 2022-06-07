@@ -1,3 +1,7 @@
+# v0.0.34
+
+Documentation improvements and allow for zero values in Moran process.
+
 # v0.0.33
 
 Documentation improvements and add replicator-mutator equation.

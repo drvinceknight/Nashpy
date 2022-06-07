@@ -338,6 +338,8 @@ can be replaced by an integer :math:`n` which represents the number of
 individuals of the first type. The number of individuals of the second type is
 then given by :math:`N - n`.
 
+.. <!--alex ignore death-->
+
 In this case the random process is a specific type of process called a birth
 death process:
 

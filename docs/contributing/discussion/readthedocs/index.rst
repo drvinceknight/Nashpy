@@ -41,7 +41,7 @@ One specific setting used by Nashpy is::
 
 This ensures Read the docs does not look for a :code:`requirements.txt` file to
 install the library. Instead it runs :code:`pip install .` which uses
-:ref:`pyproject.toml` file. It also uses the extra requirements specified by
+:ref:`pyproject.toml-file`. It also uses the extra requirements specified by
 :code:`[doc]` in the :code:`pyproject.toml` file.
 
 A powerful feature offered by Read the docs is that it can build documentation

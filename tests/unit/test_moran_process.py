@@ -26,7 +26,7 @@ def test_score_all_individuals_in_3_by_3_game():
 @given(M=arrays(np.int8, (3, 3), unique=True))
 def test_properties_of_scores(M):
     """
-    Checks that if non negative valued matrices are passed then non negative
+    Checks that if negative valued matrices are passed then non negative
     valued scored are calculated.
 
     Parameters
@@ -34,7 +34,7 @@ def test_properties_of_scores(M):
     M : array
         a payoff matrix
     """
-    if np.min(M) > 0:
+    if np.min(M) >= 0:
         population = np.array((0, 0, 1, 1, 2, 2))
         scores = score_all_individuals(A=M, population=population)
         assert np.min(scores) >= 0
@@ -135,7 +135,7 @@ def test_moran_process_in_3_by_3_game(M):
     M : array
         a payoff matrix
     """
-    if np.min(M) > 0:
+    if np.min(M) >= 0:
         initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
         generations = tuple(moran_process(A=M, initial_population=initial_population))
         last_generation = generations[-1]
@@ -213,6 +213,28 @@ def test_specific_moran_process_with_mutation_seed_2():
     generations = [next(generator) for _ in range(10)]
     last_generation = generations[-1]
     expected_last_generation = np.array((0, 0, 2, 1, 1, 1, 0))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_with_mutation_seed_3():
+    """
+    This is a test for an example in the discussion documentation BUT also
+    checks a specific seed where a bug existed regarding the selection
+    probabilities with a 0 value in the payoff matrix during mutation.
+    """
+    A = np.array([[2, 1], [3, 0]])
+    initial_population = [0, 0, 0, 0, 1]
+    mutation_probability = 0.2
+    seed = 6
+    np.random.seed(seed)
+    generator = moran_process(
+        A=A,
+        initial_population=initial_population,
+        mutation_probability=mutation_probability,
+    )
+    generations = [next(generator) for _ in range(10)]
+    last_generation = generations[-1]
+    expected_last_generation = np.array((1, 0, 1, 1, 1))
     assert np.array_equal(last_generation, expected_last_generation)
 
 

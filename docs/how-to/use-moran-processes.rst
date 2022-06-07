@@ -50,13 +50,13 @@ which case it will not terminate::
     [0 1 1]
     [0 1 0]
 
-Currently, only positive valued matrices are supported::
+Currently, only non-negative valued matrices are supported::
 
-    >>> A = np.array([[3, 0], [1, 2]])
+    >>> A = np.array([[3, -1], [1, 2]])
     >>> game = nash.Game(A)
     >>> generations = game.moran_process(initial_population=(0, 0, 1))
     >>> for population in generations:
     ...     print(population)
     Traceback (most recent call last):
      ...
-    ValueError: Only positive valued payoff matrices are currently supported
+    ValueError: Only non negative valued payoff matrices are currently supported

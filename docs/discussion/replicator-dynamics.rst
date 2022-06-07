@@ -54,8 +54,8 @@ We will also assume that any given individual in the population is playing a
 - shares :math:`\chi_1` proportion of the time.
 - acts aggressively :math:`\chi_2` proportion of the time.
 
-The overall fitness of an individual in the strategy is then given by their
-expected utility (as given by :math:`A`) as their interact with the population:
+The overall fitness of an individual in the population is then given by their
+expected utility (as given by :math:`A`) as they interact with the population:
 
 .. math::
 

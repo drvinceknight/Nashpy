@@ -13,11 +13,8 @@ more about the service here: https://readthedocs.org
 The documentation contained in :code:`docs/` is automatically built and can be
 viewed at https://nashpy.readthedocs.io/en/stable/.
 
-Settings
+Versions
 --------
-
-Read the docs allows you to configure your build using a :code:`readthedocs.yml`
-file. This is not currently used by Nashpy.
 
 The default version (ie when going to https://nashpy.readthedocs.io/) is the
 :code:`stable` version which means the last release.
@@ -39,10 +36,13 @@ One specific setting used by Nashpy is::
        install:
          - method: pip
            path: .
+           extra_requirements:
+             - doc
 
 This ensures Read the docs does not look for a :code:`requirements.txt` file to
 install the library. Instead it runs :code:`pip install .` which uses
-:ref:`pyproject.toml-file`.
+:ref:`pyproject.toml-file`. It also uses the extra requirements specified by
+:code:`[doc]` in the :code:`pyproject.toml` file.
 
 A powerful feature offered by Read the docs is that it can build documentation
 in pull requests.

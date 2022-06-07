@@ -35,3 +35,29 @@ For example the following will create a plot::
 
   xs = np.linspace(0, 10)
   plt.plot(xs, np.cos(xs))
+
+Using mermaid for diagrams
+--------------------------
+
+A popular tool for drawing diagrams is `mermaid.js <https://mermaid-js.github.io/>`_.
+This can be used directly with
+:code:`sphinx`.  To enable it, ensure that :code:`"sphinxcontrib.mermaid"` is
+included in :code:`extensions` in :code:`conf.py`.
+
+For example the following will create a flowchart::
+
+   .. mermaid::
+
+      graph TD;
+         A-->B;
+         A-->C;
+         B-->D;
+         C-->D;
+
+.. mermaid::
+
+   graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;

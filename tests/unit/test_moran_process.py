@@ -216,6 +216,28 @@ def test_specific_moran_process_with_mutation_seed_2():
     assert np.array_equal(last_generation, expected_last_generation)
 
 
+def test_specific_moran_process_with_mutation_seed_3():
+    """
+    This is a test for an example in the discussion documentation BUT also
+    checks a specific seed where a bug existed regarding the selection
+    probabilities with a 0 value in the payoff matrix during mutation.
+    """
+    A = np.array([[2, 1], [3, 0]])
+    initial_population = [0, 0, 0, 0, 1]
+    mutation_probability = 0.2
+    seed = 6
+    np.random.seed(seed)
+    generator = moran_process(
+        A=A,
+        initial_population=initial_population,
+        mutation_probability=mutation_probability,
+    )
+    generations = [next(generator) for _ in range(10)]
+    last_generation = generations[-1]
+    expected_last_generation = np.array((1, 0, 1, 1, 1))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
 def test_specific_moran_process_with_already_fixed_initial_population():
     A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
     initial_population = np.array((0, 0, 0))

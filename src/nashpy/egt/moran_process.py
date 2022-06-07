@@ -84,7 +84,10 @@ def update_population(
     next_population = np.array(population)
     probabilities = scores / np.sum(scores)
 
-    birth_index = np.random.choice(range(N), p=probabilities)
+    try:
+        birth_index = np.random.choice(range(N), p=probabilities)
+    except ValueError:
+        birth_index = np.random.choice(range(N))
     death_index = np.random.randint(N)
 
     if (mutation_probability > 0) and (np.random.random() < mutation_probability):

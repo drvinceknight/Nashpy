@@ -210,6 +210,8 @@ In 1980, Robert Axelrod (a political scientist) invited submissions to a
 computer tournament version of an iterated prisoners dilemma. This was described
 in a 1980 paper [Axelrod1980]_.
 
+.. <!--alex ignore tit-->
+
 - 14 strategies were submitted.
 - Round robin tournament with 200 stages including a 15th player who played
   uniformly randomly.

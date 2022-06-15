@@ -156,7 +156,7 @@ with the following constraints:
 
 .. math::
 
-   T > R > P > S
+   T > R > P > S\qquad
    2R > T + S
 
 - The first constraint ensures that the second action "Defect" dominates the
@@ -172,7 +172,7 @@ themselves.
 .. admonition:: Question
    :class: note
 
-   Under what conditions is the follow game a Prisoners Dilemma:
+   Under what conditions is the following game a Prisoners Dilemma:
 
    .. math::
 

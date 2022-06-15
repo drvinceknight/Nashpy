@@ -5,7 +5,7 @@ Asymmetric replicator dynamics
 
 The asymmetric replicator dynamics algorithm is implemented in :code:`Nashpy`
 based on the work presented in  [Elvio2011]_. This is considered as the 
-asymmetric version of the symmetric :ref:`replicator-dynamics`.
+asymmetric version of the symmetric :ref:`replicator-dynamics-discussion`.
 
 There exists a population with two types of individuals where each type has 
 their own strategy set. Strategies are assigned amongst the population. 
@@ -59,7 +59,7 @@ Stability is achieved in asymmetric replicator dynamics when both
 Every stable steady state is a Nash equilibria, and every Nash equilibria
 is a steady state in asymmetric replicator dynamics.
 
-Similarly to :ref:`replicator-dynamics`, a game is not guaranteed to converge
+Similarly to :ref:`replicator-dynamics-discussion`, a game is not guaranteed to converge
 to a steady state.
 Find below the probability distributions for both the row player and the column 
 player over time, of a game that does not converge::

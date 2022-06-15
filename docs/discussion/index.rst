@@ -11,6 +11,7 @@ Discussion
    vertex-enumeration.rst
    extensive-form-games.rst
    repeated-games.rst
+   cooperation.rst
    lemke-howson.rst
    degenerate-games.rst
    fictitious-play.rst

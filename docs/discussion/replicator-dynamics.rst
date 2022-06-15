@@ -1,4 +1,4 @@
-.. _replicator-dynamics:
+.. _replicator-dynamics-discussion:
 
 Replicator dynamics
 ===================

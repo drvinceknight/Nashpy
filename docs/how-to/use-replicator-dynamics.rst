@@ -4,15 +4,15 @@ Use replicator dynamics
 =======================
 
 One of the learning algorithms implemented in :code:`Nashpy` is called
-:ref:`replicator-dynamics`, this is implemented as a method on the :code:`Game` 
-class::
+:ref:`replicator-dynamics-discussion`, this is implemented as a method on the
+:code:`Game` class::
 
     >>> import nashpy as nash
     >>> import numpy as np
     >>> A = np.array([[3, 2], [4, 2]])
     >>> game = nash.Game(A)
 
-The :code:`replicator_dynamics` method returns the strategies of the row player 
+The :code:`replicator_dynamics` method returns the strategies of the row player
 over time::
 
     >>> game.replicator_dynamics()
@@ -26,9 +26,9 @@ over time::
 
 
 
-It is also possible to pass a :code:`y0` variable in order to assign a starting 
-strategy. Otherwise the probability is divided equally amongst all possible 
-actions. Passing a :code:`timepoints` variable gives the algorithm a sequence of 
+It is also possible to pass a :code:`y0` variable in order to assign a starting
+strategy. Otherwise the probability is divided equally amongst all possible
+actions. Passing a :code:`timepoints` variable gives the algorithm a sequence of
 timepoints over which to calculate the strategies::
 
     >>> y0 = np.array([0.9, 0.1])

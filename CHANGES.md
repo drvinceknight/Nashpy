@@ -1,3 +1,7 @@
+# v0.0.35
+
+Addition to the documentation.
+
 # v0.0.34
 
 Documentation improvements and allow for zero values in Moran process.

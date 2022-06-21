@@ -6,3 +6,4 @@ List of contributors
 - `@asinghgaba <https://github.com/asinghgaba>`_
 - `@katiemcgoldrick <https://github.com/katiemcgoldrick>`_
 - `@volume-on-max <https://github.com/volume-on-max>`_
+- `@theref <https://github.com/theref>`_

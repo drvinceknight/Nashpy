@@ -7,3 +7,4 @@ List of contributors
 - `@katiemcgoldrick <https://github.com/katiemcgoldrick>`_
 - `@volume-on-max <https://github.com/volume-on-max>`_
 - `@theref <https://github.com/theref>`_
+- `@robert-szeto <https://github.com/robert-szeto>`_

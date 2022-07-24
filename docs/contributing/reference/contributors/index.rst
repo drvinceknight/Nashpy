@@ -8,3 +8,4 @@ List of contributors
 - `@volume-on-max <https://github.com/volume-on-max>`_
 - `@theref <https://github.com/theref>`_
 - `@robert-szeto <https://github.com/robert-szeto>`_
+- `@arwheel <https://github.com/arwheel>`_

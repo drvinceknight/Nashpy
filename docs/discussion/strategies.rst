@@ -44,8 +44,8 @@ If we consider two players, assume the row player always chooses
 :math:`\text{Rock}` and :math:`\text{Paper}` (with equal probability) what is
 the expected outcome of any one game between them?
 
-- The expected score of the row player will be: :math:`-1 \times 1/2 + 0 \times 1/2 = -1/2`.
-- The expected score of the column player will be: :math:`1 \times 1/2 + 0 \times 1/2 = 1/2`.
+- The expected score of the row player will be: :math:`1 \times 1/2 + 0 \times 1/2 = 1/2`.
+- The expected score of the column player will be: :math:`-1 \times 1/2 + 0 \times 1/2 = -1/2`.
 
 In Game theoretic terms, the behaviours described above are referred to as
 **strategies**. **Strategies map information to actions.** In this particular case,

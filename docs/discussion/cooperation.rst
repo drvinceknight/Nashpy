@@ -179,7 +179,7 @@ themselves.
       A = \begin{pmatrix}
             1       & -\mu \\
             1 + \mu & 0
-      \end{pmatrix}\qquad
+          \end{pmatrix}\qquad
       B = A ^ T
 
 .. admonition:: Answer
@@ -189,7 +189,7 @@ themselves.
 
    .. math::
 
-      1 + \mu &> 1 0 > - \mu
+      1 + \mu > 1 \text{ and } 0 > - \mu
 
    and:
 

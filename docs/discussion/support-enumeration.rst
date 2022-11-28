@@ -91,7 +91,7 @@ If :math:`\sigma_r` is a best response to :math:`\sigma_c` then:
 
 .. math::
 
-   (A\sigma_cT)_i = \text{max}_{k\in\{1, 2\}} (A\sigma_c^T)_k \text{ for all }i \in \{1, 2\}
+   (A\sigma_c^T)_i = \text{max}_{k\in\{1, 2\}} (A\sigma_c^T)_k \text{ for all }i \in \{1, 2\}
 
 which gives:
 
@@ -155,10 +155,9 @@ For a non :ref:`Degenerate <degenerate-games-discussion>` 2 player game
 :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2` the following algorithm returns all
 pairs of best responses:
 
-1. For all :math:`1\leq k_1\leq m` and :math:`1\leq k_2\leq n`;
+1. For all :math:`1\leq k\leq m`:
 2. For all pairs of :ref:`support <definition-of-support-of-a-strategy>`
-   :math:`(I, J)` with :math:`|I|=k_1` and
-   :math:`|J|=k_2`.
+   :math:`(I, J)` with :math:`|I|=|J|=k`.
 3. Solve the following equations (this ensures we have best responses):
 
    .. math::

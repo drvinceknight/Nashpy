@@ -147,7 +147,7 @@ For example, consider :ref:`matching-pennies`. Below is a plot of
    plt.legend()
 
 Given that the utilities in both cases are linear, the best response to any
-value of :math:`y \ne 1/2` is either :math:`(1, 0)` or :math:`(0, 1`.
+value of :math:`y \ne 1/2` is either :math:`(1, 0)` or :math:`(0, 1)`.
 The best response :math:`\sigma_r^*` is given by:
 
 .. math::
@@ -185,7 +185,7 @@ The best response :math:`\sigma_r^*` is given by:
    .. math::
 
       u_c(\sigma_r, (1, 0)) =& -x + (1-x)= 1 - 2x\\
-                            =& x - (1-x)= -1 + 2x
+      u_c(\sigma_r, (0, 1)) =& x - (1-x)= -1 + 2x
 
 
    Here is a plot of the utilities:
@@ -202,6 +202,16 @@ The best response :math:`\sigma_r^*` is given by:
       plt.xlabel("$\sigma_r=(x, 1-x)$")
       plt.title("Utility to column player")
       plt.legend()
+
+   The best response is given by:
+
+   .. math::
+
+      \sigma_c ^* = \begin{cases}
+                        (1, 0),& \text{ if } x < 1/2\\
+                        (0, 1),& \text{ if } x > 1/2\\
+                        \text{indifferent},& \text{ if } x=1/2
+                     \end{cases}
 
 .. _best_response_condition:
 

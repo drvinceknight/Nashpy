@@ -16,7 +16,7 @@ jobs:
 
     - name: Install alex - checker for inconsiderate / insensitive writing
       run: |
-        npm install alex --global
+        npm install alex@9.1.0 --global
 
     - name: Run alex on documentation
       run: |

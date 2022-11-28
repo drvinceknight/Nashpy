@@ -14,8 +14,8 @@ strategic form games.
 
    tutorial/index.rst
    how-to/index.rst
+   text-book/index.rst
    discussion/index.rst
-   reference/index.rst
    contributing/index.rst
 
 

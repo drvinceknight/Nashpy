@@ -1,21 +1,11 @@
-Discussion
-==========
+Discussion and code reference
+=============================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   normal-form-games.rst
-   strategies.rst
-   best-responses.rst
-   support-enumeration.rst
-   vertex-enumeration.rst
-   extensive-form-games.rst
-   repeated-games.rst
-   cooperation.rst
-   lemke-howson.rst
-   degenerate-games.rst
-   fictitious-play.rst
-   stochastic-fictitious-play.rst
-   replicator-dynamics.rst
-   asymmetric-replicator-dynamics.rst
-   moran-process.rst
+   john-nash.rst
+   gambit.rst
+   other-python-game-theory-libraries.rst
+   bibliography.rst
+   source/nashpy.rst

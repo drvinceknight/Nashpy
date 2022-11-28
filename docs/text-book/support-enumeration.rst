@@ -155,7 +155,7 @@ For a non :ref:`Degenerate <degenerate-games-discussion>` 2 player game
 :math:`(A, B)\in{\mathbb{R}^{m\times n}}^2` the following algorithm returns all
 pairs of best responses:
 
-1. For all :math:`1\leq k\leq m`:
+1. For all :math:`1\leq k\leq \min(m, n)`:
 2. For all pairs of :ref:`support <definition-of-support-of-a-strategy>`
    :math:`(I, J)` with :math:`|I|=|J|=k`.
 3. Solve the following equations (this ensures we have best responses):

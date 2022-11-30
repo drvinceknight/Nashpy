@@ -14,18 +14,6 @@ jobs:
       with:
         node-version: '12'
 
-    - name: Install alex - checker for inconsiderate / insensitive writing
-      run: |
-        npm install alex@9.1.0 --global
-
-    - name: Run alex on documentation
-      run: |
-        alex docs/**/*.rst
-
-    - name: Run alex on README.md
-      run: |
-        alex README.md
-
     - name: Check formatting of md files
       run: |
         python -m pip install mdformat

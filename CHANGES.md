@@ -1,3 +1,7 @@
+# v0.0.36
+
+Reorganisation of docs.
+
 # v0.0.35
 
 Addition to the documentation.

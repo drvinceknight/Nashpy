@@ -84,7 +84,6 @@ def stochastic_fictitious_play(
             for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
         ]
 
-        distribution: int
         plays = [
             np.random.choice(range(len(distribution)), p=distribution)
             for distribution in distributions

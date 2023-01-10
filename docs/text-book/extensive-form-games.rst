@@ -155,7 +155,7 @@ game.
 These strategies can be thought of as vectors in the space of the cross product
 of the sets of actions available at every information set.
 For player :math:`i\in \mathcal{N}` with information sets :math:`v_i=((v_i)_1,
-(v_i)_2, \dots, (v_i)_n)` a strategy :math:`s=(s_1, s_2, \dots, s_n` indicates
+(v_i)_2, \dots, (v_i)_n)` a strategy :math:`s=(s_1, s_2, \dots, s_n)` indicates
 what action to take at each information set. So :math:`s_2` will prescribe which
 action to take at all vertices contained in :math:`(v_i)_2`.
 

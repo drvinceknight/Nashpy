@@ -156,8 +156,7 @@ with the following constraints:
 
 .. math::
 
-   T > R > P > S\qquad
-   2R > T + S
+   T > R > P > S \qquad 2R > T + S
 
 - The first constraint ensures that the second action "Defect" dominates the
   first action "Cooperate".

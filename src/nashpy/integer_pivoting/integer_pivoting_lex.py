@@ -6,7 +6,7 @@ import warnings
 
 import numpy as np
 import numpy.typing as npt
-from typing import Iterable, Any
+from typing import Any
 
 
 def find_pivot_row_lex(

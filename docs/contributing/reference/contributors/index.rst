@@ -9,3 +9,4 @@ List of contributors
 - `@theref <https://github.com/theref>`_
 - `@robert-szeto <https://github.com/robert-szeto>`_
 - `@arwheel <https://github.com/arwheel>`_
+- Computing for Mathematics class of 2023

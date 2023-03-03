@@ -4,47 +4,6 @@ import numpy.typing as npt
 from typing import Generator, Optional, Any
 
 
-def get_best_response_to_play_count(A: npt.NDArray, play_count: npt.NDArray) -> int:
-    """
-    Returns the best response to a belief based on the playing distribution of the opponent
-
-    Parameters
-    ----------
-    A : array
-        The utility matrix.
-    play_count : array
-        The play counts.
-
-    Returns
-    -------
-    int
-        The action that corresponds to the best response.
-    """
-    utilities = A @ play_count
-    return np.random.choice(np.argwhere(utilities == np.max(utilities)).transpose()[0])
-
-
-def update_play_count(play_count: npt.NDArray, play: int) -> npt.NDArray:
-    """
-    Update a belief vector with a given play
-
-    Parameters
-    ----------
-    play_count : array
-        The play counts.
-    play : int
-        The given play.
-
-    Returns
-    -------
-    array
-        The updated play counts.
-    """
-    extra_play = np.zeros(play_count.shape)
-    extra_play[play] = 1
-    return play_count + extra_play
-
-
 def fictitious_play(
     A: npt.NDArray, B: npt.NDArray, iterations: int, play_counts: Optional[Any] = None
 ) -> Generator:
@@ -67,20 +26,30 @@ def fictitious_play(
     Generator
         The play counts.
     """
+    actions1, actions2 = A.shape
+
     if play_counts is None:
-        play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
+        play_counts1 = np.zeros(actions1, dtype=int)
+        play_counts2 = np.zeros(actions2, dtype=int)
+        payoff1 = np.zeros(actions1)
+        payoff2 = np.zeros(actions2)
+    else:
+        play_counts1, play_counts2 = play_counts
+        payoff1 = A @ play_counts2
+        payoff2 = play_counts1 @ B
 
-    yield play_counts
+    A_t = A.T
+    yield play_counts1, play_counts2
 
-    for repetition in range(iterations):
+    for _ in range(iterations):
 
-        plays = [
-            get_best_response_to_play_count(matrix, play_count)
-            for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
-        ]
+        best_move1 = np.random.choice(np.flatnonzero(payoff1 == payoff1.max()))
+        best_move2 = np.random.choice(np.flatnonzero(payoff2 == payoff2.max()))
 
-        play_counts = [
-            update_play_count(play_count, play)
-            for play_count, play in zip(play_counts, plays)
-        ]
-        yield play_counts
+        payoff1 += A_t[best_move2]
+        payoff2 += B[best_move1]
+
+        play_counts1[best_move1] += 1
+        play_counts2[best_move2] += 1
+
+        yield play_counts1, play_counts2

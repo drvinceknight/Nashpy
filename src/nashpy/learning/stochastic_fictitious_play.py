@@ -1,7 +1,27 @@
 """Code to carry out stochastic fictitious learning"""
 import numpy as np
-from nashpy.learning.fictitious_play import update_play_count
 import numpy.typing as npt
+
+
+def update_play_count(play_count: npt.NDArray, play: int) -> npt.NDArray:
+    """
+    Update a belief vector with a given play
+
+    Parameters
+    ----------
+    play_count : array
+        The play counts.
+    play : int
+        The given play.
+
+    Returns
+    -------
+    array
+        The updated play counts.
+    """
+    extra_play = np.zeros(play_count.shape)
+    extra_play[play] = 1
+    return play_count + extra_play
 
 
 def get_distribution_response_to_play_count(

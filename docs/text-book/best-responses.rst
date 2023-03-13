@@ -83,14 +83,14 @@ response to a row players' strategy :math:`\sigma_r` if and only if:
 
    .. math::
 
-      \text{argmax}_{i\in\mathcal{S}_1}A_{i1}=2
+      \text{argmax}_{i\in\mathcal{A}_1}A_{i1}=2
 
    Against the second action of the column player the best response is to choose
    the second action which gives a utility of 1. This can be expressed as:
 
    .. math::
 
-      \text{argmax}_{i\in\mathcal{S}_1}A_{i2}=2
+      \text{argmax}_{i\in\mathcal{A}_1}A_{i2}=2
 
 
    The row player's best response to either of the actions of the column player
@@ -98,7 +98,7 @@ response to a row players' strategy :math:`\sigma_r` if and only if:
 
    .. math::
 
-      \text{argmax}_{i\in\mathcal{S}_1}A_{ij}=2\text{ for all }j\in\mathcal{A}_2
+      \text{argmax}_{i\in\mathcal{A}_1}A_{ij}=2\text{ for all }j\in\mathcal{A}_2
 
 .. _best_responses_in_2_by_2_games:
 

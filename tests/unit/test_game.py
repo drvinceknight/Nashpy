@@ -252,7 +252,6 @@ Column player:
             self.assertEqual(w[-1].category, RuntimeWarning)
 
     def test_support_enumeration_for_deg_bi_matrix_game_with_non_deg(self):
-
         A = np.array([[0, 0], [0, 0]])
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
@@ -262,7 +261,6 @@ Column player:
             self.assertEqual(w[-1].category, RuntimeWarning)
 
     def test_support_enumeration_for_deg_bi_matrix_game_with_low_tol(self):
-
         A = np.array([[0, 0], [0, 0]])
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:

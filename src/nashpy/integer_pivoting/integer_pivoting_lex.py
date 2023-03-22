@@ -12,7 +12,6 @@ from typing import Any
 def find_pivot_row_lex(
     tableau: npt.NDArray, column_index: int, slack_variables: Any
 ) -> int:
-
     """
     Find the index of the row to pivot.
 

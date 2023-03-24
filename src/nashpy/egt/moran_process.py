@@ -1,7 +1,6 @@
 """Code for implementation of a Moran process"""
 import numpy as np
 import numpy.typing as npt
-import networkx as nx  # TODO Remove this as a dependency
 
 from typing import Generator
 
@@ -9,11 +8,7 @@ from typing import Generator
 def score_all_individuals(
     A: npt.NDArray,
     population: npt.NDArray,
-    interaction_probability: array = None,  # Modify this to be the probability
-                                            # Point out it corresponds to
-                                            # adjacency matrix of...
-                                            # Highlight need not be a stochastic
-                                            # matrix
+    interaction_graph_adjacency_matrix: npt.NDArray = None,
 ) -> npt.NDArray:
     """
     Return the scores of all individuals when they play against all other
@@ -25,11 +20,12 @@ def score_all_individuals(
         a payoff matrix
     population : array
         the population
-    interaction_graph : graph
-        the interaction graph G: individuals of type i interact with individuals
-        of type j count towards fitness iff G_{ij} = 1.
-        Default is None: if so a complete graph is used -- this corresponds to
-        all individuals interacting with each other.
+    interaction_graph_adjacency_matrix : array
+        the adjacency matrix for the interaction graph G: individuals of type i
+        interact with individuals of type j count towards fitness iff G_{ij} =
+        1.  Default is None: if so a complete graph is used -- this corresponds
+        to all individuals interacting with each other (with no self
+        interactions)
 
     Returns
     -------
@@ -48,16 +44,16 @@ def score_all_individuals(
             "Only non negative valued payoff matrices are currently supported"
         )
 
-    if interaction_graph is None:
+    if interaction_graph_adjacency_matrix is None:
         population_size = len(population)
-        interaction_graph = nx.complete_graph(population_size)
+        interaction_graph_adjacency_matrix = (np.eye(population_size) + 1) % 2
 
     scores = []
 
     for i, player in enumerate(population):
         total = 0
         for j, opponent in enumerate(population):
-            if (i, j) in interaction_graph.edges:
+            if interaction_graph_adjacency_matrix[i, j] == 1:
                 total += A[player, opponent]
         scores.append(total)
 
@@ -69,11 +65,6 @@ def update_population(
     scores: npt.NDArray,
     original_set_of_strategies: set,
     mutation_probability: float = 0,
-    reproduction_graph: nx.Digraph = None,  # TODO Modify this to be an
-                                            # stochastic matrix.
-                                            # Note that it corresponds to
-                                            # adjacency matrix of graph defined
-                                            # in Nowak's Nature paper.
 ) -> npt.NDArray:
     """
     Return the new population of all individuals given the scores of every
@@ -94,8 +85,7 @@ def update_population(
         the probability of an individual selected to be copied mutates to
         another individual from the original set of strategies (even if they are
         no longer present in the population).
-    reproduction_stochastic_matrix : array
-        
+
 
     Returns
     -------

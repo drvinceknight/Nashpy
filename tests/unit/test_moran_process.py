@@ -23,11 +23,77 @@ def test_score_all_individuals_in_3_by_3_game():
     assert np.array_equal(expected_scores, scores)
 
 
+def test_score_all_individuals_in_3_by_3_game_on_cycle():
+    """
+    Confirm that in this game, each player interacts with a player of the "next"
+    time.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    population = np.array((0, 1, 2))
+    interaction_graph_adjacency_matrix = np.array(((0, 1, 0), (0, 0, 1), (1, 0, 0)))
+    scores = score_all_individuals(
+        A=A,
+        population=population,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+    )
+    expected_scores = np.array((3, 5, 6))
+    assert np.array_equal(expected_scores, scores)
+
+
+def test_score_all_individuals_in_3_by_3_game_on_disconnected_graph():
+    """
+    Confirm that in this game, each player interacts with no other players. The
+    expected scores should be 0.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    population = np.array((0, 1, 2))
+    interaction_graph_adjacency_matrix = np.array(((0, 0, 0), (0, 0, 0), (0, 0, 0)))
+    scores = score_all_individuals(
+        A=A,
+        population=population,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+    )
+    expected_scores = np.array((0, 0, 0))
+    assert np.array_equal(expected_scores, scores)
+
+
+@given(interaction_graph_adjacency_matrix=arrays(np.bool_, (6, 6)))
+def test_properties_of_scores_for_arbitrary_adjacency_matrix(
+    interaction_graph_adjacency_matrix,
+):
+    """
+    Confirm that output works and falls within expected bounds for any valid
+    interaction_graph.
+
+    Note this uses a strategy that generates a boolean array. However this will
+    be considered like a binary array.
+
+    Parameters
+    ----------
+    interaction_graph_adjacency_matrix : array
+        the adjacency matrix for the interaction graph G: individuals of type i
+        interact with individuals of type j count towards fitness iff G_{ij} =
+        1.  Default is None: if so a complete graph is used -- this corresponds
+        to all individuals interacting with each other (with no self
+        interactions)
+    """
+    population = np.array((0, 0, 1, 1, 2, 2))
+    M = np.array(((0, 1, 2), (2, 0, 1), (1, 2, 0)))
+    scores = score_all_individuals(
+        A=M,
+        population=population,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+    )
+    assert np.min(scores) >= 0
+    assert np.max(scores) <= np.sum(M)
+    assert len(scores) == len(population)
+
+
 @given(M=arrays(np.int8, (3, 3), unique=True))
 def test_properties_of_scores(M):
     """
-    Checks that if negative valued matrices are passed then non negative
-    valued scored are calculated.
+    Checks that if non negative valued matrices are passed then non negative
+    valued scores are calculated.
 
     Parameters
     ----------
@@ -39,6 +105,7 @@ def test_properties_of_scores(M):
         scores = score_all_individuals(A=M, population=population)
         assert np.min(scores) >= 0
         assert np.sum(scores) > 0
+        assert len(scores) == len(population)
     else:
         with pytest.raises(ValueError):
             initial_population = np.array((0, 0, 0, 1, 1, 2, 2))

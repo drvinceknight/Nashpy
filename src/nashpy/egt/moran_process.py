@@ -65,6 +65,7 @@ def update_population(
     scores: npt.NDArray,
     original_set_of_strategies: set,
     mutation_probability: float = 0,
+    replacement_stochastic_matrix: npt.NDArray = None,
 ) -> npt.NDArray:
     """
     Return the new population of all individuals given the scores of every
@@ -85,7 +86,10 @@ def update_population(
         the probability of an individual selected to be copied mutates to
         another individual from the original set of strategies (even if they are
         no longer present in the population).
-
+    replacement_stochastic_matrix: array
+        Individual i chosen for replacement will replace individual j with
+        probability P_{ij}.
+        Default is None: this is equivalent to P_{ij} = 1 / N for all i, j.
 
     Returns
     -------
@@ -100,7 +104,14 @@ def update_population(
         birth_index = np.random.choice(range(N), p=probabilities)
     except ValueError:
         birth_index = np.random.choice(range(N))
-    death_index = np.random.randint(N)  # TODO Modify this to use birth graph
+
+    if replacement_stochastic_matrix is None:
+        death_index = np.random.randint(N)
+    else:
+        death_index = np.random.choice(
+            range(N),
+            p=replacement_stochastic_matrix[birth_index],
+        )
 
     if (mutation_probability > 0) and (np.random.random() < mutation_probability):
         birth_strategy = np.random.choice(

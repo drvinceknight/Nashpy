@@ -188,6 +188,66 @@ def test_update_population_with_uniform_population():
     assert np.array_equal(expected_new_population, new_population)
 
 
+def test_update_population_with_identity_replacement_stochastic_matrix():
+    """
+    With the identity replacement graph as the identity matrix it is not
+    possible for the population to change.
+    """
+    population = np.array((0, 1, 2))
+    scores = np.array((18, 15, 23))
+    original_set_of_strategies = set(population)
+    replacement_stochastic_matrix = np.identity(n=3)
+
+    new_population = update_population(
+        population=population,
+        scores=scores,
+        original_set_of_strategies=original_set_of_strategies,
+        replacement_stochastic_matrix=replacement_stochastic_matrix,
+    )
+    assert np.array_equal(population, new_population)
+
+
+def test_update_population_with_specific_graph():
+    """
+    The graph chosen ensures that individuals from the first  three nodes can only
+    replace elements at the 4th and 5th nodes.
+
+    The scores ensure this is the only replacement that will happen.
+
+    The various seeds chosen ensure various possibilities are captured.
+    """
+    population = np.array((0, 0, 0, 1, 1, 2, 2))
+    original_set_of_strategies = set(population)
+    scores = np.array((18, 18, 18, 0, 0, 0, 0))
+    # TODO Fix the dimension of the stochastic matrix
+    replacement_stochastic_matrix = np.array(
+        (
+            (0, 0, 0, 1 / 2, 1 / 2, 0, 0),
+            (0, 0, 0, 1 / 2, 1 / 2, 0, 0),
+            (0, 0, 0, 1 / 2, 1 / 2, 0, 0),
+            (0, 0, 0, 1, 0, 0, 0),
+            (0, 0, 0, 0, 1, 0, 0),
+            (0, 0, 0, 0, 0, 1, 0),
+            (0, 0, 0, 0, 0, 0, 1),
+        )
+    )
+    expected_new_populations = (
+        np.array((0, 0, 0, 1, 0, 2, 2)),
+        np.array((0, 0, 0, 0, 1, 2, 2)),
+    )
+    seeds = (0, 2)
+
+    for seed, expected_new_population in zip(seeds, expected_new_populations):
+        np.random.seed(seed)
+        new_population = update_population(
+            population=population,
+            scores=scores,
+            original_set_of_strategies=original_set_of_strategies,
+            replacement_stochastic_matrix=replacement_stochastic_matrix,
+        )
+    assert np.array_equal(new_population, expected_new_population)
+
+
 @given(M=arrays(np.int8, (3, 3), unique=True))
 def test_moran_process_in_3_by_3_game(M):
     """

@@ -523,8 +523,12 @@ def test_fixation_probablities_0():
     probabilities = fixation_probabilities(
         A=A, initial_population=initial_population, repetitions=repetitions
     )
-    expected_probabilities = np.array((0.5, 0.3, 0.2))
-    assert np.allclose(probabilities, expected_probabilities)
+    expected_probabilities = {
+        (0, 0, 0, 0, 0, 0, 0): 0.5,
+        (1, 1, 1, 1, 1, 1, 1): 0.3,
+        (2, 2, 2, 2, 2, 2, 2): 0.2,
+    }
+    assert probabilities == expected_probabilities
 
 
 def test_fixation_probablities_1():
@@ -535,8 +539,12 @@ def test_fixation_probablities_1():
     probabilities = fixation_probabilities(
         A=A, initial_population=initial_population, repetitions=repetitions
     )
-    expected_probabilities = np.array((0.2, 0.3, 0.5))
-    assert np.allclose(probabilities, expected_probabilities)
+    expected_probabilities = {
+        (0, 0, 0, 0, 0, 0, 0): 0.2,
+        (1, 1, 1, 1, 1, 1, 1): 0.3,
+        (2, 2, 2, 2, 2, 2, 2): 0.5,
+    }
+    assert probabilities == expected_probabilities
 
 
 def test_fixation_probablities_with_fixed_initial_population_0():
@@ -547,8 +555,10 @@ def test_fixation_probablities_with_fixed_initial_population_0():
     probabilities = fixation_probabilities(
         A=A, initial_population=initial_population, repetitions=repetitions
     )
-    expected_probabilities = np.array((1, 0, 0))
-    assert np.array_equal(probabilities, expected_probabilities)
+    expected_probabilities = {
+        (0, 0, 0, 0): 1,
+    }
+    assert probabilities == expected_probabilities
 
 
 def test_fixation_probablities_with_fixed_initial_population_2():
@@ -559,5 +569,7 @@ def test_fixation_probablities_with_fixed_initial_population_2():
     probabilities = fixation_probabilities(
         A=A, initial_population=initial_population, repetitions=repetitions
     )
-    expected_probabilities = np.array((0, 0, 1))
-    assert np.array_equal(probabilities, expected_probabilities)
+    expected_probabilities = {
+        (2, 2, 2, 2, 2, 2): 1,
+    }
+    assert probabilities == expected_probabilities

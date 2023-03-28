@@ -632,4 +632,10 @@ Column player:
             initial_population=initial_population, repetitions=20
         )
         expected_probabilities = np.array((0.1, 0, 0.45, 0.45))
-        assert np.array_equal(probabilities, expected_probabilities)
+
+        expected_probabilities = {
+            (0, 0, 0, 0, 0, 0, 0, 0): 0.1,
+            (2, 2, 2, 2, 2, 2, 2, 2): 0.45,
+            (3, 3, 3, 3, 3, 3, 3, 3): 0.45,
+        }
+        assert probabilities == expected_probabilities

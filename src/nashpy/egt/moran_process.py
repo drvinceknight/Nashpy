@@ -3,7 +3,7 @@ import numpy as np
 import numpy.typing as npt
 import networkx as nx
 
-from typing import Generator
+from typing import Generator, Dict
 
 
 def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
@@ -231,7 +231,7 @@ def fixation_probabilities(
     A: npt.NDArray,
     initial_population: npt.NDArray,
     repetitions: int,
-) -> npt.NDArray:
+) -> Dict[tuple, float]:
     """
     Return the fixation probabilities for all types of individuals.
 
@@ -256,17 +256,15 @@ def fixation_probabilities(
     Returns
     -------
     array
-        The fixation probability of each type.
+        The probability of all obtained fixation states
     """
-    number_of_strategies = A.shape[0]
-    fixation_counts = np.array([0 for _ in range(number_of_strategies)])
+    state_counts = {}
     for repetition in range(repetitions):
         generations = tuple(moran_process(A=A, initial_population=initial_population))
-        last_population = generations[-1]
+        last_population = tuple(generations[-1])
+        try:
+            state_counts[last_population] += 1
+        except KeyError:
+            state_counts[last_population] = 1
 
-        assert len(set(last_population)) == 1
-        fixed_strategy = last_population[0]
-
-        fixation_counts[fixed_strategy] += 1
-
-    return fixation_counts / repetitions
+    return {state: count / repetitions for state, count in state_counts.items()}

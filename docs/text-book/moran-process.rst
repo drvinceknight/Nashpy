@@ -515,7 +515,7 @@ to obtain the fixation probability :math:`\rho=x_1`.
                repetitions=repetitions
            )
 
-           return probabilities[0]
+           return probabilities[tuple(0 for _ in range(N))]
 
        A = np.array([[2, 1], [3, 0]])
        np.random.seed(0)

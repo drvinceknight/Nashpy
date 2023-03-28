@@ -3,7 +3,7 @@ import numpy as np
 import numpy.typing as npt
 import networkx as nx
 
-from typing import Generator, Dict
+from typing import Generator, Dict, Tuple, Set
 
 
 def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
@@ -145,6 +145,36 @@ def update_population(
     return next_population
 
 
+def is_population_not_fixed(
+    population: npt.NDArray, population_components: Tuple[Set]
+) -> bool:
+    """
+    Given a population vector and a set of population connected components this
+    returns a boolean indicating if all individuals in each component are of the
+    same type.
+    This is used to check for fixation when using a replacement graph that may
+    be disconnected.
+
+    Parameters
+    ----------
+    population : array
+        the population
+    population_components : tuple
+        a tuple of sets containing node indices. Each set corresponds to a set
+        of connected components.
+
+    Returns
+    -------
+    bool
+        True if the population is not yet fixed. True if the population is
+        fixed (all individuals in all connected components have the same type)..
+    """
+    return any(
+        len(set(population[node] for node in component)) != 1
+        for component in population_components
+    )
+
+
 def moran_process(
     A: npt.NDArray,
     initial_population: npt.NDArray,
@@ -203,10 +233,11 @@ def moran_process(
     else:
         population_components = (set(range(len(population))),)
 
-    if len(set(population)) > 1:
-        while (mutation_probability > 0) or any(
-            len(set(population[node] for node in component)) != 1
-            for component in population_components
+    if is_population_not_fixed(
+        population=population, population_components=population_components
+    ):
+        while (mutation_probability > 0) or is_population_not_fixed(
+            population=population, population_components=population_components
         ):
             scores = score_all_individuals(
                 A=A,
@@ -231,6 +262,8 @@ def fixation_probabilities(
     A: npt.NDArray,
     initial_population: npt.NDArray,
     repetitions: int,
+    replacement_stochastic_matrix: npt.NDArray = None,
+    interaction_graph_adjacency_matrix: npt.NDArray = None,
 ) -> Dict[tuple, float]:
     """
     Return the fixation probabilities for all types of individuals.
@@ -251,6 +284,16 @@ def fixation_probabilities(
         the initial population
     repetitions : int
         The number of repetitions of the algorithm.
+    replacement_stochastic_matrix: array
+        Individual i chosen for replacement will replace individual j with
+        probability P_{ij}.
+        Default is None: this is equivalent to P_{ij} = 1 / N for all i, j.
+    interaction_graph_adjacency_matrix : array
+        the adjacency matrix for the interaction graph G: individuals of type i
+        interact with individuals of type j count towards fitness iff G_{ij} =
+        1.  Default is None: if so a complete graph is used -- this corresponds
+        to all individuals interacting with each other (with no self
+        interactions)
 
 
     Returns
@@ -258,9 +301,22 @@ def fixation_probabilities(
     array
         The probability of all obtained fixation states
     """
+
+    if interaction_graph_adjacency_matrix is None:
+        interaction_graph_adjacency_matrix = get_complete_graph_adjacency_matrix(
+            population=initial_population
+        )
+
     state_counts = {}
     for repetition in range(repetitions):
-        generations = tuple(moran_process(A=A, initial_population=initial_population))
+        generations = tuple(
+            moran_process(
+                A=A,
+                initial_population=initial_population,
+                interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+                replacement_stochastic_matrix=replacement_stochastic_matrix,
+            )
+        )
         last_population = tuple(generations[-1])
         try:
             state_counts[last_population] += 1

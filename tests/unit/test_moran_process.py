@@ -10,6 +10,7 @@ from hypothesis.extra.numpy import arrays
 from nashpy.egt.moran_process import (
     fixation_probabilities,
     get_complete_graph_adjacency_matrix,
+    is_population_not_fixed,
     moran_process,
     score_all_individuals,
     update_population,
@@ -264,6 +265,28 @@ def test_update_population_with_specific_graph():
             replacement_stochastic_matrix=replacement_stochastic_matrix,
         )
     assert np.array_equal(new_population, expected_new_population)
+
+
+def test_is_population_not_fixed_for_fixed_population():
+    population = np.array((0, 0, 1, 1))
+    population_components = ({0, 1}, {2, 3})
+    assert (
+        is_population_not_fixed(
+            population=population, population_components=population_components
+        )
+        is False
+    )
+
+
+def test_is_population_not_fixed_for_not_fixed_population():
+    population = np.array((0, 0, 1, 2))
+    population_components = ({0, 1}, {2, 3})
+    assert (
+        is_population_not_fixed(
+            population=population, population_components=population_components
+        )
+        is True
+    )
 
 
 @given(M=arrays(np.int8, (3, 3), unique=True))
@@ -571,5 +594,124 @@ def test_fixation_probablities_with_fixed_initial_population_2():
     )
     expected_probabilities = {
         (2, 2, 2, 2, 2, 2): 1,
+    }
+    assert probabilities == expected_probabilities
+
+
+def test_fixation_probablities_on_graphs_0():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(0)
+    repetitions = 10
+    interaction_graph_adjacency_matrix = np.array(
+        (
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 0, 1, 1, 1),
+            (0, 1, 0, 0, 1, 0, 1),
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (0, 1, 1, 1, 1, 1, 1),
+        )
+    )
+    replacement_stochastic_matrix = np.array(
+        (
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (0, 0, 0, 1 / 3, 1 / 3, 1 / 3, 0),
+            (0, 0, 0, 1 / 3, 1 / 3, 1 / 3, 0),
+            (0, 0, 0, 1 / 4, 1 / 4, 1 / 4, 1 / 4),
+            (0, 0, 0, 0, 0, 1 / 2, 1 / 2),
+        )
+    )
+    probabilities = fixation_probabilities(
+        A=A,
+        initial_population=initial_population,
+        repetitions=repetitions,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+        replacement_stochastic_matrix=replacement_stochastic_matrix,
+    )
+
+    expected_probabilities = {
+        (0, 0, 0, 1, 1, 1, 1): 0.2,
+        (0, 0, 0, 2, 2, 2, 2): 0.8,
+    }
+    assert probabilities == expected_probabilities
+
+
+def test_fixation_probablities_on_graphs_1():
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 0, 0, 1, 1, 2, 2))
+    np.random.seed(1)
+    repetitions = 10
+    interaction_graph_adjacency_matrix = np.array(
+        (
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 0, 1, 1, 1),
+            (0, 1, 0, 0, 1, 0, 1),
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (0, 1, 1, 1, 1, 1, 1),
+        )
+    )
+    replacement_stochastic_matrix = np.array(
+        (
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (1 / 3, 1 / 3, 1 / 3, 0, 0, 0, 0),
+            (0, 0, 0, 1 / 3, 1 / 3, 1 / 3, 0),
+            (0, 0, 0, 1 / 3, 1 / 3, 1 / 3, 0),
+            (0, 0, 0, 1 / 4, 1 / 4, 1 / 4, 1 / 4),
+            (0, 0, 0, 0, 0, 1 / 2, 1 / 2),
+        )
+    )
+    probabilities = fixation_probabilities(
+        A=A,
+        initial_population=initial_population,
+        repetitions=repetitions,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+        replacement_stochastic_matrix=replacement_stochastic_matrix,
+    )
+
+    expected_probabilities = {
+        (0, 0, 0, 1, 1, 1, 1): 0.3,
+        (0, 0, 0, 2, 2, 2, 2): 0.7,
+    }
+    assert probabilities == expected_probabilities
+
+
+def test_fixation_probablities_with_initial_fixed_population_on_graphs_0():
+    """
+    The replacement graph is completely disconnected so the initial population
+    is fixed.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 1, 0, 1, 2, 0, 2))
+    np.random.seed(0)
+    repetitions = 10
+    interaction_graph_adjacency_matrix = np.array(
+        (
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 0, 1, 1, 1),
+            (0, 1, 0, 0, 1, 0, 1),
+            (0, 1, 1, 0, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (0, 1, 1, 1, 1, 1, 1),
+        )
+    )
+    replacement_stochastic_matrix = np.identity(7)
+    probabilities = fixation_probabilities(
+        A=A,
+        initial_population=initial_population,
+        repetitions=repetitions,
+        interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+        replacement_stochastic_matrix=replacement_stochastic_matrix,
+    )
+
+    expected_probabilities = {
+        (0, 1, 0, 1, 2, 0, 2): 1,
     }
     assert probabilities == expected_probabilities

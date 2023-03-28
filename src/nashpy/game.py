@@ -302,7 +302,13 @@ Column player:
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)
 
-    def moran_process(self, initial_population, mutation_probability=0):
+    def moran_process(
+        self,
+        initial_population,
+        mutation_probability=0,
+        replacement_stochastic_matrix: npt.NDArray = None,
+        interaction_graph_adjacency_matrix: npt.NDArray = None,
+    ):
         """
         Return a generator of population across the Moran process. The last
         population is when only a single type of individual is present in the
@@ -316,6 +322,16 @@ Column player:
             the probability of an individual selected to be copied mutates to
             another individual from the original set of strategies (even if they are
             no longer present in the population).
+        replacement_stochastic_matrix: array
+            Individual i chosen for replacement will replace individual j with
+            probability P_{ij}.
+            Default is None: this is equivalent to P_{ij} = 1 / N for all i, j.
+        interaction_graph_adjacency_matrix : array
+            the adjacency matrix for the interaction graph G: individuals of type i
+            interact with individuals of type j count towards fitness iff G_{ij} =
+            1.  Default is None: if so a complete graph is used -- this corresponds
+            to all individuals interacting with each other (with no self
+            interactions)
 
 
         Returns
@@ -328,9 +344,17 @@ Column player:
             A=A,
             initial_population=initial_population,
             mutation_probability=mutation_probability,
+            interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+            replacement_stochastic_matrix=replacement_stochastic_matrix,
         )
 
-    def fixation_probabilities(self, initial_population, repetitions):
+    def fixation_probabilities(
+        self,
+        initial_population,
+        repetitions,
+        replacement_stochastic_matrix: npt.NDArray = None,
+        interaction_graph_adjacency_matrix: npt.NDArray = None,
+    ):
         """
         Return the fixation probabilities for all types of individuals.
 
@@ -348,6 +372,17 @@ Column player:
             the initial population
         repetitions : int
             The number of iterations of the algorithm.
+        replacement_stochastic_matrix: array
+            Individual i chosen for replacement will replace individual j with
+            probability P_{ij}.
+            Default is None: this is equivalent to P_{ij} = 1 / N for all i, j.
+        interaction_graph_adjacency_matrix : array
+            the adjacency matrix for the interaction graph G: individuals of type i
+            interact with individuals of type j count towards fitness iff G_{ij} =
+            1.  Default is None: if so a complete graph is used -- this corresponds
+            to all individuals interacting with each other (with no self
+            interactions)
+
 
 
         Returns
@@ -357,5 +392,9 @@ Column player:
         """
         A, _ = self.payoff_matrices
         return fixation_probabilities(
-            A=A, initial_population=initial_population, repetitions=repetitions
+            A=A,
+            initial_population=initial_population,
+            repetitions=repetitions,
+            interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+            replacement_stochastic_matrix=replacement_stochastic_matrix,
         )

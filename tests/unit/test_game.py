@@ -639,3 +639,5 @@ Column player:
             (3, 3, 3, 3, 3, 3, 3, 3): 0.45,
         }
         assert probabilities == expected_probabilities
+
+    # TODO Add tests for graphs.

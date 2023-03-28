@@ -9,6 +9,7 @@ author-email = "vince@vknight.org"
 requires = [
     "numpy >=1.21.0",
     "scipy >=0.19.0",
+    "networkx >= 3.0.0",
 ]
 home-page = "https://vknight.org"
 requires-python= ">=3.8"

@@ -8,11 +8,29 @@ from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
 from nashpy.egt.moran_process import (
+    fixation_probabilities,
+    get_complete_graph_adjacency_matrix,
+    moran_process,
     score_all_individuals,
     update_population,
-    moran_process,
-    fixation_probabilities,
 )
+
+
+def test_get_complete_graph_adjacency_matrix():
+    population = (0, 0, 0, 1, 1, 1, 1)
+    adjacency_matrix = get_complete_graph_adjacency_matrix(population=population)
+    expected_adjacency_matrix = np.array(
+        (
+            (0, 1, 1, 1, 1, 1, 1),
+            (1, 0, 1, 1, 1, 1, 1),
+            (1, 1, 0, 1, 1, 1, 1),
+            (1, 1, 1, 0, 1, 1, 1),
+            (1, 1, 1, 1, 0, 1, 1),
+            (1, 1, 1, 1, 1, 0, 1),
+            (1, 1, 1, 1, 1, 1, 0),
+        )
+    )
+    assert np.array_equal(adjacency_matrix, expected_adjacency_matrix)
 
 
 def test_score_all_individuals_in_3_by_3_game():
@@ -282,6 +300,128 @@ def test_specific_moran_process_seed_0():
     generations = tuple(moran_process(A=A, initial_population=initial_population))
     last_generation = generations[-1]
     expected_last_generation = np.array((1, 1, 1, 1, 1, 1, 1))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_to_effect_of_interaction_graph_seed_0():
+    """
+    Two subsequent seeded Moran Processes are run.
+
+    In the second we modify the Moran process so that the fixed population type
+    no longer interacts.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 1, 2))
+    interaction_graph_adjacency_matrix = np.array(((0, 1, 0), (0, 0, 1), (1, 0, 0)))
+    np.random.seed(0)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+            interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((2, 2, 2))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+    initial_population = np.array((0, 1, 2))
+    interaction_graph_adjacency_matrix = np.array(((0, 1, 0), (0, 0, 1), (0, 0, 0)))
+    np.random.seed(0)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+            interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 0))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_for_effect_of_replacement_stochastic_matrix_seed_0():
+    """
+    Two subsequent seeded Moran Processes are run.
+
+    In the second we modify the Moran process so that the fixed population type
+    no longer replaces anyone but itself.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 1, 2))
+    np.random.seed(0)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((2, 2, 2))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+    initial_population = np.array((0, 1, 2))
+    replacement_stochastic_matrix = np.array(
+        (
+            (1 / 3, 1 / 3, 1 / 3),
+            (1 / 3, 1 / 3, 1 / 3),
+            (0, 0, 1),
+        )
+    )
+    np.random.seed(0)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+            replacement_stochastic_matrix=replacement_stochastic_matrix,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 0))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+
+def test_specific_moran_process_for_effect_of_replacement_stochastic_matrix_seed_1():
+    """
+    Two subsequent seeded Moran Processes are run.
+
+    In the first there is no replacement matrix: the population fixes with a
+    single type.
+    In the second the replacement matrix represents a partitioned population.
+    The population fixes with two types.
+    """
+    A = np.array(((4, 3, 2), (1, 2, 5), (6, 1, 3)))
+    initial_population = np.array((0, 1, 2, 1))
+    np.random.seed(1)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((1, 1, 1, 1))
+    assert np.array_equal(last_generation, expected_last_generation)
+
+    initial_population = np.array((0, 1, 2, 1))
+    replacement_stochastic_matrix = np.array(
+        (
+            (1 / 2, 1 / 2, 0, 0),
+            (1 / 2, 1 / 2, 0, 0),
+            (0, 0, 1 / 2, 1 / 2),
+            (0, 0, 1 / 2, 1 / 2),
+        )
+    )
+    np.random.seed(1)
+    generations = tuple(
+        moran_process(
+            A=A,
+            initial_population=initial_population,
+            replacement_stochastic_matrix=replacement_stochastic_matrix,
+        )
+    )
+    last_generation = generations[-1]
+    expected_last_generation = np.array((0, 0, 2, 2))
     assert np.array_equal(last_generation, expected_last_generation)
 
 

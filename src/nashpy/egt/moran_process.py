@@ -1,8 +1,28 @@
 """Code for implementation of a Moran process"""
 import numpy as np
 import numpy.typing as npt
+import networkx as nx
 
 from typing import Generator
+
+
+def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
+    """
+    Return the adjacency matrix for the complete graph on a population.
+
+    Parameters
+    ----------
+    population : npt.NDArray
+        The number of nodes
+
+    Returns
+    -------
+    array
+        the adjacency matrix for the complete graph on N nodes.
+    """
+    population_size = len(population)
+    interaction_graph_adjacency_matrix = (np.eye(population_size) + 1) % 2
+    return interaction_graph_adjacency_matrix
 
 
 def score_all_individuals(
@@ -45,8 +65,9 @@ def score_all_individuals(
         )
 
     if interaction_graph_adjacency_matrix is None:
-        population_size = len(population)
-        interaction_graph_adjacency_matrix = (np.eye(population_size) + 1) % 2
+        interaction_graph_adjacency_matrix = get_complete_graph_adjacency_matrix(
+            population=population
+        )
 
     scores = []
 
@@ -128,6 +149,8 @@ def moran_process(
     A: npt.NDArray,
     initial_population: npt.NDArray,
     mutation_probability: float = 0,
+    replacement_stochastic_matrix: npt.NDArray = None,
+    interaction_graph_adjacency_matrix: npt.NDArray = None,
 ) -> Generator[npt.NDArray, None, None]:
     """
     Return a generator of population across the Moran process. The last
@@ -147,6 +170,18 @@ def moran_process(
         the probability of an individual selected to be copied mutates to
         another individual from the original set of strategies (even if they are
         no longer present in the population).
+    replacement_stochastic_matrix: array
+        Individual i chosen for replacement will replace individual j with
+        probability P_{ij}.
+        Default is None: this is equivalent to P_{ij} = 1 / N for all i, j.
+    interaction_graph_adjacency_matrix : array
+        the adjacency matrix for the interaction graph G: individuals of type i
+        interact with individuals of type j count towards fitness iff G_{ij} =
+        1.  Default is None: if so a complete graph is used -- this corresponds
+        to all individuals interacting with each other (with no self
+        interactions)
+
+
 
 
     Yields
@@ -155,15 +190,36 @@ def moran_process(
         The generations.
     """
     population = initial_population
+    original_set_of_strategies = set(population)
+
+    if interaction_graph_adjacency_matrix is None:
+        interaction_graph_adjacency_matrix = get_complete_graph_adjacency_matrix(
+            population=population
+        )
+
+    if replacement_stochastic_matrix is not None:
+        G = nx.Graph(replacement_stochastic_matrix)
+        population_components = tuple(nx.connected_components(G))
+    else:
+        population_components = (set(range(len(population))),)
+
     if len(set(population)) > 1:
-        while (len(set(population)) != 1) or (mutation_probability > 0):
-            scores = score_all_individuals(A=A, population=population)
+        while (mutation_probability > 0) or any(
+            len(set(population[node] for node in component)) != 1
+            for component in population_components
+        ):
+            scores = score_all_individuals(
+                A=A,
+                population=population,
+                interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
+            )
 
             population = update_population(
                 population=population,
                 scores=scores,
                 mutation_probability=mutation_probability,
-                original_set_of_strategies=set(initial_population),
+                original_set_of_strategies=original_set_of_strategies,
+                replacement_stochastic_matrix=replacement_stochastic_matrix,
             )
 
             yield population

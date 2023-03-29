@@ -30,6 +30,8 @@ Nashpy is:
   - Asymmetric replicator dynamics [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-asymmetric-replicator-dynamics.html) - [Theory docs 📘](https://nashpy.readthedocs.io/en/stable/text-book/asymmetric-replicator-dynamics.html)
   - Moran processes [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-processes.html)
   - Generate games from repeated games [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/obtain-a-repeated-game.html) - [Theory docs 📘](https://nashpy.readthedocs.io/en/stable/text-book/repeated-games.html)
+  - Moran processes on interaction graphs [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-process-on-interaction-graph.html)
+  - Moran processes on replication graphs [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-process-on-replication-graph.html)
 
 ## Documentation
 

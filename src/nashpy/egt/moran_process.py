@@ -3,7 +3,7 @@ import numpy as np
 import numpy.typing as npt
 import networkx as nx
 
-from typing import Generator, Dict, Tuple, Set
+from typing import Optional, Generator, Dict, Tuple, Set
 
 
 def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
@@ -28,7 +28,7 @@ def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
 def score_all_individuals(
     A: npt.NDArray,
     population: npt.NDArray,
-    interaction_graph_adjacency_matrix: npt.NDArray = None,
+    interaction_graph_adjacency_matrix: Optional[npt.NDArray] = None,
 ) -> npt.NDArray:
     """
     Return the scores of all individuals when they play against all other
@@ -86,7 +86,7 @@ def update_population(
     scores: npt.NDArray,
     original_set_of_strategies: set,
     mutation_probability: float = 0,
-    replacement_stochastic_matrix: npt.NDArray = None,
+    replacement_stochastic_matrix: Optional[npt.NDArray] = None,
 ) -> npt.NDArray:
     """
     Return the new population of all individuals given the scores of every
@@ -179,8 +179,8 @@ def moran_process(
     A: npt.NDArray,
     initial_population: npt.NDArray,
     mutation_probability: float = 0,
-    replacement_stochastic_matrix: npt.NDArray = None,
-    interaction_graph_adjacency_matrix: npt.NDArray = None,
+    replacement_stochastic_matrix: Optional[npt.NDArray] = None,
+    interaction_graph_adjacency_matrix: Optional[npt.NDArray] = None,
 ) -> Generator[npt.NDArray, None, None]:
     """
     Return a generator of population across the Moran process. The last
@@ -262,8 +262,8 @@ def fixation_probabilities(
     A: npt.NDArray,
     initial_population: npt.NDArray,
     repetitions: int,
-    replacement_stochastic_matrix: npt.NDArray = None,
-    interaction_graph_adjacency_matrix: npt.NDArray = None,
+    replacement_stochastic_matrix: Optional[npt.NDArray] = None,
+    interaction_graph_adjacency_matrix: Optional[npt.NDArray] = None,
 ) -> Dict[tuple, float]:
     """
     Return the fixation probabilities for all types of individuals.

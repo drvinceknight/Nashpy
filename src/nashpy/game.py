@@ -1,7 +1,7 @@
 """A class for a normal form game"""
 import numpy as np
 import numpy.typing as npt
-from typing import Any
+from typing import Optional, Any
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
@@ -306,8 +306,8 @@ Column player:
         self,
         initial_population,
         mutation_probability=0,
-        replacement_stochastic_matrix: npt.NDArray = None,
-        interaction_graph_adjacency_matrix: npt.NDArray = None,
+        replacement_stochastic_matrix: Optional[npt.NDArray] = None,
+        interaction_graph_adjacency_matrix: Optional[npt.NDArray] = None,
     ):
         """
         Return a generator of population across the Moran process. The last
@@ -352,8 +352,8 @@ Column player:
         self,
         initial_population,
         repetitions,
-        replacement_stochastic_matrix: npt.NDArray = None,
-        interaction_graph_adjacency_matrix: npt.NDArray = None,
+        replacement_stochastic_matrix: Optional[npt.NDArray] = None,
+        interaction_graph_adjacency_matrix: Optional[npt.NDArray] = None,
     ):
         """
         Return the fixation probabilities for all types of individuals.

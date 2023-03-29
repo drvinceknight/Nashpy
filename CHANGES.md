@@ -1,3 +1,7 @@
+# v0.0.37
+
+Implementation of moran processes on graphs.
+
 # v0.0.36
 
 Reorganisation of docs.

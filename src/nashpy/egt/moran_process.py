@@ -3,7 +3,7 @@ import numpy as np
 import numpy.typing as npt
 import networkx as nx
 
-from typing import Optional, Generator, Dict, Tuple, Set
+from typing import Optional, Generator, Dict, Tuple
 
 
 def get_complete_graph_adjacency_matrix(population: npt.NDArray) -> npt.NDArray:
@@ -146,7 +146,8 @@ def update_population(
 
 
 def is_population_not_fixed(
-    population: npt.NDArray, population_components: Tuple[Set]
+    population: npt.NDArray,
+    population_components: Tuple,
 ) -> bool:
     """
     Given a population vector and a set of population connected components this
@@ -159,7 +160,7 @@ def is_population_not_fixed(
     ----------
     population : array
         the population
-    population_components : tuple
+    population_components : Tuple
         a tuple of sets containing node indices. Each set corresponds to a set
         of connected components.
 
@@ -167,7 +168,7 @@ def is_population_not_fixed(
     -------
     bool
         True if the population is not yet fixed. True if the population is
-        fixed (all individuals in all connected components have the same type)..
+        fixed (all individuals in all connected components have the same type).
     """
     return any(
         len(set(population[node] for node in component)) != 1
@@ -307,7 +308,7 @@ def fixation_probabilities(
             population=initial_population
         )
 
-    state_counts = {}
+    state_counts: Dict[Tuple, int] = {}
     for repetition in range(repetitions):
         generations = tuple(
             moran_process(

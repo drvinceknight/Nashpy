@@ -21,3 +21,5 @@ How to:
    use-moran-processes.rst
    obtain-fixation-probabilities.rst
    obtain-a-repeated-game.rst
+   use-moran-process-on-replacement-graph.rst
+   use-moran-process-on-interaction-graph.rst

@@ -107,7 +107,6 @@ def play_game(game, repetitions, row_strategy, col_strategy):
     row_utility, col_utility = 0, 0
     state = ((), ())
     for _ in range(repetitions):
-
         assert state in row_strategy, f"{state} not in row_strategy: {row_strategy}"
         assert state in col_strategy, f"{state} not in col_strategy: {col_strategy}"
         utilities = game[row_strategy[state], col_strategy[state]]

@@ -73,7 +73,6 @@ def stochastic_fictitious_play(
     yield play_counts, distributions
 
     for repetition in range(iterations):
-
         distributions = [
             get_distribution_response_to_play_count(
                 A=matrix,

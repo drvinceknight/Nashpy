@@ -252,7 +252,6 @@ Column player:
             self.assertEqual(w[-1].category, RuntimeWarning)
 
     def test_support_enumeration_for_deg_bi_matrix_game_with_non_deg(self):
-
         A = np.array([[0, 0], [0, 0]])
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
@@ -262,7 +261,6 @@ Column player:
             self.assertEqual(w[-1].category, RuntimeWarning)
 
     def test_support_enumeration_for_deg_bi_matrix_game_with_low_tol(self):
-
         A = np.array([[0, 0], [0, 0]])
         g = nash.Game(A)
         with warnings.catch_warnings(record=True) as w:
@@ -634,4 +632,12 @@ Column player:
             initial_population=initial_population, repetitions=20
         )
         expected_probabilities = np.array((0.1, 0, 0.45, 0.45))
-        assert np.array_equal(probabilities, expected_probabilities)
+
+        expected_probabilities = {
+            (0, 0, 0, 0, 0, 0, 0, 0): 0.1,
+            (2, 2, 2, 2, 2, 2, 2, 2): 0.45,
+            (3, 3, 3, 3, 3, 3, 3, 3): 0.45,
+        }
+        assert probabilities == expected_probabilities
+
+    # TODO Add tests for graphs.

@@ -24,6 +24,7 @@ documentation.
 .. [Nash1950] Nash, John F. "Equilibrium points in n-person games." Proceedings of the national academy of sciences 36.1 (1950): 48-49.
 .. [Nisan2007] Nisan, Noam, et al., eds. Algorithmic game theory. Vol. 1. Cambridge: Cambridge University Press, 2007.
 .. [Nowak2006] Nowak, Martin A. Evolutionary dynamics: exploring the equations of life. Harvard university press, 2006.
+.. [Ohtsuki2007] Ohtsuki, Hisashi, Jorge M. Pacheco, and Martin A. Nowak. "Evolutionary graph theory: Breaking the symmetry between interaction and replacement." Journal of Theoretical Biology 246.4 (2007): 681-694.
 .. [Press2012] Press, William H., and Freeman J. Dyson. "Iterated Prisoner’s Dilemma contains strategies that dominate any evolutionary opponent." Proceedings of the National Academy of Sciences 109.26 (2012): 10409-10413.
 .. [Savani2015] Rahul Savani and Bernhard von Stengel. Game Theory Explorer – Software for the Applied Game Theorist. Computational Management Science 12, 5-33, 2015
 .. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.

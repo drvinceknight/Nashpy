@@ -8,7 +8,10 @@ from scipy.integrate import odeint
 
 
 def get_derivative_of_fitness(
-    x: npt.NDArray, t: float, A: npt.NDArray, mutation_matrix: Optional[npt.NDArray] = None
+    x: npt.NDArray,
+    t: float,
+    A: npt.NDArray,
+    mutation_matrix: Optional[npt.NDArray] = None,
 ) -> npt.NDArray:
     """
     Find the derivative of fitness function

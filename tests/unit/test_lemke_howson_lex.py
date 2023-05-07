@@ -56,3 +56,36 @@ class TestLemkeHowsonLex(unittest.TestCase):
                 (np.array([0, 1, 0]), np.array([1, 0, 0])),
             ):
                 self.assertTrue(all(np.isclose(eq, expected_eq)))
+
+    @unittest.skip("game currently not stable")
+    def test_lemke_howson_lex_degenerate_tie_breaking_looping(
+        self,
+    ):
+        A = np.array(
+            [
+                [0.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+                [0.711, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0],
+                [1.0, 0.672, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 0.667, 0.0, 0.0, 0.5, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 0.579, 0.0, 0.0, 0.5, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 1.0],
+                [1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.0, 0.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.333, 0.0, 0.5],
+                [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0],
+            ]
+        )
+        B = 1 - A
+        expected_reward = 0.75872890672  # from support vector calc
+        # label 1 works, 0 crashes, and 2 loops infinitely
+        for label in [1, 0, 2]:
+            found_eq = False
+            with self.subTest(label=label):
+                eq = lemke_howson_lex(A, B, label)
+                self.assertFalse(
+                    np.isnan(eq[0]).any() or np.isnan(eq[1]).any(),
+                    "strategy is not nan",
+                )
+                reward = eq[0].dot(A).dot(eq[1].transpose())
+                self.assertAlmostEqual(reward, expected_reward, delta=1e-7)
+                found_eq = True
+            self.assertTrue(found_eq, "Did not find eq on label " + str(label))

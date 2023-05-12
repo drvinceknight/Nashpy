@@ -7,12 +7,7 @@ import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 
-from nashpy.integer_pivoting.integer_pivoting import (
-    find_pivot_row,
-    make_tableau,
-    non_basic_variables,
-    pivot_tableau,
-)
+from nashpy.linalg import TableauBuilder, Tableau
 
 
 class TestPolytope(unittest.TestCase):
@@ -22,7 +17,8 @@ class TestPolytope(unittest.TestCase):
 
     @given(M=arrays(np.int8, (4, 5)))
     def test_creation_of_tableaux(self, M):
-        tableau = make_tableau(M)
+        t = TableauBuilder.row(M.transpose()).build()
+        tableau = t._tableau
         number_of_strategies, dimension = M.shape
         self.assertEqual(
             tableau.shape,
@@ -42,15 +38,15 @@ class TestPolytope(unittest.TestCase):
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
         )
-        tableau = make_tableau(M)
-        self.assertTrue(np.array_equal(tableau, expected_tableau))
+        t = TableauBuilder.row(M.transpose()).build()
+        self.assertTrue(np.array_equal(t._tableau, expected_tableau))
 
         M = np.array([[3, 2, 3], [2, 6, 1]])
         expected_tableau = np.array(
             [[3.0, 2.0, 3.0, 1.0, 0.0, 1.0], [2.0, 6.0, 1.0, 0.0, 1.0, 1.0]]
         )
-        tableau = make_tableau(M)
-        self.assertTrue(np.array_equal(tableau, expected_tableau))
+        t = TableauBuilder.row(M.transpose()).build()
+        self.assertTrue(np.array_equal(t._tableau, expected_tableau))
 
     def test_find_particular_pivot_row(self):
         tableau = np.array(
@@ -60,14 +56,16 @@ class TestPolytope(unittest.TestCase):
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
         )
+        t = Tableau(tableau)
         for column, row in [(0, 0), (1, 2), (2, 0), (3, 1), (4, 2)]:
-            self.assertEqual(find_pivot_row(tableau=tableau, column_index=column), row)
+            self.assertEqual(t._find_pivot_row(column_index=column), row)
 
         tableau = np.array(
             [[3.0, 2.0, 3.0, 1.0, 0.0, 1.0], [2.0, 6.0, 1.0, 0.0, 1.0, 1.0]]
         )
+        t = Tableau(tableau)
         for column, row in [(0, 0), (1, 1), (2, 0), (3, 0), (4, 1)]:
-            self.assertEqual(find_pivot_row(tableau=tableau, column_index=column), row)
+            self.assertEqual(t._find_pivot_row(column_index=column), row)
 
     def test_non_basic_variables(self):
         tableau = np.array(
@@ -77,12 +75,14 @@ class TestPolytope(unittest.TestCase):
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
         )
-        self.assertEqual(non_basic_variables(tableau), set([0, 1]))
+        t = Tableau(tableau)
+        self.assertEqual(t.non_basic_variables, set([0, 1]))
 
         tableau = np.array(
             [[3.0, 2.0, 3.0, 1.0, 0.0, 1.0], [2.0, 6.0, 1.0, 0.0, 1.0, 1.0]]
         )
-        self.assertEqual(non_basic_variables(tableau), set([0, 1, 2]))
+        t = Tableau(tableau)
+        self.assertEqual(t.non_basic_variables, set([0, 1, 2]))
 
     def test_particular_pivot(self):
         tableau = np.array(
@@ -92,7 +92,8 @@ class TestPolytope(unittest.TestCase):
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
         )
-        self.assertEqual(pivot_tableau(tableau, column_index=0), set([2]))
+        t = Tableau(tableau)
+        self.assertEqual(t.pivot_and_drop_label(column_index=0), 2)
         next_tableau = np.array(
             [
                 [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
@@ -101,10 +102,10 @@ class TestPolytope(unittest.TestCase):
             ]
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
+            np.array_equal(t._tableau, next_tableau),
             msg="{} != {}".format(tableau, next_tableau),
         )
-        self.assertEqual(pivot_tableau(tableau, column_index=2), set([0]))
+        self.assertEqual(t.pivot_and_drop_label(column_index=2), 0)
         next_tableau = np.array(
             np.array(
                 [
@@ -115,6 +116,6 @@ class TestPolytope(unittest.TestCase):
             )
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
+            np.array_equal(t._tableau, next_tableau),
             msg="{} != {}".format(tableau, next_tableau),
         )

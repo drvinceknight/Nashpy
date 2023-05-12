@@ -3,11 +3,8 @@ import warnings
 
 import numpy as np
 
-from nashpy.algorithms.lemke_howson import (
-    lemke_howson,
-    shift_tableau,
-    tableau_to_strategy,
-)
+from nashpy.algorithms.lemke_howson import lemke_howson
+from nashpy.linalg import TableauBuilder, Tableau
 
 
 class TestLemkeHowson(unittest.TestCase):
@@ -15,29 +12,55 @@ class TestLemkeHowson(unittest.TestCase):
     Tests for the Lemke Howson algorithm
     """
 
-    def test_particular_shift_tableau(self):
-        tableau = np.array(
+    def test_col_tableau_creation(self):
+        payoffs = np.array(
             [
-                [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
-                [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
-                [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
+                [3.0, 3.0],
+                [2.0, 5.0],
+                [0.0, 6.0],
             ]
         )
-        expected_shift = np.array(
+        t = TableauBuilder.column(payoffs).build()
+        expected = np.array(
             [
                 [1.0, 0.0, 0.0, 3.0, 3.0, 1.0],
                 [0.0, 1.0, 0.0, 2.0, 5.0, 1.0],
                 [0.0, 0.0, 1.0, 0.0, 6.0, 1.0],
             ]
         )
-        shift = shift_tableau(tableau, (3, 2))
         self.assertTrue(
-            np.array_equal(shift, expected_shift),
-            msg="{} != {}".format(shift, expected_shift),
+            np.array_equal(t._tableau, expected),
+            msg="{} != {}".format(t._tableau, expected),
         )
+        self.assertEqual(t.non_basic_variables, set([3, 4]))
+        self.assertEqual(t._original_basic_labels, set([3,4]))
+        self.assertEqual(t.labels, set(range(sum(payoffs.shape))))
+
+    def test_row_tableau_creation(self):
+        payoffs = np.array(
+            [
+                [3.0, 3.0],
+                [2.0, -5.0],
+                [0.0, 1.0],
+            ]
+        )
+        t = TableauBuilder.row(payoffs).make_positive().build()
+        expected = np.array(
+            [
+                [9.0, 8.0, 6.0, 1.0, 0.0, 1.0],
+                [9.0, 1.0, 7.0, 0.0, 1.0, 1.0],
+            ]
+        )
+        self.assertTrue(
+            np.array_equal(t._tableau, expected),
+            msg="{} != {}".format(t._tableau, expected),
+        )
+        self.assertEqual(t.non_basic_variables, set([0, 1, 2]))
+        self.assertEqual(t._original_basic_labels, set([0,1,2]))
+        self.assertEqual(t.labels, set(range(sum(payoffs.shape))))
 
     def test_particular_tableau_to_strategy(self):
-        tableau = np.array(
+        t_arr = np.array(
             [
                 [3.0, 0, 1.0, 1.0, 0.0, 1.0],
                 [0.0, 0, 1.0, 1.0, 1.0, 1.0],
@@ -46,10 +69,11 @@ class TestLemkeHowson(unittest.TestCase):
         )
         basic_labels = set([0, 1])
         strategy_labels = set([0, 1])
-        strategy = tableau_to_strategy(tableau, basic_labels, strategy_labels)
+        t = Tableau(t_arr, strategy_labels)
+        strategy = t.to_strategy(basic_labels)
         self.assertTrue(np.array_equal(strategy, np.array([2 / 3, 1 / 3])))
 
-        tableau = np.array(
+        t_arr = np.array(
             [
                 [3.0, 0, 1.0, 0, 0.0, 1.0],
                 [0.0, 3.0, 1.0, 3.0, 1.0, 1.0],
@@ -58,7 +82,8 @@ class TestLemkeHowson(unittest.TestCase):
         )
         basic_labels = set([0, 3])
         strategy_labels = set([0, 1])
-        strategy = tableau_to_strategy(tableau, basic_labels, strategy_labels)
+        t = Tableau(t_arr, strategy_labels)
+        strategy = t.to_strategy(basic_labels)
         self.assertTrue(np.array_equal(strategy, np.array([1, 0])))
 
     def test_particular_lemke_howson(self):

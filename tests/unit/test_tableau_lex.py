@@ -5,11 +5,7 @@ import unittest
 
 import numpy as np
 
-from nashpy.integer_pivoting.integer_pivoting_lex import (
-    find_entering_variable,
-    find_pivot_row_lex,
-    pivot_tableau_lex,
-)
+from nashpy.linalg import TableauBuilder, TableauLex
 
 
 class TestPolytope(unittest.TestCase):
@@ -18,107 +14,80 @@ class TestPolytope(unittest.TestCase):
     """
 
     def test_find_particular_pivot_row_lex(self):
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
-        )
-        slack_variables = [2, 3, 4]
+        ))
         for column, row in [(0, 0), (1, 2), (2, 0), (3, 1), (4, 2)]:
             self.assertEqual(
-                find_pivot_row_lex(
-                    tableau=tableau,
-                    column_index=column,
-                    slack_variables=slack_variables,
-                ),
+                tableau._find_pivot_row(column),
                 row,
             )
 
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [[3.0, 2.0, 3.0, 1.0, 0.0, 1.0], [2.0, 6.0, 1.0, 0.0, 1.0, 1.0]]
-        )
-        slack_variables = [3, 4]
+        ))
         for column, row in [(0, 0), (1, 1), (2, 0), (3, 0), (4, 1)]:
             self.assertEqual(
-                find_pivot_row_lex(
-                    tableau=tableau,
-                    column_index=column,
-                    slack_variables=slack_variables,
-                ),
+                tableau._find_pivot_row(column),
                 row,
             )
 
         # degenerate case
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [3.0, 1.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [0.0, 0.0, -6.0, -3.0, 3.0, 0.0, 0.0],
                 [0.0, 8.0, 6.0, -1.0, 0.0, 3.0, 2.0],
             ]
-        )
+        ), original_basic_labels=set([0,1,2]))
         slack_variables = [3, 4, 5]
         for column, row in [(0, 0), (1, 2), (2, 0), (3, 0), (4, 1)]:
             self.assertEqual(
-                find_pivot_row_lex(
-                    tableau=tableau,
-                    column_index=column,
-                    slack_variables=slack_variables,
-                ),
+                tableau._find_pivot_row(column),
                 row,
             )
 
     def test_find_entering_variable(self):
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [3.0, 1.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [3.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0],
                 [1.0, 3.0, 3.0, 0.0, 0.0, 1.0, 1.0],
             ]
-        )
+        ))
         for row_index, entering_variable in [(0, 3), (1, 4), (2, 5)]:
             self.assertEqual(
-                find_entering_variable(
-                    tableau=tableau,
-                    pivot_row_index=row_index,
-                    non_basic_variables=set(range(3)),
-                ),
+                tableau._find_dropped(row_index, tableau.slack_variables),
                 entering_variable,
             )
 
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [3.0, 1.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [0.0, 0.0, -6.0, -3.0, 3.0, 0.0, 0.0],
                 [0.0, 8.0, 6.0, -1.0, 0.0, 3.0, 2.0],
             ]
-        )
+        ))
         for row_index, entering_variable in [(0, 0), (1, 4), (2, 5)]:
             self.assertEqual(
-                find_entering_variable(
-                    tableau=tableau,
-                    pivot_row_index=row_index,
-                    non_basic_variables={1, 2, 3},
-                ),
+                tableau._find_dropped(row_index, tableau.labels-{1,2,3}),
                 entering_variable,
             )
 
     def test_particular_pivot(self):
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
                 [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
             ]
-        )
+        ))
         self.assertEqual(
-            pivot_tableau_lex(
-                tableau,
-                column_index=0,
-                slack_variables=range(2, 5),
-                non_basic_variables={0, 1},
-            ),
+            tableau.pivot_and_drop_label(0),
             2,
         )
         next_tableau = np.array(
@@ -129,16 +98,11 @@ class TestPolytope(unittest.TestCase):
             ]
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
-            msg="{} != {}".format(tableau, next_tableau),
+            np.array_equal(tableau._tableau, next_tableau),
+            msg="{} != {}".format(tableau._tableau, next_tableau),
         )
         self.assertEqual(
-            pivot_tableau_lex(
-                tableau,
-                column_index=2,
-                slack_variables=range(2, 5),
-                non_basic_variables={1, 2},
-            ),
+            tableau.pivot_and_drop_label(2),
             0,
         )
         next_tableau = np.array(
@@ -151,25 +115,21 @@ class TestPolytope(unittest.TestCase):
             )
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
-            msg="{} != {}".format(tableau, next_tableau),
+            np.array_equal(tableau._tableau, next_tableau),
+            msg="{} != {}".format(tableau._tableau, next_tableau),
         )
 
-        # degenerate cases
-        tableau = np.array(
+    def test_degenerate_pivot(self):
+        tableau = TableauLex(np.array(
             [
                 [3.0, 1.0, 3.0, 1.0, 0.0, 0.0, 1.0],
                 [0.0, 0.0, -6.0, -3.0, 3.0, 0.0, 0.0],
                 [0.0, 8.0, 6.0, -1.0, 0.0, 3.0, 2.0],
             ]
-        )
+        ), original_basic_labels=[0,1,2])
+        tableau._non_basic_variables = set([1, 2, 3])
         self.assertEqual(
-            pivot_tableau_lex(
-                tableau,
-                column_index=1,
-                slack_variables=range(3, 6),
-                non_basic_variables={1, 2, 3},
-            ),
+            tableau.pivot_and_drop_label(1),
             5,
         )
         next_tableau = np.array(
@@ -180,24 +140,19 @@ class TestPolytope(unittest.TestCase):
             ]
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
-            msg="{} != {}".format(tableau, next_tableau),
+            np.array_equal(tableau._tableau, next_tableau),
+            msg="{} != {}".format(tableau._tableau, next_tableau),
         )
 
-        tableau = np.array(
+        tableau = TableauLex(np.array(
             [
                 [10.0, 11.0, 10.0, 1.0, 0.0, 0.0, 1.0],
                 [10.0, 11.0, 10.0, 0.0, 1.0, 0.0, 1.0],
                 [10.0, 11.0, 1.0, 0.0, 0.0, 1.0, 1.0],
             ]
-        )
+        ))
         self.assertEqual(
-            pivot_tableau_lex(
-                tableau,
-                column_index=0,
-                slack_variables=range(3, 6),
-                non_basic_variables={0, 1, 2},
-            ),
+            tableau.pivot_and_drop_label(0),
             3,
         )
         next_tableau = np.array(
@@ -208,6 +163,6 @@ class TestPolytope(unittest.TestCase):
             ]
         )
         self.assertTrue(
-            np.array_equal(tableau, next_tableau),
-            msg="{} != {}".format(tableau, next_tableau),
+            np.array_equal(tableau._tableau, next_tableau),
+            msg="{} != {}".format(tableau._tableau, next_tableau),
         )

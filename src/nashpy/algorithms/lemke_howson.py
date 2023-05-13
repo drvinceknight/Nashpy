@@ -8,7 +8,7 @@ from typing import Tuple
 from nashpy.linalg import TableauBuilder
 
 def lemke_howson(
-    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0
+    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0, algorithm: str = "basic"
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
@@ -39,8 +39,8 @@ def lemke_howson(
     Tuple
         An equilibria
     """
-    col_tableau = TableauBuilder.column(A).make_positive().build()
-    row_tableau = TableauBuilder.row(B).make_positive().build()
+    col_tableau = TableauBuilder.column(A).make_positive().build(algorithm)
+    row_tableau = TableauBuilder.row(B).make_positive().build(algorithm)
 
     if initial_dropped_label in row_tableau.non_basic_variables:
         tableux = cycle((row_tableau, col_tableau))
@@ -52,10 +52,8 @@ def lemke_howson(
     entering_label = initial_dropped_label
     while not fully_labeled:
         tableau = next(tableux)
-        print("entering label ", entering_label)
         entering_label = tableau.pivot_and_drop_label(entering_label)
         current_labels = col_tableau.non_basic_variables.union(row_tableau.non_basic_variables)
-        print("current ", current_labels, "full ", full_labels)
         fully_labeled = current_labels == full_labels
 
     row_strat = row_tableau.to_strategy(col_tableau.non_basic_variables)

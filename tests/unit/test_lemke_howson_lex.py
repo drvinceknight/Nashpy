@@ -37,8 +37,9 @@ class TestLemkeHowsonLex(unittest.TestCase):
         A = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
         B = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
         for label in range(6):
+            eqs = lemke_howson(A, B, label, "lex")
             for eq, expected_eq in zip(
-                lemke_howson(A, B, label, "lex"),
+                eqs,
                 (np.array([0.5, 0.5, 0]), np.array([0, 0, 1])),
             ):
                 self.assertTrue(all(np.isclose(eq, expected_eq)))
@@ -57,7 +58,6 @@ class TestLemkeHowsonLex(unittest.TestCase):
             ):
                 self.assertTrue(all(np.isclose(eq, expected_eq)))
 
-    @unittest.skip("game currently not stable")
     def test_lemke_howson_lex_degenerate_tie_breaking_looping(
         self,
     ):
@@ -76,16 +76,19 @@ class TestLemkeHowsonLex(unittest.TestCase):
         )
         B = 1 - A
         expected_reward = 0.75872890672  # from support vector calc
-        # label 1 works, 0 crashes, and 2 loops infinitely
-        for label in [1, 0, 2]:
-            found_eq = False
+        hits = 0
+        for label in range(sum(A.shape)):
             with self.subTest(label=label):
                 eq = lemke_howson_lex(A, B, label)
-                self.assertFalse(
-                    np.isnan(eq[0]).any() or np.isnan(eq[1]).any(),
-                    "strategy is not nan",
-                )
+                print("EQ!: ", eq)
+                #self.assertFalse(
+                #    np.isnan(eq[0]).any() or np.isnan(eq[1]).any(),
+                #    "strategy is not nan",
+                #)
+                if not (np.isnan(eq[0]).any() or np.isnan(eq[1]).any()):
+                    hits += 1
+                else:
+                    continue
                 reward = eq[0].dot(A).dot(eq[1].transpose())
                 self.assertAlmostEqual(reward, expected_reward, delta=1e-7)
-                found_eq = True
-            self.assertTrue(found_eq, "Did not find eq on label " + str(label))
+        self.assertEqual(hits, sum(A.shape))

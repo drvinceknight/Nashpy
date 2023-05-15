@@ -186,32 +186,57 @@ class TableauLex(Tableau):
             self._non_basic_variables = super().non_basic_variables
         return set(self._non_basic_variables)
 
-    def _find_pivot_row(self, column_index: int) -> int:
+    def _find_pivot_row_old(self, column_index: int) -> int:
         """
         First applies normal tableau logic to find the pivot row.
         The implied size of the pertubation matrix is used to break any ties
         """
-        C = self._tableau[:, sorted(self.slack_variables)]
-        lex_order_reversed = np.lexsort(np.rot90(C))
-        lex_order = -lex_order_reversed + lex_order_reversed.shape[0]
-
-        # gets ratio of each row
-        pivot_column = self._tableau[:, column_index]
-        Cq = self._tableau[:, -1]
-
-        # catch divide by zero warning
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
                 r"invalid value encountered in true_divide|divide by zero encountered in true_divide",
             )
 
+            Cq = self._tableau[:, -1]
+            self._tableau[:, sorted(self.slack_variables)]
+            #C = self._tableau[:, sorted(self.slack_variables)] / np.reshape(Cq, (Cq.shape[0], 1))
+            #C[np.isnan(C)] = np.inf
+            lex_order_reversed = np.lexsort(np.rot90(C))
+            lex_order = -lex_order_reversed + lex_order_reversed.shape[0]
+
+            # gets ratio of each row
+            pivot_column = self._tableau[:, column_index]
+            Cq = self._tableau[:, -1]
+
+            # catch divide by zero warning
+
             ratio = np.divide(Cq, pivot_column)
+            #ratio[np.isnan(ratio)] = np.inf
 
         # filters for column coefficients <=0 (to preserve feasibility)
         filtered_ratio = np.where(pivot_column <= 0, np.full(ratio.shape, np.inf), ratio)
 
         return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
+
+    def _find_pivot_row(self, column_index: int) -> int:
+        pertubations = self._tableau[:, sorted(self.slack_variables)]
+        errors = np.power(1e-7, np.arange(pertubations.shape[0]))
+        errors = np.reshape(errors, (errors.size, 1))
+        calc_errs = pertubations.dot(errors)
+
+        row_ratios = self._tableau[:, column_index] / self._tableau[:, -1]
+        row_ratios[np.isnan(row_ratios)] = -np.inf
+        ties = row_ratios == np.max(row_ratios)
+        if sum(ties) > 1:
+            row_ratios = calc_errs[:,0] / self._tableau[:, column_index]
+            row_ratios[np.isnan(row_ratios)] = -np.inf
+            row_ratios[ties == False] = -np.inf
+
+            #print("Tie: ", row_ratios)
+
+        return np.argmax(row_ratios)
+
+
 
     def pivot_and_drop_label(self, column_index: int) -> int:
         """

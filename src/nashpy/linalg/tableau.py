@@ -181,61 +181,46 @@ class TableauLex(Tableau):
         super().__init__(*kargs, **kwargs)
 
     @property
-    def non_basic_variables(self):
+    def non_basic_variables(self) -> Set:
         if self._non_basic_variables is None:
             self._non_basic_variables = super().non_basic_variables
         return set(self._non_basic_variables)
 
-    def _find_pivot_row_old(self, column_index: int) -> int:
-        """
-        First applies normal tableau logic to find the pivot row.
-        The implied size of the pertubation matrix is used to break any ties
-        """
+    def _find_pivot_row(self, column_index: int) -> int:
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
                 r"invalid value encountered in true_divide|divide by zero encountered in true_divide",
             )
-
-            Cq = self._tableau[:, -1]
-            self._tableau[:, sorted(self.slack_variables)]
-            #C = self._tableau[:, sorted(self.slack_variables)] / np.reshape(Cq, (Cq.shape[0], 1))
-            #C[np.isnan(C)] = np.inf
-            lex_order_reversed = np.lexsort(np.rot90(C))
-            lex_order = -lex_order_reversed + lex_order_reversed.shape[0]
-
-            # gets ratio of each row
-            pivot_column = self._tableau[:, column_index]
-            Cq = self._tableau[:, -1]
-
-            # catch divide by zero warning
-
-            ratio = np.divide(Cq, pivot_column)
-            #ratio[np.isnan(ratio)] = np.inf
-
-        # filters for column coefficients <=0 (to preserve feasibility)
-        filtered_ratio = np.where(pivot_column <= 0, np.full(ratio.shape, np.inf), ratio)
-
-        return np.lexsort(np.flipud((filtered_ratio, lex_order)))[0]
-
-    def _find_pivot_row(self, column_index: int) -> int:
-        pertubations = self._tableau[:, sorted(self.slack_variables)]
-        errors = np.power(1e-7, np.arange(pertubations.shape[0]))
-        errors = np.reshape(errors, (errors.size, 1))
-        calc_errs = pertubations.dot(errors)
-
-        row_ratios = self._tableau[:, column_index] / self._tableau[:, -1]
-        row_ratios[np.isnan(row_ratios)] = -np.inf
-        ties = row_ratios == np.max(row_ratios)
-        if sum(ties) > 1:
-            row_ratios = calc_errs[:,0] / self._tableau[:, column_index]
+            row_ratios = self._tableau[:, column_index] / self._tableau[:, -1]
             row_ratios[np.isnan(row_ratios)] = -np.inf
-            row_ratios[ties == False] = -np.inf
+            ties = row_ratios == np.max(row_ratios)
+            if sum(ties) > 1:
+                return self._tie_break_lex(column_index, ties)
+            return np.argmax(row_ratios)
 
-            #print("Tie: ", row_ratios)
+    def _tie_break_lex(self, column_index: int, ties: npt.NDArray) -> int:
+        """
+        Provides tie breaks if minratio algorithm yields multiple rows. The tiebreaking looks at a perturbed
+        problem similar to https://people.math.carleton.ca/~kcheung/math/notes/MATH5801/05/5_3_perturb.html.
 
-        return np.argmax(row_ratios)
+        As tableau[:, slack_vars] started out as identity matrix then tableau[:, slack_vars] * e = e
+        tableau[:, slack_vars] * e should still reflect how pertubations were alterted through the pivoting matrix operations.
+        to tie break we apply minratio test on the pertubed problem. Rather than setting a value for the error, we simply
+        rely on error << min(tableau) so we can lexiographically compare entries in tableau
+        """
+        errs = self._tableau[:, sorted(self.slack_variables)]
+        pivot_column = self._tableau[:, (column_index, )]
+        err_ratios = errs / pivot_column
+        err_ratios[np.isnan(err_ratios)] = -np.inf
+        err_ratios[ties == False, :] = -np.inf
+        return self._row_sort_asc(err_ratios)[-1]
 
+    def _row_sort_asc(self, m: npt.NDArray) -> npt.NDArray:
+        """
+        Sorts the rows in m in ascending order, starting with comparing 0th then 1st column
+        """
+        return np.lexsort(np.flipud(m.transpose()))
 
 
     def pivot_and_drop_label(self, column_index: int) -> int:

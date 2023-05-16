@@ -166,3 +166,15 @@ class TestPolytope(unittest.TestCase):
             np.array_equal(tableau._tableau, next_tableau),
             msg="{} != {}".format(tableau._tableau, next_tableau),
         )
+
+    def test_lex_row_sort(self):
+        tableau = TableauLex(np.random.rand(3,3))
+        arr = np.array(
+            [
+                [-np.inf, -np.inf, -np.inf],
+                [np.inf, 3, 1],
+                [np.inf, 2, 2],
+            ]
+        )
+        order = tableau._row_sort_asc(arr)
+        self.assertEqual(order.tolist(), [0, 2, 1])

@@ -119,3 +119,17 @@ class TestPolytope(unittest.TestCase):
             np.array_equal(t._tableau, next_tableau),
             msg="{} != {}".format(tableau, next_tableau),
         )
+
+    def test_unknown_algorithm(self):
+        payoffs = np.eye(3)
+        with self.assertRaises(ValueError) as context:
+            TableauBuilder.row(payoffs).build("unknownalgorithm")
+            self.assertEquals(
+                "Algorithm 'unknownalgorithm' is not known, use 'basic' or 'lex'",
+                context.exception,
+            )
+
+    def test_fail_fast_on_no_dropped_label(self):
+        tableau = Tableau(np.array([[3.0]]))
+        with self.assertRaises(ValueError):
+            tableau._find_dropped(0, set())

@@ -1,12 +1,19 @@
+"""A class for the tableaus used in the Lemke Howson algorithms"""
 import warnings
 import numpy as np
 import numpy.typing as npt
-from itertools import cycle
-from typing import Tuple, Set, List, Iterable
+from typing import Set, List, Iterable, Optional
+
 
 class TableauBuilder(object):
-    def __init__(self, payoffs, shifted = False):
+    """
+    A builder class for initializing Lemke Howson tableaus
+    """
+
+    def __init__(self, payoffs: npt.NDArray, shifted: bool = False):
         """
+        Create the builder, usually you would use the static 'row' or
+        'column' methods for this
 
         Parameters
         ----------
@@ -18,13 +25,28 @@ class TableauBuilder(object):
         self._payoffs = payoffs
         self._shifted = shifted
 
-
     def make_positive(self):
+        """
+        Ensure all payoffs are > 0. This will not alter equlibriums
+
+        Returns
+        -------
+        TableauBuilder
+            self (i.e. the builder instance).
+        """
         if np.min(self._payoffs) <= 0:
             self._payoffs = self._payoffs + abs(np.min(self._payoffs)) + 1
         return self
 
     def _build_tableau_matrix(self) -> npt.NDArray:
+        """
+        Build the tableau matrix from payoff. Can be shifted to preserve label indices
+
+        Returns
+        -------
+        array
+            the tableau matrix
+        """
         slack_vars = np.eye(self._payoffs.shape[0])
         m = np.append(self._payoffs, slack_vars, axis=1)
         if self._shifted:
@@ -33,27 +55,91 @@ class TableauBuilder(object):
         return np.append(m, targets, axis=1)
 
     def build(self, algorithm="basic"):
+        """
+        Builds a tableau with the specified algorithm
+
+        Parameters
+        ----------
+        algorithm : str
+            Either "basic" or "lex". Defaults to "basic", use "lex" for degenerate games
+
+        Returns
+        -------
+        Tableau
+            Tableau of the given specification
+
+        Raises
+        ------
+        ValueError
+            if algorithm is unknown
+        """
+
         m = self._build_tableau_matrix()
         if algorithm == "basic":
             return Tableau(m)
         elif algorithm == "lex":
             return TableauLex(m)
-        raise ValueError("algorithm "+algorithm+" is not known, use 'basic' or 'lex'")
+        raise ValueError(
+            "Algorithm '" + algorithm + "' is not known, use 'basic' or 'lex'"
+        )
 
     @staticmethod
-    def column(A : npt.NDArray):
+    def column(A: npt.NDArray):
+        """
+        Initiates building a column tableau
+
+        Parameters
+        ----------
+        A : array
+            The payoffs for column player
+        Returns
+        -------
+        TableauBuilder
+            A builder to generate the tableau
+        """
         tb = TableauBuilder(A, shifted=True)
         return tb
 
     @staticmethod
-    def row(B : npt.NDArray):
+    def row(B: npt.NDArray):
+        """
+        Initiates building a row tableau
+
+        Parameters
+        ----------
+        B : array
+            The payoffs for row player
+        Returns
+        -------
+        TableauBuilder
+            A builder to generate the tableau
+        """
         tb = TableauBuilder(B.transpose())
         return tb
 
 
-
 class Tableau(object):
-    def __init__(self, tableau: npt.NDArray, original_basic_labels: Iterable = None):
+    """
+    An implementation of a standard Tableau
+    Tableaus are well known in linear optimizations
+    problems and e.g. part of the simplex algorithm.
+    """
+
+    def __init__(
+        self, tableau: npt.NDArray, original_basic_labels: Optional[Iterable] = None
+    ):
+        """
+        Constructs a Tableau for solving lemke-howson algorithm.
+
+        Parameters
+        ----------
+        tableau : array
+            The tableau off a payoff matrix
+        original_basic_labels : Optional[Iterable]
+            By default this corresponds to the non-basic variables.
+            There should be no need to override this unless tableau
+            matrix was manipulated prior to calling constructor
+        """
         self._tableau = tableau
         if original_basic_labels is not None:
             self._original_basic_labels = set(original_basic_labels)
@@ -67,7 +153,7 @@ class Tableau(object):
 
         Returns
         -------
-        set
+        Set
             All lables
         """
         h, w = self._tableau.shape
@@ -78,11 +164,11 @@ class Tableau(object):
     def non_basic_variables(self) -> Set:
         """
         Identifies the non basic variables of the tableau,
-        these correspond to the labels.
+        these correspond to the basic labels.
 
         Returns
         -------
-        set
+        Set
             The indices of the non basic variables.
         """
 
@@ -90,28 +176,96 @@ class Tableau(object):
         return set(np.where([np.count_nonzero(col) != 1 for col in columns])[0])
 
     @property
-    def basic_variables(self):
+    def basic_variables(self) -> Set:
+        """
+        Identifies the basic variables of the tableau
+        these correspond to the non-basic labels
+
+        Returns
+        -------
+        Set
+            The indices of the basic variables.
+        """
         return self.labels - self.non_basic_variables
 
     @property
-    def slack_variables(self):
+    def slack_variables(self) -> Set:
+        """
+        Identifies the slack variables of the tableau
+        These were the original non-basic labels when
+        tableau was generated and should not change over time
+
+        Returns
+        -------
+        Set
+            The indices of the slack variables
+        """
         return self.labels - self._original_basic_labels
 
     def _find_pivot_row(self, column_index: int) -> int:
+        """
+        Uses minratio test to find the row to pivot against.
+        To avoid divide-by-zeros this is implemented using max ratio
+
+        Parameters
+        ----------
+        column_index : int
+            The column/label to pivot.
+
+        Returns
+        -------
+        int
+            The row to pivot against
+        """
         row_ratios = self._tableau[:, column_index] / self._tableau[:, -1]
-        return np.argmax(row_ratios)
+        return int(np.argmax(row_ratios))
 
     def _pivot_on_column(self, column_index: int):
+        """
+        Perform a column pivot, returning the row/dropped label
+
+        Parameters
+        ----------
+        column_index : int
+            The column/label to pivot.
+
+        Returns
+        -------
+        int
+            The row chosen to pivot against
+        """
         pivot_row_index = self._find_pivot_row(column_index)
         self._pivot(column_index, pivot_row_index)
         return pivot_row_index
 
     def _pivot(self, column_index: int, pivot_row_index: int):
+        """
+        Perform row operations to drop column from all but the pivot row
+
+        Parameters
+        ----------
+        column_index : int
+            The column/label to pivot.
+        pivot_row_index : int
+            The row to pivot
+        """
         for i in range(self._tableau.shape[0]):
             if i != pivot_row_index:
                 self._apply_pivot(column_index, pivot_row_index, i)
 
     def _apply_pivot(self, pivot_col: int, pivot_row: int, applying_row: int):
+        """
+        Dropping pivot value on the applying row
+
+        Parameters
+        ----------
+        pivot_col : int
+            The column/label to pivot.
+        pivot_row : int
+            The row to pivot
+        applying_row : int
+            The row to drop pivot column from
+        """
         pivot_element = self._tableau[pivot_row, pivot_col]
         row_pivot_val = self._tableau[applying_row, pivot_col]
         row = self._tableau[applying_row, :] * pivot_element
@@ -138,18 +292,50 @@ class Tableau(object):
         return dropped
 
     def _find_dropped(self, pivot_row_index: int, prev_basic_variables: Set) -> int:
+        """
+        Identifies the dropped label
+
+        Parameters
+        ----------
+        pivot_row_index : int
+            The row to find dropped label from
+        prev_basic_variables : Set
+            The candidates for labels that might have been dropped
+
+        Returns
+        -------
+        int
+            The dropped label
+
+        Raises
+        ------
+        ValueError
+            if no dropped label is identified.
+        """
         for i in prev_basic_variables:
             if self._tableau[pivot_row_index, i] != 0:
                 return i
-
+        raise ValueError("could not find dropped label")
 
     def _extract_label_values(self, column_index: int) -> List:
+        """
+        Calculates equlibria for a basic label in strategy
+
+        Parameters
+        ----------
+        column_index : int
+            The basic label to compute strategy for
+
+        Returns
+        -------
+        List
+            The computed unnormalized strategy
+        """
         vertex = []
         for row, value in zip(self._tableau[:, column_index], self._tableau[:, -1]):
             if row != 0:
                 vertex.append(value / row)
         return vertex
-
 
     def to_strategy(self, basic_labels: Set) -> npt.NDArray:
         """
@@ -157,7 +343,7 @@ class Tableau(object):
 
         Parameters
         ----------
-        basic_labels : set
+        basic_labels : Set
             the set of basic labels in the other tableau.
 
         Returns
@@ -175,18 +361,60 @@ class Tableau(object):
         strategy = np.array(vertex)
         return strategy / sum(strategy)
 
+
 class TableauLex(Tableau):
+    """
+    A tableau with lexiographic sorting to break ties when pivoting.
+    This avoids endless looping that might occur with a standard
+    tableau when applied on degenerate games.
+    """
+
     def __init__(self, *kargs, **kwargs):
+        """
+        Constructs a lex Tableau for solving degenerate games.
+        Parameters are inherited from Tableau
+
+        Parameters
+        ----------
+        *kargs : Any
+            Positional arguments passed to Tableau constructor
+        **kwargs : Any
+            Key value arguments passed to Tableau constructor
+        """
         self._non_basic_variables = None
         super().__init__(*kargs, **kwargs)
 
     @property
     def non_basic_variables(self) -> Set:
+        """
+        Identifies the non basic variables of the tableau,
+        these correspond to the basic labels. For lex algorithm
+        a non-basic variable must have been dropped in an earlier pivot
+
+        Returns
+        -------
+        Set
+            The indices of the non basic variables.
+        """
+
         if self._non_basic_variables is None:
             self._non_basic_variables = super().non_basic_variables
         return set(self._non_basic_variables)
 
     def _find_pivot_row(self, column_index: int) -> int:
+        """
+        Finding the row to pivot like std tableau, but applying lex sorting to resolve ties in minratio.
+
+        Parameters
+        ----------
+        column_index : int
+            The column/label to pivot.
+
+        Returns
+        -------
+        int
+            The label to drop.
+        """
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
@@ -197,7 +425,7 @@ class TableauLex(Tableau):
             ties = row_ratios == np.max(row_ratios)
             if sum(ties) > 1:
                 return self._tie_break_lex(column_index, ties)
-            return np.argmax(row_ratios)
+            return int(np.argmax(row_ratios))
 
     def _tie_break_lex(self, column_index: int, ties: npt.NDArray) -> int:
         """
@@ -208,24 +436,45 @@ class TableauLex(Tableau):
         tableau[:, slack_vars] * e should still reflect how pertubations were alterted through the pivoting matrix operations.
         to tie break we apply minratio test on the pertubed problem. Rather than setting a value for the error, we simply
         rely on error << min(tableau) so we can lexiographically compare entries in tableau
+
+        Parameters
+        ----------
+        column_index : int
+            The label to pivot.
+        ties: array
+            The rows to perform tiebreak on
+
+        Returns
+        -------
+        int
+            The row to pivot on
         """
         errs = self._tableau[:, sorted(self.slack_variables)]
-        pivot_column = self._tableau[:, (column_index, )]
+        pivot_column = self._tableau[:, (column_index,)]
         err_ratios = errs / pivot_column
         err_ratios[np.isnan(err_ratios)] = -np.inf
-        err_ratios[ties == False, :] = -np.inf
+        err_ratios[np.logical_not(ties), :] = -np.inf
         return self._row_sort_asc(err_ratios)[-1]
 
     def _row_sort_asc(self, m: npt.NDArray) -> npt.NDArray:
         """
         Sorts the rows in m in ascending order, starting with comparing 0th then 1st column
+
+        Parameters
+        ----------
+        m : array
+            The matrix to sort
+
+        Returns
+        -------
+        array
+            The order of the entries
         """
         return np.lexsort(np.flipud(m.transpose()))
 
-
     def pivot_and_drop_label(self, column_index: int) -> int:
         """
-        In addition to normal tableau logic, ensures entering and leaving labels are recorded
+        In addition to standard tableau logic this ensures entering and leaving labels are recorded
 
         Parameters
         ----------

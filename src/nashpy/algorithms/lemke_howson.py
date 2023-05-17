@@ -2,13 +2,16 @@
 import warnings
 from itertools import cycle
 
-import numpy as np
 import numpy.typing as npt
 from typing import Tuple
 from nashpy.linalg import TableauBuilder
 
+
 def lemke_howson(
-    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0, algorithm: str = "basic"
+    A: npt.NDArray,
+    B: npt.NDArray,
+    initial_dropped_label: int = 0,
+    algorithm: str = "basic",
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
@@ -33,6 +36,9 @@ def lemke_howson(
         The column player payoff matrix
     initial_dropped_label: int
         The initial dropped label.
+    algorithm: str
+        Either 'basic' or 'lex'. The slightly more complex lex algorithm can
+        be used for degenerate games.
 
     Returns
     -------
@@ -53,7 +59,9 @@ def lemke_howson(
     while not fully_labeled:
         tableau = next(tableux)
         entering_label = tableau.pivot_and_drop_label(entering_label)
-        current_labels = col_tableau.non_basic_variables.union(row_tableau.non_basic_variables)
+        current_labels = col_tableau.non_basic_variables.union(
+            row_tableau.non_basic_variables
+        )
         fully_labeled = current_labels == full_labels
 
     row_strat = row_tableau.to_strategy(col_tableau.non_basic_variables)

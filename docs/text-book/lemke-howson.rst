@@ -97,14 +97,16 @@ This algorithm is implemented using integer pivoting.
 
    - The labels of :math:`T_c` are thus :math:`\{2, 3\}`::
 
-         >>> import nashpy as nash
-         >>> nash.integer_pivoting.non_basic_variables(col_tableau)
+         >>> from nashpy.linalg.tableau import Tableau
+         >>> ctableau = Tableau(col_tableau)
+         >>> ctableau.non_basic_variables
          {2, 3}
 
 
    - The labels of :math:`T_r` are thus :math:`\{0, 1\}`::
 
-         >>> nash.integer_pivoting.non_basic_variables(row_tableau)
+         >>> rtableau = Tableau(row_tableau)
+         >>> rtableau.non_basic_variables
          {0, 1}
 
    So we are going to drop label :math:`1` from :math:`T_r`.
@@ -121,7 +123,7 @@ This algorithm is implemented using integer pivoting.
    In our case the first row has corresponding ratio: :math:`1/2` and the second
    ratio :math:`1/1`. So our pivot row is the first row::
 
-       >>> nash.integer_pivoting.find_pivot_row(row_tableau, column_index=1)
+       >>> rtableau._find_pivot_row(column_index=1)
        0
 
    What we now do is row operations so as to make the second column correspond
@@ -140,9 +142,9 @@ This algorithm is implemented using integer pivoting.
    Our resulting tableau has labels: :math:`\{0, 2\}` so it has "picked up"
    label :math:`2`::
 
-       >>> nash.integer_pivoting.pivot_tableau(row_tableau, column_index=1)
-       {2}
-       >>> row_tableau
+       >>> rtableau.pivot_and_drop_label(column_index=1)
+       2
+       >>> rtableau._tableau
        array([[ 1,  2,  1,  0,  1],
               [ 5,  0, -1,  2,  1]])
 
@@ -154,7 +156,7 @@ This algorithm is implemented using integer pivoting.
    The ratios are: :math:`1/3` for the first row and :math:`1/1` for the
    second, thus the pivot row is the first row::
 
-       >>> nash.integer_pivoting.find_pivot_row(col_tableau, column_index=2)
+       >>> ctableau._find_pivot_row(column_index=2)
        0
 
    Using similar row operations we obtain:
@@ -170,9 +172,9 @@ This algorithm is implemented using integer pivoting.
    Our resulting tableau has labels: :math:`\{0, 3\}`, so it has picked up
    label :math:`0`::
 
-       >>> nash.integer_pivoting.pivot_tableau(col_tableau, column_index=2)
-       {0}
-       >>> col_tableau
+       >>> ctableau.pivot_and_drop_label(column_index=2)
+       0
+       >>> ctableau._tableau
        array([[ 1,  0,  3,  1,  1],
               [-1,  3,  0,  8,  2]])
 
@@ -191,9 +193,9 @@ This algorithm is implemented using integer pivoting.
    Our resulting tableau has labels: :math:`\{2, 3\}`, so it has picked up
    label :math:`3`::
 
-       >>> nash.integer_pivoting.pivot_tableau(row_tableau, column_index=0)
-       {3}
-       >>> row_tableau
+       >>> rtableau.pivot_and_drop_label(column_index=0)
+       3
+       >>> rtableau._tableau
        array([[ 0, 10,  6, -2,  4],
               [ 5,  0, -1,  2,  1]])
 
@@ -211,9 +213,9 @@ This algorithm is implemented using integer pivoting.
 
    Our resulting tableau has labels: :math:`\{0, 1\}`::
 
-       >>> nash.integer_pivoting.pivot_tableau(col_tableau, column_index=3)
-       {1}
-       >>> col_tableau
+       >>> ctableau.pivot_and_drop_label(column_index=3)
+       1
+       >>> ctableau._tableau
        array([[ 9, -3, 24,  0,  6],
               [-1,  3,  0,  8,  2]])
 

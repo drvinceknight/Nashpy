@@ -4,6 +4,8 @@ import numpy as np
 
 from nashpy.algorithms.lemke_howson import lemke_howson
 from nashpy.algorithms.lemke_howson_lex import lemke_howson_lex
+
+
 class TestLemkeHowsonLex(unittest.TestCase):
     def test_particular_lemke_howson_with_lexicographic_ratio_test(self):
         """
@@ -86,4 +88,6 @@ class TestLemkeHowsonLex(unittest.TestCase):
                     continue
                 reward = eq[0].dot(A).dot(eq[1].transpose())
                 self.assertAlmostEqual(reward, expected_reward, delta=1e-7)
-        self.assertGreaterEqual(nonnans, 14, msg="at least 14 eqs without nan values produced")
+        self.assertGreaterEqual(
+            nonnans, 14, msg="at least 14 eqs without nan values produced"
+        )

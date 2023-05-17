@@ -33,7 +33,7 @@ class TestLemkeHowson(unittest.TestCase):
             msg="{} != {}".format(t._tableau, expected),
         )
         self.assertEqual(t.non_basic_variables, set([3, 4]))
-        self.assertEqual(t._original_basic_labels, set([3,4]))
+        self.assertEqual(t._original_basic_labels, set([3, 4]))
         self.assertEqual(t.labels, set(range(sum(payoffs.shape))))
 
     def test_row_tableau_creation(self):
@@ -56,7 +56,7 @@ class TestLemkeHowson(unittest.TestCase):
             msg="{} != {}".format(t._tableau, expected),
         )
         self.assertEqual(t.non_basic_variables, set([0, 1, 2]))
-        self.assertEqual(t._original_basic_labels, set([0,1,2]))
+        self.assertEqual(t._original_basic_labels, set([0, 1, 2]))
         self.assertEqual(t.labels, set(range(sum(payoffs.shape))))
 
     def test_particular_tableau_to_strategy(self):

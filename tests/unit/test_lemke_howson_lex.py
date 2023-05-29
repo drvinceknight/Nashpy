@@ -28,7 +28,7 @@ class TestLemkeHowsonLex(unittest.TestCase):
         A = np.array([[1, -1], [-1, 1]])
         B = -A
         for label in range(4):
-            for eq in lemke_howson(A, B, label, "lex"):
+            for eq in lemke_howson(A, B, label, lexicographic=True):
                 self.assertTrue(
                     all(np.isclose(eq, np.array([1 / 2, 1 / 2]))), msg=str(eq)
                 )
@@ -39,7 +39,7 @@ class TestLemkeHowsonLex(unittest.TestCase):
         A = np.array([[1, 3, 3], [3, 1, 3], [1, 3, 3]])
         B = np.array([[3, 3, 1], [1, 1, 3], [3, 1, 3]])
         for label in range(6):
-            eqs = lemke_howson(A, B, label, "lex")
+            eqs = lemke_howson(A, B, label, lexicographic=True)
             for eq, expected_eq in zip(
                 eqs,
                 (np.array([0.5, 0.5, 0]), np.array([0, 0, 1])),
@@ -55,7 +55,7 @@ class TestLemkeHowsonLex(unittest.TestCase):
         B = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
         for label in range(6):
             for eq, expected_eq in zip(
-                lemke_howson(A, B, label, "lex"),
+                lemke_howson(A, B, label, lexicographic=True),
                 (np.array([0, 1, 0]), np.array([1, 0, 0])),
             ):
                 self.assertTrue(all(np.isclose(eq, expected_eq)))

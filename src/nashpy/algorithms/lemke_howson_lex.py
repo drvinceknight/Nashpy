@@ -36,4 +36,4 @@ def lemke_howson_lex(
     Tuple
         An equilibria
     """
-    return lemke_howson(A, B, initial_dropped_label, "lex")
+    return lemke_howson(A, B, initial_dropped_label, True)

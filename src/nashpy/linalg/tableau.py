@@ -5,117 +5,73 @@ import numpy.typing as npt
 from typing import Set, List, Iterable, Optional
 
 
-class TableauBuilder(object):
+def create_row_tableau(payoffs: npt.NDArray, lexicographic=True):
     """
-    A builder class for initializing Lemke Howson tableaus
+    Creates a row tableau
+
+    Parameters
+    ----------
+    payoffs : array
+        The payoff matrix, typically for column (B) player
+    lexicographic : bool
+        Whether the tableau should use lex sorting to handle degenerate games
+    Returns
+    -------
+    Tableau
+        The corresponding row tableau for the payoff matrix
     """
+    tableau = _build_tableau_matrix(payoffs.transpose(), False)
+    if lexicographic:
+        return TableauLex(tableau)
+    return Tableau(tableau)
 
-    def __init__(self, payoffs: npt.NDArray, shifted: bool = False):
-        """
-        Create the builder, usually you would use the static 'row' or
-        'column' methods for this
 
-        Parameters
-        ----------
-        payoffs : array
-            a tableau corresponding to a vertex of a polytope.
-        shifted : bool
-            boolean to shift non basic variables to end of tableau
-        """
-        self._payoffs = payoffs
-        self._shifted = shifted
+def create_col_tableau(payoffs: npt.NDArray, lexicographic=False):
+    """
+    Creates a column tableau
 
-    def make_positive(self):
-        """
-        Ensure all payoffs are > 0. This will not alter equlibriums
+    Parameters
+    ----------
+    payoffs : array
+        The payoff matrix, typically for row (A) player
+    lexicographic : bool
+        Whether the tableau should use lex sorting to handle degenerate games
+    Returns
+    -------
+    Tableau
+        The corresponding column tableau for the payoff matrix
+    """
+    tableau = _build_tableau_matrix(payoffs, True)
+    if lexicographic:
+        return TableauLex(tableau)
+    return Tableau(tableau)
 
-        Returns
-        -------
-        TableauBuilder
-            self (i.e. the builder instance).
-        """
-        if np.min(self._payoffs) <= 0:
-            self._payoffs = self._payoffs + abs(np.min(self._payoffs)) + 1
-        return self
 
-    def _build_tableau_matrix(self) -> npt.NDArray:
-        """
-        Build the tableau matrix from payoff. Can be shifted to preserve label indices
+def _build_tableau_matrix(payoffs: npt.NDArray, shifted: bool) -> npt.NDArray:
+    """
+    Build the tableau matrix from payoff. Can be shifted to preserve label indices.
+    As required in lemke howson, payoffs are ensured to be positive.
+    Adding a constant would anyways never affect the equilibrium
 
-        Returns
-        -------
-        array
-            the tableau matrix
-        """
-        slack_vars = np.eye(self._payoffs.shape[0])
-        m = np.append(self._payoffs, slack_vars, axis=1)
-        if self._shifted:
-            m = np.roll(m, slack_vars.shape[1], axis=1)
-        targets = np.ones((m.shape[0], 1))
-        return np.append(m, targets, axis=1)
+    Parameters
+    ----------
+    payoffs : array
+        The payoff matrix
+    shifted : bool
+        When True, first indices will be slack vars
 
-    def build(self, algorithm="basic"):
-        """
-        Builds a tableau with the specified algorithm
-
-        Parameters
-        ----------
-        algorithm : str
-            Either "basic" or "lex". Defaults to "basic", use "lex" for degenerate games
-
-        Returns
-        -------
-        Tableau
-            Tableau of the given specification
-
-        Raises
-        ------
-        ValueError
-            if algorithm is unknown
-        """
-
-        m = self._build_tableau_matrix()
-        if algorithm == "basic":
-            return Tableau(m)
-        elif algorithm == "lex":
-            return TableauLex(m)
-        raise ValueError(
-            "Algorithm '" + algorithm + "' is not known, use 'basic' or 'lex'"
-        )
-
-    @staticmethod
-    def column(A: npt.NDArray):
-        """
-        Initiates building a column tableau
-
-        Parameters
-        ----------
-        A : array
-            The payoffs for column player
-        Returns
-        -------
-        TableauBuilder
-            A builder to generate the tableau
-        """
-        tb = TableauBuilder(A, shifted=True)
-        return tb
-
-    @staticmethod
-    def row(B: npt.NDArray):
-        """
-        Initiates building a row tableau
-
-        Parameters
-        ----------
-        B : array
-            The payoffs for row player
-        Returns
-        -------
-        TableauBuilder
-            A builder to generate the tableau
-        """
-        tb = TableauBuilder(B.transpose())
-        return tb
+    Returns
+    -------
+    array
+        the tableau matrix
+    """
+    if np.min(payoffs) <= 0:
+        payoffs = payoffs + abs(np.min(payoffs)) + 1
+    slack_vars = np.eye(payoffs.shape[0])
+    targets = np.ones((payoffs.shape[0], 1))
+    if shifted:
+        return np.concatenate([slack_vars, payoffs, targets], axis=1)
+    return np.concatenate([payoffs, slack_vars, targets], axis=1)
 
 
 class Tableau(object):

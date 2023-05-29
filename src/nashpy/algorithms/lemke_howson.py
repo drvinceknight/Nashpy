@@ -4,14 +4,14 @@ from itertools import cycle
 
 import numpy.typing as npt
 from typing import Tuple
-from nashpy.linalg import TableauBuilder
+from nashpy.linalg import create_col_tableau, create_row_tableau
 
 
 def lemke_howson(
     A: npt.NDArray,
     B: npt.NDArray,
     initial_dropped_label: int = 0,
-    algorithm: str = "basic",
+    lexicographic: bool = False,
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
@@ -36,17 +36,17 @@ def lemke_howson(
         The column player payoff matrix
     initial_dropped_label: int
         The initial dropped label.
-    algorithm: str
-        Either 'basic' or 'lex'. The slightly more complex lex algorithm can
-        be used for degenerate games.
+    lexicographic: bool
+        Whether to apply lexicographic sorting during pivoting, default True.
+        Lexiographic sorting ensures solutions on degenerate games
 
     Returns
     -------
     Tuple
         An equilibria
     """
-    col_tableau = TableauBuilder.column(A).make_positive().build(algorithm)
-    row_tableau = TableauBuilder.row(B).make_positive().build(algorithm)
+    col_tableau = create_col_tableau(A, lexicographic)
+    row_tableau = create_row_tableau(B, lexicographic)
 
     if initial_dropped_label in row_tableau.non_basic_variables:
         tableux = cycle((row_tableau, col_tableau))

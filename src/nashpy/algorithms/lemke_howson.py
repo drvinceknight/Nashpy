@@ -11,7 +11,7 @@ def lemke_howson(
     A: npt.NDArray,
     B: npt.NDArray,
     initial_dropped_label: int = 0,
-    lexicographic: bool = False,
+    lexicographic: bool = True,
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented

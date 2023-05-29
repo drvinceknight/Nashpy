@@ -366,21 +366,18 @@ Column player:
         for eq, expected in zip(equilibria, expected_equilibria):
             self.assertTrue(all(np.isclose(eq, expected)))
 
-    def test_particular_lemke_howson_raises_warning(self):
+    def test_degenerate_lemke_howson_provides_some_solution(self):
         """
-        This is a degenerate game so the algorithm fails.
+        This is a degenerate game. One of many solutions should be found
         This was raised in
         https://github.com/drvinceknight/Nashpy/issues/35
         """
         A = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
         B = np.array([[-1, -1, -1], [0, 0, 0], [-1, -1, -10000]])
         game = nash.Game(A, B)
-        with warnings.catch_warnings(record=True) as w:
-            eqs = game.lemke_howson(initial_dropped_label=0)
-            self.assertEqual(len(eqs[0]), 2)
-            self.assertEqual(len(eqs[1]), 4)
-            self.assertGreater(len(w), 0)
-            self.assertEqual(w[-1].category, RuntimeWarning)
+        eqs = game.lemke_howson(initial_dropped_label=0)
+        self.assertAlmostEqual(eqs[0].dot(A).dot(eqs[1].transpose()), 0)
+        self.assertAlmostEqual(eqs[0].dot(B).dot(eqs[1].transpose()), 0)
 
     def test_lemke_howson_enumeration(self):
         """Test for the enumeration of equilibrium using Lemke Howson"""

@@ -1,11 +1,15 @@
 """A class for the Lemke Howson algorithm with lexicographical ordering"""
-
+from deprecated import deprecated  # type: ignore
 import numpy.typing as npt
 from typing import Tuple
 
 from .lemke_howson import lemke_howson
 
 
+@deprecated(
+    version="0.0.38",
+    reason="Standard lemke_howson function now supports lex sort, this class will be removed soon",
+)
 def lemke_howson_lex(
     A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0
 ) -> Tuple[npt.NDArray, npt.NDArray]:

@@ -2,73 +2,16 @@
 import warnings
 from itertools import cycle
 
-import numpy as np
 import numpy.typing as npt
-from typing import Tuple, Set, Iterable
-from nashpy.integer_pivoting import (
-    make_tableau,
-    non_basic_variables,
-    pivot_tableau,
-)
-
-
-def shift_tableau(tableau: npt.NDArray, shape: Tuple[int, ...]) -> npt.NDArray:
-    """
-    Shift a tableau to ensure labels of pairs of tableaux coincide
-
-    Parameters
-    ----------
-    tableau : array
-        a tableau corresponding to a vertex of a polytope.
-    shape : tuple
-        the required shape of the tableau
-
-    Returns
-    -------
-    array
-        The shifted tableau
-    """
-    return np.append(
-        np.roll(tableau[:, :-1], shape[0], axis=1),
-        np.ones((shape[0], 1)),
-        axis=1,
-    )
-
-
-def tableau_to_strategy(
-    tableau: npt.NDArray, basic_labels: Set[int], strategy_labels: Iterable
-) -> npt.NDArray:
-    """
-    Return a strategy vector from a tableau
-
-    Parameters
-    ----------
-    tableau : array
-        a tableau corresponding to a vertex of a polytope.
-    basic_labels : set
-        the set of basic labels.
-    strategy_labels : Iterable
-        the set of labels that correspond to strategies.
-
-    Returns
-    -------
-    array
-        A strategy.
-    """
-    vertex = []
-    for column in strategy_labels:
-        if column in basic_labels:
-            for i, row in enumerate(tableau[:, column]):
-                if row != 0:
-                    vertex.append(tableau[i, -1] / row)
-        else:
-            vertex.append(0)
-    strategy = np.array(vertex)
-    return strategy / sum(strategy)
+from typing import Tuple
+from nashpy.linalg import create_col_tableau, create_row_tableau
 
 
 def lemke_howson(
-    A: npt.NDArray, B: npt.NDArray, initial_dropped_label: int = 0
+    A: npt.NDArray,
+    B: npt.NDArray,
+    initial_dropped_label: int = 0,
+    lexicographic: bool = True,
 ) -> Tuple[npt.NDArray, npt.NDArray]:
     """
     Obtain the Nash equilibria using the Lemke Howson algorithm implemented
@@ -93,49 +36,39 @@ def lemke_howson(
         The column player payoff matrix
     initial_dropped_label: int
         The initial dropped label.
+    lexicographic: bool
+        Whether to apply lexicographic sorting during pivoting, default True.
+        Lexiographic sorting ensures solutions on degenerate games
 
     Returns
     -------
     Tuple
         An equilibria
     """
+    col_tableau = create_col_tableau(A, lexicographic)
+    row_tableau = create_row_tableau(B, lexicographic)
 
-    if np.min(A) <= 0:
-        A = A + abs(np.min(A)) + 1
-    if np.min(B) <= 0:
-        B = B + abs(np.min(B)) + 1
-
-    # build tableaux
-    col_tableau = make_tableau(A)
-    col_tableau = shift_tableau(col_tableau, A.shape)
-    row_tableau = make_tableau(B.transpose())
-    full_labels = set(range(sum(A.shape)))
-
-    if initial_dropped_label in non_basic_variables(row_tableau):
+    if initial_dropped_label in row_tableau.non_basic_variables:
         tableux = cycle((row_tableau, col_tableau))
     else:
         tableux = cycle((col_tableau, row_tableau))
 
-    # First pivot (to drop a label)
-    entering_label = pivot_tableau(next(tableux), initial_dropped_label)
-    while (
-        non_basic_variables(row_tableau).union(non_basic_variables(col_tableau))
-        != full_labels
-    ):
-        entering_label = pivot_tableau(next(tableux), next(iter(entering_label)))
+    full_labels = col_tableau.labels
+    fully_labeled = False
+    entering_label = initial_dropped_label
+    while not fully_labeled:
+        tableau = next(tableux)
+        entering_label = tableau.pivot_and_drop_label(entering_label)
+        current_labels = col_tableau.non_basic_variables.union(
+            row_tableau.non_basic_variables
+        )
+        fully_labeled = current_labels == full_labels
 
-    row_strategy = tableau_to_strategy(
-        row_tableau, non_basic_variables(col_tableau), range(A.shape[0])
-    )
-    col_strategy = tableau_to_strategy(
-        col_tableau,
-        non_basic_variables(row_tableau),
-        range(A.shape[0], sum(A.shape)),
-    )
-
-    if row_strategy.shape != (A.shape[0],) and col_strategy.shape != (A.shape[0],):
-        msg = """The Lemke Howson algorithm has returned probability vectors of 
+    row_strat = row_tableau.to_strategy(col_tableau.non_basic_variables)
+    col_strat = col_tableau.to_strategy(row_tableau.non_basic_variables)
+    if row_strat.shape != (A.shape[0],) and col_strat.shape != (A.shape[0],):
+        msg = """The Lemke Howson algorithm has returned probability vectors of·
 incorrect shapes. This indicates an error. Your game could be degenerate."""
 
         warnings.warn(msg, RuntimeWarning)
-    return row_strategy, col_strategy
+    return row_strat, col_strat

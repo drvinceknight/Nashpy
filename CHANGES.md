@@ -1,3 +1,7 @@
+# v0.0.38
+
+Fix a bug in stochastic fictitious play.
+
 # v0.0.37
 
 Implementation of moran processes on graphs.

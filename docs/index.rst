@@ -6,8 +6,7 @@
 Welcome to Nashpy's documentation!
 ==================================
 
-This is a Python library used for the computation of equilibria in 2 player
-strategic form games.
+A python library for 2 player games.
 
 .. toctree::
    :maxdepth: 2

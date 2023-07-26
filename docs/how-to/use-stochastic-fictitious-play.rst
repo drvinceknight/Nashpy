@@ -32,8 +32,8 @@ Note that this process is stochastic::
     >>> np.random.seed(1)
     >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations)
     >>> for play_counts, distributions in play_counts_and_distributions:
-    ...     row_play_counts, column_play_counts = play_counts  
-    ...     row_distributions, column_distributions = distributions  
+    ...     row_play_counts, column_play_counts = play_counts
+    ...     row_distributions, column_distributions = distributions
     ...     print(row_play_counts, column_play_counts)
     [0 0] [0 0]
     [1. 0.] [1. 0.]
@@ -48,8 +48,8 @@ point for the algorithm::
     >>> play_counts = (np.array([0., 500.]), np.array([0., 500.]))
     >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, play_counts=play_counts)
     >>> for play_counts, distributions in play_counts_and_distributions:
-    ...     row_play_counts, column_play_counts = play_counts  
-    ...     row_distributions, column_distributions = distributions  
+    ...     row_play_counts, column_play_counts = play_counts
+    ...     row_distributions, column_distributions = distributions
     ...     print(row_play_counts, column_play_counts)
     ...
     [  0. 500.] [  0. 500.]
@@ -58,8 +58,8 @@ point for the algorithm::
     [  0. 999.] [  0. 999.]
     [   0. 1000.] [   0. 1000.]
 
-A value of :code:`etha` and :code:`epsilon_bar` can be passed. 
-See the :ref:`stochastic-fictitious-play` reference section for more information. The default values for etha and epsilon bar are 
+A value of :code:`etha` and :code:`epsilon_bar` can be passed.
+See the :ref:`stochastic-fictitious-play` reference section for more information. The default values for etha and epsilon bar are
 :math:`10^-1` and :math:`10^-2` respectively::
 
     >>> np.random.seed(0)
@@ -67,8 +67,8 @@ See the :ref:`stochastic-fictitious-play` reference section for more information
     >>> epsilon_bar = 10**-3
     >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar)
     >>> for play_counts, distributions in play_counts_and_distributions:
-    ...     row_play_counts, column_play_counts = play_counts  
-    ...     row_distributions, column_distributions = distributions  
+    ...     row_play_counts, column_play_counts = play_counts
+    ...     row_distributions, column_distributions = distributions
     ...     print(row_play_counts, column_play_counts)
     ...
     [0 0] [0 0]
@@ -77,3 +77,21 @@ See the :ref:`stochastic-fictitious-play` reference section for more information
     [498.   1.] [497.   2.]
     [499.   1.] [498.   2.]
 
+
+Note that for some large valued input matrices a numerical error can occur::
+
+    >>> A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
+    >>> B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
+    >>> game = nash.Game(A, B)
+    >>> iterations = 500
+    >>> play_counts_and_distributions = tuple(game.stochastic_fictitious_play(iterations=iterations))
+    Traceback (most recent call last):
+    ...
+    ValueError: The matrix with values ranging from -76 to 141...
+
+This can usually addressed by an affine scaling of the matrices::
+
+    >>> A = A / 10
+    >>> B = B / 10
+    >>> game = nash.Game(A, B)
+    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar)

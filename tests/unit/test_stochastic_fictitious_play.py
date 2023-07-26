@@ -1,9 +1,10 @@
 """
 Tests for stochastic fictitious learning
 """
-import numpy as np
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
+import numpy as np
+import pytest
 
 from nashpy.learning.stochastic_fictitious_play import (
     get_distribution_response_to_play_count,
@@ -36,6 +37,23 @@ def test_get_distribution_response_to_play_count_2():
     )
     assert np.allclose(distribution_response, expected_distribution)
     assert np.sum(distribution_response) == 1
+
+
+def test_get_distribution_response_to_play_for_bug_reported_by_user():
+    """
+    This is a bug reported by email.
+
+    Captured here: https://github.com/drvinceknight/Nashpy/issues/214
+    """
+    A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
+    np.random.seed(0)
+    etha = 10**-1
+    epsilon_bar = 10**-2
+    play_count = [1, 1, 1]
+    with pytest.raises(ValueError):
+        get_distribution_response_to_play_count(
+            A=A, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+        )
 
 
 def test_get_distribution_response_to_play_count_3():
@@ -136,3 +154,17 @@ def test_stochastic_fictitious_play_longrun_default_inputs():
     assert np.sum(c_playcounts) == iterations
     assert np.allclose(r_dist, np.array([0.35888645, 0.32741658, 0.31369697]))
     assert np.allclose(c_dist, np.array([0.30257911, 0.3463743, 0.35104659]))
+
+
+def test_bug_reported_by_user():
+    """
+    This is a bug reported by email.
+
+    Captured here: https://github.com/drvinceknight/Nashpy/issues/214
+    """
+    A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
+    B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
+    iterations = 500
+    np.random.seed(0)
+    with pytest.raises(ValueError):
+        tuple(stochastic_fictitious_play(A=A, B=B, iterations=iterations))

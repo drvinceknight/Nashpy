@@ -25,6 +25,13 @@ def get_distribution_response_to_play_count(
     -------
     int
         The action that corresponds to the best response.
+
+    Raises
+    ------
+    ValueError
+        A value error is raised if the input matrix leads to a numerical error
+        when computing the logit distribution. Usually this can be addressed by
+        rescaling the input matrix for example A = A / 10.
     """
     if np.sum(play_count) == 0:
         strategies = play_count + 1 / len(play_count)
@@ -35,6 +42,16 @@ def get_distribution_response_to_play_count(
     logit_choice = np.exp(etha**-1 * noisy_utilities) / np.sum(
         np.exp(etha**-1 * noisy_utilities)
     )
+    try:
+        assert np.all(logit_choice < np.inf)
+    except AssertionError:
+        raise ValueError(
+            f"""The matrix with values ranging from {np.min(A)} to {np.max(A)} 
+            has entries with values that lead to
+            numeric errors in the calculation of the logit choice. This can
+            be caused by having absolute values too large. Rescaling your
+            matrix could fix this error."""
+        )
     return logit_choice
 
 
@@ -72,7 +89,7 @@ def stochastic_fictitious_play(
 
     yield play_counts, distributions
 
-    for repetition in range(iterations):
+    for _ in range(iterations):
         distributions = [
             get_distribution_response_to_play_count(
                 A=matrix,

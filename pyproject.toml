@@ -12,7 +12,7 @@ requires = [
     "networkx >= 3.0.0",
     "deprecated >= 1.2.14"
 ]
-home-page = "https://vknight.org"
+home-page = "https://github.com/drvinceknight/Nashpy"
 requires-python= ">=3.8"
 description-file = "README.md"
 classifiers = [ "License :: OSI Approved :: MIT License",]

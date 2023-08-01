@@ -5,6 +5,7 @@ from typing import Optional, Any
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
+from .linalg.minimax import linear_program
 from .egt.moran_process import moran_process, fixation_probabilities
 from .learning.fictitious_play import fictitious_play
 from .learning.replicator_dynamics import (
@@ -398,3 +399,26 @@ Column player:
             interaction_graph_adjacency_matrix=interaction_graph_adjacency_matrix,
             replacement_stochastic_matrix=replacement_stochastic_matrix,
         )
+
+    def linear_program(self):
+        """
+        Returns the Nash Equilibrium for a zero sum game by solving the Linear
+        Program that corresponds to the minimax theorem.
+
+        Returns
+        -------
+        tuple
+            The Nash equilibria
+        Raises
+        ------
+        ValueError
+            A value error is raised if the game is not zero sum
+        """
+        if self.zero_sum is False:
+            raise ValueError(
+                "The Linear Program corresponding to the minimax theorem is defined only for Zero Sum games."
+            )
+        A, B = self.payoff_matrices
+        row_strategy = linear_program(row_player_payoff_matrix=A)
+        column_strategy = linear_program(row_player_payoff_matrix=B.T)
+        return row_strategy, column_strategy

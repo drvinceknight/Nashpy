@@ -7,6 +7,7 @@ Nashpy Game Theory Text book
    normal-form-games.rst
    strategies.rst
    best-responses.rst
+   zero-sum-games.rst
    support-enumeration.rst
    vertex-enumeration.rst
    extensive-form-games.rst

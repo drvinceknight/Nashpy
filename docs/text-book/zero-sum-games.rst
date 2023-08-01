@@ -37,6 +37,8 @@ Optimising worst case outcomes
 The value of a game
 -------------------
 
+.. _formulation-of-linear-program:
+
 Formulation of the linear program
 ---------------------------------
 
@@ -72,6 +74,8 @@ Where the parameters of the linear programme are defined by:
        M_{\text{eq}} &= (\underbrace{1, \dots, 1}_{m}, 0) && M_{\text{eq}}\in\{0, 1\}^{1\times(m + 1)}\\
        b_{\text{eq}} &= 1 \\
    \end{align}
+
+.. _the-minimax-theorem:
 
 The minimax theorem
 -------------------

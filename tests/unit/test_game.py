@@ -638,3 +638,18 @@ Column player:
         assert probabilities == expected_probabilities
 
     # TODO Add tests for graphs.
+
+    def test_linear_program_for_non_zero_sum_games(self):
+        A = np.array([[-1, 0], [-1, 1]])
+        B = np.array([[3, 0], [1, -1]])
+        g = nash.Game(A, B)
+        with pytest.raises(ValueError):
+            g.linear_program()
+
+    def test_linear_program_for_zero_sum_games(self):
+        A = np.array([[-1, 0], [-1, 1]])
+        B = np.array([[1, 0], [1, -1]])
+        g = nash.Game(A, B)
+        equilibria = g.linear_program()
+        expected_equilibria = (np.array([1, 0]), np.array([1, 0]))
+        assert np.array_equal(equilibria, expected_equilibria)

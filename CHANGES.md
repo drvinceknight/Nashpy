@@ -1,3 +1,7 @@
+# v0.0.39
+
+Implement linear program for Zero sum games.
+
 # v0.0.38
 
 Fix a bug in stochastic fictitious play.

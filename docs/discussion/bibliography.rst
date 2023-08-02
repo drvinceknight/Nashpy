@@ -27,5 +27,7 @@ documentation.
 .. [Ohtsuki2007] Ohtsuki, Hisashi, Jorge M. Pacheco, and Martin A. Nowak. "Evolutionary graph theory: Breaking the symmetry between interaction and replacement." Journal of Theoretical Biology 246.4 (2007): 681-694.
 .. [Press2012] Press, William H., and Freeman J. Dyson. "Iterated Prisoner’s Dilemma contains strategies that dominate any evolutionary opponent." Proceedings of the National Academy of Sciences 109.26 (2012): 10409-10413.
 .. [Savani2015] Rahul Savani and Bernhard von Stengel. Game Theory Explorer – Software for the Applied Game Theorist. Computational Management Science 12, 5-33, 2015
+.. [Vanderbei1998] Vanderbei, Robert J. "Vanderbei, linear programming foundations and extensions." (1998).
 .. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
+.. [vonStengel2023] von Stengel, Bernhard. "Zero-sum games and linear programming duality." Mathematics of Operations Research (2023).

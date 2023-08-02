@@ -30,4 +30,5 @@ documentation.
 .. [Vanderbei1998] Vanderbei, Robert J. "Vanderbei, linear programming foundations and extensions." (1998).
 .. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
+.. [vonNeumann1928] von Neumann, J. "Zur theorie der gesellschaftsspiele." Mathematische annalen 100.1 (1928): 295-320
 .. [vonStengel2023] von Stengel, Bernhard. "Zero-sum games and linear programming duality." Mathematics of Operations Research (2023).

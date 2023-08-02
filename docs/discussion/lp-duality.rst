@@ -55,6 +55,9 @@ Subject to:
         y_i            &\geq 0&&\text{ for }i\leq n
    \end{align}
 
+
+.. _linear_program_duality_theorem:
+
 Linear Program Duality Theorem
 ------------------------------
 

@@ -117,7 +117,7 @@ The :code:`paper.bib` and :code:`paper.md` files
 ************************************************
 
 These are the source files for the `Journal of Open Source Software
-<https://joss.theoj.org>`_ paper written about Nashpy: [Knight2018]_.
+<https://joss.theoj.org>`_ paper written about Nashpy: [Knight2018b]_.
 
 .. _pyproject.toml-file:
 

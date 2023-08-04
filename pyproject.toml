@@ -18,4 +18,4 @@ description-file = "README.md"
 classifiers = [ "License :: OSI Approved :: MIT License",]
 
 [tool.flit.metadata.requires-extra]
-doc = ["sphinx>=7.1.2", "sphinx-rtd-theme", "sphinx-togglebutton", "matplotlib", "sphinxcontrib.mermaid"]
+doc = ["sphinx>=5.0", "sphinx-rtd-theme", "sphinx-togglebutton", "matplotlib", "sphinxcontrib.mermaid"]

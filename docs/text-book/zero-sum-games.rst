@@ -113,7 +113,7 @@ Subject to:
         -x_1 + x_3 - x_4 &\geq u \\
         x_1 - x_3 + x_4 &\geq u \\
         x_1 + x_2 + x_3 + x_4 &= 1\\
-        x_i &\geq 0 \text{ for all} i\in\{1, 2, 3, 4\}
+        x_i &\geq 0 \text{ for all } i\in\{1, 2, 3, 4\}
    \end{align}
 
 .. admonition:: Question
@@ -191,7 +191,7 @@ linear program will give the max-min strategy and value:
 
 .. math::
 
-   \max_{x\in\mathbb{R}^{(m + 1)\times 1}} cx
+   \min_{x\in\mathbb{R}^{(m + 1)\times 1}} cx
 
 Subject to:
 
@@ -208,7 +208,7 @@ Where the coefficients of the linear program are defined by:
 .. math::
 
    \begin{align}
-       c &= (\underbrace{0, \dots, 0}_{m}, 1) && c\in\{0, 1\}^{1 \times (m + 1)}\\
+       c &= (\underbrace{0, \dots, 0}_{m}, -1) && c\in\{0, 1\}^{1 \times (m + 1)}\\
        M_{\text{ub}} &= \begin{pmatrix}(-A^T)_{11}&\dots&(-A^T)_{1m}&1\\
                                        \vdots     &\ddots&\vdots           &1\\
                                        (-A^T)_{n1}&\dots&(-A^T)_{nm}&1\end{pmatrix} && M\in\mathbb{R}^{n\times (m + 1)}\\
@@ -216,6 +216,48 @@ Where the coefficients of the linear program are defined by:
        M_{\text{eq}} &= (\underbrace{1, \dots, 1}_{m}, 0) && M_{\text{eq}}\in\{0, 1\}^{1\times(m + 1)}\\
        b_{\text{eq}} &= 1 \\
    \end{align}
+
+For the :ref:`modified rock paper scissors game
+<motivating-example-zero-sum-games>` the coefficients of the linear system are
+given by:
+
+.. math::
+
+   \begin{align}
+       c &= (0, 0, 0, 0, -1)\\
+       M_{\text{ub}} &= \begin{pmatrix}
+           0 & -1 &  1 & -1 &  1\\
+           1 &  0 & -1 &  1 &  1\\
+           -1&  1.&  0.& -1.&  1
+           \end{pmatrix}\\
+       b_{\text{ub}} &= \begin{pmatrix}0\\0\\0\end{pmatrix}\\
+       M_{\text{eq}} &= (1, 1, 1, 1, 0)\\
+       b_{\text{eq}} &= 1 \\
+   \end{align}
+
+.. admonition:: Question
+   :class: note
+
+   Obtain the coefficients of the reformulated linear system for the zero sum
+   game :ref:`Matching Pennies <matching-pennies>`: with payoff matrix :math:`A
+   = \begin{pmatrix} 1 & -1\\ -1 & 1 \end{pmatrix}`.
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   .. math::
+
+      \begin{align}
+          c &= (0, 0, -1)\\
+          M_{\text{ub}} &= \begin{pmatrix}
+              -1 & 1 &  1\\
+              1 &  -1 & 1\\
+              \end{pmatrix}\\
+          b_{\text{ub}} &= \begin{pmatrix}0\\0\end{pmatrix}\\
+          M_{\text{eq}} &= (1, 1, 0)\\
+          b_{\text{eq}} &= 1 \\
+      \end{align}
+
 
 .. _the-minimax-theorem:
 

@@ -1,3 +1,7 @@
+# v0.0.40
+
+Add more documentation on Zero sum games.
+
 # v0.0.39
 
 Implement linear program for Zero sum games.

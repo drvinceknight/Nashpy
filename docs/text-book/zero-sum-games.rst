@@ -217,6 +217,9 @@ Where the coefficients of the linear program are defined by:
        b_{\text{eq}} &= 1 \\
    \end{align}
 
+This reformulation is in fact how the linear program is written in Nashpy's
+source code.
+
 For the :ref:`modified rock paper scissors game
 <motivating-example-zero-sum-games>` the coefficients of the linear system are
 given by:
@@ -244,6 +247,8 @@ given by:
 
 .. admonition:: Answer
    :class: caution, dropdown
+
+   Here are the coefficients of the reformulated linear system:
 
    .. math::
 

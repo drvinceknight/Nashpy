@@ -279,9 +279,10 @@ then :math:`u=v`.
 
 This can be proved using the :ref:`linear_program_duality_theorem`.
 
-Note that this answer the question of :ref:`motivating-example-zero-sum-games`:
-through a choice of strategy the row player can ensure they obtain the value of
-the game which is equal to the *max-min* value and the *min-max* value.
+Note that this answers the question posed at the end of 
+:ref:`motivating-example-zero-sum-games`: through a choice of strategy the row 
+player can ensure they obtain the value of the game which is equal to the
+*max-min* value and the *min-max* value.
 
 Using Nashpy
 ------------

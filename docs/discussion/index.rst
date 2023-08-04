@@ -6,6 +6,7 @@ Discussion and code reference
 
    john-nash.rst
    gambit.rst
+   lp-duality.rst
    other-python-game-theory-libraries.rst
    bibliography.rst
    source/nashpy.rst

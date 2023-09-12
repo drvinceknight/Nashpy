@@ -21,3 +21,4 @@ How to:
    how-to-push-changes/index.rst
    how-to-open-a-pull-request/index.rst
    how-to-format-markdown-files/index.rst
+   how-to-run-benchmarks/index.rst

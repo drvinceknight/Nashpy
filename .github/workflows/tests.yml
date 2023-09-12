@@ -31,6 +31,6 @@ jobs:
           python -m tox
 
       - name: check benchmarks run (only on macOS)
-        if: matrix.os == "macOS-latest"
+        if: matrix.os == 'macOS-latest'
         run: |
           python -m tox -e benchmark

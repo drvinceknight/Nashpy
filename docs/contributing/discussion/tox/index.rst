@@ -28,4 +28,12 @@ This is done thanks to configurations written in :code:`tox.ini`::
 
     [tox]
     isolated_build = True
-    envlist = py38, py39
+    envlist = py38, py39, py310, py311
+
+Running specific benchmarks
+---------------------------
+
+The benchmark code is configured using the :code:`[testenv:benchmark]`. This
+gives a specific set of jobs to be run with the command::
+
+    $ python -m tox benchmark

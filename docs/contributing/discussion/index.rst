@@ -20,6 +20,7 @@ Discussion
    mypy/index.rst
    sphinx/index.rst
    doctests/index.rst
+   pytest-benchmark/index.rst
    alex/index.rst
    github_actions/index.rst
    readthedocs/index.rst

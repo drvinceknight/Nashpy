@@ -16,3 +16,7 @@ If you want to run the tests across a single version of Python::
     $ python -m tox -e <version>
 
 where :code:`version` is either :code:`py38` or :code:`py39`.
+
+To run all tests in parallel::
+
+    $ python -m tox -p

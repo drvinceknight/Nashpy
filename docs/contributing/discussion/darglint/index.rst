@@ -10,7 +10,7 @@ directly document a function. Their presence is checked using
 checked using `darglint
 <https://github.com/terrencepreilly/darglint>`_.
 
-Once installed darlint can be used to check one of three docstring styles:
+Once installed darglint can be used to check one of three docstring styles:
 
 1. `Google style guide <https://google.github.io/styleguide/pyguide.html>`_
 2. `Sphinx style guide <https://pythonhosted.org/an_example_pypi_project/sphinx.html#function-definitions>`_

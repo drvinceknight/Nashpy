@@ -335,6 +335,51 @@ numeric value of -1.
 
    4. The game is Zero sum as :math:`A = -B`.
 
+Exercises
+---------
+
+1. Represent the following game in normal form:
+
+       Alice, Bob and Celine are childhood friends that would like to communicate
+       online. They have a choice between 3 social networks: facebook, twitter and
+       G+.
+
+   Clearly state the players, strategy sets and interpretations of the utilities.
+
+2. Obtain the full game
+   representations :math:`(A, B)` for the zero sum games with row play
+   payoff matrix given by:
+
+   1. :math:`A =\begin{pmatrix}1 & 3\\ -1 & 4\end{pmatrix}`
+   2. :math:`A =\begin{pmatrix}1 & -2\\ -1 & 2\end{pmatrix}`
+   3. :math:`A =\begin{pmatrix}1 & -2 & 4\\ 2 & -1 & 2\\ 7 & -7 & 6\end{pmatrix}`
+
+3. Consider the game described as follows:
+
+       An airline loses two suitcases belonging to two different
+       travelers. Both suitcases have the same value. An airline manager
+       tasked to settle the claims of both travelers explains that the
+       airline is liable for a maximum of £5 per suitcase.
+
+   
+   To determine an honest appraised value of the suitcases, the
+   manager separates both travelers and asks them to write down the
+   amount of their value at no less than £2 and no larger than £5 (to
+   the single dollar):
+
+   -  If both write down the same number, that number as the true
+      dollar value of both suitcases and reimburse both travelers
+      that amount.
+   -  However, if one writes down a smaller number than the other,
+      this smaller number will be taken as the true dollar value, and
+      both travelers will receive that amount along with a
+      bonus/malus: £2 extra will be paid to the traveler who wrote
+      down the lower value and a £2 deduction will be taken from the
+      person who wrote down the higher amount.
+
+   Represent this as a Normal Form Game.
+
+
 Using Nashpy
 ------------
 

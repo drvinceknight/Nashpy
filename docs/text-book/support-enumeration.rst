@@ -347,6 +347,42 @@ Repeat steps 3,4 and 5 for all potential support pairs.
 
           ((2/3, 1/3), (0, 1/3, 2/3))
 
+Exercises
+---------
+
+
+Use support enumeration to find Nash equilibria for the following
+games:
+
+1. 
+
+.. math::
+
+   A =
+   \begin{pmatrix}
+   3  & 3 & 2 \\
+   2  & 1 & 3 
+   \end{pmatrix}
+   \qquad
+   B =
+   \begin{pmatrix}
+   2  & 1 & 3 \\
+   2  & 3 & 2 
+   \end{pmatrix}
+2. 
+
+.. math:: 
+
+   A =
+   \begin{pmatrix}
+   3 & -1\\
+   2 & 7\end{pmatrix}
+   \qquad
+   B =
+   \begin{pmatrix}
+   -3 & 1\\
+   1 & -6\end{pmatrix}
+
 
 Using Nashpy
 ------------

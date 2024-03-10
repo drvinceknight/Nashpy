@@ -1,4 +1,5 @@
 """A class for the vertex enumeration algorithm"""
+
 import numpy as np
 import numpy.typing as npt
 from typing import Generator, Tuple, Any

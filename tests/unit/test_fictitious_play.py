@@ -1,6 +1,7 @@
 """
 Tests for fictitious learning
 """
+
 import types
 
 import numpy as np

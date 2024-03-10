@@ -1,6 +1,7 @@
 """
 Tests for the integer pivoting
 """
+
 import unittest
 
 import numpy as np

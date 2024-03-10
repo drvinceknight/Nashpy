@@ -1,4 +1,5 @@
 """Code to carry out replicator dynamics"""
+
 import numpy as np
 import numpy.typing as npt
 from typing import Optional, Tuple

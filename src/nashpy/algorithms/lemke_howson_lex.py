@@ -1,4 +1,5 @@
 """A class for the Lemke Howson algorithm with lexicographical ordering"""
+
 from deprecated import deprecated  # type: ignore
 import numpy.typing as npt
 from typing import Tuple

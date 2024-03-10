@@ -1,6 +1,7 @@
 """
 Tests for the best response check
 """
+
 import numpy as np
 
 from nashpy.utils.is_best_response import (

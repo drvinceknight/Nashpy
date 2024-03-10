@@ -53,10 +53,10 @@ that type as they interact with the population:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        f_1 = & \frac{2 (v_1 - 1) + 1 v_2}{N - 1}\\
        f_2 = & \frac{3 v_1 + 1 (v_2 - 1)}{N - 1}
-   \end{align}
+   \end{align*}
 
 Note that :math:`f_i` is dependent on :math:`v`.
 
@@ -382,23 +382,23 @@ The transition probabilities are then given by:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        p_{i,i+1}&=\frac{if_{1}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{N-i}{N}\\
        p_{i,i-1}&=\frac{(N-i)f_{2}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{i}{N}
-   \end{align}
+   \end{align*}
 
 which gives:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        \gamma_i&=\frac{p_{i, i - 1}}{p_{i, i +1}}\\
                &=\frac{\frac{(N-i)f_{2}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{i}{N}}
                       {\frac{if_{1}(i)}{if_{1}(i) + (N-i)f_{2}(i)}\frac{N-i}{N}}\\
                &=\frac{(N-i)f_{2}(i)\frac{i}{N}}
                       {if_{1}(i)\frac{N-i}{N}}\\
                &=\frac{f_{2}(i)}{f_{1}(i)}
-   \end{align}
+   \end{align*}
 
 Thus, the formula for :math:`x_i` in the general birth death process can be used
 to obtain the fixation probability :math:`\rho=x_1`.
@@ -528,6 +528,22 @@ to obtain the fixation probability :math:`\rho=x_1`.
        plt.xlabel("$N$")
        plt.ylabel(r"$\rho$")
        plt.legend();
+
+Exercises
+---------
+
+1. For the following games, obtain the fixation probability :math:`x_1`
+   for :math:`N=4`:
+
+   1. :math:`A=\begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}`
+   2. :math:`A=\begin{pmatrix}1 & 2 \\ 3 & 1\end{pmatrix}`
+
+2. Consider the game
+   :math:`A=\begin{pmatrix}r & 1 \\ 1 & 1\end{pmatrix}` for :math:`r>1`
+   and :math:`N`, and obtain :math:`x_1` as a function of :math:`r`. How
+   does :math:`r` effect the chance of fixation?
+3. Prove the theorem for fixation probabilities in a birth
+   death process (a Moran process with 2 types).
 
 Using Nashpy
 ------------

@@ -71,10 +71,10 @@ Subject to:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
         Ay^T &\leq \mathbb{1}v \\
         y&\in\mathcal{S}_2
-   \end{align}
+   \end{align*}
 
 In this case, :math:`v` is called the *min-max* value of the game.
 
@@ -89,10 +89,10 @@ Subject to:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
         xA &\geq \mathbb{1}u \\
         x\in\mathcal{S}_1
-   \end{align}
+   \end{align*}
 
 In this case, :math:`v` is called the *max-min* value of the game.
 
@@ -108,13 +108,13 @@ Subject to:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
         x_2 - x_3 + x_4 &\geq u \\
         -x_1 + x_3 - x_4 &\geq u \\
         x_1 - x_3 + x_4 &\geq u \\
         x_1 + x_2 + x_3 + x_4 &= 1\\
         x_i &\geq 0 \text{ for all } i\in\{1, 2, 3, 4\}
-   \end{align}
+   \end{align*}
 
 .. admonition:: Question
    :class: note
@@ -138,12 +138,12 @@ Subject to:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
            x_1 - x_2 &\geq u \\
            -x_1 + x_2&\geq u \\
            x_1 + x_2 &= 1\\
            x_i &\geq 0 \text{ for all } i\in\{1, 2\}
-      \end{align}
+      \end{align*}
 
    2. Given that :math:`x_1+x_2=1` this linear program corresponds to:
 
@@ -155,21 +155,21 @@ Subject to:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
            2x_1 - 1 &\geq u \\
            -2x_1 + 1&\geq u \\
            0 \leq x_1 &\leq 1\\
-      \end{align}
+      \end{align*}
 
    These contraints can be rewritten as:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
            x_1 &\geq \frac{1 + u}{2} \\
            x_1 &\leq \frac{1 - u}{2} \\
            0 &\leq x_1 \leq 1\\
-      \end{align}
+      \end{align*}
 
 
    This implies that :math:`\frac{u + 1}{2}\leq x_1\leq \frac{1 - u}{2}` which
@@ -197,17 +197,17 @@ Subject to:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
         M_{\text{ub}}x &\leq b_{\text{ub}} \\
         M_{\text{eq}}x &= b_{\text{eq}} \\
         x_i            &\geq 0&&\text{ for }i\leq m
-   \end{align}
+   \end{align*}
 
 Where the coefficients of the linear program are defined by:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        c &= (\underbrace{0, \dots, 0}_{m}, -1) && c\in\{0, 1\}^{1 \times (m + 1)}\\
        M_{\text{ub}} &= \begin{pmatrix}(-A^T)_{11}&\dots&(-A^T)_{1m}&1\\
                                        \vdots     &\ddots&\vdots           &1\\
@@ -215,7 +215,7 @@ Where the coefficients of the linear program are defined by:
        b_{\text{ub}} &= (\underbrace{0, \dots, 0}_{n})^T && b_{\text{ub}}\in\{0\}^{n\times 1}\\
        M_{\text{eq}} &= (\underbrace{1, \dots, 1}_{m}, 0) && M_{\text{eq}}\in\{0, 1\}^{1\times(m + 1)}\\
        b_{\text{eq}} &= 1 \\
-   \end{align}
+   \end{align*}
 
 This reformulation is in fact how the linear program is written in Nashpy's
 source code.
@@ -226,7 +226,7 @@ given by:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        c &= (0, 0, 0, 0, -1)\\
        M_{\text{ub}} &= \begin{pmatrix}
            0 & -1 &  1 & -1 &  1\\
@@ -236,7 +236,7 @@ given by:
        b_{\text{ub}} &= \begin{pmatrix}0\\0\\0\end{pmatrix}\\
        M_{\text{eq}} &= (1, 1, 1, 1, 0)\\
        b_{\text{eq}} &= 1 \\
-   \end{align}
+   \end{align*}
 
 .. admonition:: Question
    :class: note
@@ -252,7 +252,7 @@ given by:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
           c &= (0, 0, -1)\\
           M_{\text{ub}} &= \begin{pmatrix}
               -1 & 1 &  1\\
@@ -261,7 +261,7 @@ given by:
           b_{\text{ub}} &= \begin{pmatrix}0\\0\end{pmatrix}\\
           M_{\text{eq}} &= (1, 1, 0)\\
           b_{\text{eq}} &= 1 \\
-      \end{align}
+      \end{align*}
 
 
 .. _the-minimax-theorem:
@@ -283,6 +283,18 @@ Note that this answers the question posed at the end of
 :ref:`motivating-example-zero-sum-games`: through a choice of strategy the row 
 player can ensure they obtain the value of the game which is equal to the
 *max-min* value and the *min-max* value.
+
+Exercises
+---------
+
+
+Obtain the coefficients of the reformulated linear system for the zero sum
+games with the following payoff matrices:
+
+1. :math:`A = \begin{pmatrix} 3 & -1\\ -1 & 2 \end{pmatrix}`.
+2. :math:`A = \begin{pmatrix} -1 & -1\\ -1 & 3 \end{pmatrix}`.
+3. :math:`A = \begin{pmatrix} 2 & 1 & -3\\ -3 & -1 & 3 \end{pmatrix}`.
+4. :math:`A = \begin{pmatrix} 3 & -2 & 0\\ -3 & 0 & 3 \\ 0 & 2 & -5 \end{pmatrix}`.
 
 Using Nashpy
 ------------

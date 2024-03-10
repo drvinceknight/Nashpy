@@ -1,4 +1,5 @@
 """A class for the Lemke Howson algorithm"""
+
 import warnings
 from itertools import cycle
 

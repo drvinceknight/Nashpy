@@ -1,4 +1,5 @@
 """Code to carry out fictitious learning"""
+
 import numpy as np
 import numpy.typing as npt
 from typing import Generator, Optional, Any

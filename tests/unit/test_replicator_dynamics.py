@@ -1,6 +1,7 @@
 """
 Tests for Replicator Dynamics
 """
+
 import numpy as np
 import pytest
 from hypothesis import given, settings

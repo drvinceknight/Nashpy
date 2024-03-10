@@ -11,3 +11,10 @@ build/
 env/
 .tox/
 *.DS_Store
+*.aux
+*.log
+*.fdb_latexmk
+*.fls
+*.xdv
+env*
+

@@ -100,6 +100,33 @@ response to a row players' strategy :math:`\sigma_r` if and only if:
 
       \text{argmax}_{i\in\mathcal{A}_1}A_{ij}=2\text{ for all }j\in\mathcal{A}_2
 
+.. _definition_of_a_degenerate_game:
+
+Definition of a degenerate game
+-------------------------------
+
+A two player game is called non degenerate if no mixed strategy of support size
+:math:`k` has more than :math:`k` pure best responses.
+
+.. admonition:: Question
+   :class: note
+
+   Show that the following game is degenerate:
+
+   .. math::
+
+      A =
+      \begin{pmatrix}
+           0 & -1 &  1\\
+          -1 &  0 &  1\\
+          -1 &  1 &  0
+      \end{pmatrix}
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   The third column has two pure best responses.
+
 .. _best_responses_in_2_by_2_games:
 
 Generic best responses in 2 by 2 games
@@ -324,6 +351,94 @@ In a two player game :math:`(A, B)\in {\mathbb{R}^{m \times n}} ^ 2`,
 :math:`(\sigma_r, \sigma_c)` is a Nash equilibria if :math:`\sigma_r` is a best
 response to :math:`\sigma_c` and :math:`\sigma_c` is a best response to
 :math:`\sigma_r`.
+
+Exercises
+---------
+
+
+
+1. For the following games identify the best responses:
+
+   1. 
+
+   .. math:: 
+
+      A = 
+      \begin{pmatrix}
+      2 & 1\\
+      1 & 1\end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+         1 & 1\\
+         1 & 3\end{pmatrix}
+
+   2. 
+
+   .. math::
+
+      A = 
+      \begin{pmatrix}
+      2  & 1 & 3 & 17\\
+      27 & 3 & 1 & 1\\
+      4  & 6 & 7 & 18
+      \end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      11 & 9  & 10 & 22\\
+      0  & 1  & 1  & 0\\
+      2  & 10 & 12 & 0
+      \end{pmatrix}
+
+   3. 
+
+   .. math:: 
+
+      A =
+      \begin{pmatrix}
+      3  & 3 & 2 \\
+      2  & 1 & 3 
+      \end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      2  & 1 & 3 \\
+      2  & 3 & 2 
+      \end{pmatrix}
+
+   4. 
+
+   .. math::
+
+      A =
+      \begin{pmatrix}
+      3 & -1\\
+      2 & 7\end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      -3 & 1\\
+      1 & -6\end{pmatrix}
+
+2. Represent the following game in normal form:
+
+      Assume two neighbouring countries have at their disposal very
+      destructive armies. If both countries attack each other the
+      countries’ civilian population will suffer 10 thousand casualties.
+      If one country attacks whilst the other remains peaceful, the
+      peaceful country will lose 15 thousand casualties but would also
+      retaliate causing the offensive country 13 thousand casualties. If
+      both countries remain peaceful then there are no casualties.
+
+   1. Clearly state the players and strategy sets.
+   2. Plot the utilities to both countries assuming that they play a
+      mixed strategy while the other country remains peaceful.
+   3. Plot the utilities to both countries assuming that they play a
+      mixed strategy while the other country attacks.
+   4. Obtain the best responses of each player.
+
+3. Construct a degenerate :math:`3\times 3` game.
 
 Using Nashpy
 ------------

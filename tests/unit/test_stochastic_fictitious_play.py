@@ -1,6 +1,7 @@
 """
 Tests for stochastic fictitious learning
 """
+
 from hypothesis import given
 from hypothesis.extra.numpy import arrays
 import numpy as np

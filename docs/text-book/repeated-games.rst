@@ -122,96 +122,96 @@ distribution over the action set of the stage game.
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to C\\
              (S, S) &\to C\\
              (S, C) &\to C\\
              (C, S) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
       For the column player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to S\\
              (S, S) &\to C\\
              (S, C) &\to C\\
              (C, S) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
    2. For the row player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to C\\
              (S, S) &\to C\\
              (C, S) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
       For the column player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to S\\
              (S, S) &\to C\\
              (S, C) &\to C\\
              (C, S) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
    3. For the row player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to C\\
              (S, S) &\to C\\
              (C, S) &\to S\\
              (S, C) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
       For the column player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to S\\
              (S, S) &\to C\\
              (S, C) &\to C\\
              (C, S) &\to \alpha\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
    4. For the row player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to S\\
              (S, S) &\to C\\
              (C, S) &\to S\\
              (S, C) &\to C\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
       For the column player:
 
       .. math::
 
-         \begin{align}
+         \begin{align*}
              (\emptyset, \emptyset) &\to S\\
              (S, S) &\to C\\
              (S, C) &\to C\\
              (C, S) &\to S\\
              (C, C) &\to S\\
-         \end{align}
+         \end{align*}
 
 .. admonition:: Answer
    :class: caution, dropdown
@@ -257,7 +257,7 @@ For the row player:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        (\emptyset, \emptyset) &\to r_1\\
        (r_1, c_1) &\to r_2\\
        (r_1, c_2) &\to r_2\\
@@ -265,13 +265,13 @@ For the row player:
        (r_2, c_1) &\to r_2\\
        (r_2, c_2) &\to r_2\\
        (r_2, c_3) &\to r_2\\
-   \end{align}
+   \end{align*}
 
 For the column player:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        (\emptyset, \emptyset) &\to c_2\\
        (r_1, c_1) &\to c_3\\
        (r_2, c_1) &\to c_1\\
@@ -279,7 +279,7 @@ For the column player:
        (r_2, c_2) &\to c_1\\
        (r_1, c_3) &\to c_3\\
        (r_2, c_3) &\to c_1\\
-   \end{align}
+   \end{align*}
 
 This pair of strategies correspond to the following scenario:
 
@@ -303,6 +303,60 @@ if either player has an incentive to deviate.
 
 Thus this strategy pair **is a Nash equilibrium** and evidences how a reputation
 can be built and cooperation can emerge from complex dynamics.
+
+Exercises
+---------
+
+1. Write the full potential history :math:`\bigcup_{t=0}^{T-1}H(t)` for
+   repeated games with :math:`T` periods in the following cases:
+
+   1. :math:`\mathcal{A}_1=\mathcal{A}_2=\{0, 1\}` and :math:`T=2`
+   2. :math:`\mathcal{A}_1=\{r_1, r_2\}\;\mathcal{A}_2=\{c_1, c_2\}` and :math:`T=3`
+
+2. Obtain a formula for :math:`\left|\bigcup_{t=0}^{T-1}H(t)\right|` in
+   terms of :math:`A_1, A_2` and :math:`T`.
+3. Prove that a sequence of stage Nash equilibria is a Nash equilibria for the
+   repeated game.
+4. Obtain all sequence of stage Nash equilibria as well as another Nash
+   equilibrium for the following repeated games:
+
+   1. 
+
+   .. math::
+      
+      A =
+      \begin{pmatrix}
+      3 & -1\\
+      2 & 4\\
+      3 & 1
+      \end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      13 & -1\\
+      6 & 2\\
+      3 & 1
+      \end{pmatrix}
+      \qquad
+      T=2
+
+   2.
+
+   .. math::
+
+      A =
+      \begin{pmatrix}
+      2 & -1 & 8\\
+      4 & 2 & 9
+      \end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      13 & 14 & -1\\
+      6 & 2 & 6
+      \end{pmatrix}
+      \qquad
+      T=2
 
 Using Nashpy
 ------------

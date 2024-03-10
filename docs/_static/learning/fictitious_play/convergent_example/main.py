@@ -5,6 +5,7 @@ This plots a divergent fictitious play example.
 
 The code should match the reference code in the documentation.
 """
+
 import matplotlib.pyplot as plt
 import numpy as np
 

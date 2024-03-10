@@ -85,10 +85,10 @@ In our case the differential equations are:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        \frac{dx_1}{dt} &= x_1(2x_1 + x_2 - \phi)\\
        \frac{dx_2}{dt} &= x_2(3x_1 - \phi)
-   \end{align}
+   \end{align*}
 
 where:
 
@@ -194,21 +194,21 @@ Note that there are equivalent linear algebraic definitions to the above:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
           \frac{dx_1}{dt} &= x_1(x_3 - x_2 - \phi)\\
           \frac{dx_2}{dt} &= x_2(x_1 - x_3 - \phi)\\
           \frac{dx_3}{dt} &= x_3(x_2 - x_1 - \phi)
-      \end{align}
+      \end{align*}
 
    Closer inspection of :math:`\phi` gives: :math:`\phi=0` thus:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
           \frac{dx_1}{dt} &= x_1(x_3 - x_2)\\
           \frac{dx_2}{dt} &= x_2(x_1 - x_3)\\
           \frac{dx_3}{dt} &= x_3(x_2 - x_1)
-      \end{align}
+      \end{align*}
 
 
 Stability of the replicator dynamics equation
@@ -253,11 +253,11 @@ referred to as a **stable population**.
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
           \frac{dx_1}{dt} &= x_1(x_3 - x_2)\\
           \frac{dx_2}{dt} &= x_2(x_1 - x_3)\\
           \frac{dx_3}{dt} &= x_3(x_2 - x_1)
-      \end{align}
+      \end{align*}
 
    For them all to be 0, this requires:
 
@@ -318,10 +318,10 @@ referred to as a **stable population**.
 
     .. math::
 
-       \begin{align}
+       \begin{align*}
            \frac{dx_1}{dt} &= x_1(2x_1 + x_2 - \phi)\\
            \frac{dx_2}{dt} &= x_2(3x_1 - \phi)
-       \end{align}
+       \end{align*}
 
     where:
 
@@ -333,10 +333,10 @@ referred to as a **stable population**.
 
     .. math::
 
-       \begin{align}
+       \begin{align*}
            \frac{dx_1}{dt} &= x_1(x_1 - 1)(2x_1-1)\\
            \frac{dx_2}{dt} &= -x_1(x_1 - 1)(2x_1-1)
-       \end{align}
+       \end{align*}
 
    For them both to be 0, this requires:
 
@@ -566,13 +566,32 @@ The plot below shows the evolution of the system:
 
    .. math::
 
-      \begin{align}
+      \begin{align*}
           \frac{dx_i}{dt} &= x_i f_i Q_{ii}- x_i\phi\text{ for all }i && Q_{ij}=0\text{ for all } i\ne j\\
           \frac{dx_i}{dt} &= x_i f_i - x_i\phi\text{ for all }i && Q_{ii}=1\\
           \frac{dx_i}{dt} &= x_i (f_i - \phi)\text{ for all }i
-      \end{align}
+      \end{align*}
 
    As required.
+
+
+Exercises
+---------
+
+1. Consider a population with
+   two types of individuals: :math:`x=(x_1, x_2)` such that
+   :math:`x_1 + x_2 = 1`. Obtain all the stable distribution for the
+   system defined by the following fitness functions:
+
+   1. :math:`f_1(x)=x_1 - x_2\qquad f_2(x)=x_2 - 2 x_1`
+   2. :math:`f_1(x)=x_1x_2 - x_2\qquad f_2(x)=x_2 - x_1 + 1/2`
+   3. :math:`f_1(x)=x_1 ^ 2 \qquad f_2(x)=x_2^2`
+
+2. For the following games, obtain all the stable distributions for the
+   evolutionary game:
+
+   1. :math:`A = \begin{pmatrix}2 & 4 \\ 5 & 3\end{pmatrix}`
+   2. :math:`A = \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}`
 
 
 Using Nashpy

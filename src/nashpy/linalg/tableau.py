@@ -1,4 +1,5 @@
 """A class for the tableaus used in the Lemke Howson algorithms"""
+
 import warnings
 import numpy as np
 import numpy.typing as npt

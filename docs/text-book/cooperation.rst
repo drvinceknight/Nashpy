@@ -46,37 +46,37 @@ Cooperate unconditionally:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        (\emptyset, \emptyset) &\to r_1\\
        (r_1, c_1) &\to r_1\\
        (r_1, c_2) &\to r_1\\
        (r_2, c_1) &\to r_1\\
        (r_2, c_2) &\to r_1\\
-   \end{align}
+   \end{align*}
 
 Defect unconditionally:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        (\emptyset, \emptyset) &\to r_2\\
        (r_1, c_1) &\to r_2\\
        (r_1, c_2) &\to r_2\\
        (r_2, c_1) &\to r_2\\
        (r_2, c_2) &\to r_2\\
-   \end{align}
+   \end{align*}
 
 Start by cooperating and then repeat the action of the opponent:
 
 .. math::
 
-   \begin{align}
+   \begin{align*}
        (\emptyset, \emptyset) &\to r_1\\
        (r_1, c_1) &\to r_1\\
        (r_1, c_2) &\to r_2\\
        (r_2, c_1) &\to r_1\\
        (r_2, c_2) &\to r_2\\
-   \end{align}
+   \end{align*}
 
 The strategy space when repeating the game **twice** corresponds to 32 different
 strategies. We can see how these 32 strategies interact in an evolutionary
@@ -311,6 +311,66 @@ The fact that Tit For Tat won garnered a lot of research (still ongoing) as it
 showed a mathematical model of how cooperative behaviour can emerge in complex
 situations. However, recent research has shown that Tit For Tat is not a
 universally strong strategy [Knight2018]_, [Harper2017]_, [Press2012]_.
+
+Exercises
+---------
+
+
+Justify if the following games are Prisoners dilemmas or not:
+
+1. .. math :: 
+
+      A =
+        \begin{pmatrix}
+        3 & 0\\
+        5 & 1
+        \end{pmatrix}
+        \qquad
+      B =
+        \begin{pmatrix}
+        3 & 5\\
+        0 & 1
+        \end{pmatrix}
+
+2. .. math:: 
+
+      A =
+        \begin{pmatrix}
+        1 & -1\\
+        2 & 0
+        \end{pmatrix}
+        \qquad
+      B =
+        \begin{pmatrix}
+        1 & 2\\
+        -1 & 0
+        \end{pmatrix}
+3. .. math::
+    
+      A =
+        \begin{pmatrix}
+        1 & -1\\
+        2 & 0
+        \end{pmatrix}
+        \qquad
+      B =
+        \begin{pmatrix}
+        3 & 5\\
+        0 & 1
+        \end{pmatrix}
+4. .. math::
+
+      A =
+        \begin{pmatrix}
+        6 & 0\\
+        12 & 1
+        \end{pmatrix}
+        \qquad
+      B =
+        \begin{pmatrix}
+        6 & 12\\
+        0 & 0
+        \end{pmatrix}
 
 Using Python
 ------------

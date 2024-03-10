@@ -1,4 +1,5 @@
 """Code for implementation of a Moran process"""
+
 import numpy as np
 import numpy.typing as npt
 import networkx as nx

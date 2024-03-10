@@ -21,9 +21,11 @@ play_counts_and_distribuions = tuple(
 
 plt.figure()
 probabilities = [
-    row_play_counts / np.sum(row_play_counts)
-    if np.sum(row_play_counts) != 0
-    else row_play_counts + 1 / len(row_play_counts)
+    (
+        row_play_counts / np.sum(row_play_counts)
+        if np.sum(row_play_counts) != 0
+        else row_play_counts + 1 / len(row_play_counts)
+    )
     for (row_play_counts, col_play_counts), _ in play_counts_and_distribuions
 ]
 for number, strategy in enumerate(zip(*probabilities)):

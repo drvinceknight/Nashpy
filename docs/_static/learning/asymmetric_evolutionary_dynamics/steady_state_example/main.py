@@ -5,6 +5,7 @@ This plots an example of stable steady state strategies in an asymmetric game.
 
 The code should match the reference code in the documentation.
 """
+
 import matplotlib.pyplot as plt
 import numpy as np
 

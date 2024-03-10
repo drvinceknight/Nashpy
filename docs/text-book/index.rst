@@ -14,7 +14,6 @@ Nashpy Game Theory Text book
    repeated-games.rst
    cooperation.rst
    lemke-howson.rst
-   degenerate-games.rst
    fictitious-play.rst
    stochastic-fictitious-play.rst
    replicator-dynamics.rst

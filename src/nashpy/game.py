@@ -1,4 +1,5 @@
 """A class for a normal form game"""
+
 import numpy as np
 import numpy.typing as npt
 from typing import Optional, Any

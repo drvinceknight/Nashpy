@@ -146,21 +146,21 @@ This corresponds to taking the expectation over the probability distributions
 
    .. math::
 
-      \begin{align}
-      u_r(\sigma_r, \sigma_c) = & 1/3(1/3 \times 0 + 1/3 \times -1 + 1/3 \times 1) \\
+      \begin{align*}
+      u_r(\sigma_r, \sigma_c) & = 1/3(1/3 \times 0 + 1/3 \times -1 + 1/3 \times 1) \\
                                 & + 0(1/3 \times 1 + 1/3 \times 0 + 1/3 \times -1) \\
                                 & + 2/3(1/3 \times -1 + 1/3 \times 1 + 1/3 \times 0) \\
-                              = & 0
-      \end{align}
+                               & =  0
+      \end{align*} 
 
    .. math::
 
-      \begin{align}
-      u_c(\sigma_r, \sigma_c) = & 1/3(1/3 \times 0 + 1/3 \times 1 + 1/3 \times -1) \\
-                                & + 0(1/3 \times -1 + 1/3 \times 0 + 1/3 \times 1) \\
-                                & + 2/3(1/3 \times 1 + 1/3 \times -1 + 1/3 \times 0) \\
-                              = & 0
-      \end{align}
+      \begin{align*}
+      u_c(\sigma_r, \sigma_c) & = 1/3(1/3 \times 0 + 1/3 \times 1 + 1/3 \times -1) \\
+                              & + 0(1/3 \times -1 + 1/3 \times 0 + 1/3 \times 1) \\
+                              & + 2/3(1/3 \times 1 + 1/3 \times -1 + 1/3 \times 0) \\
+                              & = 0
+      \end{align*}
 
 Linear algebraic calculation of expected utilities
 --------------------------------------------------
@@ -191,6 +191,48 @@ product:
    .. math::
 
       u_c(\sigma_r, \sigma_c) = (1/3, 0, 2/3) B \begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = (2/3, -1/3, -1/3)\begin{pmatrix}1/3 \\ 1/3 \\ 1/3\end{pmatrix} = 0
+
+
+Exercises
+---------
+
+
+1. For the following vectors explain which ones are valid mixed strategy
+   vectors for a strategy set of size 5. If there are not: explain why.
+
+   1. :math:`\sigma=(1, 0, 0, 0, 0)`
+   2. :math:`\sigma=(1/4, 1/4, 0, 0, 1/4)`
+   3. :math:`\sigma=(1/4, 1/4, 1/2, -1/2, 1/2)`
+   4. :math:`\sigma=(1/4, 1/4, 0, 0, 11/20)`
+   5. :math:`\sigma=(1/5, 1/5, 1/5, 1/5, 1/5)`
+
+
+2. Obtain the supports for the following strategy vectors:
+
+   1. :math:`\sigma = (1, 0, 0, 0)`
+   2. :math:`\sigma = (1/2, 0, 1/2, 0)`
+   3. :math:`\sigma = (1/4, 1/4, 1/4, 1/4)`
+
+
+3. Calculate the utilities (for both the row and column player) for the
+   following game for the following strategy pairs:
+
+   .. math::
+
+
+      A =
+      \begin{pmatrix}
+      1 & -1\\
+      -3 & 1\end{pmatrix}
+      \qquad
+      B =
+      \begin{pmatrix}
+      -1 & 2\\
+      1 & -1\end{pmatrix}
+
+   1. :math:`\sigma_r = (.2, .8)\qquad\sigma_c = (.6, .4)`
+   2. :math:`\sigma_r = (.3, .7)\qquad\sigma_c = (.2, .8)`
+   3. :math:`\sigma_r = (.9, .1)\qquad\sigma_c = (.5, .5)`
 
 
 Using Nashpy

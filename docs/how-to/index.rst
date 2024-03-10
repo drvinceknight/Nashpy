@@ -10,6 +10,7 @@ How to:
    create-a-game.rst
    calculate-utilities.rst
    check-best-responses.rst
+   handle-degenerate-games.rst
    use-minimax.rst
    solve-with-support-enumeration.rst
    solve-with-vertex-enumeration.rst

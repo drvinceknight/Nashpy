@@ -1,23 +1,7 @@
 .. _degenerate-games-discussion:
 
-Degenerate games
-================
-
-A two player game is called nondegenerate if no mixed strategy of support size
-:math:`k` has more than :math:`k` pure best responses.
-
-For example, the zero sum game defined by the following matrix is degenerate:
-
-.. math::
-
-   A =
-   \begin{pmatrix}
-        0 & -1 &  1\\
-       -1 &  0 &  1\\
-       -1 &  1 &  0
-   \end{pmatrix}
-
-The third column has two pure best responses.
+Handle Degenerate games
+=======================
 
 When dealing with *degenerate* games unexpected results can occur::
 

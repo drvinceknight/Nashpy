@@ -142,6 +142,65 @@ Definition of a strategy in an extensive form game
 A strategy for a player in an extensive form is a collection of probability
 distribution over the action set of each information set.
 
+
+Definition of backward induction
+--------------------------------
+
+Backward induction: This is the process of analysing a game from back to front. 
+At each information set we remove actions that are not a best response.
+
+
+.. admonition:: Question
+   :class: note
+
+   For the following game with :math:`\mathcal{N} = \{\text{Alice},
+   \text{Bob}\}`, assume that decision nodes :math:`A_i` are Alice's and
+   :math:`B_i` are Bob's. Obtain a Nash equilibrium using backwards induction.
+
+   .. image:: /_static/discussion/extensive-form-game-example-with-perfect-information/main.png
+
+.. admonition:: Answer
+   :class: caution, dropdown
+
+   At node :math:`A_2` Alice's best response is to pick :math:`Y` (because :math:`4>3`) thus the
+   extensive form game becomes:
+
+   .. image:: /_static/discussion/extensive-form-game-example-with-perfect-information_one_step_backwards_induction/main.png
+
+   At node :math:`B_2` Bob's best response is to pick :math:`c` (because
+   :math:`2>0`) thus the extensive form game becomes:
+
+   .. image:: /_static/discussion/extensive-form-game-example-with-perfect-information_two_steps_backwards_induction/main.png
+
+   At node :math:`B_1` Bob's best response to to pick :math:`b` (because
+   :math:`5>1`) thus the extensive form game becomes:
+
+   .. image:: /_static/discussion/extensive-form-game-example-with-perfect-information_three_steps_backwards_induction/main.png
+
+   At node :math:`A_1` Alice's best response to to pick :math:`W` (because
+   :math:`4>3`).
+
+   From this we obtain the following Nash equilibria:
+
+   - Alice's strategy:
+
+     .. math::
+
+         \begin{align}
+             A_1 &\to W\\
+             A_2 &\to Y\\
+         \end{align}
+
+   - Bob's strategy:
+
+     .. math::
+
+         \begin{align}
+             B_1 &\to b\\
+             B_2 &\to c\\
+         \end{align}
+
+
 .. _equivalence-of-extensive-and-normal-form-games:
 
 Equivalence of Extensive and Normal Form Games
@@ -234,6 +293,28 @@ Using this enumeration the payoff functions can be given by the matrices
       2 & 1\\
       0 & 3\\
       \end{pmatrix}
+
+Exercises
+---------
+
+1. Obtain the Nash equilibrium for the following games using backward induction:
+
+   .. image:: /_static/discussion/extensive-form-game-exercise-one/main.png
+
+   .. image:: /_static/discussion/extensive-form-game-exercise-two/main.png
+
+   .. image:: /_static/discussion/extensive-form-game-exercise-three/main.png
+
+   .. image:: /_static/discussion/extensive-form-game-exercise-four/main.png
+
+
+2. Obtain the Nash equilibrium for the following game:
+
+   Player 1 chooses a number :math:`x\geq 0`, which player 2
+   observes. After this simultaneously and independently player 1
+   and player 2 choose :math:`y_1, y_2\in\mathbb{R}` respectively.
+   The utility to player 1 is given by :math:`2y_2y_1+xy_1-y_1^2-x^3/3`
+   and the utility to player 2 is given by :math:`-(y_1-2y_2)^2`.
 
 Using Nashpy
 ------------

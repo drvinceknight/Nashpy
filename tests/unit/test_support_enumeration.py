@@ -1,6 +1,7 @@
 """
 Tests for the game class
 """
+
 import unittest
 
 import numpy as np

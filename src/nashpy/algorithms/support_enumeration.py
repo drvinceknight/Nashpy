@@ -1,4 +1,5 @@
 """A class for a normal form game"""
+
 import warnings
 from itertools import chain, combinations
 

@@ -1,6 +1,7 @@
 """
 Tests for the moran process
 """
+
 import numpy as np
 import pytest
 

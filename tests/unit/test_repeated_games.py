@@ -1,6 +1,7 @@
 """
 Tests for functionality to create games from repeated games.
 """
+
 import numpy as np
 
 import nashpy as nash

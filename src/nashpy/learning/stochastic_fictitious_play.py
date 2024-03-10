@@ -1,4 +1,5 @@
 """Code to carry out stochastic fictitious learning"""
+
 import numpy as np
 from nashpy.learning.fictitious_play import update_play_count
 import numpy.typing as npt

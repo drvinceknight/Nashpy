@@ -1,6 +1,7 @@
 """
 Tests for the linear programming implementation for Zero sum games
 """
+
 import numpy as np
 
 from nashpy.linalg.minimax import (

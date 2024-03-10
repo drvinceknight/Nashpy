@@ -1,6 +1,7 @@
 """
 Tests for the polytope functionality
 """
+
 import unittest
 from types import GeneratorType
 

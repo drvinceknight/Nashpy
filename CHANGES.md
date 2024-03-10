@@ -1,3 +1,7 @@
+# v0.0.41
+
+Add exercises to a number of text book chapters.
+
 # v0.0.40
 
 Add more documentation on Zero sum games.

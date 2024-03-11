@@ -17,4 +17,4 @@ env/
 *.fls
 *.xdv
 env*
-
+.pypirc

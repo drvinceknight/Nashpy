@@ -15,7 +15,7 @@ If we modify the game of :ref:`Rock Paper Scissora
 - Paper disproves Spock.
 
 The other modification is that the game is no longer symmetric: only the row
-player can use the Well.
+player can use Spock.
 
 The mathematical representation of this game is given by:
 

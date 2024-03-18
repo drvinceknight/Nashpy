@@ -357,7 +357,8 @@ Exercises
 
 
 
-1. For the following games identify the best responses:
+1. For the following games identify the best responses that are strategies with
+   support size 1 (i.e. strategies that just play a single action).
 
    1. 
 

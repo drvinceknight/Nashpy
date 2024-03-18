@@ -197,8 +197,8 @@ Exercises
 ---------
 
 
-1. For the following vectors explain which ones are valid mixed strategy
-   vectors for a strategy set of size 5. If there are not: explain why.
+1. For the following vectors explain which ones are valid strategy
+   vectors for an action set of size 5. If there are not: explain why.
 
    1. :math:`\sigma=(1, 0, 0, 0, 0)`
    2. :math:`\sigma=(1/4, 1/4, 0, 0, 1/4)`

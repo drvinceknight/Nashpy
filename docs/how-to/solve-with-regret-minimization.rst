@@ -1,0 +1,34 @@
+.. _how-to-use-regret-minimization:
+
+Solve with support enumeration
+==============================
+
+One of the algorithms implemented in :code:`Nashpy` is called
+:code:`regret_minimization()`, this is implemented as a method on the :code:`Game`
+class::
+
+    >>> import nashpy as nash
+    >>> import numpy as np
+    >>> A = np.array([[3, -1], [-1, 3]])
+    >>> B = np.array([[-3, 1], [1, -3]])
+    >>> rps = nash.Game(A,B)
+
+This :code:`regret_minimization` method returns a generator of all the
+equilibria::
+
+    >>> ne_regret_mini = rps.regret_minimization()
+    >>> print(list(ne_regret_mini))
+    [([0.5, 0.5], [0.5, 0.5])]
+
+The program will generate more controlled results by adding the two input parameters :code:`learning_rate` and :code:`max_iterations` within the function :code:`regret_minimization`.
+The Example call statements to run is given below::
+
+    >>> A = np.array([[3, -1,3], [-1, 3,6], [-1, 1,2]])
+    >>> B = np.array([[-3, 1,4], [1, -3,3], [-1, 3,4]])
+    >>> rps = nash.Game(A,B)
+    >>> learning_rate = 0.2
+    >>> max_iterations = 1000
+    >>> ne_regret_mini = rps.regret_minimization(learning_rate=learning_rate,
+    max_iterations=max_iterations)
+    >>> print(list(ne_regret_mini))
+    [([0.0, 1.0, 0.0], [0.0, 0.0, 1.0])]

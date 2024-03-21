@@ -57,7 +57,3 @@ class TestRegretMinimization(unittest.TestCase):
         self.assertTrue(
             np.allclose(actual_nash_equilibrium_B, expected_nash_equilibrium_B)
         )
-
-
-if __name__ == "__main__":
-    unittest.main()

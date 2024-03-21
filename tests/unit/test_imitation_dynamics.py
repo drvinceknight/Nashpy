@@ -75,7 +75,3 @@ class TestImitationDynamics(unittest.TestCase):
             )  # Convert numpy arrays to tuples
         # Check if the results are different in at least one pair of iterations
         self.assertTrue(len(set(results)) == 1, "Results are randomly generated")
-
-
-if __name__ == "__main__":
-    unittest.main()

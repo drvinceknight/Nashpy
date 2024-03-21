@@ -2,8 +2,9 @@ import numpy as np
 from typing import Generator, Tuple, Any
 import numpy.typing as npt
 
+
 def payoff(player_strategy, opponent_strategy, player_payoff_matrix):
-    '''
+    """
     Calculate the payoff of a player given their strategy and the opponent's strategy.
 
     Parameters:
@@ -13,13 +14,19 @@ def payoff(player_strategy, opponent_strategy, player_payoff_matrix):
 
     Returns:
     - payoff: scalar representing the payoff of the player
-    '''
+    """
     return np.dot(player_strategy, np.dot(player_payoff_matrix, opponent_strategy))
 
+
 def imitation_dynamics(
-        A: npt.NDArray, B: npt.NDArray, population_size=100, num_of_generations=1000, random_seed=None,threshold=0.5
-        ) -> Generator[Tuple[float, float], Any, None]:
-    '''
+    A: npt.NDArray,
+    B: npt.NDArray,
+    population_size=100,
+    num_of_generations=1000,
+    random_seed=None,
+    threshold=0.5,
+) -> Generator[Tuple[float, float], Any, None]:
+    """
     Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
 
     Parameters:
@@ -33,21 +40,31 @@ def imitation_dynamics(
     Yields:
     - nash_equilibrium_player1: numpy array representing the Nash equilibrium strategy for Player 1
     - nash_equilibrium_player2: numpy array representing the Nash equilibrium strategy for Player 2
-    '''
+    """
 
     num_strategies = len(A)
 
     # Initialize population
     if random_seed:
-        np.random.seed(random_seed) # Set random seed for reproducibility 
+        np.random.seed(random_seed)  # Set random seed for reproducibility
 
     population_A = np.random.dirichlet(np.ones(num_strategies), size=population_size)
     population_B = np.random.dirichlet(np.ones(num_strategies), size=population_size)
 
     for generation in range(num_of_generations):
         # Play the game
-        payoffs_A = np.array([payoff(population_A[i], population_B[i], A) for i in range(population_size)])
-        payoffs_B = np.array([payoff(population_B[i], population_A[i], B) for i in range(population_size)])
+        payoffs_A = np.array(
+            [
+                payoff(population_A[i], population_B[i], A)
+                for i in range(population_size)
+            ]
+        )
+        payoffs_B = np.array(
+            [
+                payoff(population_B[i], population_A[i], B)
+                for i in range(population_size)
+            ]
+        )
 
         # Update population based on payoffs
         # Used Imitation dynamics in which the players copy the strategy of the most successful individual

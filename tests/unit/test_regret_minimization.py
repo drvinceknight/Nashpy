@@ -3,7 +3,6 @@ import numpy as np
 from nashpy.algorithms.regret_minimization import regret_minimization
 
 
-
 def test_regret_minimization_for_zerosum_game():
     # Test case values
     A = np.array(
@@ -27,6 +26,7 @@ def test_regret_minimization_for_zerosum_game():
     # Assert if the actual Nash equilibrium strategies match the expected strategies
     assert np.array_equal(actual_nash_equilibrium_A, expected_nash_equilibrium_A)
     assert np.array_equal(actual_nash_equilibrium_B, expected_nash_equilibrium_B)
+
 
 def test_regret_minimization_non_zerosum_game():
     # Test case values

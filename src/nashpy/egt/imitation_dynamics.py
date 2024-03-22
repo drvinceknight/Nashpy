@@ -22,7 +22,7 @@ def imitation_dynamics(
     A: npt.NDArray,
     B: npt.NDArray,
     population_size=100,
-    num_of_generations=1000,
+    iterations=1000,
     random_seed=None,
     threshold=0.5,
 ) -> Generator[Tuple[float, float], Any, None]:
@@ -33,7 +33,7 @@ def imitation_dynamics(
     - A: numpy matrix representing the payoff matrix for Player 1
     - B: numpy matrix representing the payoff matrix for Player 2
     - population_size : number of individuals in the population of the group (default: 100)
-    - num_of_generations: number of generations to simulate (default: 1000)
+    - iterations: number of generations to simulate (default: 1000)
     - random_seed: seed for reproducibility (default: None)
     - threshold: threshold value for representing strategies as 0 or 1 (default: 0.5)
 
@@ -51,7 +51,7 @@ def imitation_dynamics(
     population_A = np.random.dirichlet(np.ones(num_strategies), size=population_size)
     population_B = np.random.dirichlet(np.ones(num_strategies), size=population_size)
 
-    for generation in range(num_of_generations):
+    for generation in range(iterations):
         # Play the game
         payoffs_A = np.array(
             [

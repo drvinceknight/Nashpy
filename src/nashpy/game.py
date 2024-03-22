@@ -454,7 +454,7 @@ Column player:
     def imitation_dynamics(
         self,
         population_size=100,
-        num_of_generations=1000,
+        iterations=1000,
         random_seed=None,
         threshold=0.5,
     ):
@@ -465,7 +465,7 @@ Column player:
         A: numpy matrix representing the payoff matrix for Player 1
         B: numpy matrix representing the payoff matrix for Player 2
         population_size : number of individuals in the population of the group (default: 100)
-        num_of_generations: number of generations to simulate (default: 1000)
+        iterations: number of generations to simulate (default: 1000)
         random_seed: seed for reproducibility (default: None)
         threshold: threshold value for representing strategies as 0 or 1 (default: 0.5)
 
@@ -479,7 +479,7 @@ Column player:
             A=A,
             B=B,
             population_size=population_size,
-            num_of_generations=num_of_generations,
+            iterations=iterations,
             random_seed=random_seed,
             threshold=threshold,
         )

@@ -31,9 +31,9 @@ Even with a zero-sum game, the probability of strategies to achieve Nash Equilib
     >>> B = np.array([[-3, 1,4], [1, -3,3], [-1, 3,4]])
     >>> rps = nash.Game(A,B)
     >>> population_size=200
-    >>> num_of_generations=100
+    >>> iterations=100
     >>> random_seed=30
     >>> threshold=0.3
-    >>> ne_imitation_dynamics = rps.imitation_dynamics(population_size=population_size,num_of_generations=num_of_generations,random_seed=random_seed,threshold=threshold)
+    >>> ne_imitation_dynamics = rps.imitation_dynamics(population_size=population_size,iterations=iterations,random_seed=random_seed,threshold=threshold)
     >>> list(ne_imitation_dynamics)
     [(array([0., 1., 0.]), array([1., 0., 1.]))]

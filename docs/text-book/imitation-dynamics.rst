@@ -42,7 +42,7 @@ Convergence and Nash Equilibrium
 Thresholding (Optional)
 ------------------------
 
-- Apply a thresholding mechanism to discretize strategies into binary or discrete values if needed.
+- Apply a thresholding mechanism to discretize strategies, values must range between 0 and 1, defaulted to 0.5.
 
 Comparison with Fictitious Play
 -------------------------------

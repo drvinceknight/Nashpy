@@ -26,8 +26,8 @@ equilibria::
     >>> B = np.array([[-3, 1,4], [1, -3,3], [-1, 3,4]])
     >>> rps = nash.Game(A,B)
     >>> learning_rate = 0.2
-    >>> max_iterations = 1000
+    >>> iterations = 1000
     >>> ne_regret_mini = rps.regret_minimization(learning_rate=learning_rate,
-    max_iterations=max_iterations)
+    iterations=iterations)
     >>> print(list(ne_regret_mini))
     [([0.0, 1.0, 0.0], [0.0, 0.0, 1.0])]

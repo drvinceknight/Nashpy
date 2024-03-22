@@ -13,8 +13,8 @@ class::
     >>> B = np.array([[-3, 1], [1, -3]])
     >>> rps = nash.Game(A,B)
 
-This :code:`imitation_dynamics` method returns a generator of all the
-equilibria::
+This :code:`imitation_dynamics` method returns a generator of the outcomes 
+of the imitation dynamics algorithm::
 
     >>> ne_imitation_dynamics = rps.imitation_dynamics()
     >>> print(list(ne_imitation_dynamics))

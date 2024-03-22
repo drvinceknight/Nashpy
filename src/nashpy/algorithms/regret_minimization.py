@@ -36,7 +36,7 @@ def generate_abs_strategy(strategy_list):
 
 
 def regret_minimization(
-    A: npt.NDArray, B: npt.NDArray, learning_rate=0.1, max_iterations=100
+    A: npt.NDArray, B: npt.NDArray, learning_rate=0.1, iterations=100
 ) -> Generator[Tuple[float, float], Any, None]:
     """
     Obtain the Nash equilibria using regret minimization method using N number of itreations.
@@ -73,7 +73,7 @@ def regret_minimization(
     strategy_A = np.ones(num_strategies_1) / num_strategies_1
     strategy_B = np.ones(num_strategies_2) / num_strategies_2
 
-    for itration_num in range(max_iterations):
+    for itration_num in range(iterations):
         strategy_utilities_A = np.dot(A, strategy_B)
         strategy_utilities_B = np.dot(B, strategy_A)
 

@@ -425,7 +425,7 @@ Column player:
         column_strategy = linear_program(row_player_payoff_matrix=B.T)
         return row_strategy, column_strategy
 
-    def regret_minimization(self, learning_rate=0.1, max_iterations=100):
+    def regret_minimization(self, learning_rate=0.1, iterations=100):
         """
         Build best Strategies probability of both players using regret minimization method
         Algorithm implemented here is Algorithm 4.3 Theorem 4.4 of [Nisan2007]_
@@ -448,7 +448,7 @@ Column player:
         """
         A, B = self.payoff_matrices
         return regret_minimization(
-            A=A, B=B, learning_rate=learning_rate, max_iterations=max_iterations
+            A=A, B=B, learning_rate=learning_rate, iterations=iterations
         )
 
     def imitation_dynamics(

@@ -1,6 +1,6 @@
 .. _how-to-use-regret-minimization:
 
-Solve with support enumeration
+Solve with Regret Minimization
 ==============================
 
 One of the algorithms implemented in :code:`Nashpy` is called
@@ -20,8 +20,7 @@ equilibria::
     >>> print(list(ne_regret_mini))
     [([0.5, 0.5], [0.5, 0.5])]
 
-The program will generate more controlled results by adding the two input parameters :code:`learning_rate` and :code:`max_iterations` within the function :code:`regret_minimization`.
-The Example call statements to run is given below::
+:code:`regret_minimization` takes the following parameters :code:`learning_rate` and :code:`iterations`.
 
     >>> A = np.array([[3, -1,3], [-1, 3,6], [-1, 1,2]])
     >>> B = np.array([[-3, 1,4], [1, -3,3], [-1, 3,4]])

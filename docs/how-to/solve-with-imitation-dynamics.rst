@@ -20,9 +20,6 @@ equilibria::
     >>> print(list(ne_imitation_dynamics))
     [(array([0., 1.]), array([1., 0.]))]
 
-Note:
-Even with a zero-sum game, the probability of strategies to achieve Nash Equilibrium is not evenly distributed; this is because the system is not random but runs only on imitating the opposition's strategy.
-
 :code:`imitation_dynamics` takes the following parameters  :code:`iterations`, :code:`population_size`, :code:`random_seed` and :code:`threshold` within the function :code:`imitation_dynamics`.
 
     >>> import nashpy as nash

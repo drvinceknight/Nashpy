@@ -15,8 +15,8 @@ from .learning.replicator_dynamics import (
 )
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 from .utils.is_best_response import is_best_response
-from .algorithms.regret_minimization import regret_minimization
-from .egt.imitation_dynamics import imitation_dynamics
+from .learning.regret_minimization import regret_minimization
+from .learning.imitation_dynamics import imitation_dynamics
 
 
 class Game:
@@ -428,24 +428,26 @@ Column player:
 
     def regret_minimization(self, learning_rate=0.1, iterations=100):
         """
-        Build best Strategies probability of both players using regret minimization method
+        Obtain the Nash equilibria using regret minimization method using N number of itreations.
+        The code provided is based on the concept of regret matching,
+        with the fixed learning rate.
+
         Algorithm implemented here is Algorithm 4.3 Theorem 4.4 of [Nisan2007]_
+
+        1. Build best Strategies probability of both players
 
         Parameters
         ----------
-
-        learning_rate: float ( Optional Defaulted to 0.1 )
+        learning_rate : float
             The  learning_rate determines the magnitude of the update towards the regrets
-            The learning rate scales the regrets before they are added to the current strategy.
-            A higher learning rate results in a larger update, while a lower learning rate leads to a smaller update.
-            This value allows you to control the pace towards a Nash equilibrium.
 
-        max_itreations: Integer ( Optional Defaulted to 100 )
+        iterations : Integer
             This value is defaulted to 100 itrations, this number could be modified to a larger or smaller number based on the untilities/payoff matrix shape
+
         Returns
         -------
-        tuple
-            The Nash equilibria
+        Generator
+            The equilibria.
         """
         A, B = self.payoff_matrices
         return regret_minimization(
@@ -462,18 +464,21 @@ Column player:
         """
         Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
 
-        Parameters:
-        A: numpy matrix representing the payoff matrix for Player 1
-        B: numpy matrix representing the payoff matrix for Player 2
-        population_size : number of individuals in the population of the group (default: 100)
-        iterations: number of generations to simulate (default: 1000)
-        random_seed: seed for reproducibility (default: None)
-        threshold: threshold value for representing strategies as 0 or 1 (default: 0.5)
+        Parameters
+        ----------
+        population_size : number
+            number of individuals in the population of the group (default: 100)
+        iterations : number
+            number of generations to simulate (default: 1000)
+        random_seed : number
+            seed for reproducibility (default: None)
+        threshold : float
+            threshold value for representing strategies as 0 or 1 (default: 0.5)
 
         Returns
         -------
-        tuple
-            The Nash equilibria
+        Generator
+            The equilibria.
         """
         A, B = self.payoff_matrices
         return imitation_dynamics(

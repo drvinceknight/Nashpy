@@ -1,6 +1,5 @@
-import unittest
 import numpy as np
-from nashpy.algorithms.regret_minimization import regret_minimization
+from nashpy.learning.regret_minimization import regret_minimization
 
 
 def test_regret_minimization_for_zerosum_game():

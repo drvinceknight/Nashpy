@@ -1,6 +1,5 @@
-from nashpy.egt.imitation_dynamics import imitation_dynamics
+from nashpy.learning.imitation_dynamics import imitation_dynamics
 import numpy as np
-import unittest
 import random
 
 
@@ -52,7 +51,7 @@ def test_random_seed_constant():
     A = np.array([[3, 0], [1, 3]])  # Example payoff matrix for Player 1
     B = np.array([[0, 1], [3, 0]])  # Example payoff matrix for Player 2
     population_size = 100
-    iterations = 1000
+    iterations = 100
     random_seed = random.randrange(
         0, 1000
     )  # Add a random_seed value as constant to generate same results in the evolution

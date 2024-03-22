@@ -653,3 +653,39 @@ Column player:
         equilibria = g.linear_program()
         expected_equilibria = (np.array([1, 0]), np.array([1, 0]))
         assert np.array_equal(equilibria, expected_equilibria)
+
+    def test_regret_minimization_non_zerosum_game(self):
+        # Test case values
+        A = np.array([[3, -1, 3], [-1, 3, 6], [-1, 1, 2]])
+        B = np.array([[-3, 1, 4], [1, -3, 3], [-1, 3, 4]])
+        g = nash.Game(A, B)
+
+        expected_nash_equilibrium = [
+            (np.array([0.0, 1.0, 0.0]), np.array([0.0, 0.0, 1.0]))
+        ]  # Expected Nash equilibrium strategy for Players
+        # Execute the regret minimization algorithm
+        for obtained, expected in zip(
+            g.regret_minimization(), expected_nash_equilibrium
+        ):
+            for s1, s2 in zip(obtained, expected):
+                self.assertTrue(
+                    np.array_equal(s1, s2),
+                    msg="obtained: {} !=expected: {}".format(obtained, expected),
+                )
+
+    def test_imitation_dynamics_randomness(self):
+        # Define parameters for the imitation dynamics function
+        A = np.array([[3, 0], [1, 3]])  # Example payoff matrix for Player 1
+        B = np.array([[0, 1], [3, 0]])  # Example payoff matrix for Player 2
+        g = nash.Game(A, B)
+        # Run imitation dynamics multiple times and collect the results
+        results = []
+        for i in range(10):  # Run 10 iterations
+            # Run imitation dynamics with random seed set to None (random initialization)
+            for i, j in list(g.imitation_dynamics()):
+                nash_equilibrium_player1 = i
+            results.append(
+                (tuple(nash_equilibrium_player1))
+            )  # Convert numpy arrays to tuples
+        # Check if the results are different in at least one pair of iterations
+        assert np.all(len(set(results)) > 1)

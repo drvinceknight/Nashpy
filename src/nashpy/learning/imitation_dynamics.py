@@ -1,3 +1,5 @@
+"""A function for a Imitation Dynamics algorithm"""
+
 import numpy as np
 from typing import Generator, Tuple, Any
 import numpy.typing as npt
@@ -7,15 +9,23 @@ def payoff(player_strategy, opponent_strategy, player_payoff_matrix):
     """
     Calculate the payoff of a player given their strategy and the opponent's strategy.
 
-    Parameters:
-    - player_strategy: numpy array representing the strategy of the player
-    - opponent_strategy: numpy array representing the strategy of the opponent
-    - player_payoff_matrix: numpy matrix representing the payoff matrix for the player
+    Parameters
+    ----------
+    player_strategy: numpy array
+        representing the strategy of the player
+    opponent_strategy: numpy array
+        representing the strategy of the opponent
+    player_payoff_matrix: numpy matrix
+        representing the payoff matrix for the player
 
-    Returns:
-    - payoff: scalar representing the payoff of the player
+    Returns
+    -------
+    return_value: scalar representing strategy and payoff matrix
     """
-    return np.dot(player_strategy, np.dot(player_payoff_matrix, opponent_strategy))
+    return_value = np.dot(
+        player_strategy, np.dot(player_payoff_matrix, opponent_strategy)
+    )
+    return return_value
 
 
 def imitation_dynamics(
@@ -29,19 +39,26 @@ def imitation_dynamics(
     """
     Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
 
-    Parameters:
-    - A: numpy matrix representing the payoff matrix for Player 1
-    - B: numpy matrix representing the payoff matrix for Player 2
-    - population_size : number of individuals in the population of the group (default: 100)
-    - iterations: number of generations to simulate (default: 1000)
-    - random_seed: seed for reproducibility (default: None)
-    - threshold: threshold value for representing strategies as 0 or 1 (default: 0.5)
+    Parameters
+    ----------
+    A : numpy matrix
+        representing the payoff matrix for Player 1
+    B : numpy matrix
+        representing the payoff matrix for Player 2
+    population_size : number
+        number of individuals in the population of the group (default: 100)
+    iterations : number
+        number of generations to simulate (default: 1000)
+    random_seed : number
+        seed for reproducibility (default: None)
+    threshold : float
+        threshold value for representing strategies as 0 or 1 (default: 0.5)
 
-    Yields:
-    - nash_equilibrium_player1: numpy array representing the Nash equilibrium strategy for Player 1
-    - nash_equilibrium_player2: numpy array representing the Nash equilibrium strategy for Player 2
+    Yields
+    -------
+    Generator
+        The equilibria.
     """
-
     num_strategies = len(A)
 
     # Initialize population

@@ -94,7 +94,7 @@ response to a row players' strategy :math:`\sigma_r` if and only if:
 
 
    The row player's best response to either of the actions of the column player
-   is :math:`\sigma_r^*=(1,0)`. This can be expressed as:
+   is :math:`\sigma_r^*=(0,1)`. This can be expressed as:
 
    .. math::
 

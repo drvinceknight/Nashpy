@@ -1,5 +1,5 @@
-Detailed Mathematical Model of Imitation Dynamics
-==================================================
+Imitation Dynamics
+==================
 
 Introduction
 ------------

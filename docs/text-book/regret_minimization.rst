@@ -1,5 +1,5 @@
-Regret Minimization in Game Theory
-==================================
+Regret Minimization
+===================
 
 Introduction
 ------------

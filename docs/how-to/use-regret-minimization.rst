@@ -1,7 +1,7 @@
 .. _how-to-use-regret-minimization:
 
-Solve with Regret Minimization
-==============================
+Use with Regret Minimization
+============================
 
 One of the algorithms implemented in :code:`Nashpy` is called
 :code:`regret_minimization()`, this is implemented as a method on the :code:`Game`

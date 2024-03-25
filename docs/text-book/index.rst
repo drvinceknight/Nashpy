@@ -19,3 +19,5 @@ Nashpy Game Theory Text book
    replicator-dynamics.rst
    asymmetric-replicator-dynamics.rst
    moran-process.rst
+   imitation-dynamics.rst
+   regret_minimization.rst

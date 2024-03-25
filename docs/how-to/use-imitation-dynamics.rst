@@ -1,7 +1,7 @@
 .. _how-to-use-imitation-dynamics:
 
-Solve with Imitation Dynamics
-==============================
+Use Imitation Dynamics
+======================
 
 One of the algorithms implemented in :code:`Nashpy` is called
 :code:`imitation_dynamics()`, this is implemented as a method on the :code:`Game`

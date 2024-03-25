@@ -15,6 +15,8 @@ from .learning.replicator_dynamics import (
 )
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 from .utils.is_best_response import is_best_response
+from .learning.regret_minimization import regret_minimization
+from .learning.imitation_dynamics import imitation_dynamics
 
 
 class Game:
@@ -423,3 +425,67 @@ Column player:
         row_strategy = linear_program(row_player_payoff_matrix=A)
         column_strategy = linear_program(row_player_payoff_matrix=B.T)
         return row_strategy, column_strategy
+
+    def regret_minimization(self, learning_rate=0.1, iterations=100):
+        """
+        Obtain the Nash equilibria using regret minimization method using N number of itreations.
+        The code provided is based on the concept of regret matching,
+        with the fixed learning rate.
+
+        Algorithm implemented here is Algorithm 4.3 Theorem 4.4 of [Nisan2007]_
+
+        1. Build best Strategies probability of both players
+
+        Parameters
+        ----------
+        learning_rate : float
+            The  learning_rate determines the magnitude of the update towards the regrets
+
+        iterations : Integer
+            This value is defaulted to 100 itrations, this number could be modified to a larger or smaller number based on the untilities/payoff matrix shape
+
+        Returns
+        -------
+        Generator
+            The equilibria.
+        """
+        A, B = self.payoff_matrices
+        return regret_minimization(
+            A=A, B=B, learning_rate=learning_rate, iterations=iterations
+        )
+
+    def imitation_dynamics(
+        self,
+        population_size=100,
+        iterations=1000,
+        random_seed=None,
+        threshold=0.5,
+    ):
+        """
+        Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
+
+        Parameters
+        ----------
+        population_size : number
+            number of individuals in the population of the group (default: 100)
+        iterations : number
+            number of generations to simulate (default: 1000)
+        random_seed : number
+            seed for reproducibility (default: None)
+        threshold : float
+            threshold value for representing strategies as 0 or 1 (default: 0.5)
+
+        Returns
+        -------
+        Generator
+            The equilibria.
+        """
+        A, B = self.payoff_matrices
+        return imitation_dynamics(
+            A=A,
+            B=B,
+            population_size=population_size,
+            iterations=iterations,
+            random_seed=random_seed,
+            threshold=threshold,
+        )

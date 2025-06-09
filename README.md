@@ -1,8 +1,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596758.svg)](https://doi.org/10.5281/zenodo.596758)
 ![](https://github.com/drvinceknight/Nashpy/workflows/CI/badge.svg)
-[![Discord](https://img.shields.io/discord/753185848337367060?label=Discord)](https://discord.gg/wZsv6s8TTB)
-[![Gitter](https://badges.gitter.im/drvinceknight/Nashpy.svg)](https://gitter.im/drvinceknight/Nashpy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00904/status.svg)](https://doi.org/10.21105/joss.00904)
+
+Join [the Game Theory Discord](https://github.com/drvinceknight/equilibrium_explorers) server to chat -- [direct invite link](https://discord.gg/NfTAkhAeyc).
 
 # Nashpy: a python library for 2 player games.
 

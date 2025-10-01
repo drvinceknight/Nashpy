@@ -10,3 +10,4 @@ List of contributors
 - `@robert-szeto <https://github.com/robert-szeto>`_
 - `@arwheel <https://github.com/arwheel>`_
 - Computing for Mathematics class of 2023
+- `@HarryFosterCU <https://github.com/HarryFosterCU`_

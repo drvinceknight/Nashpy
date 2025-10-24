@@ -52,7 +52,7 @@ def greenwood_quantize(
 def type_1_discrete_step(x, A):
     """
     this is one eular step of the regular replicator dynmaics function...
-    
+
     Parameters
         ----------
         A : array
@@ -94,6 +94,7 @@ def type_2_discrete_step(x, A):
 
     return x * ((Ax) / (np.dot(Ax, (x))))  # NEW_X NOT NORMALISED
 
+
 def discrete_replicator_dynamics(
     x,
     A,
@@ -101,7 +102,6 @@ def discrete_replicator_dynamics(
     quantize=False,
     step_function=type_2_discrete_step,
 ):
-    
     """
     FILL IN THIS DOCSTRING
 

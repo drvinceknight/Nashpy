@@ -1,3 +1,5 @@
+"""Code to carry out discrete replicator dynamics"""
+
 import numpy as np
 import numpy.typing as npt
 from typing import Optional, Tuple
@@ -49,7 +51,7 @@ def greenwood_quantize(
             return int_k
 
 
-def type_1_discrete_step(x, A):
+def type_1_discrete_step(x: npt.NDArray, A: npt.NDArray):
     """
     this is one eular step of the regular replicator dynmaics function...
 
@@ -72,7 +74,7 @@ def type_1_discrete_step(x, A):
     return x + x * ((Ax) - (np.dot(Ax, (x))))  # NEW_X NOT NORMALISED
 
 
-def type_2_discrete_step(x, A):
+def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
     """
     FILL IN THIS DOCSTRING
 

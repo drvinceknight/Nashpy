@@ -27,7 +27,7 @@ def greenwood_quantize(
     for i in range(0, len(k)):
         int_k[i] = np.floor((k[i]) + 1 / 2)
 
-    Ndash = np.sum(k)
+    Ndash = np.sum(int_k)
     d = int(Ndash - N)
 
     if d == 0:
@@ -40,14 +40,19 @@ def greenwood_quantize(
 
         if d > 0:
             for i in range(0, d):  # decrement ki with largest error value
-                int_k[(np.where(errors == (errors_sorted[i])))[0][0]] -= 1
+                error_location = (np.where(errors == (errors_sorted[i])))[0][0]
+                int_k[error_location] += 1
+                errors[error_location] = 0
+                errors_sorted[i] = 0
 
             return int_k
 
         if d < 0:
             for i in range(0, -d):  # increment ki with smallest error value
-                int_k[(np.where(errors == (errors_sorted[-i])))[0][0]] += 1
-
+                error_location = (np.where(errors == (errors_sorted[-i])))[0][0]
+                int_k[error_location] += 1
+                errors[error_location] = 0
+                errors_sorted[-i] = 0
             return int_k
 
 
@@ -100,7 +105,7 @@ def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
 def discrete_replicator_dynamics(
     x,
     A,
-    steps,
+    steps=1,
     quantize=False,
     step_function=type_2_discrete_step,
 ):
@@ -127,11 +132,14 @@ def discrete_replicator_dynamics(
             intager population vector
     """
 
+    # data verification
+    # check values sum < infinity
+
     x_over_time = np.zeros((steps, len(x)))
     N = sum(x)
     x = x / N
 
-    for i in range(0, steps):
+    for i in range(steps):
         x = step_function(x, A)
 
         if quantize == True:

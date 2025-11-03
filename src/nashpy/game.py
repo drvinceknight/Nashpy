@@ -311,7 +311,6 @@ Column player:
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)
 
-    #    x,A, steps=1,quantize=False,step_function=type_2_discrete_step,
     def discrete_replicator_dynamics(
         self,
         initial_population,

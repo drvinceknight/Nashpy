@@ -2,7 +2,6 @@
 
 import numpy as np
 import numpy.typing as npt
-from typing import Optional, Tuple
 
 
 def greenwood_quantize(
@@ -10,18 +9,18 @@ def greenwood_quantize(
     N: int,
 ):
     """
-    rounds populations to nearest intager while keeping total population consistent
+    rounds populations to nearest integer while keeping total population consistent
 
     Parameters
-        ----------
-        x : array
-            non-intager population vector
-        N : int
-            size of array x
+    ----------
+    k : array
+        non-integer population vector
+    N : int
+        size of array x
     Returns
-        ----------
-        array
-            intager population vector
+    ----------
+    array
+        integer population vector
     """
     int_k = np.zeros(k.shape)
     for i in range(0, len(k)):
@@ -30,53 +29,51 @@ def greenwood_quantize(
     Ndash = np.sum(int_k)
     d = int(Ndash - N)
 
-    if d == 0:
-        return int_k
-    else:
-        errors = np.zeros(k.shape)  # calculate errors
+    if d != 0:
+        errors = np.zeros(k.shape)
         for i in range(0, len(k)):
             errors[i] = int_k[i] - k[i]
         errors_sorted = np.sort(errors)
 
         if d > 0:
-            for i in range(0, d):  # decrement ki with largest error value
+            for i in range(0, d):
                 error_location = (np.where(errors == (errors_sorted[i])))[0][0]
-                int_k[error_location] += 1
+                int_k[error_location] -= 1
                 errors[error_location] = 0
                 errors_sorted[i] = 0
 
-            return int_k
-
         if d < 0:
-            for i in range(0, -d):  # increment ki with smallest error value
+            for i in range(0, -d):
                 error_location = (np.where(errors == (errors_sorted[-i])))[0][0]
                 int_k[error_location] += 1
                 errors[error_location] = 0
                 errors_sorted[-i] = 0
-            return int_k
+
+    return int_k
 
 
 def type_1_discrete_step(x: npt.NDArray, A: npt.NDArray):
     """
-    this is one eular step of the regular replicator dynmaics function...
+    this version of discrete replicator dynamics is equivilent to a Euler step of the continuous replicator dynamics equation with step size 1.
+
+    x[t+1]=x[t] + (step_size) * x [payoff_x - average_payoff]
 
     Parameters
-        ----------
-        A : array
-            the payoff matrix
+    ----------
+    x : array
+        the normalised population distribution
 
-        x : array
-            the normalised population distribution
-
+    A : array
+        the payoff matrix
     Returns
-        ----------
-        array
-            intager population vector
+    ----------
+    array
+        integer population vector
     """
 
     Ax = np.matvec(A, (x))
 
-    return x + x * ((Ax) - (np.dot(Ax, (x))))  # NEW_X NOT NORMALISED
+    return x + x * ((Ax) - (np.dot(Ax, (x))))
 
 
 def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
@@ -84,17 +81,16 @@ def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
     FILL IN THIS DOCSTRING
 
     Parameters
-        ----------
-        A : array
-            the payoff matrix
+    ----------
+    x : array
+        the normalised population distribution
 
-        x : array
-            the normalised population distribution
-
+    A : array
+         the payoff matrix
     Returns
-        ----------
-        array
-            intager population vector
+    ----------
+    array
+        integer population vector
     """
 
     Ax = np.matvec(A, (x))
@@ -113,23 +109,26 @@ def discrete_replicator_dynamics(
     FILL IN THIS DOCSTRING
 
     Parameters
-        ----------
-        x : array
-            the normalised population distribution
+    ----------
+    x : array
+        the normalised population distribution
 
-        A : array
-            the payoff matrix
+    A : array
+        the payoff matrix
 
-        steps : int
-            number of iterations to run the step function
+    steps : int
+        number of iterations to run the step function
 
-        quantize : bool
-            toggles the qantization algorithm
+    quantize : bool
+        toggles the qantization algorithm
+
+    step_function : function
+        determines which function to use per discrete time step
 
     Returns
-        ----------
-        array
-            intager population vector
+    ----------
+    array
+        integer population vector
     """
 
     # data verification
@@ -142,7 +141,7 @@ def discrete_replicator_dynamics(
     for i in range(steps):
         x = step_function(x, A)
 
-        if quantize == True:
+        if quantize:
             x = greenwood_quantize(x * N, N)
             x = x / N
 

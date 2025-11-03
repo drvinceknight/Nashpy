@@ -162,7 +162,7 @@ def test_greenwood_d_greater_than_zero():
     )
 
 
-def test_discrete_replicator_dynamics():
+def test_discrete_replicator_dynamics_1_generation():
 
     x = np.array((20, 80))
     A = np.array(
@@ -173,8 +173,8 @@ def test_discrete_replicator_dynamics():
     )
     expected_next_x = np.array([15, 85])
     next_x = discrete_replicator_dynamics(
-        x=x,
         A=A,
+        x=x,
         steps=1,
         quantize=True,
     )
@@ -214,8 +214,8 @@ def test_discrete_replicator_dynamics_20_generations_size_2():
         ]
     )
     next_x = discrete_replicator_dynamics(
-        x=x,
         A=A,
+        x=x,
         steps=20,
         quantize=False,
     )
@@ -255,8 +255,8 @@ def test_discrete_replicator_dynamics_20_generations_size_2_quantized():
         ]
     )
     next_x = discrete_replicator_dynamics(
-        x=x,
         A=A,
+        x=x,
         steps=20,
         quantize=True,
     )

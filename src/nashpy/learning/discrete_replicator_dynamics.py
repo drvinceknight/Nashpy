@@ -97,7 +97,7 @@ def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
 
     Ax = np.matvec(A, (x))
 
-    return x * ((Ax) / (np.dot(Ax, (x)))) 
+    return x * ((Ax) / (np.dot(Ax, (x))))
 
 
 def discrete_replicator_dynamics(

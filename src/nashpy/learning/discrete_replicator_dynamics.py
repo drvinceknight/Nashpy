@@ -54,7 +54,9 @@ def greenwood_quantize(
 
 def type_1_discrete_step(x: npt.NDArray, A: npt.NDArray):
     """
-    this version of discrete replicator dynamics is equivilent to a Euler step of the continuous replicator dynamics equation with step size 1.
+    performs type 1 discrete step on population x
+
+    this type of discrete replicator dynamics equation is equivilent to a Euler step of the continuous replicator dynamics equation with step size 1.
 
     x[t+1]=x[t] + (step_size) * x [payoff_x - average_payoff]
 
@@ -78,7 +80,7 @@ def type_1_discrete_step(x: npt.NDArray, A: npt.NDArray):
 
 def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
     """
-    FILL IN THIS DOCSTRING
+    performs type 2 discrete step on population x
 
     Parameters
     ----------
@@ -99,22 +101,22 @@ def type_2_discrete_step(x: npt.NDArray, A: npt.NDArray):
 
 
 def discrete_replicator_dynamics(
-    x,
     A,
+    x,
     steps=1,
     quantize=False,
     step_function=type_2_discrete_step,
 ):
     """
-    FILL IN THIS DOCSTRING
+    Implement discrete replicator dynamics
 
     Parameters
     ----------
-    x : array
-        the normalised population distribution
-
     A : array
         the payoff matrix
+
+    x : array
+        the normalised population distribution
 
     steps : int
         number of iterations to run the step function
@@ -130,9 +132,6 @@ def discrete_replicator_dynamics(
     array
         integer population vector
     """
-
-    # data verification
-    # check values sum < infinity
 
     x_over_time = np.zeros((steps, len(x)))
     N = sum(x)

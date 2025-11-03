@@ -33,7 +33,6 @@ def test_type_2_discrete_step_size_2():
 
 
 def test_type_2_discrete_step_size_3():
-    # GO OVER THIS TEST -> CREATE WRITTEN EXAMPLE FOR IT
     x = np.array((0.2, 0.3, 0.5))
     A = np.array(
         (
@@ -51,7 +50,6 @@ def test_type_2_discrete_step_size_3():
 
 
 def test_type_2_discrete_step_size_4():
-    # GO OVER THIS TEST -> CREATE WRITTEN EXAMPLE FOR IT
     x = np.array((0.2, 0.3, 0.2, 0.3))
     A = np.array(((4, 3, 1, 5), (2, 5, 2, 2), (6, 5, 3, 9), (2, 2, 1, 5)))
     expected_next_x = np.array((0.19101124, 0.24438202, 0.33707865, 0.22752809))
@@ -80,7 +78,6 @@ def test_type_1_discrete_step_size_2():
 
 
 def test_type_1_discrete_step_size_3():
-    # GO OVER THIS TEST -> CREATE WRITTEN EXAMPLE FOR IT
     x = np.array((0.2, 0.3, 0.5))
     A = np.array(
         (
@@ -98,7 +95,6 @@ def test_type_1_discrete_step_size_3():
 
 
 def test_type_1_discrete_step_size_4():
-    # GO OVER THIS TEST -> CREATE WRITTEN EXAMPLE FOR IT
     x = np.array((0.2, 0.3, 0.2, 0.3))
     A = np.array(((4, 3, 1, 5), (2, 5, 2, 2), (6, 5, 3, 9), (2, 2, 1, 5)))
     expected_next_x = np.array((0.168, 0.102, 0.688, 0.042))
@@ -135,7 +131,6 @@ def test_greenwood_quantize_sum_consistent(k):
 )
 def test_greenwood_quantize(k):
 
-    # get array length n of floats,  values sum  to integer p, assert greenwoods(array) sums to p
     N = np.round(np.sum(k) + 0.5, 0)
     k[-1] = k[-1] + (N - (np.sum(k) + 0.5))
 
@@ -153,7 +148,6 @@ def test_greenwood_d_less_than_zero():
 
 
 def test_greenwood_d_greater_than_zero():
-    # edit to have a random N value
 
     k = np.array([0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8])
     N = 8

@@ -109,7 +109,7 @@ def test_properties_of_scores_for_arbitrary_adjacency_matrix(
     assert len(scores) == len(population)
 
 
-@given(M=arrays(np.int8, (3, 3), unique=True))
+@given(M=arrays(np.int64, (3, 3), unique=True))
 def test_properties_of_scores(M):
     """
     Checks that if non negative valued matrices are passed then non negative

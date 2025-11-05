@@ -25,5 +25,4 @@ How to:
    obtain-a-repeated-game.rst
    use-moran-process-on-replacement-graph.rst
    use-moran-process-on-interaction-graph.rst
-   use-imitation-dynamics.rst
-   use-regret-minimization.rst
+   use-introspection-dynamics.rst

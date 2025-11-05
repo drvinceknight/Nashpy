@@ -10,6 +10,8 @@ def greenwood_quantize(
 ):
     """
     rounds populations to nearest integer while keeping total population consistent
+    called after each discrete step.
+    useful for modeling a finite population of players who can only use pure stratergies
 
     Parameters
     ----------

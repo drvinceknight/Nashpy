@@ -32,24 +32,16 @@ def greenwood_quantize(
     d = int(Ndash - N)
 
     if d != 0:
-        errors = np.zeros(k.shape)
-        for i in range(0, len(k)):
-            errors[i] = int_k[i] - k[i]
-        errors_sorted = np.sort(errors)
-
+        errors = int_k - k 
         if d > 0:
-            for i in range(0, d):
-                error_location = (np.where(errors == (errors_sorted[i])))[0][0]
-                int_k[error_location] -= 1
-                errors[error_location] = 0
-                errors_sorted[i] = 0
+            error_index=np.argpartition(errors, -d)[-d:]
+            int_k[(error_index)]=int_k[(error_index)]-1
+            return int_k
 
         if d < 0:
-            for i in range(0, -d):
-                error_location = (np.where(errors == (errors_sorted[-i])))[0][0]
-                int_k[error_location] += 1
-                errors[error_location] = 0
-                errors_sorted[-i] = 0
+            error_index=np.argpartition(errors, d)[d:]
+            int_k[(error_index)]=int_k[(error_index)]+1
+            return int_k
 
     return int_k
 

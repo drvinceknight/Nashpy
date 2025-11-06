@@ -1,4 +1,4 @@
-.. _moran-process:
+.. _introspection-dynamics:
 
 Introspection Dynamics
 ======================
@@ -77,7 +77,7 @@ than the probability of picking the new action is uniformly random. A high value
 of :math:`\beta` indicates that the play will choose the better action with certainty.
 
 This process corresponds to a Markov chain (details of which can be found in
-[Couto2023]_) which defines the steady state probability vector :math:`v` which
+[Couto2022]_) which defines the steady state probability vector :math:`v` which
 gives the probability of being in any given state of action pairs.
 
 Using Nashpy

@@ -40,10 +40,6 @@ These interactions can be represented by the two *asymmetric* payoff matrices,
        1 & 4 & 6
    \end{pmatrix}
 
-The entry :math:`A_{ij}` gives Firm 1’s payoff when it plays its
-:math:`i`-th action and Firm 2 plays its :math:`j`-th, and similarly
-for :math:`B_{ji}` for Firm 2.
-
 *Given these asymmetric payoffs, how will the players’ strategies evolve
 over time if both adapt introspectively?*
 

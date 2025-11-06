@@ -13,7 +13,7 @@ requires = [
     "deprecated >= 1.2.14"
 ]
 home-page = "https://github.com/drvinceknight/Nashpy"
-requires-python= ">=3.8"
+requires-python= ">=3.10"
 description-file = "README.md"
 classifiers = [ "License :: OSI Approved :: MIT License",]
 

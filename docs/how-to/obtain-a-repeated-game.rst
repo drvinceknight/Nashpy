@@ -48,4 +48,5 @@ actions<definition-of-strategies-in-repeated-games>`::
 
     >>> strategies = nash.repeated_games.obtain_strategy_space(A=A, repetitions=2)
     >>> next(strategies)
-    {((), ()): (1.0, 0.0), ((0,), (0,)): (1.0, 0.0), ((0,), (1,)): (1.0, 0.0), ((1,), (0,)): (1.0, 0.0), ((1,), (1,)): (1.0, 0.0)}
+    {((), ()): (np.float64(1.0), np.float64(0.0)), ((0,), (0,)): (np.float64(1.0), np.float64(0.0)), ((0,), (1,)): (np.float64(1.0), np.float64(0.0)), ((1,), (0,)): (np.float64(1.0), np.float64(0.0)), ((1,), (1,)): (np.float64(1.0), np.float64(0.0))}
+

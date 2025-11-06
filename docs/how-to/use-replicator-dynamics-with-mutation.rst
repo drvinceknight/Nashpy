@@ -19,4 +19,4 @@ dynamics equation with mutation can be solved using the following::
            ...,
            [0.55278206, 0.44721794],
            [0.5527821 , 0.4472179 ],
-           [0.55278214, 0.44721786]])
+           [0.55278214, 0.44721786]], shape=(1000, 2))

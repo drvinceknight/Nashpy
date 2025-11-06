@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from hypothesis import given
+from hypothesis.strategies import integers
 from hypothesis.extra.numpy import arrays
 
 from nashpy.egt.moran_process import (
@@ -109,7 +110,11 @@ def test_properties_of_scores_for_arbitrary_adjacency_matrix(
     assert len(scores) == len(population)
 
 
-@given(M=arrays(np.int8, (3, 3), unique=True))
+@given(
+    M=arrays(
+        np.int64, (3, 3), elements=integers(min_value=-10, max_value=100), unique=True
+    )
+)
 def test_properties_of_scores(M):
     """
     Checks that if non negative valued matrices are passed then non negative

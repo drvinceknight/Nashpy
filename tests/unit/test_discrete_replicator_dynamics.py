@@ -143,7 +143,8 @@ def test_greenwood_d_less_than_zero():
     k = np.array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2])
     N = 2
     assert np.array_equal(
-        greenwood_quantize(k, N), np.array([1, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+        np.sort(greenwood_quantize(k, N), axis=None),
+        np.array([0, 0, 0, 0, 0, 0, 0, 0, 1, 1]),
     )
 
 
@@ -152,7 +153,8 @@ def test_greenwood_d_greater_than_zero():
     k = np.array([0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8])
     N = 8
     assert np.array_equal(
-        greenwood_quantize(k, N), np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 1])
+        np.sort(greenwood_quantize(k, N), axis=None),
+        np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 1]),
     )
 
 

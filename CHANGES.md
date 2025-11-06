@@ -1,3 +1,7 @@
+# v0.0.43
+
+Fix errors in introspection documentation.
+
 # v0.0.42
 
 Add introspection dynamics.

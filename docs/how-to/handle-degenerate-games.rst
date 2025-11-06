@@ -47,27 +47,3 @@ arguments:
   underlying linear system :code:`tol` is considered to be a lower bound for
   difference between two real numbers. Using :code:`tol=0` ensures a strict
   run of the algorithm.
-
-Here is an example::
-
-    >>> A = np.array([[4, 9, 9], [9, 1, 6], [9, 2, 3]])
-    >>> B = np.array([[2, 2, 5], [7, 4, 4], [1, 6, 4]])
-    >>> game = nash.Game(A, B)
-    >>> for eq in game.support_enumeration():
-    ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [1. 0. 0.] [0. 0. 1.]
-    [0. 1. 0.] [1. 0. 0.]
-    [0.5 0.5 0. ] [0.38 0.   0.62]
-    [0.2 0.5 0.3] [0.57 0.32 0.11]
-    >>> for eq in game.support_enumeration(non_degenerate=True):
-    ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [1. 0. 0.] [0. 0. 1.]
-    [0. 1. 0.] [1. 0. 0.]
-    [0.5 0.5 0. ] [0.38 0.   0.62]
-    [0.2 0.5 0.3] [0.57 0.32 0.11]
-    >>> for eq in game.support_enumeration(non_degenerate=False, tol=0):
-    ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
-    [1. 0. 0.] [0. 0. 1.]
-    [0. 1. 0.] [1. 0. 0.]
-    [0.5 0.5 0. ] [0.38 0.   0.62]
-    [0.2 0.5 0.3] [0.57 0.32 0.11]

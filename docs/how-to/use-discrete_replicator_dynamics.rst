@@ -23,7 +23,7 @@ The :code:`discrete_replicator_dynamics` produces the stratergy distribution for
             [0.5,        0.5       ]
             [0.5,        0.5       ]])
 
-Qunatisation can be toggled to model a finite intager population
+Quantization can be toggled to model a finite intager population
     >>> initial_distribution=np.array([20,80])
     >>> stratergy_over_time = game.discrete_replicator_dynamics( initial_distribution,steps=100, quantize=True)
     >>> stratergy_over_time

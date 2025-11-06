@@ -16,25 +16,27 @@ The :code:`introspection_dynamics` method returns a generator of a given collect
 generations::
 
     >>> np.random.seed(0)
-    >>> steps = game.moran_process(number_of_iterations=50)
+    >>> steps = game.introspection_dynamics(number_of_iterations=50, beta=.2)
     >>> for actions in steps:
     ...     print(actions)
-    [0 0 1]
-    [0 1 1]
-    [0 1 1]
+    [0 1]
+    [0 1]
+    [0 1]
     ...
-    [0 1 1]
-    [1 1 1]
+    [1 1]
+    [1 0]
+    [1 1]
 
 Note that this process is stochastic::
 
     >>> np.random.seed(2)
-    >>> steps = game.moran_process(number_of_iterations=50)
+    >>> steps = game.introspection_dynamics(number_of_iterations=50, beta=.2)
     >>> for actions in steps:
     ...     print(actions)
-    [0 0 1]
-    [0 0 1]
-    [0 0 0]
+    [0 1]
+    [0 1]
+    [0 1]
     ...
-    [0 0 1]
-    [0 0 0]
+    [0 1]
+    [0 1]
+    [0 1]

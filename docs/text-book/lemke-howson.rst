@@ -100,14 +100,15 @@ This algorithm is implemented using integer pivoting.
          >>> from nashpy.linalg.tableau import Tableau
          >>> ctableau = Tableau(col_tableau)
          >>> ctableau.non_basic_variables
-         {2, 3}
+         {np.int64(2), np.int64(3)}
+
 
 
    - The labels of :math:`T_r` are thus :math:`\{0, 1\}`::
 
          >>> rtableau = Tableau(row_tableau)
          >>> rtableau.non_basic_variables
-         {0, 1}
+         {np.int64(0), np.int64(1)}
 
    So we are going to drop label :math:`1` from :math:`T_r`.
 

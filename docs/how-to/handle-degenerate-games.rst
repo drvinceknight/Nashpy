@@ -63,9 +63,11 @@ Here is an example::
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
     [1. 0. 0.] [0. 0. 1.]
     [0. 1. 0.] [1. 0. 0.]
+    [0.5 0.5 0. ] [0.38 0.   0.62]
     [0.2 0.5 0.3] [0.57 0.32 0.11]
     >>> for eq in game.support_enumeration(non_degenerate=False, tol=0):
     ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
     [1. 0. 0.] [0. 0. 1.]
     [0. 1. 0.] [1. 0. 0.]
+    [0.5 0.5 0. ] [0.38 0.   0.62]
     [0.2 0.5 0.3] [0.57 0.32 0.11]

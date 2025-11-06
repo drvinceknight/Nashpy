@@ -2,7 +2,7 @@
 
 import numpy as np
 import numpy.typing as npt
-from typing import Optional, Any
+from typing import Optional, Any, Generator
 from .algorithms.lemke_howson import lemke_howson
 from .algorithms.support_enumeration import support_enumeration
 from .algorithms.vertex_enumeration import vertex_enumeration
@@ -13,6 +13,7 @@ from .learning.replicator_dynamics import (
     asymmetric_replicator_dynamics,
     replicator_dynamics,
 )
+from .learning.introspection_dynamics import introspection_dynamics
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 from .utils.is_best_response import is_best_response
 from .learning.regret_minimization import regret_minimization
@@ -488,4 +489,38 @@ Column player:
             iterations=iterations,
             random_seed=random_seed,
             threshold=threshold,
+        )
+
+    def introspection_dynamics(
+        self,
+        number_of_iterations: int,
+        beta: float,
+        initial_actions: Optional[npt.NDArray[np.int64]] = None,
+    ) -> Generator[npt.NDArray, None, None]:
+        """
+        Run introspection dynamics.
+
+        Parameters
+        ----------
+        number_of_iterations : int
+            the number of steps to simulate the process
+        beta : float
+            The learning intensity. A value of 0 indicates random choice of actions,
+            a high value means a higher likelihood of choosing an action that gives
+            a better payoff.
+        initial_actions : array
+            The indices of the actions chosen by both players.
+
+        Returns
+        -------
+        Generator
+            the actions chosen at each step by both players
+        """
+        A, B = self.payoff_matrices
+        return introspection_dynamics(
+            A=A,
+            B=B,
+            number_of_iterations=number_of_iterations,
+            beta=beta,
+            initial_actions=initial_actions,
         )

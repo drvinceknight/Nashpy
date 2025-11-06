@@ -16,7 +16,7 @@ The :code:`fixation` method returns a dictionary mapping the final states to the
     >>> np.random.seed(0)
     >>> probabilities = game.fixation_probabilities(initial_population=(0, 1, 1, 1), repetitions=200)
     >>> probabilities
-    {(1, 1, 1, 1): 0.765, (0, 0, 0, 0): 0.235}
+    {(np.int64(1), np.int64(1), np.int64(1), np.int64(1)): 0.765, (np.int64(0), np.int64(0), np.int64(0), np.int64(0)): 0.235}
 
 This above shows that approximately (estimated over 200 iterations) 23.5 % of
 the time the first strategy will take over a population with a total of 4

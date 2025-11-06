@@ -689,3 +689,32 @@ Column player:
             )  # Convert numpy arrays to tuples
         # Check if the results are different in at least one pair of iterations
         assert np.all(len(set(results)) > 1)
+
+    def test_introspection_dynamics(self):
+        A = np.array([[3, 0], [1, 3]])
+        B = np.array([[0, 1], [3, 0]])
+        game = nash.Game(A, B)
+        beta = 0.3
+        number_of_iterations = 10
+        expected_steps = (
+            [0, 1],
+            [0, 1],
+            [0, 1],
+            [0, 1],
+            [1, 1],
+            [0, 1],
+            [1, 1],
+            [1, 1],
+            [1, 1],
+            [1, 1],
+            [0, 1],
+        )
+
+        np.random.seed(0)
+        steps = tuple(
+            game.introspection_dynamics(
+                beta=beta, number_of_iterations=number_of_iterations
+            )
+        )
+        print(steps)
+        assert np.array_equal(steps, expected_steps)

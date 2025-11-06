@@ -32,15 +32,15 @@ def greenwood_quantize(
     d = int(Ndash - N)
 
     if d != 0:
-        errors = int_k - k 
+        errors = int_k - k
         if d > 0:
-            error_index=np.argpartition(errors, -d)[-d:]
-            int_k[(error_index)]=int_k[(error_index)]-1
+            error_index = np.argpartition(errors, -d)[-d:]
+            int_k[(error_index)] = int_k[(error_index)] - 1
             return int_k
 
         if d < 0:
-            error_index=np.argpartition(errors, d)[d:]
-            int_k[(error_index)]=int_k[(error_index)]+1
+            error_index = np.argpartition(errors, d)[d:]
+            int_k[(error_index)] = int_k[(error_index)] + 1
             return int_k
 
     return int_k

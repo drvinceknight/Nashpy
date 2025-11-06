@@ -23,7 +23,7 @@ def test_introspection_dynamics_with_seed_0():
         )
     )
     number_of_iterations = 10
-    expected_steps = [
+    expected_steps = (
         [0, 1],
         [0, 0],
         [0, 0],
@@ -35,17 +35,19 @@ def test_introspection_dynamics_with_seed_0():
         [1, 1],
         [1, 1],
         [2, 1],
-    ]
+    )
     beta = 1
 
     np.random.seed(0)
-    steps = introspection_dynamics(
-        M_r,
-        M_c,
-        number_of_iterations=number_of_iterations,
-        beta=beta,
+    steps = tuple(
+        introspection_dynamics(
+            M_r,
+            M_c,
+            number_of_iterations=number_of_iterations,
+            beta=beta,
+        )
     )
-    assert steps == expected_steps
+    assert np.array_equal(steps, expected_steps)
 
 
 def test_introspection_dynamics_with_seed_0_and_initial_action_set():
@@ -64,7 +66,7 @@ def test_introspection_dynamics_with_seed_0_and_initial_action_set():
         )
     )
     number_of_iterations = 10
-    expected_steps = [
+    expected_steps = (
         [2, 1],
         [2, 1],
         [2, 1],
@@ -76,19 +78,21 @@ def test_introspection_dynamics_with_seed_0_and_initial_action_set():
         [0, 1],
         [0, 0],
         [2, 0],
-    ]
+    )
     beta = 1
     initial_actions = [2, 1]
 
     np.random.seed(0)
-    steps = introspection_dynamics(
-        M_r,
-        M_c,
-        number_of_iterations=number_of_iterations,
-        beta=beta,
-        initial_actions=initial_actions,
+    steps = tuple(
+        introspection_dynamics(
+            M_r,
+            M_c,
+            number_of_iterations=number_of_iterations,
+            beta=beta,
+            initial_actions=initial_actions,
+        )
     )
-    assert steps == expected_steps
+    assert np.array_equal(steps, expected_steps)
 
 
 def test_introspection_dynamics_with_seed_1_and_initial_action_set():
@@ -107,7 +111,7 @@ def test_introspection_dynamics_with_seed_1_and_initial_action_set():
         )
     )
     number_of_iterations = 10
-    expected_steps = [
+    expected_steps = (
         [2, 1],
         [2, 1],
         [2, 1],
@@ -119,19 +123,21 @@ def test_introspection_dynamics_with_seed_1_and_initial_action_set():
         [2, 1],
         [2, 1],
         [2, 1],
-    ]
+    )
     beta = 1
     initial_actions = [2, 1]
 
     np.random.seed(1)
-    steps = introspection_dynamics(
-        M_r,
-        M_c,
-        number_of_iterations=number_of_iterations,
-        beta=beta,
-        initial_actions=initial_actions,
+    steps = tuple(
+        introspection_dynamics(
+            M_r,
+            M_c,
+            number_of_iterations=number_of_iterations,
+            beta=beta,
+            initial_actions=initial_actions,
+        )
     )
-    assert steps == expected_steps
+    assert np.array_equal(steps, expected_steps)
 
 
 def test_introspection_dynamics_with_seed_1_and_initial_action_set_and_low_beta():
@@ -150,7 +156,7 @@ def test_introspection_dynamics_with_seed_1_and_initial_action_set_and_low_beta(
         )
     )
     number_of_iterations = 10
-    expected_steps = [
+    expected_steps = (
         [2, 1],
         [2, 1],
         [1, 1],
@@ -162,16 +168,18 @@ def test_introspection_dynamics_with_seed_1_and_initial_action_set_and_low_beta(
         [2, 1],
         [2, 1],
         [2, 1],
-    ]
+    )
     beta = 0.2
     initial_actions = [2, 1]
 
     np.random.seed(1)
-    steps = introspection_dynamics(
-        M_r,
-        M_c,
-        number_of_iterations=number_of_iterations,
-        beta=beta,
-        initial_actions=initial_actions,
+    steps = tuple(
+        introspection_dynamics(
+            M_r,
+            M_c,
+            number_of_iterations=number_of_iterations,
+            beta=beta,
+            initial_actions=initial_actions,
+        )
     )
-    assert steps == expected_steps
+    assert np.array_equal(steps, expected_steps)

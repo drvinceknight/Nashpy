@@ -1,15 +1,18 @@
 """Code for implementation of Introspection dynamics"""
 
 import numpy as np
+import numpy.typing as npt
+
+from typing import Optional, Generator
 
 
 def introspection_dynamics(
-    A,
-    B,
-    number_of_iterations,
-    beta,
-    initial_actions=None,
-):
+    A: npt.NDArray,
+    B: npt.NDArray,
+    number_of_iterations: int,
+    beta: float,
+    initial_actions: Optional[npt.NDArray[np.int64]] = None,
+) -> Generator[npt.NDArray, None, None]:
     """
     Run introspection dynamics.
 
@@ -28,9 +31,9 @@ def introspection_dynamics(
     initial_actions : array
         The indices of the actions chosen by both players.
 
-    Returns
-    -------
-    list
+    Yields
+    ------
+    Generator
         the actions chosen at each step by both players
     """
     number_of_actions = A.shape
@@ -38,17 +41,20 @@ def introspection_dynamics(
     players = [0, 1]
     action_spaces = [list(range(number_of_actions[player])) for player in players]
     if initial_actions is None:
-        steps = [[np.random.choice(action_space) for action_space in action_spaces]]
+        actions = np.array(
+            [np.random.choice(action_space) for action_space in action_spaces]
+        )
     else:
-        steps = [initial_actions]
+        actions = np.array(initial_actions)
+
+    yield actions
 
     for _ in range(number_of_iterations):
         player = np.random.choice(players)
 
         payoff_matrix = payoff_matrices[player]
-        current_actions = steps[-1]
-        current_score = payoff_matrix[current_actions[0]][current_actions[1]]
-        current_action = current_actions[player]
+        current_score = payoff_matrix[actions[0]][actions[1]]
+        current_action = actions[player]
 
         action_space = action_spaces[player]
         potential_action_space = [
@@ -56,18 +62,18 @@ def introspection_dynamics(
         ]
 
         potential_action = np.random.choice(potential_action_space)
-        potential_actions = [
-            action if i != player else potential_action
-            for i, action in enumerate(current_actions)
-        ]
+        potential_actions = np.array(
+            [
+                action if i != player else potential_action
+                for i, action in enumerate(actions)
+            ]
+        )
         potential_score = payoff_matrix[potential_actions[0]][potential_actions[1]]
         delta = potential_score - current_score
 
         probability_of_change = 1 / (1 + np.exp(-beta * delta))
 
         if np.random.random() < probability_of_change:
-            steps.append(potential_actions)
-        else:
-            steps.append(current_actions)
+            actions = potential_actions
 
-    return steps
+        yield actions

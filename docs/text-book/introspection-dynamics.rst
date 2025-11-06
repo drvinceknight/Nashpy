@@ -44,10 +44,9 @@ The entry :math:`A_{ij}` gives Firm 1’s payoff when it plays its
 :math:`i`-th action and Firm 2 plays its :math:`j`-th, and similarly
 for :math:`B_{ji}` for Firm 2.
 
-> *Given these asymmetric payoffs, how will the players’ strategies evolve
-> over time if both adapt introspectively?*
+*Given these asymmetric payoffs, how will the players’ strategies evolve
+over time if both adapt introspectively?*
 
-The
 
 .. _definition-of-the-introspection-dynamics:
 
@@ -79,16 +78,6 @@ of :math:`\beta` indicates that the play will choose the better action with cert
 This process corresponds to a Markov chain (details of which can be found in
 [Couto2023]_) which defines the steady state probability vector :math:`v` which
 gives the probability of being in any given state of action pairs.
-
-The transition matrix for :math:`M_1=M_2=2`
--------------------------------------------
-
-.. TODO
-
-Exercises
----------
-
-.. TODO
 
 Using Nashpy
 ------------

@@ -1,3 +1,7 @@
+# v0.0.42
+
+Add introspection dynamics.
+
 # v0.0.41
 
 Add exercises to a number of text book chapters.

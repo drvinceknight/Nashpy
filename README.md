@@ -32,6 +32,7 @@ Nashpy is:
   - Generate games from repeated games [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/obtain-a-repeated-game.html) - [Theory docs 📘](https://nashpy.readthedocs.io/en/stable/text-book/repeated-games.html)
   - Moran processes on interaction graphs [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-process-on-interaction-graph.html)
   - Moran processes on replication graphs [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-moran-process-on-replication-graph.html)
+  - Introspection dynamics [How to docs 🐍](https://nashpy.readthedocs.io/en/stable/how-to/use-introspection-dynamics.html) - [Theory docs](https://nashpy.readthedocs.io/en/stable/text-book/introspection-dynamics.html)
 
 ## Documentation
 

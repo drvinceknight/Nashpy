@@ -1,4 +1,4 @@
-.. _moran-process:
+.. _introspection-dynamics:
 
 Introspection Dynamics
 ======================
@@ -40,10 +40,6 @@ These interactions can be represented by the two *asymmetric* payoff matrices,
        1 & 4 & 6
    \end{pmatrix}
 
-The entry :math:`A_{ij}` gives Firm 1’s payoff when it plays its
-:math:`i`-th action and Firm 2 plays its :math:`j`-th, and similarly
-for :math:`B_{ji}` for Firm 2.
-
 *Given these asymmetric payoffs, how will the players’ strategies evolve
 over time if both adapt introspectively?*
 
@@ -53,7 +49,7 @@ over time if both adapt introspectively?*
 The Introspection Dynamics
 --------------------------
 
-First defined in [Couto2023]_ introspection dynamics on 2 player games is
+First defined in [Couto2022]_ introspection dynamics on 2 player games is
 defined as a process on 
 :math:`N=2` individuals which can use :math:`M_1` and math:`M_2` actions
 respectively.
@@ -67,6 +63,7 @@ The process is defined as follows, at each step:
    assigned action to :math:`\tilde \pi` the payoff they would have had with the
    alternative action. They compute :math:`\Delta=\tilde \pi - \pi`.
 4. They change their action to the new action with probability given by:
+
    .. math::
 
       \frac{1}{1 + e^{-\beta \Delta}}
@@ -76,7 +73,7 @@ than the probability of picking the new action is uniformly random. A high value
 of :math:`\beta` indicates that the play will choose the better action with certainty.
 
 This process corresponds to a Markov chain (details of which can be found in
-[Couto2023]_) which defines the steady state probability vector :math:`v` which
+[Couto2022]_) which defines the steady state probability vector :math:`v` which
 gives the probability of being in any given state of action pairs.
 
 Using Nashpy

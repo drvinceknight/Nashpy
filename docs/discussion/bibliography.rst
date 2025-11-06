@@ -7,6 +7,7 @@ This is a collection of various bibliographic items referenced in the
 documentation.
 
 .. [Axelrod1980] Axelrod, Robert. "Effective choice in the prisoner's dilemma." Journal of conflict resolution 24.1 (1980): 3-25.
+.. [Couto2022] Couto, Marta C., Stefano Giaimo, and Christian Hilbe. "Introspection dynamics: a simple model of counterfactual learning in asymmetric games." New Journal of Physics 24.6 (2022): 063010.
 .. [Couto2023] Couto, Marta C., and Saptarshi Pal. "Introspection dynamics in asymmetric multiplayer games." Dynamic Games and Applications 13.4 (2023): 1256-1285.
 .. [Dantzig2016] Dantzig, George. Linear programming and extensions. Princeton university press, 2016.  APA
 .. [Elvio2011] Elvio, Accinelli and Carrera, Edgar. 2011. Evolutionarily Stable Strategies and Replicator Dynamics in Asymmetric Two-Population Games. 10.1007/978-3-642-11456-4_3.

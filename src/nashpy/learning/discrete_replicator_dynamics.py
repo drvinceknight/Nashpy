@@ -24,9 +24,7 @@ def greenwood_quantize(
     array
         integer population vector
     """
-    int_k = np.zeros(k.shape)
-    for i in range(0, len(k)):
-        int_k[i] = np.floor((k[i]) + 1 / 2)
+    int_k = np.floor(k + 1 / 2)
 
     Ndash = np.sum(int_k)
     d = int(Ndash - N)

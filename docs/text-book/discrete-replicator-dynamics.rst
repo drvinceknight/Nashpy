@@ -67,9 +67,38 @@ to resolve this we can use greenwoods algorithm after each discrete time step.
 
 based on the algorithm described by [Greenwood2019]_,
 the quantiszation algorithm rounds the population of each stratergy to its nearest intager value after each step, 
-then increments or decrements values with the largest error to ensure the total population stays consistent.
+then increments or decrements values with the largest error to ensure the total population stays consistent. Described as follows:
+
+The algorithm takes the population distribution :math:`\textbf{x}` and the total population :math:`N` as inputs
+
+first it calculates :math:`k'_i` for each :math:`x_i \in \textbf{x}` where
+
+:math:`k'_i = \lfloor N x_i - \frac{1}{2} \rfloor` 
+
+then calculates any change in population total
+
+:math:`d = \sum{k'_i} - N`
+
+if :math:`d = 0`, the algorithm terminates returning :math:`\textbf{k}'`
+
+if :math:`d \neq 0`, the total population has changed and more steps need to be taken.
+
+the errors :math:`\delta_i` for each :math:`k_i'` are calculated, 
 
 
+:math:`\delta_i = k'_i - N * x_i`
+
+this being the distance of each :math:`k_i'` from its respective non-quantized value :math:`N x_i`
+
+if :math:`d > 0`
+find the :math:`d` largest :math:`\delta_i`'s, and decrement all the :math:`k_i'`'s matching thoes error values by 1
+
+if :math:`d < 0`
+find the :math:`|d|` smallest :math:`\delta_i`'s, and increment all the :math:`k_i'`'s matching thoes error values by 1
+
+both cases then return :math:`\textbf{k}'`
+
+this produces the closest result to the non-quantized algorithm while maintaining a consistent total population
 
 .. plot::
 

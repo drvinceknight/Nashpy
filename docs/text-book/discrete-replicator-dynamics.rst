@@ -56,14 +56,15 @@ and get discrete results (on the left) similar to the continuous replicator func
    ax1.legend() 
    ax2.legend() 
 
-Both the continuous and discrete replicator functions produce a proportion of a total population,
-if there were a total of 100 animals in this example this would result in non-intager animal populations.
+Both the continuous and discrete replicator functions produce a proportion of a total population, this addresses
+the first modelling challenge: have discrete time.
 
-To resolve this we can use greenwoods algorithm after each discrete time step. 
+However what if we wanted to model a finite population of 100 animals?
 
-Based on the algorithm described by [Greenwood2019]_,
-the quantiszation algorithm rounds the population of each stratergy to its nearest intager value after each step, 
-then increments or decrements values with the largest error to ensure the total population stays consistent. Described as follows:
+Greenwoods Quantization Algorithm
+---------------------------------
+
+This algorithm is described in [Greenwood2019]_.
 
 The algorithm takes the population distribution :math:`\textbf{x}` and the total population :math:`N` as inputs
 

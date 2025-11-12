@@ -2,9 +2,6 @@
 
 Discrete Replicator dynamics
 ============================
-This is the discrete version of the continuous :ref:`replicator dynamics <replicator-dynamics-discussion>` and can be used to model how stratergies evolve over time
-in distinct increments.
-
 
 Motivating example: once a day hawk dove game
 ---------------------------------------------

@@ -100,13 +100,6 @@ then increments or decrements values with the largest error to ensure the total 
    ax1.legend() 
    ax2.legend() 
 
-Discussion
-----------
-
-due to the requirement that the population must stay consistent, the quantisation algorithm can reach artificial fixed points.
-These occur when the discrete replicator algorithm would produce a change in population distribution
-though this change is small enough to be undone when rounded. This can be seen above where the quantized algorithm does not reach a 50/50
-distribution of aggressive and sharing animals.
 
 
 

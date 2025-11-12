@@ -6,8 +6,8 @@ This is the discrete version of the continuous :ref:`replicator dynamics <replic
 in distinct increments.
 
 
-.. _motivating-example-discrete_replicator_dynamics:
-
+Motivating example: once a day hawk dove game
+---------------------------------------------
 
 consider the Hawk Dove model shown in :ref:`replicator dynamics <replicator-dynamics-discussion>`, where we wish to model the populations of an aggressive animal and sharing animal over time
 but assume the population of aggressive and sharing animals only changes once a day when they interact to eat. 

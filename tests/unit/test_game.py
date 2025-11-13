@@ -584,6 +584,25 @@ Column player:
         assert row_check is True
         assert column_check is False
 
+    def test_discrete_replicator_dynamics(self):
+        """Test for the discrete replicator dynamics algorithm"""
+
+        x = np.array((0.2, 0.8))
+        A = np.array(
+            (
+                (4, 3),
+                (2, 5),
+            )
+        )
+        game = nash.Game(A)
+        expected_next_x = np.array((2 / 13, 11 / 13))
+        next_x = game.discrete_replicator_dynamics(
+            initial_population=x,
+            steps=1,
+            quantize=False,
+        )[-1]
+        assert np.allclose(expected_next_x, next_x)
+
     def test_moran_process_seed_1(self):
         A = np.array(((4, 3, 2, 1), (5, 1, 2, 5), (2, 6, 1, 3), (4, 10, 1, 1)))
         game = nash.Game(A)

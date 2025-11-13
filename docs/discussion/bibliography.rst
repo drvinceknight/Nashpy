@@ -34,3 +34,4 @@ documentation.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
 .. [vonNeumann1928] von Neumann, J. "Zur theorie der gesellschaftsspiele." Mathematische annalen 100.1 (1928): 295-320
 .. [vonStengel2023] von Stengel, Bernhard. "Zero-sum games and linear programming duality." Mathematics of Operations Research (2023).
+.. [Greenwood2019] Greenwood, Garrison W.  "On the Study of Human Cooperation via Computer Simulation" Springer Nature (2019): 35-37

@@ -18,5 +18,6 @@ Nashpy Game Theory Text book
    stochastic-fictitious-play.rst
    replicator-dynamics.rst
    asymmetric-replicator-dynamics.rst
+   discrete-replicator-dynamics.rst
    moran-process.rst
    introspection-dynamics.rst

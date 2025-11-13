@@ -9,6 +9,10 @@ from .algorithms.vertex_enumeration import vertex_enumeration
 from .linalg.minimax import linear_program
 from .egt.moran_process import moran_process, fixation_probabilities
 from .learning.fictitious_play import fictitious_play
+from .learning.discrete_replicator_dynamics import (
+    discrete_replicator_dynamics,
+    type_2_discrete_step,
+)
 from .learning.replicator_dynamics import (
     asymmetric_replicator_dynamics,
     replicator_dynamics,
@@ -306,6 +310,41 @@ Column player:
             sigma_r=sigma_c,
         )
         return (is_row_strategy_best_response, is_column_strategy_best_response)
+
+    def discrete_replicator_dynamics(
+        self,
+        initial_population,
+        steps=1,
+        quantize=False,
+        step_function=type_2_discrete_step,
+    ):
+        """
+        Returns an array containing the probability of each strategy being played
+        over discrete time steps.
+        Or if quantized, an array containing the number of players using each stratrgy
+        over discrete time steps.
+
+        Parameters
+        ----------
+        initial_population : array
+            the initial population distribution, or exact numbers for players of each stratergy
+        steps  :int
+            how many generations to run the step function
+        quantize : bool
+            whether or not to use greenwoods algorithm to quantize the result of the step function
+            at each iteration.
+        step_function :func
+            determines which step function to be used
+
+        Returns
+        -------
+            array
+            The population distribuition at distinct timepoints
+        """
+        A, _ = self.payoff_matrices
+        return discrete_replicator_dynamics(
+            A, initial_population, steps, quantize, step_function
+        )
 
     def moran_process(
         self,

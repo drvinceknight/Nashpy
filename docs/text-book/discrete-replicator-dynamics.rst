@@ -3,13 +3,16 @@
 Discrete Replicator dynamics
 ============================
 
+.. _motivating-example-discrete-replicator-dynamics:
+
 Motivating example: once a day hawk dove game
 ---------------------------------------------
 
-Consider the Hawk Dove model shown in :ref:`replicator dynamics <replicator-dynamics-discussion>`, where we wish to model the populations of an aggressive animal and sharing animal over time
-but assume the population of aggressive and sharing animals only changes once a day when they interact to eat. 
+Consider the Hawk Dove model shown in :ref:`replicator dynamics <replicator-dynamics-discussion>`, 
+where we wish to model the populations of aggressive and sharing animals over time
+but assume the population of aggressive and sharing animals only changes once a day.
 
-We can use the same payoff matrix :math:`A`:
+We use the following payoff matrix:
 
 .. math::
 
@@ -21,14 +24,42 @@ We can use the same payoff matrix :math:`A`:
 
 and starting population distribution
 
-:math:`x_0 = ([0.05,0.95])`:
+.. math::
+
+   x_0 = \begin{pmatrix}0.05\\0.95\end{pmatrix}
+
 where 95% are sharers while 5% are aggressive.
 
-We can use the following discrete function to find the new population after each time step
+How would we model this situation with the added constraint of discrete time?
 
-:math:`x_{\ i+1} = x_i (\frac{(Ax)_i}{x^T A x})`:
+The discrete replicator dynamics equation
+-----------------------------------------
 
-and get discrete results (on the left) similar to the continuous replicator function (on the right).
+Given a population with :math:`N` types of individuals. Where the fitness of an
+individual of type :math:`i` when interacting with an individual of type
+:math:`j` is given by :math:`A_{ij}` where :math:`A\in\mathbb{R}^{N \times N}`.
+The discrete replicator dynamics equation defines a sequence :math:`x^{(t)}` given by:
+
+.. math::
+
+   x_{i}^{(t + 1)} = x_i^{(t)} \frac{(Ax)_i}{{x^{(t)}}^T A x^{(t)}}
+
+where:
+
+.. math::
+
+   \phi = \sum_{i=1} ^ N x_i^{(t)} f_i(x)
+
+where :math:`f_i` is the population dependent fitness of individuals of type
+:math:`i`:
+
+.. math::
+
+   f_i(x) = (Ax^{(t)})_i
+
+
+For the :ref:`motivating-example-discrete-replicator-dynamics` this gives
+discrete results (on the left) similar to the continuous replicator function (on the right).
 
 .. plot::
 
@@ -57,45 +88,75 @@ and get discrete results (on the left) similar to the continuous replicator func
    ax2.legend() 
 
 Both the continuous and discrete replicator functions produce a proportion of a total population, this addresses
-the first modelling challenge: have discrete time.
+the first modelling challenge: to have discrete time.
 
 However what if we wanted to model a finite population of 100 animals?
 
-Greenwoods Quantization Algorithm
----------------------------------
+Quantizing a Population Distribution
+------------------------------------
 
-This algorithm is described in [Greenwood2019]_.
+This algorithm is first described in [Greenwood2019]_, the aim is to convert a continuous population
+distribution :math:`\mathbf{x} = (x_1, \dots, x_n)` into a vector of integer
+counts :math:`\mathbf{k} = (k_1, \dots, k_n)` such that the entries sum exactly
+to :math:`N` while remaining as close as possible to the unquantised values
+:math:`N x_i`.
 
-The algorithm takes the population distribution :math:`\textbf{x}` and the total population :math:`N` as inputs
+This quantization step is done at every step of the discrete replicator dynamics
+to ensure the population vector remains integer.
 
-First it calculates :math:`k'_i` for each :math:`x_i \in \textbf{x}` where
+Algorithm (Quantisation of a Population Distribution)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:math:`k'_i = \lfloor N x_i - \frac{1}{2} \rfloor` 
+Given a population distribution :math:`\mathbf{x}` and a total population
+:math:`N`, proceed as follows:
 
-Then calculates any change in population total
+1. **Initial rounding step**
 
-:math:`d = \sum{k'_i} - N`
+   For each :math:`i = 1, \dots, n`, compute
 
-If :math:`d = 0`, the algorithm terminates returning :math:`\textbf{k}'`
+   .. math::
 
-If :math:`d \neq 0`, the total population has changed and more steps need to be taken.
+      k'_i = \left\lfloor N x_i - \tfrac{1}{2} \right\rfloor.
 
-The errors :math:`\delta_i` for each :math:`k_i'` are calculated, 
+2. **Check population consistency**
 
+   Compute the discrepancy
 
-:math:`\delta_i = k'_i - N * x_i`
+   .. math::
 
-This being the distance of each :math:`k_i'` from its respective non-quantized value :math:`N x_i`
+      d = \sum_{i=1}^n k'_i - N.
 
-If :math:`d > 0`
-find the :math:`d` largest :math:`\delta_i`'s, and decrement all the :math:`k_i'`'s matching thoes error values by 1
+   If :math:`d = 0`, return :math:`\mathbf{k}'` immediately.
 
-if :math:`d < 0`
-find the :math:`|d|` smallest :math:`\delta_i`'s, and increment all the :math:`k_i'`'s matching thoes error values by 1
+3. **Compute rounding errors**
 
-Both cases then return :math:`\textbf{k}'`
+   For each :math:`i`, compute the error
 
-This produces the closest result to the non-quantized algorithm while maintaining a consistent total population
+   .. math::
+
+      \delta_i = k'_i - N x_i,
+
+   which quantifies the deviation of :math:`k'_i` from its exact value
+   :math:`N x_i`.
+
+4. **Adjust to restore the correct total**
+
+   - If :math:`d > 0` (too many individuals have been allocated):
+
+     Select the :math:`d` largest errors :math:`\delta_i` and decrement each
+     corresponding :math:`k'_i` by 1.
+
+   - If :math:`d < 0` (too few individuals have been allocated):
+
+     Select the :math:`|d|` smallest errors :math:`\delta_i` and increment each
+     corresponding :math:`k'_i` by 1.
+
+5. **Return the corrected population**
+
+   The adjusted vector :math:`\mathbf{k}'` now sums to :math:`N` and is the
+   closest integer-valued approximation to the unquantised population
+   :math:`N \mathbf{x}`.
+
 
 .. plot::
 
@@ -127,7 +188,8 @@ This produces the closest result to the non-quantized algorithm while maintainin
    ax2.legend() 
 
 
+Using Nashpy
+------------
 
-
-
-
+See :ref:`how-to-use-discrete-replicator-dynamics` for guidance of how to use Nashpy to
+obtain numerical solutions of the discrete replicator dynamics equation.

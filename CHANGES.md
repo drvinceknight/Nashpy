@@ -1,3 +1,7 @@
+# v0.0.44
+
+Return extreme / limit points of degenerate Nash components in support enumeration.
+
 # v0.0.43
 
 Fix errors in introspection documentation.

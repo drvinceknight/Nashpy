@@ -2,6 +2,7 @@
 
 import warnings
 from itertools import chain, combinations
+from math import comb
 
 import numpy as np
 import numpy.typing as npt
@@ -212,6 +213,125 @@ def is_ne(
     )
 
 
+def _already_seen(strategy_pair: tuple, seen: list, atol: float = 1e-8) -> bool:
+    """Return True if strategy_pair is already in seen (up to atol)."""
+    s1, s2 = strategy_pair
+    for t1, t2 in seen:
+        if np.allclose(s1, t1, atol=atol) and np.allclose(s2, t2, atol=atol):
+            return True
+    return False
+
+
+def support_ne_vertices(
+    A: npt.NDArray,
+    B: npt.NDArray,
+    support1,
+    support2,
+    atol: float = 1e-8,
+) -> list:
+    """
+    Vertices of the set of Nash equilibria whose supports are contained in the
+    given pair.
+
+    Used when the indifference system for a support pair is singular (degenerate
+    games). The vertices are the extreme / limit points of that NE component.
+
+    Parameters
+    ----------
+    A : array
+        The row player utility matrix.
+    B : array
+        The column player utility matrix
+    support1 :
+        Candidate support of the row player.
+    support2 :
+        Candidate support of the column player.
+    atol : float
+        Numerical tolerance.
+
+    Returns
+    -------
+    list
+        Distinct (row strategy, column strategy) vertices.
+    """
+    I = list(support1)
+    J = list(support2)
+    n1, n2 = A.shape
+    m = len(I)
+    n = len(J)
+    dimension = m + n
+
+    inequalities = []
+    for index in range(dimension):
+        coeff = np.zeros(dimension)
+        coeff[index] = 1.0
+        inequalities.append((coeff, 0.0))
+
+    for i in I:
+        for k in range(n1):
+            if k == i:
+                continue
+            coeff = np.zeros(dimension)
+            for offset, column in enumerate(J):
+                coeff[m + offset] = A[i, column] - A[k, column]
+            inequalities.append((coeff, 0.0))
+
+    for j in J:
+        for ell in range(n2):
+            if ell == j:
+                continue
+            coeff = np.zeros(dimension)
+            for offset, row in enumerate(I):
+                coeff[offset] = B[row, j] - B[row, ell]
+            inequalities.append((coeff, 0.0))
+
+    eq_row = np.zeros(dimension)
+    eq_row[:m] = 1.0
+    eq_col = np.zeros(dimension)
+    eq_col[m:] = 1.0
+    equalities = [(eq_row, 1.0), (eq_col, 1.0)]
+
+    n_tight = dimension - len(equalities)
+    if n_tight < 0:
+        return []
+    if n_tight > 0 and comb(len(inequalities), n_tight) > 64:
+        return []
+    vertices = []
+    for combo in combinations(range(len(inequalities)), n_tight):
+        matrix = np.vstack(
+            [eq[0] for eq in equalities] + [inequalities[i][0] for i in combo]
+        )
+        rhs = np.array(
+            [eq[1] for eq in equalities] + [inequalities[i][1] for i in combo]
+        )
+        try:
+            point = np.linalg.solve(matrix, rhs)
+        except np.linalg.LinAlgError:
+            point, residuals, rank, _ = np.linalg.lstsq(matrix, rhs, rcond=None)
+            if rank < dimension:
+                continue
+            if len(residuals) and residuals[0] > atol:
+                continue
+        if np.any(point < -atol):
+            continue
+        if abs(eq_row.dot(point) - 1.0) > atol or abs(eq_col.dot(point) - 1.0) > atol:
+            continue
+        if any(coeff.dot(point) < bound - atol for coeff, bound in inequalities):
+            continue
+        row_strategy = np.zeros(n1)
+        col_strategy = np.zeros(n2)
+        row_strategy[I] = np.maximum(point[:m], 0.0)
+        col_strategy[J] = np.maximum(point[m:], 0.0)
+        if row_strategy.sum() == 0 or col_strategy.sum() == 0:
+            continue
+        row_strategy = row_strategy / row_strategy.sum()
+        col_strategy = col_strategy / col_strategy.sum()
+        pair = (row_strategy, col_strategy)
+        if not _already_seen(pair, vertices, atol=atol):
+            vertices.append(pair)
+    return vertices
+
+
 def support_enumeration(
     A: npt.NDArray, B: npt.NDArray, non_degenerate: bool = False, tol: float = 10**-16
 ) -> Generator[Tuple[bool, bool], Any, None]:
@@ -224,6 +344,10 @@ def support_enumeration(
     2. For each I,J supports of size k
     3. Solve indifference conditions
     4. Check that have Nash Equilibrium.
+
+    On degenerate support pairs the indifference system can be singular. In that
+    case the extreme points (limit points) of the NE set on those supports are
+    returned.
 
     Parameters
     ----------
@@ -243,18 +367,36 @@ def support_enumeration(
         The equilibria.
     """
     count = 0
-    for s1, s2, sup1, sup2 in indifference_strategies(
-        A, B, non_degenerate=non_degenerate, tol=tol
-    ):
-        if is_ne((s1, s2), (sup1, sup2), (A, B)):
+    seen = []
+    recovered_pairs = []
+    for pair in potential_support_pairs(A, B, non_degenerate=non_degenerate):
+        s1 = solve_indifference(B.T, *(pair[::-1]))
+        s2 = solve_indifference(A, *pair)
+        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
+            if is_ne((s1, s2), (pair[0], pair[1]), (A, B)):
+                count += 1
+                seen.append((s1, s2))
+                yield s1, s2
+        elif s1 is False or s2 is False:
+            recovered_pairs.append(pair)
+
+    for sup1, sup2 in recovered_pairs:
+        for s1, s2 in support_ne_vertices(A, B, sup1, sup2):
+            actual1 = tuple(i for i, value in enumerate(s1) if value > tol)
+            actual2 = tuple(j for j, value in enumerate(s2) if value > tol)
+            if not actual1 or not actual2:
+                continue
+            if not is_ne((s1, s2), (actual1, actual2), (A, B)):
+                continue
+            if _already_seen((s1, s2), seen):
+                continue
             count += 1
+            seen.append((s1, s2))
             yield s1, s2
     if count % 2 == 0:
         warning = """
 An even number of ({}) equilibria was returned. This
 indicates that the game is degenerate. Consider using another algorithm
 to investigate.
-                  """.format(
-            count
-        )
+                  """.format(count)
         warnings.warn(warning, RuntimeWarning)

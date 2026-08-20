@@ -7,12 +7,14 @@ import unittest
 import numpy as np
 
 from nashpy.algorithms.support_enumeration import (
+    _already_seen,
     indifference_strategies,
     is_ne,
     obey_support,
     potential_support_pairs,
     powerset,
     solve_indifference,
+    support_ne_vertices,
 )
 
 
@@ -338,6 +340,73 @@ class TestSupportEnumeration(unittest.TestCase):
                 )
             )
         )
+
+    def test_already_seen(self):
+        """Test duplicate detection for strategy pairs"""
+        pair = (np.array([1.0, 0.0]), np.array([0.0, 1.0]))
+        self.assertFalse(_already_seen(pair, []))
+        self.assertTrue(_already_seen(pair, [pair]))
+
+        near = (np.array([1.0 + 1e-10, 0.0]), np.array([0.0, 1.0]))
+        self.assertTrue(_already_seen(near, [pair]))
+
+        different_row = (np.array([0.0, 1.0]), np.array([0.0, 1.0]))
+        self.assertFalse(_already_seen(different_row, [pair]))
+
+        different_column = (np.array([1.0, 0.0]), np.array([1.0, 0.0]))
+        self.assertFalse(_already_seen(different_column, [pair]))
+
+        slightly_off = (np.array([0.9, 0.1]), np.array([0.0, 1.0]))
+        self.assertTrue(_already_seen(slightly_off, [pair], atol=0.2))
+        self.assertFalse(_already_seen(slightly_off, [pair], atol=1e-8))
+
+    def _close_to_vertex(self, vertices, expected):
+        return any(
+            np.allclose(got[0], expected[0]) and np.allclose(got[1], expected[1])
+            for got in vertices
+        )
+
+    def test_support_ne_vertices_issue_222(self):
+        """Vertices of the NE segment from https://github.com/drvinceknight/Nashpy/issues/222"""
+        A = np.array([[-3.0, 3.0], [-3.0, 5.0]])
+        B = np.array([[2.0, 7.0], [4.0, 2.0]])
+
+        vertices = support_ne_vertices(A, B, (0, 1), (0,))
+        expected_limit_points = [
+            (np.array([0.0, 1.0]), np.array([1.0, 0.0])),
+            (np.array([2 / 7, 5 / 7]), np.array([1.0, 0.0])),
+        ]
+        self.assertEqual(len(vertices), 2)
+        for expected in expected_limit_points:
+            self.assertTrue(
+                self._close_to_vertex(vertices, expected),
+                msg="missing vertex {}: got {}".format(expected, vertices),
+            )
+
+        pure = support_ne_vertices(A, B, (1,), (0,))
+        self.assertEqual(len(pure), 1)
+        self.assertTrue(
+            self._close_to_vertex(pure, expected_limit_points[0]),
+            msg="missing pure vertex: got {}".format(pure),
+        )
+
+        self.assertEqual(support_ne_vertices(A, B, (0,), (0,)), [])
+
+    def test_support_ne_vertices_row_pure_continuum(self):
+        """Vertices of the row-pure continuum in the 3x2 degenerate example"""
+        A = np.array([[3.0, 3.0], [2.0, 5.0], [0.0, 6.0]])
+        B = np.array([[3.0, 3.0], [2.0, 6.0], [3.0, 1.0]])
+        vertices = support_ne_vertices(A, B, (0,), (0, 1))
+        expected_limit_points = [
+            (np.array([1.0, 0.0, 0.0]), np.array([1.0, 0.0])),
+            (np.array([1.0, 0.0, 0.0]), np.array([2 / 3, 1 / 3])),
+        ]
+        self.assertEqual(len(vertices), 2)
+        for expected in expected_limit_points:
+            self.assertTrue(
+                self._close_to_vertex(vertices, expected),
+                msg="missing vertex {}: got {}".format(expected, vertices),
+            )
 
 
 class TestUtils(unittest.TestCase):

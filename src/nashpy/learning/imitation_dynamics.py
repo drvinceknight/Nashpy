@@ -1,103 +1,133 @@
-"""A function for a Imitation Dynamics algorithm"""
+"""Code to simulate an imitate-the-best population process."""
+
+from typing import Generator, Optional, Tuple
 
 import numpy as np
-from typing import Generator, Tuple, Any
 import numpy.typing as npt
 
 
-def payoff(player_strategy, opponent_strategy, player_payoff_matrix):
-    """
-    Calculate the payoff of a player given their strategy and the opponent's strategy.
+def payoff(
+    row_strategy: npt.NDArray,
+    column_strategy: npt.NDArray,
+    payoff_matrix: npt.NDArray,
+) -> float:
+    """Calculate the expected payoff for a mixed-strategy profile.
 
     Parameters
     ----------
-    player_strategy: numpy array
-        representing the strategy of the player
-    opponent_strategy: numpy array
-        representing the strategy of the opponent
-    player_payoff_matrix: numpy matrix
-        representing the payoff matrix for the player
+    row_strategy : array
+        The mixed strategy of the row player.
+    column_strategy : array
+        The mixed strategy of the column player.
+    payoff_matrix : array
+        The payoff matrix of the player whose payoff is being calculated.
 
     Returns
     -------
-    return_value: scalar representing strategy and payoff matrix
+    float
+        The expected payoff.
     """
-    return_value = np.dot(
-        player_strategy, np.dot(player_payoff_matrix, opponent_strategy)
-    )
-    return return_value
+    return float(row_strategy @ payoff_matrix @ column_strategy)
 
 
 def imitation_dynamics(
     A: npt.NDArray,
     B: npt.NDArray,
-    population_size=100,
-    iterations=1000,
-    random_seed=None,
-    threshold=0.5,
-) -> Generator[Tuple[float, float], Any, None]:
-    """
-    Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
+    population_size: int = 100,
+    iterations: int = 1000,
+    random_seed: Optional[int] = None,
+    threshold: float = 0.5,
+    *,
+    seed: Optional[int] = None,
+) -> Generator[Tuple[npt.NDArray, npt.NDArray], None, None]:
+    """Simulate an imitate-the-best process for a bimatrix game.
+
+    Each individual in the row population is paired with the individual at the
+    same position in the column population. After payoffs are calculated, every
+    individual in a population copies that population's highest-payoff mixed
+    strategy. The generator yields one pair of thresholded final population
+    profiles, preserving the existing public return contract.
 
     Parameters
     ----------
-    A : numpy matrix
-        representing the payoff matrix for Player 1
-    B : numpy matrix
-        representing the payoff matrix for Player 2
-    population_size : number
-        number of individuals in the population of the group (default: 100)
-    iterations : number
-        number of generations to simulate (default: 1000)
-    random_seed : number
-        seed for reproducibility (default: None)
+    A : array
+        The row player payoff matrix.
+    B : array
+        The column player payoff matrix.
+    population_size : int
+        The number of individuals in each population.
+    iterations : int
+        The number of generations to simulate.
+    random_seed : int, optional
+        Backwards-compatible alias for ``seed``.
     threshold : float
-        threshold value for representing strategies as 0 or 1 (default: 0.5)
+        Values in the final mean population profiles that are greater than or
+        equal to this value are represented by 1; lower values by 0.
+    seed : int, optional
+        Seed for a local NumPy random number generator.
 
     Yields
-    -------
-    Generator
-        The equilibria.
+    ------
+    tuple
+        The thresholded final row and column population profiles.
+
+    Raises
+    ------
+    ValueError
+        If the payoff matrices or simulation parameters are invalid, or if
+        both ``seed`` and ``random_seed`` are supplied.
     """
-    num_strategies = len(A)
+    A = np.asarray(A)
+    B = np.asarray(B)
 
-    # Initialize population
-    if random_seed:
-        np.random.seed(random_seed)  # Set random seed for reproducibility
+    if A.ndim != 2 or B.ndim != 2:
+        raise ValueError("A and B must be two-dimensional payoff matrices.")
+    if A.shape != B.shape:
+        raise ValueError("A and B must have the same shape.")
+    if population_size <= 0:
+        raise ValueError("population_size must be positive.")
+    if iterations < 0:
+        raise ValueError("iterations must be non-negative.")
+    if not 0 <= threshold <= 1:
+        raise ValueError("threshold must be between 0 and 1 inclusive.")
+    if seed is not None and random_seed is not None:
+        raise ValueError("seed and random_seed cannot both be supplied.")
+    if seed is None:
+        seed = random_seed
 
-    population_A = np.random.dirichlet(np.ones(num_strategies), size=population_size)
-    population_B = np.random.dirichlet(np.ones(num_strategies), size=population_size)
+    number_of_row_strategies, number_of_column_strategies = A.shape
+    random_generator = np.random.default_rng(seed)
+    row_population = random_generator.dirichlet(
+        np.ones(number_of_row_strategies), size=population_size
+    )
+    column_population = random_generator.dirichlet(
+        np.ones(number_of_column_strategies), size=population_size
+    )
 
-    for generation in range(iterations):
-        # Play the game
-        payoffs_A = np.array(
+    for _ in range(iterations):
+        row_payoffs = np.array(
             [
-                payoff(population_A[i], population_B[i], A)
+                payoff(row_population[i], column_population[i], A)
                 for i in range(population_size)
             ]
         )
-        payoffs_B = np.array(
+        column_payoffs = np.array(
             [
-                payoff(population_B[i], population_A[i], B)
+                payoff(row_population[i], column_population[i], B)
                 for i in range(population_size)
             ]
         )
 
-        # Update population based on payoffs
-        # Used Imitation dynamics in which the players copy the strategy of the most successful individual
-        fittest_A_index = np.argmax(payoffs_A)
-        fittest_B_index = np.argmax(payoffs_B)
-        population_A = np.tile(population_A[fittest_A_index], (population_size, 1))
-        population_B = np.tile(population_B[fittest_B_index], (population_size, 1))
+        fittest_row_index = np.argmax(row_payoffs)
+        fittest_column_index = np.argmax(column_payoffs)
+        row_population = np.tile(
+            row_population[fittest_row_index], (population_size, 1)
+        )
+        column_population = np.tile(
+            column_population[fittest_column_index], (population_size, 1)
+        )
 
-    # Calculate Nash equilibrium strategies
-    nash_equilibrium_A = np.mean(population_A, axis=0)
-    nash_equilibrium_B = np.mean(population_B, axis=0)
+    row_profile = (np.mean(row_population, axis=0) >= threshold).astype(float)
+    column_profile = (np.mean(column_population, axis=0) >= threshold).astype(float)
 
-    # Threshold the strategies
-    nash_equilibrium_A[nash_equilibrium_A >= threshold] = 1
-    nash_equilibrium_A[nash_equilibrium_A < threshold] = 0
-    nash_equilibrium_B[nash_equilibrium_B >= threshold] = 1
-    nash_equilibrium_B[nash_equilibrium_B < threshold] = 0
-
-    yield nash_equilibrium_A, nash_equilibrium_B
+    yield row_profile, column_profile

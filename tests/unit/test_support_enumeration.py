@@ -3,6 +3,7 @@ Tests for the game class
 """
 
 import unittest
+import warnings
 
 import numpy as np
 
@@ -14,6 +15,7 @@ from nashpy.algorithms.support_enumeration import (
     potential_support_pairs,
     powerset,
     solve_indifference,
+    support_enumeration,
     support_ne_vertices,
 )
 
@@ -391,6 +393,37 @@ class TestSupportEnumeration(unittest.TestCase):
         )
 
         self.assertEqual(support_ne_vertices(A, B, (0,), (0,)), [])
+
+    def test_recovered_vertices_are_dropped_by_a_coarse_tolerance(self):
+        """A recovered vertex with no mass above `tol` is not an equilibrium"""
+        A = np.array([[-3.0, 3.0], [-3.0, 5.0]])
+        B = np.array([[2.0, 7.0], [4.0, 2.0]])
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            default = list(support_enumeration(A, B))
+            coarse = list(support_enumeration(A, B, tol=0.8))
+
+        # ([2/7, 5/7], [1, 0]) has no entry above 0.8 for the row player.
+        self.assertEqual(len(default), 2)
+        self.assertEqual(len(coarse), 1)
+        self.assertTrue(np.allclose(coarse[0][0], np.array([0.0, 1.0])))
+
+    def test_support_ne_vertices_on_empty_support(self):
+        """An empty support has no vertices to enumerate"""
+        A = np.array([[-3.0, 3.0], [-3.0, 5.0]])
+        B = np.array([[2.0, 7.0], [4.0, 2.0]])
+        self.assertEqual(support_ne_vertices(A, B, (), ()), [])
+        self.assertEqual(support_ne_vertices(A, B, (0,), ()), [])
+        self.assertEqual(support_ne_vertices(A, B, (), (0,)), [])
+
+    def test_support_ne_vertices_skips_large_support_pairs(self):
+        """Support pairs needing too many vertex solves are skipped"""
+        A = np.zeros((6, 6))
+        self.assertEqual(
+            support_ne_vertices(A, A.copy(), (0, 1, 2, 3, 4, 5), (0, 1, 2, 3, 4, 5)),
+            [],
+        )
 
     def test_support_ne_vertices_row_pure_continuum(self):
         """Vertices of the row-pure continuum in the 3x2 degenerate example"""

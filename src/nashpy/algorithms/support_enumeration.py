@@ -214,7 +214,23 @@ def is_ne(
 
 
 def _already_seen(strategy_pair: tuple, seen: list, atol: float = 1e-8) -> bool:
-    """Return True if strategy_pair is already in seen (up to atol)."""
+    """
+    Test if a strategy pair has already been recorded
+
+    Parameters
+    ----------
+    strategy_pair : tuple
+        A 2-tuple of numpy arrays.
+    seen : list
+        The pairs recorded so far.
+    atol : float
+        A tolerance parameter for equality.
+
+    Returns
+    -------
+    bool
+        True if the pair matches one in `seen` up to `atol`.
+    """
     s1, s2 = strategy_pair
     for t1, t2 in seen:
         if np.allclose(s1, t1, atol=atol) and np.allclose(s2, t2, atol=atol):
@@ -242,9 +258,9 @@ def support_ne_vertices(
         The row player utility matrix.
     B : array
         The column player utility matrix
-    support1 :
+    support1 : tuple
         Candidate support of the row player.
-    support2 :
+    support2 : tuple
         Candidate support of the column player.
     atol : float
         Numerical tolerance.
@@ -254,11 +270,11 @@ def support_ne_vertices(
     list
         Distinct (row strategy, column strategy) vertices.
     """
-    I = list(support1)
-    J = list(support2)
+    rows = list(support1)
+    cols = list(support2)
     n1, n2 = A.shape
-    m = len(I)
-    n = len(J)
+    m = len(rows)
+    n = len(cols)
     dimension = m + n
 
     inequalities = []
@@ -267,21 +283,21 @@ def support_ne_vertices(
         coeff[index] = 1.0
         inequalities.append((coeff, 0.0))
 
-    for i in I:
+    for i in rows:
         for k in range(n1):
             if k == i:
                 continue
             coeff = np.zeros(dimension)
-            for offset, column in enumerate(J):
+            for offset, column in enumerate(cols):
                 coeff[m + offset] = A[i, column] - A[k, column]
             inequalities.append((coeff, 0.0))
 
-    for j in J:
+    for j in cols:
         for ell in range(n2):
             if ell == j:
                 continue
             coeff = np.zeros(dimension)
-            for offset, row in enumerate(I):
+            for offset, row in enumerate(rows):
                 coeff[offset] = B[row, j] - B[row, ell]
             inequalities.append((coeff, 0.0))
 
@@ -296,8 +312,12 @@ def support_ne_vertices(
         return []
     if n_tight > 0 and comb(len(inequalities), n_tight) > 64:
         return []
-    vertices = []
+    vertices: list = []
     for combo in combinations(range(len(inequalities)), n_tight):
+        # The system is square: `dimension` rows made up of the two equalities
+        # and `n_tight` tight inequalities. `np.linalg.solve` therefore raises
+        # exactly when the matrix is rank deficient, and such a combination
+        # does not pin down a single point.
         matrix = np.vstack(
             [eq[0] for eq in equalities] + [inequalities[i][0] for i in combo]
         )
@@ -307,23 +327,17 @@ def support_ne_vertices(
         try:
             point = np.linalg.solve(matrix, rhs)
         except np.linalg.LinAlgError:
-            point, residuals, rank, _ = np.linalg.lstsq(matrix, rhs, rcond=None)
-            if rank < dimension:
-                continue
-            if len(residuals) and residuals[0] > atol:
-                continue
-        if np.any(point < -atol):
             continue
-        if abs(eq_row.dot(point) - 1.0) > atol or abs(eq_col.dot(point) - 1.0) > atol:
+        if np.any(point < -atol):
             continue
         if any(coeff.dot(point) < bound - atol for coeff, bound in inequalities):
             continue
+        # The equalities are rows of the solved system so each block of `point`
+        # already sums to 1: the normalisation below only removes drift.
         row_strategy = np.zeros(n1)
         col_strategy = np.zeros(n2)
-        row_strategy[I] = np.maximum(point[:m], 0.0)
-        col_strategy[J] = np.maximum(point[m:], 0.0)
-        if row_strategy.sum() == 0 or col_strategy.sum() == 0:
-            continue
+        row_strategy[rows] = np.maximum(point[:m], 0.0)
+        col_strategy[cols] = np.maximum(point[m:], 0.0)
         row_strategy = row_strategy / row_strategy.sum()
         col_strategy = col_strategy / col_strategy.sum()
         pair = (row_strategy, col_strategy)
@@ -386,7 +400,7 @@ def support_enumeration(
             actual2 = tuple(j for j, value in enumerate(s2) if value > tol)
             if not actual1 or not actual2:
                 continue
-            if not is_ne((s1, s2), (actual1, actual2), (A, B)):
+            if not is_ne((s1, s2), (np.array(actual1), np.array(actual2)), (A, B)):
                 continue
             if _already_seen((s1, s2), seen):
                 continue

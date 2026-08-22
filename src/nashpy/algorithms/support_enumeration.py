@@ -277,6 +277,17 @@ def support_ne_vertices(
     n = len(cols)
     dimension = m + n
 
+    # One probability-vector equality per player is always tight, so `n_tight`
+    # further inequalities are needed to pin a vertex down. Both the number of
+    # inequalities and the resulting number of solves are known before any of
+    # them are built, so an intractable support pair is discarded up front.
+    n_tight = dimension - 2
+    if n_tight < 0:
+        return []
+    n_inequalities = dimension + m * (n1 - 1) + n * (n2 - 1)
+    if n_tight > 0 and comb(n_inequalities, n_tight) > 64:
+        return []
+
     inequalities = []
     for index in range(dimension):
         coeff = np.zeros(dimension)
@@ -307,11 +318,6 @@ def support_ne_vertices(
     eq_col[m:] = 1.0
     equalities = [(eq_row, 1.0), (eq_col, 1.0)]
 
-    n_tight = dimension - len(equalities)
-    if n_tight < 0:
-        return []
-    if n_tight > 0 and comb(len(inequalities), n_tight) > 64:
-        return []
     vertices: list = []
     for combo in combinations(range(len(inequalities)), n_tight):
         # The system is square: `dimension` rows made up of the two equalities

@@ -39,6 +39,16 @@ def vertex_enumeration(
     if np.min(B) < 0:
         B = B + abs(np.min(B))
 
+    # The best response polytope is {x >= 0, Mx <= 1}, so its vertex coordinates
+    # scale as 1 / payoff.  With large payoffs every vertex falls below the
+    # absolute tolerance used to discard the origin and the algorithm returns
+    # nothing.  Nash equilibria are invariant under a positive rescaling of each
+    # player's payoffs, so normalise here to keep the polytope well conditioned.
+    if np.max(A) > 0:
+        A = A / np.max(A)
+    if np.max(B) > 0:
+        B = B / np.max(B)
+
     number_of_row_strategies, row_dimension = A.shape
     max_label = number_of_row_strategies + row_dimension
     full_labels = set(range(max_label))

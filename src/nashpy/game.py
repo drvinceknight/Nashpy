@@ -61,9 +61,7 @@ Row player:
 {}
 
 Column player:
-{}""".format(
-            tpe, *self.payoff_matrices
-        )
+{}""".format(tpe, *self.payoff_matrices)
 
     def __getitem__(self, key: Any) -> npt.NDArray:
         row_strategy, column_strategy = key

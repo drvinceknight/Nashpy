@@ -252,11 +252,10 @@ def support_ne_vertices(
     Used when the indifference system for a support pair is singular (degenerate
     games). The vertices are the extreme / limit points of that NE component.
 
-    One probability-vector equality per player is always tight, so
-    ``dimension - 2`` further inequalities are needed to pin a vertex down.
-    Both the number of inequalities and the resulting number of solves are
-    known before any of them are built, so an intractable support pair is
-    discarded up front.
+    One probability-vector equality per player is always tight, so `n_tight`
+    further inequalities are needed to pin a vertex down. Both the number of
+    inequalities and the resulting number of solves are known before any of
+    them are built, so an intractable support pair is discarded up front.
 
     Parameters
     ----------
@@ -369,7 +368,9 @@ def support_enumeration(
 
     On degenerate support pairs the indifference system can be singular. In that
     case the extreme points (limit points) of the NE set on those supports are
-    returned.
+    returned. Vertex recovery runs only when a returned equilibrium has extra
+    best responses, which is when `solve_indifference` is singular. Unique-solve
+    games therefore follow the original path.
 
     Parameters
     ----------
@@ -389,26 +390,44 @@ def support_enumeration(
         The equilibria.
     """
     count = 0
-    seen = []
+    seen: list = []
+    for s1, s2, sup1, sup2 in indifference_strategies(
+        A, B, non_degenerate=non_degenerate, tol=tol
+    ):
+        if is_ne((s1, s2), (sup1, sup2), (A, B)):
+            count += 1
+            seen.append((s1, s2))
+            yield s1, s2
+
     recovered_pairs = []
-    for pair in potential_support_pairs(A, B, non_degenerate=non_degenerate):
-        s1 = solve_indifference(B.T, *(pair[::-1]))
-        s2 = solve_indifference(A, *pair)
-        if obey_support(s1, pair[0], tol=tol) and obey_support(s2, pair[1], tol=tol):
-            if is_ne((s1, s2), (pair[0], pair[1]), (A, B)):
-                count += 1
-                seen.append((s1, s2))
-                yield s1, s2
-        elif s1 is False or s2 is False:
-            recovered_pairs.append(pair)
+    if not non_degenerate:
+        for s1, s2 in seen:
+            row_payoffs = np.dot(A, s2)
+            col_payoffs = np.dot(B.T, s1)
+            enlarged1 = tuple(
+                i for i, payoff in enumerate(row_payoffs) if payoff == row_payoffs.max()
+            )
+            enlarged2 = tuple(
+                j for j, payoff in enumerate(col_payoffs) if payoff == col_payoffs.max()
+            )
+            played1 = tuple(i for i, value in enumerate(s1) if value > tol)
+            played2 = tuple(j for j, value in enumerate(s2) if value > tol)
+            if enlarged1 == played1 and enlarged2 == played2:
+                continue
+            if (
+                solve_indifference(B.T, enlarged2, enlarged1) is not False
+                and solve_indifference(A, enlarged1, enlarged2) is not False
+            ):
+                continue
+            pair = (enlarged1, enlarged2)
+            if pair not in recovered_pairs:
+                recovered_pairs.append(pair)
 
     for sup1, sup2 in recovered_pairs:
         for s1, s2 in support_ne_vertices(A, B, sup1, sup2):
             actual1 = tuple(i for i, value in enumerate(s1) if value > tol)
             actual2 = tuple(j for j, value in enumerate(s2) if value > tol)
             if not actual1 or not actual2:
-                continue
-            if not is_ne((s1, s2), (np.array(actual1), np.array(actual2)), (A, B)):
                 continue
             if _already_seen((s1, s2), seen):
                 continue

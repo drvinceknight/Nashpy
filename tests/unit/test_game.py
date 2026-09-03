@@ -219,6 +219,7 @@ Column player:
         expected_equilibria = [
             (np.array([1, 0, 0]), np.array([1, 0])),
             (np.array([0, 1 / 3, 2 / 3]), np.array([1 / 3, 2 / 3])),
+            (np.array([1, 0, 0]), np.array([2 / 3, 1 / 3])),
         ]
         with warnings.catch_warnings(record=True) as w:
             obtained_equilibria = list(g.support_enumeration())
@@ -228,8 +229,17 @@ Column player:
                         np.allclose(s1, s2),
                         msg="obtained: {} !=expected: {}".format(obtained, expected),
                     )
-            self.assertGreater(len(w), 0)
-            self.assertEqual(w[-1].category, RuntimeWarning)
+            self.assertTrue(
+                any(
+                    np.allclose(eq[0], expected_equilibria[2][0])
+                    and np.allclose(eq[1], expected_equilibria[2][1])
+                    for eq in obtained_equilibria
+                ),
+                msg="missing degenerate limit point {}".format(obtained_equilibria),
+            )
+            if len(obtained_equilibria) % 2 == 0:
+                self.assertGreater(len(w), 0)
+                self.assertEqual(w[-1].category, RuntimeWarning)
 
         A = np.array([[0, 0], [0, 0]])
         B = np.array([[0, 0], [0, 0]])
@@ -307,6 +317,36 @@ Column player:
         )
         assert np.all(np.isclose(row_strategy, expected_row_strategy))
         assert np.all(np.isclose(col_strategy, expected_column_strategy))
+
+    def test_support_enumeration_returns_limit_points_of_degenerate_ne(self):
+        """
+        Degenerate 2x2 from https://github.com/drvinceknight/Nashpy/issues/222.
+
+        The NE set is the segment ([p, 1-p], [1, 0]) for p in [0, 2/7].
+        Support enumeration should return both extreme points, not only (0, 1).
+        """
+        A = np.array([[-3.0, 3.0], [-3.0, 5.0]])
+        B = np.array([[2.0, 7.0], [4.0, 2.0]])
+        g = nash.Game(A, B)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            eqs = list(g.support_enumeration())
+
+        def close_to(eq, expected):
+            return all(np.allclose(got, want) for got, want in zip(eq, expected))
+
+        expected_limit_points = [
+            (np.array([0.0, 1.0]), np.array([1.0, 0.0])),
+            (np.array([2 / 7, 5 / 7]), np.array([1.0, 0.0])),
+        ]
+        for expected in expected_limit_points:
+            self.assertTrue(
+                any(close_to(eq, expected) for eq in eqs),
+                msg="missing limit point {}: got {}".format(expected, eqs),
+            )
+        mixed = np.array([2 / 7, 5 / 7])
+        column_pure = np.array([1.0, 0.0])
+        self.assertEqual(g.is_best_response(mixed, column_pure), (True, True))
 
     def test_vertex_enumeration_for_bi_matrix(self):
         """Test for the equilibria calculation using vertex enumeration"""

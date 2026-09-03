@@ -252,6 +252,12 @@ def support_ne_vertices(
     Used when the indifference system for a support pair is singular (degenerate
     games). The vertices are the extreme / limit points of that NE component.
 
+    One probability-vector equality per player is always tight, so
+    ``dimension - 2`` further inequalities are needed to pin a vertex down.
+    Both the number of inequalities and the resulting number of solves are
+    known before any of them are built, so an intractable support pair is
+    discarded up front.
+
     Parameters
     ----------
     A : array
@@ -277,10 +283,6 @@ def support_ne_vertices(
     n = len(cols)
     dimension = m + n
 
-    # One probability-vector equality per player is always tight, so `n_tight`
-    # further inequalities are needed to pin a vertex down. Both the number of
-    # inequalities and the resulting number of solves are known before any of
-    # them are built, so an intractable support pair is discarded up front.
     n_tight = dimension - 2
     if n_tight < 0:
         return []

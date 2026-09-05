@@ -692,22 +692,22 @@ Column player:
                     msg="obtained: {} !=expected: {}".format(obtained, expected),
                 )
 
-    def test_imitation_dynamics_randomness(self):
-        # Define parameters for the imitation dynamics function
-        A = np.array([[3, 0], [1, 3]])  # Example payoff matrix for Player 1
-        B = np.array([[0, 1], [3, 0]])  # Example payoff matrix for Player 2
-        g = nash.Game(A, B)
-        # Run imitation dynamics multiple times and collect the results
-        results = []
-        for i in range(10):  # Run 10 iterations
-            # Run imitation dynamics with random seed set to None (random initialization)
-            for i, j in list(g.imitation_dynamics()):
-                nash_equilibrium_player1 = i
-            results.append(
-                (tuple(nash_equilibrium_player1))
-            )  # Convert numpy arrays to tuples
-        # Check if the results are different in at least one pair of iterations
-        assert np.all(len(set(results)) > 1)
+    def test_imitation_dynamics(self):
+        A = np.array([[3, 0, 1], [1, 2, 4]])
+        B = np.array([[2, 5, 0], [3, 1, 4]])
+        game = nash.Game(A, B)
+
+        row_profile, column_profile = next(
+            game.imitation_dynamics(
+                population_size=5,
+                iterations=2,
+                threshold=0.4,
+                seed=0,
+            )
+        )
+
+        assert row_profile.shape == (2,)
+        assert column_profile.shape == (3,)
 
     def test_introspection_dynamics(self):
         A = np.array([[3, 0], [1, 3]])

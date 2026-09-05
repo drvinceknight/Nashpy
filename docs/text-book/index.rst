@@ -16,6 +16,7 @@ Nashpy Game Theory Text book
    lemke-howson.rst
    fictitious-play.rst
    stochastic-fictitious-play.rst
+   imitation-dynamics.rst
    replicator-dynamics.rst
    asymmetric-replicator-dynamics.rst
    discrete-replicator-dynamics.rst

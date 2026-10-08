@@ -35,7 +35,7 @@ def imitation_dynamics(
     iterations=1000,
     random_seed=None,
     threshold=0.5,
-) -> Generator[Tuple[float, float], Any, None]:
+) -> Generator[Tuple[npt.NDArray, npt.NDArray], Any, None]:
     """
     Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
 

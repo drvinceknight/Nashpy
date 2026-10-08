@@ -254,7 +254,5 @@ def support_enumeration(
 An even number of ({}) equilibria was returned. This
 indicates that the game is degenerate. Consider using another algorithm
 to investigate.
-                  """.format(
-            count
-        )
+                  """.format(count)
         warnings.warn(warning, RuntimeWarning)

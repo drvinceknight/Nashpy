@@ -37,6 +37,21 @@ We see that the `lemke-howson` algorithm fails but also that the
 equilibria: there is in fact a range of strategies the row player can play
 against :code:`[ 0.5 0.5 0]` that is still a best response.
 
+When the indifference system for a support pair is singular, support
+enumeration also returns the extreme points of that Nash component. For
+example the degenerate game from
+https://github.com/drvinceknight/Nashpy/issues/222 has equilibria
+:math:`([p, 1-p], [1, 0])` for all :math:`p \in [0, 2/7]`. The algorithm
+returns both endpoints::
+
+    >>> A = np.array([[-3, 3], [-3, 5]])
+    >>> B = np.array([[2, 7], [4, 2]])
+    >>> game = nash.Game(A, B)
+    >>> for eq in game.support_enumeration():  # doctest: +ELLIPSIS
+    ...     print(np.round(eq[0], 2), np.round(eq[1], 2))
+    [0. 1.] [1. 0.]
+    [0.29 0.71] [1. 0.]
+
 The :ref:`support-enumeration-discussion` algorithm can be run with two optional
 arguments:
 

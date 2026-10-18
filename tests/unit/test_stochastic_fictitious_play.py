@@ -37,7 +37,9 @@ def test_get_distribution_response_to_play_count_2():
         A=M, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
     )
     assert np.allclose(distribution_response, expected_distribution)
-    assert np.sum(distribution_response) == 1
+    np.testing.assert_allclose(
+        np.sum(distribution_response), 1, rtol=0, atol=np.finfo(float).eps
+    )
 
 
 def test_get_distribution_response_to_play_for_bug_reported_by_user():
@@ -51,9 +53,61 @@ def test_get_distribution_response_to_play_for_bug_reported_by_user():
     etha = 10**-1
     epsilon_bar = 10**-2
     play_count = [1, 1, 1]
+    distribution = get_distribution_response_to_play_count(
+        A=A, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+    )
+    assert np.all(np.isfinite(distribution))
+    assert np.isclose(np.sum(distribution), 1)
+
+
+@pytest.mark.parametrize("payoff", [71.0, 70.9, -100.0])
+@pytest.mark.parametrize("play_count", [np.zeros(4), np.array([1, 2, 3, 4])])
+def test_large_constant_payoffs_have_uniform_response(payoff, play_count):
+    """Overflow, an overflowing normalizer, and underflow preserve a uniform response.
+
+    Parameters
+    ----------
+    payoff : float
+        The common payoff for every action.
+    play_count : array
+        Counts defining the opponent's empirical strategy.
+    """
+    distribution = get_distribution_response_to_play_count(
+        A=np.full((4, 4), payoff),
+        play_count=play_count,
+        epsilon_bar=0,
+        etha=0.1,
+    )
+    np.testing.assert_array_equal(distribution, np.full(4, 0.25))
+
+
+@pytest.mark.parametrize("offset", [0, 1000, -1000])
+def test_logit_response_depends_on_payoff_differences(offset):
+    """A common payoff offset leaves the nonsaturated logit probabilities unchanged.
+
+    Parameters
+    ----------
+    offset : float
+        The common payoff added to both actions.
+    """
+    distribution = get_distribution_response_to_play_count(
+        A=np.array([[0, 0], [1, 1]], dtype=float) + offset,
+        play_count=np.zeros(2),
+        epsilon_bar=0,
+        etha=0.5,
+    )
+    first = 1 / (1 + np.exp(2))
+    np.testing.assert_allclose(distribution, [first, 1 - first], rtol=1e-14)
+
+
+def test_nonfinite_payoffs_still_raise():
+    """Undefined utilities must not silently become an arbitrary distribution."""
     with pytest.raises(ValueError):
         get_distribution_response_to_play_count(
-            A=A, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+            A=np.full((2, 2), np.nan),
+            play_count=np.zeros(2),
+            epsilon_bar=0,
+            etha=0.1,
         )
 
 
@@ -167,5 +221,12 @@ def test_bug_reported_by_user():
     B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
     iterations = 500
     np.random.seed(0)
-    with pytest.raises(ValueError):
-        tuple(stochastic_fictitious_play(A=A, B=B, iterations=iterations))
+    states = tuple(stochastic_fictitious_play(A=A, B=B, iterations=iterations))
+    assert len(states) == iterations + 1
+    for play_counts, distributions in states[1:]:
+        for distribution in distributions:
+            assert np.all(np.isfinite(distribution))
+            assert np.all(distribution >= 0)
+            assert np.isclose(np.sum(distribution), 1)
+    for play_count in play_counts:
+        assert np.sum(play_count) == iterations

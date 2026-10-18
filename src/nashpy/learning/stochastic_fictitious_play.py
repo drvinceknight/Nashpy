@@ -30,9 +30,8 @@ def get_distribution_response_to_play_count(
     Raises
     ------
     ValueError
-        A value error is raised if the input matrix leads to a numerical error
-        when computing the logit distribution. Usually this can be addressed by
-        rescaling the input matrix for example A = A / 10.
+        A value error is raised if the input matrix or logit parameter leads to
+        non-finite probabilities.
     """
     if np.sum(play_count) == 0:
         strategies = play_count + 1 / len(play_count)
@@ -40,18 +39,17 @@ def get_distribution_response_to_play_count(
         strategies = play_count / np.sum(play_count)
     utilities = A @ strategies
     noisy_utilities = utilities + np.random.random(A.shape[0]) * epsilon_bar
-    logit_choice = np.exp(etha**-1 * noisy_utilities) / np.sum(
-        np.exp(etha**-1 * noisy_utilities)
-    )
+    logits = etha**-1 * noisy_utilities
+    # A common shift preserves the distribution and keeps exponentials at most one.
+    weights = np.exp(logits - np.max(logits))
+    logit_choice = weights / np.sum(weights)
     try:
         assert np.all(logit_choice < np.inf)
     except AssertionError:
         raise ValueError(
-            f"""The matrix with values ranging from {np.min(A)} to {np.max(A)} 
-            has entries with values that lead to
-            numeric errors in the calculation of the logit choice. This can
-            be caused by having absolute values too large. Rescaling your
-            matrix could fix this error."""
+            f"""The matrix with values ranging from {np.min(A)} to {np.max(A)}
+            leads to non-finite logit probabilities. Check the payoff values
+            and the logit parameter."""
         )
     return logit_choice
 

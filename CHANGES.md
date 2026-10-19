@@ -11,6 +11,9 @@ Handle players with only one available action in introspection dynamics.
 Avoid exponential overflow and underflow in stochastic fictitious play without
 rescaling payoffs or changing the logit parameter.
 
+Fix Moran mutation to exclude the reproducing individual's strategy rather
+than its population index.
+
 # v0.0.43
 
 Fix errors in introspection documentation.

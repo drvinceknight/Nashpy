@@ -2,6 +2,8 @@
 Tests for the moran process
 """
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 
@@ -492,7 +494,7 @@ def test_specific_moran_process_with_mutation_seed_0_mutation_probability_1():
     )
     generations = [next(generator) for _ in range(10)]
     last_generation = generations[-1]
-    expected_last_generation = np.array((0, 0, 2, 1, 1, 1, 1))
+    expected_last_generation = np.array((1, 2, 2, 2, 1, 1, 1))
     assert np.array_equal(last_generation, expected_last_generation)
 
 
@@ -530,7 +532,7 @@ def test_specific_moran_process_with_mutation_seed_3():
     )
     generations = [next(generator) for _ in range(10)]
     last_generation = generations[-1]
-    expected_last_generation = np.array((1, 0, 1, 1, 1))
+    expected_last_generation = np.array((0, 1, 0, 1, 1))
     assert np.array_equal(last_generation, expected_last_generation)
 
 
@@ -721,3 +723,43 @@ def test_fixation_probablities_with_initial_fixed_population_on_graphs_0():
         (0, 1, 0, 1, 2, 0, 2): 1,
     }
     assert probabilities == expected_probabilities
+
+
+@pytest.mark.parametrize(
+    "population, birth_index",
+    [
+        ([1, 0], 0),
+        ([1, 0], 1),
+        ([0, 1], 0),
+        ([0, 1], 1),
+        ([4, 0, 2, 4, 0, 2], 5),
+        ([4, 0, 2, 4, 0, 2], 0),
+    ],
+)
+def test_mutation_excludes_parent_strategy(population, birth_index):
+    """Mutation chooses another strategy, independently of the parent's index."""
+    population = np.array(population)
+    original = population.copy()
+    strategies = set(population)
+    expected_candidates = strategies - {population[birth_index]}
+    death_index = (birth_index + 1) % len(population)
+
+    def choose(options, p=None):
+        if p is not None:
+            return birth_index
+        assert set(options) == expected_candidates
+        return min(options)
+
+    with (
+        patch("numpy.random.choice", side_effect=choose),
+        patch("numpy.random.randint", return_value=death_index),
+        patch("numpy.random.random", return_value=0.0),
+    ):
+        result = update_population(
+            population,
+            np.ones(len(population)),
+            strategies,
+            mutation_probability=1,
+        )
+    assert result[death_index] != population[birth_index]
+    assert np.array_equal(population, original)

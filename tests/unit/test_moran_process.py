@@ -737,7 +737,15 @@ def test_fixation_probablities_with_initial_fixed_population_on_graphs_0():
     ],
 )
 def test_mutation_excludes_parent_strategy(population, birth_index):
-    """Mutation chooses another strategy, independently of the parent's index."""
+    """Mutation chooses another strategy, independently of the parent's index.
+
+    Parameters
+    ----------
+    population : list
+        The strategies of the current population.
+    birth_index : int
+        The individual selected for reproduction.
+    """
     population = np.array(population)
     original = population.copy()
     strategies = set(population)

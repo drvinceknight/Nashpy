@@ -1,3 +1,7 @@
+# Unreleased
+
+Fix Moran mutation to exclude the reproducing individual's strategy rather than its population index.
+
 # v0.0.43
 
 Fix errors in introspection documentation.

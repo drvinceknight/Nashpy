@@ -12,6 +12,7 @@ documentation.
 .. [Dantzig2016] Dantzig, George. Linear programming and extensions. Princeton university press, 2016.  APA
 .. [Elvio2011] Elvio, Accinelli and Carrera, Edgar. 2011. Evolutionarily Stable Strategies and Replicator Dynamics in Asymmetric Two-Population Games. 10.1007/978-3-642-11456-4_3.
 .. [Fudenberg1998] Fudenberg, Drew, et al. The theory of learning in games. Vol. 2. MIT press, 1998.
+.. [Grassmann1985] Grassmann, Winfried K., Michael I. Taksar, and Daniel P. Heyman. "Regenerative analysis and steady state distributions for Markov chains." Operations Research 33.5 (1985): 1107-1116.
 .. [Harper2017] Harper, Marc, et al. "Reinforcement learning produces dominant strategies for the iterated prisoner’s dilemma." PloS one 12.12 (2017): e0188046.
 .. [Hofbauer2002] Hofbauer, Josef, and William H. Sandholm. "On the global convergence of stochastic fictitious play." Econometrica 70.6 (2002): 2265-2294.
 .. [Knight2016] Knight, Vincent Anthony, et al. "An open framework for the reproducible study of the iterated prisoner's dilemma." Journal of Open Research Software 4.1 (2016).

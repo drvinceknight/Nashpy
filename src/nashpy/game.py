@@ -17,7 +17,10 @@ from .learning.replicator_dynamics import (
     asymmetric_replicator_dynamics,
     replicator_dynamics,
 )
-from .learning.introspection_dynamics import introspection_dynamics
+from .learning.introspection_dynamics import (
+    introspection_dynamics,
+    introspection_dynamics_state_distribution,
+)
 from .learning.stochastic_fictitious_play import stochastic_fictitious_play
 from .utils.is_best_response import is_best_response
 from .learning.regret_minimization import regret_minimization
@@ -527,6 +530,24 @@ Column player:
             random_seed=random_seed,
             threshold=threshold,
         )
+
+    def introspection_dynamics_state_distribution(self, beta: float) -> npt.NDArray:
+        """
+        Calculate the stationary distribution of introspection dynamics.
+
+        Parameters
+        ----------
+        beta : float
+            The finite, non-negative learning intensity.
+
+        Returns
+        -------
+        array
+            The long-run probability of each action pair, arranged in the same
+            shape as the payoff matrices.
+        """
+        A, B = self.payoff_matrices
+        return introspection_dynamics_state_distribution(A=A, B=B, beta=beta)
 
     def introspection_dynamics(
         self,

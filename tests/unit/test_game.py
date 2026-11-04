@@ -749,6 +749,14 @@ Column player:
         # Check if the results are different in at least one pair of iterations
         assert np.all(len(set(results)) > 1)
 
+    def test_introspection_dynamics_state_distribution(self):
+        A = np.array([[0, 0, 0], [1, 1, 1]])
+        B = np.array([[0, 1, 2], [0, 1, 2]])
+        distribution = nash.Game(A, B).introspection_dynamics_state_distribution(
+            beta=np.log(2)
+        )
+        assert np.allclose(distribution, np.array([[1, 2, 4], [2, 4, 8]]) / 21)
+
     def test_introspection_dynamics(self):
         A = np.array([[3, 0], [1, 3]])
         B = np.array([[0, 1], [3, 0]])

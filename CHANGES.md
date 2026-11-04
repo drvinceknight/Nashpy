@@ -1,3 +1,7 @@
+# Unreleased
+
+Add stationary state distribution calculation for introspection dynamics.
+
 # v0.0.43
 
 Fix errors in introspection documentation.

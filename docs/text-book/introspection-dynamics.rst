@@ -76,6 +76,43 @@ This process corresponds to a Markov chain (details of which can be found in
 [Couto2022]_) which defines the steady state probability vector :math:`v` which
 gives the probability of being in any given state of action pairs.
 
+Calculating the stationary distribution
+---------------------------------------
+
+Let :math:`P` be the transition matrix, with states indexed by action pairs
+:math:`(i,j)`. Only one player changes action at a time. For :math:`k\ne i`
+and :math:`\ell\ne j`,
+
+.. math::
+
+   P_{(i,j),(k,j)} = \frac{1}{2(M_1-1)}
+       \frac{1}{1+e^{-\beta(A_{k,j}-A_{i,j})}},
+
+.. math::
+
+   P_{(i,j),(i,\ell)} = \frac{1}{2(M_2-1)}
+       \frac{1}{1+e^{-\beta(B_{i,\ell}-B_{i,j})}}.
+
+All other off-diagonal entries are zero, and the diagonal entry makes each
+row sum to one. For finite payoffs and finite :math:`\beta`, each player can
+eventually reach any action and the process has a unique stationary
+distribution. It satisfies
+
+.. math::
+
+   vP=v, \qquad \sum_{i,j}v_{i,j}=1.
+
+Nashpy solves these balance equations using state elimination
+[Grassmann1985]_. Eliminating a state redirects its incoming flow according to
+its outgoing transition probabilities. The remaining equations use only
+non-negative rates, which avoids cancellation when some transitions are rare.
+The eliminated state weights are then reconstructed in logarithmic form and
+normalised. The returned array has the same shape as the payoff matrices.
+
+At :math:`\beta=0`, all action pairs have probability :math:`1/(M_1M_2)`.
+This stationary distribution describes long-run action frequencies; it is
+distinct from a pair of mixed strategies forming a Nash equilibrium.
+
 Using Nashpy
 ------------
 

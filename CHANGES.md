@@ -1,3 +1,8 @@
+# Unreleased
+
+Avoid exponential overflow and underflow in stochastic fictitious play without
+rescaling payoffs or changing the logit parameter.
+
 # v0.0.43
 
 Fix errors in introspection documentation.

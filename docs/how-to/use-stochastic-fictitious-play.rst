@@ -78,20 +78,20 @@ See the :ref:`stochastic-fictitious-play` reference section for more information
     [499.   1.] [498.   2.]
 
 
-Note that for some large valued input matrices a numerical error can occur::
+Logit probabilities are evaluated using a common shift of the scaled utilities,
+so large payoffs do not overflow their exponentials::
 
     >>> A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
     >>> B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
     >>> game = nash.Game(A, B)
     >>> iterations = 500
+    >>> np.random.seed(0)
     >>> play_counts_and_distributions = tuple(game.stochastic_fictitious_play(iterations=iterations))
-    Traceback (most recent call last):
-    ...
-    ValueError: The matrix with values ranging from -76 to 141...
+    >>> len(play_counts_and_distributions)
+    501
+    >>> all(np.all(np.isfinite(distribution)) for _, distributions in play_counts_and_distributions[1:] for distribution in distributions)
+    True
 
-This can usually addressed by an affine scaling of the matrices::
-
-    >>> A = A / 10
-    >>> B = B / 10
-    >>> game = nash.Game(A, B)
-    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar)
+The common shift leaves the probabilities unchanged. Rescaling the payoff
+matrices instead changes the strength of the logit response when :code:`etha`
+is held fixed, so it is not needed as a workaround for exponential overflow.

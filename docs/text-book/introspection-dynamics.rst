@@ -51,7 +51,7 @@ The Introspection Dynamics
 
 First defined in [Couto2022]_ introspection dynamics on 2 player games is
 defined as a process on 
-:math:`N=2` individuals which can use :math:`M_1` and math:`M_2` actions
+:math:`N=2` individuals which can use :math:`M_1` and :math:`M_2` actions
 respectively.
 
 The process is defined as follows, at each step:

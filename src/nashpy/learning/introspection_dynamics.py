@@ -2,6 +2,7 @@
 
 import numpy as np
 import numpy.typing as npt
+from scipy.special import expit
 
 from typing import Optional, Generator
 
@@ -71,7 +72,7 @@ def introspection_dynamics(
         potential_score = payoff_matrix[potential_actions[0]][potential_actions[1]]
         delta = potential_score - current_score
 
-        probability_of_change = 1 / (1 + np.exp(-beta * delta))
+        probability_of_change = expit(beta * delta)
 
         if np.random.random() < probability_of_change:
             actions = potential_actions

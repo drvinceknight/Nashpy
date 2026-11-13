@@ -183,3 +183,37 @@ def test_introspection_dynamics_with_seed_1_and_initial_action_set_and_low_beta(
         )
     )
     assert np.array_equal(steps, expected_steps)
+
+
+def test_large_negative_payoff_difference_does_not_overflow():
+    """Unfavorable proposals at high learning intensity remain well-defined."""
+    payoffs = np.array([[1.0, 0.0], [0.0, -1.0]])
+    np.random.seed(0)
+    with np.errstate(over="raise"):
+        steps = tuple(
+            introspection_dynamics(
+                payoffs,
+                payoffs,
+                number_of_iterations=10,
+                beta=1000,
+                initial_actions=np.array([0, 0]),
+            )
+        )
+    assert np.array_equal(steps, np.zeros((11, 2), dtype=int))
+
+
+def test_large_positive_payoff_difference_accepts_improvement():
+    """An overwhelmingly favorable proposal is accepted without overflow."""
+    payoffs = np.array([[-1.0, 0.0], [0.0, 1.0]])
+    np.random.seed(0)
+    with np.errstate(over="raise"):
+        steps = tuple(
+            introspection_dynamics(
+                payoffs,
+                payoffs,
+                number_of_iterations=1,
+                beta=1000,
+                initial_actions=np.array([0, 0]),
+            )
+        )
+    assert steps[-1].sum() == 1

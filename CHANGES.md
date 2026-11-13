@@ -1,5 +1,7 @@
 # Unreleased
 
+Avoid exponential overflow in introspection dynamics at high learning intensity.
+
 Avoid exponential overflow and underflow in stochastic fictitious play without
 rescaling payoffs or changing the logit parameter.
 

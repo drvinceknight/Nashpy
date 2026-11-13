@@ -35,6 +35,11 @@ def introspection_dynamics(
     ------
     Generator
         the actions chosen at each step by both players
+
+    Notes
+    -----
+    If the selected player has only one action, the state is unchanged for
+    that iteration.
     """
     number_of_actions = A.shape
     payoff_matrices = [A, B]
@@ -60,6 +65,10 @@ def introspection_dynamics(
         potential_action_space = [
             action for action in action_space if action != current_action
         ]
+
+        if not potential_action_space:
+            yield actions
+            continue
 
         potential_action = np.random.choice(potential_action_space)
         potential_actions = np.array(

@@ -148,6 +148,94 @@ class TestTableau(unittest.TestCase):
         with self.assertRaises(ValueError):
             tableau._find_dropped(0, set())
 
+    def test_apply_pivot_updates_only_the_applying_row(self):
+        tableau = Tableau(
+            np.array(
+                [
+                    [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
+                    [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
+                    [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
+                ]
+            )
+        )
+        tableau._apply_pivot(pivot_col=0, pivot_row=0, applying_row=1)
+        np.testing.assert_array_equal(
+            tableau._tableau,
+            [
+                [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
+                [0.0, 9.0, -2.0, 3.0, 0.0, 1.0],
+                [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
+            ],
+        )
+
+    def test_pivot_uses_the_supplied_row(self):
+        tableau = Tableau(
+            np.array(
+                [
+                    [3.0, 3.0, 1.0, 0.0, 0.0, 1.0],
+                    [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
+                    [0.0, 6.0, 0.0, 0.0, 1.0, 1.0],
+                ]
+            )
+        )
+        tableau._pivot(column_index=0, pivot_row_index=1)
+        np.testing.assert_array_equal(
+            tableau._tableau,
+            [
+                [0.0, -9.0, 2.0, -3.0, 0.0, -1.0],
+                [2.0, 5.0, 0.0, 1.0, 0.0, 1.0],
+                [0.0, 12.0, 0.0, 0.0, 2.0, 2.0],
+            ],
+        )
+
+    def test_pivot_on_column_returns_the_ratio_test_row(self):
+        tableau = Tableau(
+            np.array(
+                [
+                    [3.0, 1.0, 0.0, 3.0],
+                    [2.0, 0.0, 1.0, 1.0],
+                ]
+            )
+        )
+        self.assertEqual(tableau._pivot_on_column(column_index=0), 1)
+        np.testing.assert_array_equal(
+            tableau._tableau,
+            [[0.0, 2.0, -3.0, 3.0], [2.0, 0.0, 1.0, 1.0]],
+        )
+
+    def test_extract_label_values_skips_zero_coefficients(self):
+        matrix = np.array(
+            [
+                [0.0, 0.0, 1.0, 0.0, 0.0, 7.0],
+                [2.0, 0.0, 0.0, 1.0, 0.0, 6.0],
+                [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+                [4.0, 0.0, 0.0, 0.0, 0.0, 2.0],
+            ]
+        )
+        tableau = Tableau(matrix.copy())
+        with np.errstate(divide="raise", invalid="raise"):
+            self.assertEqual(tableau._extract_label_values(0), [3.0, 0.5])
+            self.assertEqual(tableau._extract_label_values(1), [])
+        np.testing.assert_array_equal(tableau._tableau, matrix)
+
+    def test_lex_tie_break_normalizes_and_excludes_non_tied_rows(self):
+        matrix = np.array(
+            [
+                [2.0, 0.0, 2.0, 6.0, 0.0, 2.0],
+                [4.0, 0.0, 4.0, 8.0, 0.0, 4.0],
+                [1.0, 0.0, 9.0, 0.0, 1.0, 1.0],
+            ]
+        )
+        tableau = TableauLex(matrix.copy(), original_basic_labels={0, 1})
+        for ties, expected in [
+            ([True, True, False], 0),
+            ([False, True, False], 1),
+            ([True, True, True], 2),
+        ]:
+            with self.subTest(ties=ties):
+                self.assertEqual(tableau._tie_break_lex(0, np.array(ties)), expected)
+        np.testing.assert_array_equal(tableau._tableau, matrix)
+
     def test_particular_tableau_to_strategy(self):
         t_arr = np.array(
             [

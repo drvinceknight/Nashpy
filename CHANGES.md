@@ -1,5 +1,7 @@
 # Unreleased
 
+Handle players with only one available action in introspection dynamics.
+
 Avoid exponential overflow and underflow in stochastic fictitious play without
 rescaling payoffs or changing the logit parameter.
 

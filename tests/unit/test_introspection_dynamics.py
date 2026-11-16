@@ -54,7 +54,15 @@ def test_introspection_dynamics_with_seed_0():
 @pytest.mark.parametrize("shape", [(1, 1), (1, 2), (2, 1)])
 @pytest.mark.parametrize("initial_actions", [None, np.array([0, 0])])
 def test_introspection_with_single_action_player(shape, initial_actions):
-    """A player without alternative actions leaves the current state unchanged."""
+    """A player without alternative actions leaves the current state unchanged.
+
+    Parameters
+    ----------
+    shape : tuple
+        The numbers of available actions for the row and column players.
+    initial_actions : array or None
+        The starting actions, or None to sample them randomly.
+    """
     payoffs = np.ones(shape)
     np.random.seed(0)
     steps = np.array(

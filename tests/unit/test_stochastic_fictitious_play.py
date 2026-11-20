@@ -27,14 +27,14 @@ def test_property_get_distribution_response_to_play_count(M):
 
 
 def test_get_distribution_response_to_play_count_2():
-    np.random.seed(0)
+    rng = np.random.default_rng(0)
     M = np.array([[3, 2], [7, 6]])
     etha = 2
     epsilon_bar = 2
     play_count = [40, 30]
-    expected_distribution = np.array([0.1028108461, 0.8971891539])
+    expected_distribution = np.array([0.16344373, 0.83655627])
     distribution_response = get_distribution_response_to_play_count(
-        A=M, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+        A=M, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha, rng=rng
     )
     assert np.allclose(distribution_response, expected_distribution)
     np.testing.assert_allclose(
@@ -49,12 +49,15 @@ def test_get_distribution_response_to_play_for_bug_reported_by_user():
     Captured here: https://github.com/drvinceknight/Nashpy/issues/214
     """
     A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
-    np.random.seed(0)
     etha = 10**-1
     epsilon_bar = 10**-2
     play_count = [1, 1, 1]
     distribution = get_distribution_response_to_play_count(
-        A=A, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+        A=A,
+        play_count=play_count,
+        epsilon_bar=epsilon_bar,
+        etha=etha,
+        rng=np.random.default_rng(0),
     )
     assert np.all(np.isfinite(distribution))
     assert np.isclose(np.sum(distribution), 1)
@@ -112,34 +115,34 @@ def test_nonfinite_payoffs_still_raise():
 
 
 def test_get_distribution_response_to_play_count_3():
-    np.random.seed(0)
+    rng = np.random.default_rng(0)
     M = np.array([[3, 2], [7, 6]])
     etha = 0.2
     epsilon_bar = 0.05
     play_count = np.array([0, 0])
     r_dist = get_distribution_response_to_play_count(
-        A=M, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha
+        A=M, play_count=play_count, epsilon_bar=epsilon_bar, etha=etha, rng=rng
     )
-    assert np.allclose(r_dist, np.array([1.97718056e-09, 9.99999998e-01]))
+    assert np.allclose(r_dist, np.array([2.25931027e-09, 9.99999998e-01]))
 
     c_dist = get_distribution_response_to_play_count(
         A=M.transpose(),
         play_count=play_count,
         epsilon_bar=epsilon_bar,
         etha=etha,
+        rng=rng,
     )
-    assert np.allclose(c_dist, np.array([0.99340266, 0.00659734]))
+    assert np.allclose(c_dist, np.array([0.99334766, 0.00665234]))
 
 
 def test_stochastic_fictitious_play_given_etha_epsilon():
-    np.random.seed(0)
     iterations = 1
     M = np.array([[3, 2], [7, 6]])
     etha = 0.2
     epsilon_bar = 0.05
     counts_and_distributions = tuple(
         stochastic_fictitious_play(
-            A=M, B=-M, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations
+            A=M, B=-M, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations, seed=0
         )
     )
     playcounts, dist = counts_and_distributions[1]
@@ -147,30 +150,28 @@ def test_stochastic_fictitious_play_given_etha_epsilon():
     r_dist, c_dist = dist
     assert np.array_equal(playcounts, [np.array([0, 1.0]), np.array([0, 1.0])])
     assert np.array_equal(r_playcounts, np.array([0, 1.0]))
-    assert np.allclose(r_dist, np.array([1.97718056e-09, 9.99999998e-01]))
+    assert np.allclose(r_dist, np.array([2.25931027e-09, 9.99999998e-01]))
     assert len(counts_and_distributions) == 2
-    assert np.allclose(c_dist, np.array([0.00678974, 0.99321026]))
+    assert np.allclose(c_dist, np.array([0.0067336, 0.9932664]))
 
 
 def test_stochastic_fictitious_play_default_inputs():
-    np.random.seed(0)
     iterations = 3
     M = np.array([[3, 2], [7, 6]])
     counts_and_distributions = tuple(
-        stochastic_fictitious_play(A=M, B=-M, iterations=iterations)
+        stochastic_fictitious_play(A=M, B=-M, iterations=iterations, seed=0)
     )
     playcounts, dist = counts_and_distributions[-1]
     r_playcounts, c_playcounts = playcounts
     r_dist, c_dist = dist
     assert np.array_equal(playcounts, [np.array([0, 3]), np.array([0, 3])])
-    assert np.allclose(r_dist, np.array([4.09913701e-18, 1.00000000e00]))
-    assert np.allclose(c_dist, np.array([4.53248709e-05, 9.99954675e-01]))
+    assert np.allclose(r_dist, np.array([4.6131621e-18, 1.00000000e00]))
+    assert np.allclose(c_dist, np.array([4.79837569e-05, 9.99952016e-01]))
     assert len(counts_and_distributions) == 4
     assert np.sum(playcounts) == 2 * iterations
 
 
 def test_stochastic_fictitious_play_2x3():
-    np.random.seed(0)
     iterations = 3
     M = np.array([[3, 2, -2], [7, -2, 6]])
     N = np.array([[2, -2, 3], [-4, 2, 6]])
@@ -178,28 +179,27 @@ def test_stochastic_fictitious_play_2x3():
     epsilon_bar = 0.2
     counts_and_distributions = tuple(
         stochastic_fictitious_play(
-            A=M, B=N, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations
+            A=M, B=N, etha=etha, epsilon_bar=epsilon_bar, iterations=iterations, seed=0
         )
     )
     playcounts, dist = counts_and_distributions[-1]
     r_playcounts, c_playcounts = playcounts
     r_dist, c_dist = dist
     assert np.array_equal(r_playcounts, np.array([0, 3]))
-    assert np.array_equal(c_playcounts, np.array([0, 0, 3.0]))
-    assert np.allclose(r_dist, np.array([0.01795781, 0.98204219]))
-    assert np.allclose(c_dist, np.array([0.00546793, 0.11912101, 0.87541106]))
+    assert np.array_equal(c_playcounts, np.array([0, 2.0, 1.0]))
+    assert np.allclose(r_dist, np.array([0.2799721, 0.7200279]))
+    assert np.allclose(c_dist, np.array([0.00622156, 0.12100703, 0.87277142]))
     assert len(counts_and_distributions) == iterations + 1
     assert np.sum(r_playcounts) == iterations
     assert np.sum(c_playcounts) == iterations
 
 
 def test_stochastic_fictitious_play_longrun_default_inputs():
-    np.random.seed(0)
     iterations = 10000
     A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
     B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
     counts_and_distributions = tuple(
-        stochastic_fictitious_play(A=A, B=B, iterations=iterations)
+        stochastic_fictitious_play(A=A, B=B, iterations=iterations, seed=0)
     )
     playcounts, dist = counts_and_distributions[-1]
     r_playcounts, c_playcounts = playcounts
@@ -207,8 +207,8 @@ def test_stochastic_fictitious_play_longrun_default_inputs():
     assert len(counts_and_distributions) == iterations + 1
     assert np.sum(r_playcounts) == iterations
     assert np.sum(c_playcounts) == iterations
-    assert np.allclose(r_dist, np.array([0.35888645, 0.32741658, 0.31369697]))
-    assert np.allclose(c_dist, np.array([0.30257911, 0.3463743, 0.35104659]))
+    assert np.allclose(r_dist, np.array([0.34857354, 0.34739881, 0.30402765]))
+    assert np.allclose(c_dist, np.array([0.32385877, 0.35455558, 0.32158565]))
 
 
 def test_bug_reported_by_user():
@@ -220,8 +220,7 @@ def test_bug_reported_by_user():
     A = np.array([[113, 65, 112], [141, 93, -56], [120, 73, -76]])
     B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
     iterations = 500
-    np.random.seed(0)
-    states = tuple(stochastic_fictitious_play(A=A, B=B, iterations=iterations))
+    states = tuple(stochastic_fictitious_play(A=A, B=B, iterations=iterations, seed=0))
     assert len(states) == iterations + 1
     for play_counts, distributions in states[1:]:
         for distribution in distributions:

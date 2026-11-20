@@ -14,23 +14,21 @@ class::
 The :code:`stochastic_fictitious_play` method returns a generator of a given collection of
 learning steps, comprising of the play counts and the mixed strategy of each player::
 
-    >>> np.random.seed(0)
     >>> iterations = 500
-    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations)
+    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, seed=0)
     >>> for play_counts, distributions in play_counts_and_distributions:
     ...     row_play_counts, column_play_counts = play_counts
     ...     row_distributions, column_distributions = distributions
     ...     print(row_play_counts, column_play_counts, row_distributions, column_distributions)
     [0 0] [0 0] None None
-    [1. 0.] [0. 1.] [9.99953841e-01 4.61594628e-05] [0.501447 0.498553]
+    [1. 0.] [0. 1.] [9.99956239e-01 4.37612752e-05] [0.50061115 0.49938885]
     ...
-    [498.   1.] [497.   2.] [1.00000000e+00 1.07557011e-13] [9.99999998e-01 2.32299935e-09]
-    [499.   1.] [498.   2.] [1.00000000e+00 1.17304491e-13] [9.99999998e-01 2.18403537e-09]
+    [498.   1.] [497.   2.] [1.00000000e+00 1.09702646e-13] [9.99999998e-01 2.18218160e-09]
+    [499.   1.] [498.   2.] [1.0000000e+00 1.0116217e-13] [9.99999998e-01 2.07111668e-09]
 
 Note that this process is stochastic::
 
-    >>> np.random.seed(1)
-    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations)
+    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, seed=1)
     >>> for play_counts, distributions in play_counts_and_distributions:
     ...     row_play_counts, column_play_counts = play_counts
     ...     row_distributions, column_distributions = distributions
@@ -44,9 +42,8 @@ Note that this process is stochastic::
 It is also possible to pass a :code:`play_counts` variable to give a starting
 point for the algorithm::
 
-    >>> np.random.seed(0)
     >>> play_counts = (np.array([0., 500.]), np.array([0., 500.]))
-    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, play_counts=play_counts)
+    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, seed=0, play_counts=play_counts)
     >>> for play_counts, distributions in play_counts_and_distributions:
     ...     row_play_counts, column_play_counts = play_counts
     ...     row_distributions, column_distributions = distributions
@@ -62,10 +59,9 @@ A value of :code:`etha` and :code:`epsilon_bar` can be passed.
 See the :ref:`stochastic-fictitious-play` reference section for more information. The default values for etha and epsilon bar are
 :math:`10^-1` and :math:`10^-2` respectively::
 
-    >>> np.random.seed(0)
     >>> etha = 10**-2
     >>> epsilon_bar = 10**-3
-    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar)
+    >>> play_counts_and_distributions = game.stochastic_fictitious_play(iterations=iterations, seed=0, etha=etha, epsilon_bar=epsilon_bar)
     >>> for play_counts, distributions in play_counts_and_distributions:
     ...     row_play_counts, column_play_counts = play_counts
     ...     row_distributions, column_distributions = distributions
@@ -85,8 +81,7 @@ so large payoffs do not overflow their exponentials::
     >>> B = np.array([[-113, -65, -112], [-141, -93, 56], [-120, -73, 76]])
     >>> game = nash.Game(A, B)
     >>> iterations = 500
-    >>> np.random.seed(0)
-    >>> play_counts_and_distributions = tuple(game.stochastic_fictitious_play(iterations=iterations))
+    >>> play_counts_and_distributions = tuple(game.stochastic_fictitious_play(iterations=iterations, seed=0))
     >>> len(play_counts_and_distributions)
     501
     >>> all(np.all(np.isfinite(distribution)) for _, distributions in play_counts_and_distributions[1:] for distribution in distributions)

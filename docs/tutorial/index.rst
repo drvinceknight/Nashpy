@@ -200,15 +200,14 @@ We can illustrate this using :code:`Nashpy`::
 
     >>> import numpy as np
     >>> iterations = 100
-    >>> np.random.seed(0)
-    >>> play_counts = rps.fictitious_play(iterations=iterations)
+    >>> play_counts = rps.fictitious_play(iterations=iterations, seed=0)
     >>> for row_play_count, column_play_count in play_counts:
     ...     print(row_play_count, column_play_count)
     [0 0 0] [0 0 0]
-    [1. 0. 0.] [0. 1. 0.]
+    [0. 0. 1.] [0. 1. 0.]
     ...
-    [28. 39. 32.] [37. 26. 36.]
-    [29. 39. 32.] [37. 26. 37.]
+    [34. 28. 37.] [31. 38. 30.]
+    [34. 28. 38.] [32. 38. 30.]
 
 Over time we can see the behaviour emerge, as the play counts can be normalised
 to give strategy vectors. Note that these will not always converge.

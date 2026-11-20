@@ -165,7 +165,7 @@ Column player:
             *self.payoff_matrices, initial_dropped_label=initial_dropped_label
         )
 
-    def fictitious_play(self, iterations, play_counts=None):
+    def fictitious_play(self, iterations, play_counts=None, *, seed=None):
         """
         Return a given sequence of actions through fictitious play. The
         implementation corresponds to the description of chapter 2 of
@@ -183,6 +183,8 @@ Column player:
             The number of iterations of the algorithm.
         play_counts : array
             The play counts.
+        seed : int or numpy.random.Generator, optional
+            A seed or generator for the local random number generator.
 
         Returns
         -------
@@ -190,11 +192,14 @@ Column player:
             The play counts
         """
         return fictitious_play(
-            *self.payoff_matrices, iterations=iterations, play_counts=play_counts
+            *self.payoff_matrices,
+            iterations=iterations,
+            play_counts=play_counts,
+            seed=seed,
         )
 
     def stochastic_fictitious_play(
-        self, iterations, play_counts=None, etha=10**-1, epsilon_bar=10**-2
+        self, iterations, play_counts=None, etha=10**-1, epsilon_bar=10**-2, *, seed=None
     ):
         """Return a given sequence of actions and mixed strategies through stochastic fictitious play. The
         implementation corresponds to the description given in [Hofbauer2002]_.
@@ -210,6 +215,8 @@ Column player:
             The noise parameter for the logit choice function.
         epsilon_bar : float
             The maximum stochastic perturbation.
+        seed : int or numpy.random.Generator, optional
+            A seed or generator for the local random number generator.
 
         Returns
         -------
@@ -221,7 +228,8 @@ Column player:
             iterations=iterations,
             play_counts=play_counts,
             etha=etha,
-            epsilon_bar=epsilon_bar
+            epsilon_bar=epsilon_bar,
+            seed=seed,
         )
 
     def replicator_dynamics(self, y0=None, timepoints=None, mutation_matrix=None):

@@ -1,5 +1,11 @@
 # Unreleased
 
+Use local NumPy generators in fictitious play and stochastic fictitious play.
+Both algorithms and their Game methods accept a keyword-only seed or Generator.
+They no longer use np.random.seed or consume NumPy's global random state, so
+existing seeded trajectories change. Moran and introspection dynamics are
+unchanged.
+
 Handle players with only one available action in introspection dynamics.
 
 Avoid exponential overflow and underflow in stochastic fictitious play without

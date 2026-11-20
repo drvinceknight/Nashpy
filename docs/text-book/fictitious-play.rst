@@ -59,10 +59,9 @@ For example::
     >>> B = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
     >>> game = nash.Game(A, B)
     >>> iterations = 10000
-    >>> np.random.seed(0)
-    >>> play_counts = tuple(game.fictitious_play(iterations=iterations))
+    >>> play_counts = tuple(game.fictitious_play(iterations=iterations, seed=0))
     >>> play_counts[-1]
-    [array([5464., 1436., 3100.]), array([2111., 4550., 3339.])]
+    [array([4677., 1688., 3635.]), array([2477., 5333., 2190.])]
 
 We can visualise the lack of convergence::
 
@@ -83,10 +82,9 @@ If we modify the game slightly we obtain a different outcome::
     >>> A = np.array([[1 / 2, 1, 0], [0, 1 / 2, 1], [1, 0, 1 / 2]])
     >>> B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
     >>> game = nash.Game(A, B)
-    >>> np.random.seed(0)
-    >>> play_counts = tuple(game.fictitious_play(iterations=iterations))
+    >>> play_counts = tuple(game.fictitious_play(iterations=iterations, seed=0))
     >>> play_counts[-1]
-    [array([3290., 3320., 3390.]), array([3356., 3361., 3283.])]
+    [array([3308., 3384., 3308.]), array([3381., 3271., 3348.])]
 
 With a clear convergence now visible::
 

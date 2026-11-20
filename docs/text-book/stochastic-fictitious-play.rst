@@ -49,11 +49,10 @@ using the default value of :code:`epsilon_bar`::
     >>> B = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
     >>> game = nash.Game(A, B)
     >>> iterations = 10000
-    >>> np.random.seed(0)
-    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations))
+    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations, seed=0))
     >>> play_counts, distributions = play_counts_and_distribuions[-1]
     >>> print(play_counts)
-    [array([3937., 1907., 4156.]), array([2823., 5458., 1719.])]
+    [array([5281., 1963., 2756.]), array([1845., 3957., 4198.])]
 
     >>> import matplotlib.pyplot as plt
     >>> plt.figure() # doctest: +SKIP
@@ -79,10 +78,9 @@ Observe below that the game converges when passing values for :code:`etha` and :
     >>> iterations = 10000
     >>> etha = 0.1
     >>> epsilon_bar = 10**-1
-    >>> np.random.seed(0)
-    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations, etha=etha, epsilon_bar=epsilon_bar))
+    >>> play_counts_and_distribuions = tuple(game.stochastic_fictitious_play(iterations=iterations, seed=0, etha=etha, epsilon_bar=epsilon_bar))
     >>> play_counts_and_distribuions[-1]
-    ([array([3300., 3293., 3407.]), array([3320., 3372., 3308.])], [array([0.33502382, 0.41533594, 0.24964024]), array([0.18890743, 0.42793694, 0.38315563])])
+    ([array([3276., 3312., 3412.]), array([3281., 3326., 3393.])], [array([0.45704086, 0.36357846, 0.17938069]), array([0.27742814, 0.44345411, 0.27911775])])
     >>> import matplotlib.pyplot as plt
     >>> plt.figure() # doctest: +SKIP
     >>> probabilities = [

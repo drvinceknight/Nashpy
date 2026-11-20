@@ -14,9 +14,8 @@ A = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]])
 B = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
 game = nash.Game(A, B)
 iterations = 10000
-np.random.seed(0)
 play_counts_and_distribuions = tuple(
-    game.stochastic_fictitious_play(iterations=iterations)
+    game.stochastic_fictitious_play(iterations=iterations, seed=0)
 )
 
 plt.figure()

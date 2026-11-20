@@ -64,17 +64,15 @@ def test_fictitious_play():
     B = np.array([[1 / 2, 0, 1], [1, 1 / 2, 0], [0, 1, 1 / 2]])
     iterations = 10000
 
-    np.random.seed(0)
-    play_counts = tuple(fictitious_play(A, B, iterations=iterations))
+    play_counts = tuple(fictitious_play(A, B, iterations=iterations, seed=0))
     assert len(play_counts) == iterations + 1
     final_row_play, final_column_play = play_counts[-1]
-    assert np.array_equal(final_row_play, [3290, 3320, 3390])
+    assert np.array_equal(final_row_play, [3308, 3384, 3308])
 
-    np.random.seed(1)
-    play_counts = tuple(fictitious_play(A, B, iterations=iterations))
+    play_counts = tuple(fictitious_play(A, B, iterations=iterations, seed=1))
     assert len(play_counts) == iterations + 1
     final_row_play, final_column_play = play_counts[-1]
-    assert np.array_equal(final_row_play, [3312, 3309, 3379])
+    assert np.array_equal(final_row_play, [3321, 3390, 3289])
 
 
 def test_fictitious_play_with_asymetric_game_and_initial_play_counts():

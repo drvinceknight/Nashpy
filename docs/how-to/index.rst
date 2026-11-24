@@ -17,6 +17,7 @@ How to:
    solve-with-lemke-howson.rst
    use-fictitious-play.rst
    use-stochastic-fictitious-play.rst
+   use-imitation-dynamics.rst
    use-replicator-dynamics.rst
    use-replicator-dynamics-with-mutation.rst
    use-discrete_replicator_dynamics.rst

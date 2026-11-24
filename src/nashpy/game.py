@@ -221,7 +221,7 @@ Column player:
             iterations=iterations,
             play_counts=play_counts,
             etha=etha,
-            epsilon_bar=epsilon_bar
+            epsilon_bar=epsilon_bar,
         )
 
     def replicator_dynamics(self, y0=None, timepoints=None, mutation_matrix=None):
@@ -494,29 +494,30 @@ Column player:
 
     def imitation_dynamics(
         self,
-        population_size=100,
-        iterations=1000,
-        random_seed=None,
-        threshold=0.5,
-    ):
+        population_size: int = 100,
+        iterations: int = 1000,
+        seed: Optional[int] = None,
+        threshold: float = 0.5,
+    ) -> Generator[tuple[npt.NDArray, npt.NDArray], None, None]:
         """
-        Simulate the imitation dynamics for a given game represented by payoff matrices A and B.
+        Simulate an imitate-the-best process for the game.
 
         Parameters
         ----------
-        population_size : number
-            number of individuals in the population of the group (default: 100)
-        iterations : number
-            number of generations to simulate (default: 1000)
-        random_seed : number
-            seed for reproducibility (default: None)
+        population_size : int
+            The number of individuals in each population.
+        iterations : int
+            The number of generations to simulate.
+        seed : int, optional
+            Seed for a local NumPy random number generator.
         threshold : float
-            threshold value for representing strategies as 0 or 1 (default: 0.5)
+            Values in the final mean population profiles that are greater than
+            or equal to this value are represented by 1; lower values by 0.
 
         Returns
         -------
         Generator
-            The equilibria.
+            A generator yielding the final thresholded population profiles.
         """
         A, B = self.payoff_matrices
         return imitation_dynamics(
@@ -524,7 +525,7 @@ Column player:
             B=B,
             population_size=population_size,
             iterations=iterations,
-            random_seed=random_seed,
+            seed=seed,
             threshold=threshold,
         )
 

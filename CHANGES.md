@@ -1,5 +1,11 @@
 # Unreleased
 
+Use local NumPy generators in fictitious play and stochastic fictitious play.
+Both algorithms and their Game methods accept a keyword-only seed or Generator.
+They no longer use np.random.seed or consume NumPy's global random state, so
+existing seeded trajectories change. Moran and introspection dynamics are
+unchanged.
+
 Fix imitation dynamics for rectangular games and correct the column player's
 payoff calculation. Imitation dynamics now uses a local NumPy random number
 generator and accepts `seed=0`. Use `seed=` in place of `random_seed=`.

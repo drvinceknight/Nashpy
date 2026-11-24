@@ -481,14 +481,12 @@ Column player:
         """
         g = nash.Game(A, B)
         iterations = 25
-        np.random.seed(seed)
         expected_outcome = tuple(
             nashpy.learning.fictitious_play.fictitious_play(
-                *g.payoff_matrices, iterations=iterations
+                *g.payoff_matrices, iterations=iterations, seed=seed
             )
         )
-        np.random.seed(seed)
-        outcome = tuple(g.fictitious_play(iterations=iterations))
+        outcome = tuple(g.fictitious_play(iterations=iterations, seed=seed))
         assert len(outcome) == iterations + 1
         assert len(expected_outcome) == iterations + 1
         for plays, expected_plays in zip(outcome, expected_outcome):
@@ -518,17 +516,15 @@ Column player:
         seed : int
             A seed for the random number generator
         """
-        np.random.seed(seed)
         iterations = 10
         g = nash.Game(A, B)
 
         expected_outcome = tuple(
             nashpy.learning.stochastic_fictitious_play.stochastic_fictitious_play(
-                *g.payoff_matrices, iterations=iterations
+                *g.payoff_matrices, iterations=iterations, seed=seed
             )
         )
-        np.random.seed(seed)
-        outcome = tuple(g.stochastic_fictitious_play(iterations=iterations))
+        outcome = tuple(g.stochastic_fictitious_play(iterations=iterations, seed=seed))
         assert len(outcome) == iterations + 1
         assert len(expected_outcome) == iterations + 1
         for (plays, distributions), (

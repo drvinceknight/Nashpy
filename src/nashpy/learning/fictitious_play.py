@@ -2,10 +2,15 @@
 
 import numpy as np
 import numpy.typing as npt
-from typing import Generator, Optional, Any
+from typing import Generator, Optional, Any, Union
 
 
-def get_best_response_to_play_count(A: npt.NDArray, play_count: npt.NDArray) -> int:
+def get_best_response_to_play_count(
+    A: npt.NDArray,
+    play_count: npt.NDArray,
+    *,
+    rng: Optional[np.random.Generator] = None,
+) -> int:
     """
     Returns the best response to a belief based on the playing distribution of the opponent
 
@@ -15,14 +20,17 @@ def get_best_response_to_play_count(A: npt.NDArray, play_count: npt.NDArray) -> 
         The utility matrix.
     play_count : array
         The play counts.
+    rng : numpy.random.Generator, optional
+        The random number generator used to break ties.
 
     Returns
     -------
     int
         The action that corresponds to the best response.
     """
+    rng = np.random.default_rng(rng)
     utilities = A @ play_count
-    return np.random.choice(np.argwhere(utilities == np.max(utilities)).transpose()[0])
+    return rng.choice(np.argwhere(utilities == np.max(utilities)).transpose()[0])
 
 
 def update_play_count(play_count: npt.NDArray, play: int) -> npt.NDArray:
@@ -47,7 +55,12 @@ def update_play_count(play_count: npt.NDArray, play: int) -> npt.NDArray:
 
 
 def fictitious_play(
-    A: npt.NDArray, B: npt.NDArray, iterations: int, play_counts: Optional[Any] = None
+    A: npt.NDArray,
+    B: npt.NDArray,
+    iterations: int,
+    play_counts: Optional[Any] = None,
+    *,
+    seed: Optional[Union[int, np.random.Generator]] = None,
 ) -> Generator:
     """
     Implement fictitious play
@@ -62,12 +75,15 @@ def fictitious_play(
         The number of iterations of the algorithm.
     play_counts : Optional
         The play counts.
+    seed : int or numpy.random.Generator, optional
+        A seed or generator for the local random number generator.
 
     Yields
     -------
     Generator
         The play counts.
     """
+    rng = np.random.default_rng(seed)
     if play_counts is None:
         play_counts = [np.array([0 for _ in range(dimension)]) for dimension in A.shape]
 
@@ -75,7 +91,7 @@ def fictitious_play(
 
     for repetition in range(iterations):
         plays = [
-            get_best_response_to_play_count(matrix, play_count)
+            get_best_response_to_play_count(matrix, play_count, rng=rng)
             for matrix, play_count in zip((A, B.transpose()), play_counts[::-1])
         ]
 

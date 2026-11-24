@@ -39,6 +39,25 @@ def test_imitation_dynamics_supports_rectangular_games():
     assert set(np.unique(column_profile)) <= {0, 1}
 
 
+def test_imitation_dynamics_uses_row_then_column_for_column_payoffs():
+    """Reversing the payoff operands would select a different column strategy."""
+    A = np.zeros((2, 2))
+    B = np.array([[0, 1], [0, 0]])
+
+    # With seed 5, the two initial row strategies are approximately
+    # (0.726, 0.274) and (0.711, 0.289), and the column strategies are
+    # (0.065, 0.935) and (0.848, 0.152). The column payoff is the product
+    # of the first row probability and the second column probability for
+    # each pair: 0.679 and 0.108. The first column strategy wins and
+    # thresholds to [0, 1]. Reversing the operands gives 0.018 and 0.245,
+    # selecting the second column strategy and returning [1, 0].
+    _, column_profile = next(
+        imitation_dynamics(A, B, population_size=2, iterations=1, seed=5)
+    )
+
+    np.testing.assert_array_equal(column_profile, [0, 1])
+
+
 def test_seed_zero_is_reproducible():
     """Zero is a valid seed."""
     A = np.array(((3, 0), (1, 2)))
@@ -68,32 +87,6 @@ def test_seed_does_not_modify_numpy_global_random_state():
     actual_next_random_value = np.random.random()
 
     assert actual_next_random_value == expected_next_random_value
-
-
-def test_random_seed_is_a_backwards_compatible_alias_for_seed():
-    """The old ``random_seed`` parameter produces the same result as ``seed``."""
-    A = np.array(((3, 0), (1, 2)))
-    B = np.array(((2, 1), (0, 3)))
-
-    result_with_seed = next(
-        imitation_dynamics(A, B, population_size=10, iterations=2, seed=0)
-    )
-    result_with_random_seed = next(
-        imitation_dynamics(A, B, population_size=10, iterations=2, random_seed=0)
-    )
-
-    for seed_profile, random_seed_profile in zip(
-        result_with_seed, result_with_random_seed
-    ):
-        np.testing.assert_array_equal(seed_profile, random_seed_profile)
-
-
-def test_seed_and_random_seed_cannot_both_be_set():
-    """Two conflicting seeds are rejected."""
-    A = np.eye(2)
-
-    with pytest.raises(ValueError, match="seed and random_seed"):
-        next(imitation_dynamics(A, A, seed=1, random_seed=1))
 
 
 def test_imitation_dynamics_validates_payoff_matrix_shapes():

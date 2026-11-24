@@ -496,10 +496,8 @@ Column player:
         self,
         population_size: int = 100,
         iterations: int = 1000,
-        random_seed: Optional[int] = None,
-        threshold: float = 0.5,
-        *,
         seed: Optional[int] = None,
+        threshold: float = 0.5,
     ) -> Generator[tuple[npt.NDArray, npt.NDArray], None, None]:
         """
         Simulate an imitate-the-best process for the game.
@@ -510,13 +508,11 @@ Column player:
             The number of individuals in each population.
         iterations : int
             The number of generations to simulate.
-        random_seed : int, optional
-            Backwards-compatible alias for ``seed``.
+        seed : int, optional
+            Seed for a local NumPy random number generator.
         threshold : float
             Values in the final mean population profiles that are greater than
             or equal to this value are represented by 1; lower values by 0.
-        seed : int, optional
-            Seed for a local NumPy random number generator.
 
         Returns
         -------
@@ -529,9 +525,8 @@ Column player:
             B=B,
             population_size=population_size,
             iterations=iterations,
-            random_seed=random_seed,
-            threshold=threshold,
             seed=seed,
+            threshold=threshold,
         )
 
     def introspection_dynamics(

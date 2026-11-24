@@ -28,7 +28,7 @@ of final thresholded population profiles::
     >>> column_profile
     array([0., 1., 1.])
 
-Passing a :code:`seed` makes the random initialization reproducible without
+Passing a :code:`seed` makes the random initialisation reproducible without
 changing NumPy's global random state::
 
     >>> first = next(game.imitation_dynamics(population_size=5, seed=0))
@@ -36,8 +36,9 @@ changing NumPy's global random state::
     >>> all(np.array_equal(x, y) for x, y in zip(first, second))
     True
 
-The older :code:`random_seed` parameter remains available as an alias for
-:code:`seed`. Supplying both parameters raises a :code:`ValueError`.
+If you used :code:`random_seed=` in v0.0.43, use :code:`seed=` instead.
+The new random number generator and payoff fixes can change results for the
+same seed.
 
 The returned binary profiles describe the thresholded final populations. They
 are not necessarily probability distributions or Nash equilibria.

@@ -1,5 +1,11 @@
 # Unreleased
 
+Fix imitation dynamics for rectangular games and correct the column player's
+payoff calculation. Imitation dynamics now uses a local NumPy random number
+generator and accepts `seed=0`. Use `seed=` in place of `random_seed=`.
+The same seed can produce different results than in v0.0.43 because of the
+new generator and bug fixes.
+
 Handle players with only one available action in introspection dynamics.
 
 Avoid exponential overflow and underflow in stochastic fictitious play without

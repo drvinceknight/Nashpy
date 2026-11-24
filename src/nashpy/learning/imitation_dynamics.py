@@ -1,6 +1,6 @@
 """Code to simulate an imitate-the-best population process."""
 
-from typing import Generator, Optional, Tuple
+from typing import Generator, Optional
 
 import numpy as np
 import numpy.typing as npt
@@ -35,11 +35,9 @@ def imitation_dynamics(
     B: npt.NDArray,
     population_size: int = 100,
     iterations: int = 1000,
-    random_seed: Optional[int] = None,
-    threshold: float = 0.5,
-    *,
     seed: Optional[int] = None,
-) -> Generator[Tuple[npt.NDArray, npt.NDArray], None, None]:
+    threshold: float = 0.5,
+) -> Generator[tuple[npt.NDArray, npt.NDArray], None, None]:
     """Simulate an imitate-the-best process for a bimatrix game.
 
     Each individual in the row population is paired with the individual at the
@@ -58,13 +56,11 @@ def imitation_dynamics(
         The number of individuals in each population.
     iterations : int
         The number of generations to simulate.
-    random_seed : int, optional
-        Backwards-compatible alias for ``seed``.
+    seed : int, optional
+        Seed for a local NumPy random number generator.
     threshold : float
         Values in the final mean population profiles that are greater than or
         equal to this value are represented by 1; lower values by 0.
-    seed : int, optional
-        Seed for a local NumPy random number generator.
 
     Yields
     ------
@@ -74,8 +70,7 @@ def imitation_dynamics(
     Raises
     ------
     ValueError
-        If the payoff matrices or simulation parameters are invalid, or if
-        both ``seed`` and ``random_seed`` are supplied.
+        If the payoff matrices or simulation parameters are invalid.
     """
     A = np.asarray(A)
     B = np.asarray(B)
@@ -90,10 +85,6 @@ def imitation_dynamics(
         raise ValueError("iterations must be non-negative.")
     if not 0 <= threshold <= 1:
         raise ValueError("threshold must be between 0 and 1 inclusive.")
-    if seed is not None and random_seed is not None:
-        raise ValueError("seed and random_seed cannot both be supplied.")
-    if seed is None:
-        seed = random_seed
 
     number_of_row_strategies, number_of_column_strategies = A.shape
     random_generator = np.random.default_rng(seed)

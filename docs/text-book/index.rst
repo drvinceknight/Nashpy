@@ -17,6 +17,7 @@ Nashpy Game Theory Text book
    fictitious-play.rst
    stochastic-fictitious-play.rst
    imitation-dynamics.rst
+   regret_minimization.rst
    replicator-dynamics.rst
    asymmetric-replicator-dynamics.rst
    discrete-replicator-dynamics.rst

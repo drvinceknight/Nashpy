@@ -25,6 +25,7 @@ documentation.
 .. [Nasar2011] Nasar, Sylvia. A beautiful mind. Simon and Schuster, 2011.  APA
 .. [Nash1950] Nash, John F. "Equilibrium points in n-person games." Proceedings of the national academy of sciences 36.1 (1950): 48-49.
 .. [Nisan2007] Nisan, Noam, et al., eds. Algorithmic game theory. Vol. 1. Cambridge: Cambridge University Press, 2007.
+.. [Neller2013] Neller, Todd W., and Marc Lanctot. "An Introduction to Counterfactual Regret Minimization." (2013). https://modelai.gettysburg.edu/2013/cfr/cfr.pdf
 .. [Nowak2006] Nowak, Martin A. Evolutionary dynamics: exploring the equations of life. Harvard university press, 2006.
 .. [Ohtsuki2007] Ohtsuki, Hisashi, Jorge M. Pacheco, and Martin A. Nowak. "Evolutionary graph theory: Breaking the symmetry between interaction and replacement." Journal of Theoretical Biology 246.4 (2007): 681-694.
 .. [Press2012] Press, William H., and Freeman J. Dyson. "Iterated Prisoner’s Dilemma contains strategies that dominate any evolutionary opponent." Proceedings of the National Academy of Sciences 109.26 (2012): 10409-10413.
@@ -32,6 +33,7 @@ documentation.
 .. [Vanderbei1998] Vanderbei, Robert J. "Vanderbei, linear programming foundations and extensions." (1998).
 .. [Webb2007] Webb, James N. Game theory: decisions, interaction and Evolution. Springer Science & Business Media, 2007.
 .. [Ziegler2012] Ziegler, Günter M. Lectures on polytopes. Vol. 152. Springer Science & Business Media, 2012.  APA
+.. [Zinkevich2007] Zinkevich, Martin, Michael Johanson, Michael Bowling, and Carmelo Piccione. "Regret Minimization in Games with Incomplete Information." Advances in Neural Information Processing Systems 20 (2007). https://poker.cs.ualberta.ca/publications/NIPS07-cfr.pdf
 .. [vonNeumann1928] von Neumann, J. "Zur theorie der gesellschaftsspiele." Mathematische annalen 100.1 (1928): 295-320
 .. [vonStengel2023] von Stengel, Bernhard. "Zero-sum games and linear programming duality." Mathematics of Operations Research (2023).
 .. [Greenwood2019] Greenwood, Garrison W.  "On the Study of Human Cooperation via Computer Simulation" Springer Nature (2019): 35-37

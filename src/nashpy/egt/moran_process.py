@@ -137,7 +137,7 @@ def update_population(
 
     if (mutation_probability > 0) and (np.random.random() < mutation_probability):
         birth_strategy = np.random.choice(
-            [n for n in original_set_of_strategies if n != birth_index]
+            [n for n in original_set_of_strategies if n != population[birth_index]]
         )
         next_population[death_index] = birth_strategy
     else:

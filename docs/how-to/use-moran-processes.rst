@@ -36,7 +36,8 @@ Note that this process is stochastic::
     [0 0 0]
 
 It is possible to pass a :code:`mutation_probability` to the process in
-which case it will not terminate::
+which case it will not terminate. A mutated offspring uses a different strategy
+from its parent, chosen from the strategies present in the initial population::
 
     >>> np.random.seed(2)
     >>> number_of_generations = 5
@@ -44,9 +45,9 @@ which case it will not terminate::
     >>> generations = game.moran_process(initial_population=(0, 0, 1), mutation_probability=mutation_probability)
     >>> for _ in range(number_of_generations):
     ...     print(next(generations))
-    [0 0 1]
-    [1 0 1]
-    [1 1 1]
+    [0 1 1]
+    [0 1 1]
+    [0 1 1]
     [0 1 1]
     [0 1 0]
 

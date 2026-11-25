@@ -713,24 +713,28 @@ Column player:
         expected_equilibria = (np.array([1, 0]), np.array([1, 0]))
         assert np.array_equal(equilibria, expected_equilibria)
 
-    def test_regret_minimization_non_zerosum_game(self):
-        # Test case values
-        A = np.array([[3, -1, 3], [-1, 3, 6], [-1, 1, 2]])
-        B = np.array([[-3, 1, 4], [1, -3, 3], [-1, 3, 4]])
-        g = nash.Game(A, B)
+    def test_regret_minimization_for_rectangular_game(self):
+        """The wrapper forwards iterations and returns average mixed strategies."""
+        A = np.array([[3, 0, 1], [1, 2, 4]])
+        B = np.array([[2, 5, 0], [3, 1, 4]])
+        game = nash.Game(A, B)
 
-        expected_nash_equilibrium = [
-            (np.array([0.0, 1.0, 0.0]), np.array([0.0, 0.0, 1.0]))
-        ]  # Expected Nash equilibrium strategy for Players
-        # Execute the regret minimization algorithm
-        for obtained, expected in zip(
-            g.regret_minimization(), expected_nash_equilibrium
-        ):
-            for s1, s2 in zip(obtained, expected):
-                self.assertTrue(
-                    np.array_equal(s1, s2),
-                    msg="obtained: {} !=expected: {}".format(obtained, expected),
-                )
+        outcomes = list(game.regret_minimization(iterations=2))
+
+        assert len(outcomes) == 1
+        row_strategy, column_strategy = outcomes[0]
+        np.testing.assert_allclose(row_strategy, [1 / 4, 3 / 4])
+        np.testing.assert_allclose(column_strategy, [1 / 6, 2 / 3, 1 / 6])
+
+    def test_regret_minimization_legacy_arguments(self):
+        """Old positional calls warn and use the new cumulative algorithm."""
+        game = nash.Game(np.array([[3, 0], [0, 1]]))
+
+        with pytest.warns(DeprecationWarning, match="learning_rate.*ignored"):
+            row_strategy, column_strategy = next(game.regret_minimization(0.1, 3))
+
+        np.testing.assert_allclose(row_strategy, [2 / 3, 1 / 3])
+        np.testing.assert_allclose(column_strategy, [1 / 6, 5 / 6])
 
     def test_imitation_dynamics(self):
         A = np.array([[3, 0, 1], [1, 2, 4]])

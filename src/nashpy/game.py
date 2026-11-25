@@ -464,28 +464,32 @@ Column player:
         column_strategy = linear_program(row_player_payoff_matrix=B.T)
         return row_strategy, column_strategy
 
-    def regret_minimization(self, learning_rate=0.1, iterations=100):
+    def regret_minimization(
+        self, learning_rate: Optional[float] = None, iterations: int = 100
+    ) -> Generator[tuple[npt.NDArray, npt.NDArray], None, None]:
         """
-        Obtain the Nash equilibria using regret minimization method using N number of itreations.
-        The code provided is based on the concept of regret matching,
-        with the fixed learning rate.
+        Return average mixed strategies from cumulative regret matching.
 
-        Algorithm implemented here is Algorithm 4.3 Theorem 4.4 of [Nisan2007]_
-
-        1. Build best Strategies probability of both players
+        Both players start uniformly and update simultaneously using expected
+        utilities. The process is deterministic and requires no random seed.
+        In zero-sum games, the average strategies approach the set of Nash
+        equilibria as the number of rounds increases.
 
         Parameters
         ----------
-        learning_rate : float
-            The  learning_rate determines the magnitude of the update towards the regrets
-
-        iterations : Integer
-            This value is defaulted to 100 itrations, this number could be modified to a larger or smaller number based on the untilities/payoff matrix shape
+        learning_rate : float, optional
+            Deprecated and ignored. Values other than None emit DeprecationWarning.
+            The positional slot is retained for compatibility.
+        iterations : int
+            Number of played rounds to average, default 100. The average
+            includes the initial uniform profile and excludes the update after
+            the last round. Zero returns the uniform strategies.
 
         Returns
         -------
         Generator
-            The equilibria.
+            A generator yielding one pair of NumPy arrays containing the row
+            and column players' average mixed strategies after all rounds.
         """
         A, B = self.payoff_matrices
         return regret_minimization(

@@ -1,5 +1,11 @@
 # Unreleased
 
+Replace the fixed learning-rate update in `Game.regret_minimization` with
+cumulative regret matching and fix column payoffs in rectangular games. The
+generator now yields the average mixed strategies played across all rounds.
+Existing calls that supply a numeric `learning_rate` still work and emit a
+deprecation warning. Use `iterations=` to set the number of rounds.
+
 Fix imitation dynamics for rectangular games and correct the column player's
 payoff calculation. Imitation dynamics now uses a local NumPy random number
 generator and accepts `seed=0`. Use `seed=` in place of `random_seed=`.

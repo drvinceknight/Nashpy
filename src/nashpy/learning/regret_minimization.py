@@ -1,132 +1,144 @@
-"""A class for a Regret Minimization algorithm"""
+"""Cumulative external regret matching for two-player normal-form games."""
+
+import warnings
+from typing import Generator, Optional
 
 import numpy as np
-from typing import Generator, Tuple, Any
 import numpy.typing as npt
 
 
-def compute_regrets(strategy_utilities, current_strategy):
-    """
-    This function calculates the regrets for a player based on the strategy utilities and the current strategy.
-    Regrets represent the difference between the utility achieved by playing a strategy and the maximum utility
-    that could have been achieved by playing any strategy.
-    In this implementation, only positive regrets are considered
+def compute_regrets(
+    strategy_utilities: npt.NDArray, current_strategy: npt.NDArray
+) -> npt.NDArray:
+    """Calculate signed instantaneous regret for each pure action.
 
     Parameters
     ----------
     strategy_utilities : array
-        Player New Strategy matrix
+        Expected utilities of each pure action against the opponent's strategy.
     current_strategy : array
-        Player Current Strategy matrix
-
+        The player's current mixed strategy.
 
     Returns
     -------
-    regrets
-        Regret for the Strategies chosen.
+    array
+        Each action's utility minus the current strategy's expected utility.
+        Negative values are retained when accumulating regrets.
     """
-    regrets = np.maximum(0, strategy_utilities - current_strategy)
-    return regrets
+    return strategy_utilities - (current_strategy @ strategy_utilities)
 
 
-def update_strategy(current_strategy, regrets, learning_rate):
-    """
-    This function updates the player's strategy based on the regrets, the current strategy, and a fixed learning rate.
-    It scales the regrets by the learning rate and adds them to the current strategy.
-    Finally, it normalizes the updated strategy to ensure that the probabilities sum up to 1.
+def update_strategy(cumulative_regrets: npt.NDArray) -> npt.NDArray:
+    """Match a mixed strategy to positive cumulative regrets.
 
     Parameters
     ----------
-    current_strategy : array
-        Player Current Strategy matrix
-    regrets : array
-        Player Current Strategy matrix
-    learning_rate: float ( Optional Defaulted to 0.1 )
-        The  learning_rate determines the magnitude of the update towards the regrets
-        The learning rate scales the regrets before they are added to the current strategy.
-        A higher learning rate results in a larger update, while a lower learning rate leads to a smaller update.
-        This value allows you to control the pace towards a Nash equilibrium.
+    cumulative_regrets : array
+        Signed cumulative regrets, one per pure action.
 
     Returns
     -------
-    latest_strategy:  arrary
-        latest_strategy is the average of the updates strategy
+    array
+        Normalized positive regrets, or the uniform strategy if none are
+        positive. The input regrets are not modified.
     """
-    updated_strategy = current_strategy + learning_rate * regrets
-    latest_strategy = updated_strategy / np.sum(updated_strategy)
-    return latest_strategy
-
-
-def generate_abs_strategy(strategy_list):
-    """
-    This function will return most favorable utility by a player based on the max probability value.
-    Will take only one variable, strategy_list as the input
-
-    Parameters
-    ----------
-    strategy_list : array
-        Array of strategy list to be updated with an absolute value
-
-    Returns
-    -------
-    favorable_strategy : Absolute stratedy by removing the fractions
-    """
-    max_probability = max(strategy_list)
-    strategy_relative = [1 if x == max_probability else 0 for x in strategy_list]
-    sum_value_in_the_list = sum(strategy_relative)
-    favorable_strategy = [x / sum_value_in_the_list for x in strategy_relative]
-    return favorable_strategy
+    positive_regrets = np.maximum(cumulative_regrets, 0)
+    total = positive_regrets.sum()
+    if total > 0:
+        return positive_regrets / total
+    return np.full(len(cumulative_regrets), 1 / len(cumulative_regrets))
 
 
 def regret_minimization(
-    A: npt.NDArray, B: npt.NDArray, learning_rate=0.1, iterations=100
-) -> Generator[Tuple[float, float], Any, None]:
-    """
-    Obtain the Nash equilibria using regret minimization method using N number of itreations.
-    The code provided is based on the concept of regret matching,
-    with the fixed learning rate.
+    A: npt.NDArray,
+    B: npt.NDArray,
+    learning_rate: Optional[float] = None,
+    iterations: int = 100,
+) -> Generator[tuple[npt.NDArray, npt.NDArray], None, None]:
+    """Yield average mixed strategies obtained through cumulative regret matching.
 
-    Algorithm implemented here is Algorithm 4.3 Theorem 4.4 of [Nisan2007]_
+    Both players start uniformly and update simultaneously using expected
+    utilities. Signed regrets accumulate across rounds. Their positive parts
+    determine the next strategies. The algorithm is deterministic.
 
-    1. Build best Strategies probability of both players
+    The generator yields one pair after all rounds. The average includes the
+    strategies used in those rounds, starting with the uniform profile, and
+    excludes the unplayed update after the last round. In zero-sum games these
+    averages approach the set of Nash equilibria as iterations increase.
 
     Parameters
     ----------
     A : array
-        The row player utility matrix.
+        Finite, real row-player payoffs with shape (m, n).
     B : array
-        The column player utility matrix
-
-    learning_rate : float ( Optional Defaulted to 0.1 )
-        The  learning_rate determines the magnitude of the update towards the regrets
-        The learning rate scales the regrets before they are added to the current strategy.
-        A higher learning rate results in a larger update, while a lower learning rate leads to a smaller update.
-        This value allows you to control the pace towards a Nash equilibrium.
-
-    iterations : Integer ( Optional Defaulted to 100 )
-        This value is defaulted to 100 itrations, this number could be modified to a larger or smaller number based on the untilities/payoff matrix shape
-
+        Finite, real column-player payoffs with the same shape as A.
+    learning_rate : float, optional
+        Deprecated and ignored. The argument retains its positional slot for
+        compatibility. Values other than None emit DeprecationWarning.
+    iterations : int
+        Number of rounds to average, default 100. Zero returns the initial
+        uniform strategies.
 
     Yields
-    -------
-    Generator
-        The equilibria.
+    ------
+    tuple
+        Two NumPy arrays of average action probabilities, of lengths m and n.
+
+    Raises
+    ------
+    ValueError
+        If matrices are not non-empty, finite, real, two-dimensional arrays
+        of the same shape, or iterations is not a non-negative integer.
     """
-    num_strategies_1, num_strategies_2 = A.shape
-    strategy_A = np.ones(num_strategies_1) / num_strategies_1
-    strategy_B = np.ones(num_strategies_2) / num_strategies_2
+    if np.iscomplexobj(A) or np.iscomplexobj(B):
+        raise ValueError("A and B must contain real payoffs.")
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    if A.ndim != 2 or B.ndim != 2:
+        raise ValueError("A and B must be two-dimensional payoff matrices.")
+    if A.shape != B.shape:
+        raise ValueError("A and B must have the same shape.")
+    if A.size == 0:
+        raise ValueError("A and B must be non-empty payoff matrices.")
+    if not np.isfinite(A).all() or not np.isfinite(B).all():
+        raise ValueError("A and B must contain only finite payoffs.")
+    if (
+        isinstance(iterations, (bool, np.bool_))
+        or not isinstance(iterations, (int, np.integer))
+        or iterations < 0
+    ):
+        raise ValueError("iterations must be a non-negative integer.")
+    if learning_rate is not None:
+        warnings.warn(
+            "learning_rate is deprecated and ignored by cumulative regret "
+            "matching. Use iterations=... to set the number of rounds.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
-    for itration_num in range(iterations):
-        strategy_utilities_A = np.dot(A, strategy_B)
-        strategy_utilities_B = np.dot(B, strategy_A)
+    # Scaling each player's payoffs by a positive factor preserves regret
+    # matching. Powers of two keep regret sums bounded even at extreme scales.
+    A = np.ldexp(A, -np.frexp(np.abs(A).max())[1])
+    B = np.ldexp(B, -np.frexp(np.abs(B).max())[1])
 
-        regrets_A = compute_regrets(strategy_utilities_A, strategy_A)
-        regrets_B = compute_regrets(strategy_utilities_B, strategy_B)
+    number_of_row_strategies, number_of_column_strategies = A.shape
+    row_regrets = np.zeros(number_of_row_strategies)
+    column_regrets = np.zeros(number_of_column_strategies)
+    row_strategy_sum = np.zeros(number_of_row_strategies)
+    column_strategy_sum = np.zeros(number_of_column_strategies)
 
-        strategy_A = update_strategy(strategy_A, regrets_A, learning_rate)
-        strategy_B = update_strategy(strategy_B, regrets_B, learning_rate)
+    for _ in range(iterations):
+        row_strategy = update_strategy(row_regrets)
+        column_strategy = update_strategy(column_regrets)
+        row_strategy_sum += row_strategy
+        column_strategy_sum += column_strategy
 
-    strategy_A_final = generate_abs_strategy(strategy_A)
-    strategy_B_final = generate_abs_strategy(strategy_B)
+        row_utilities = A @ column_strategy
+        column_utilities = B.T @ row_strategy
+        row_regrets += compute_regrets(row_utilities, row_strategy)
+        column_regrets += compute_regrets(column_utilities, column_strategy)
 
-    yield strategy_A_final, strategy_B_final
+    if iterations == 0:
+        yield update_strategy(row_regrets), update_strategy(column_regrets)
+    else:
+        yield row_strategy_sum / iterations, column_strategy_sum / iterations

@@ -1,43 +1,94 @@
+.. _regret-minimization:
+
 Regret Minimization
 ===================
 
-Introduction
-------------
+Nashpy implements cumulative external regret matching for two-player bimatrix
+games. This deterministic, full-information version evaluates utilities
+against the opponent's mixed strategy each round.
+For background on positive-regret matching and averaging, see
+[Neller2013]_, Section 2.3.
 
-In the context of game theory, "Regret" refers to the difference between a player's actual payoff and the payoff they would have received by playing a different strategy. By minimising regrets, players converge towards a Nash Equilibrium where no player has an incentive to deviate from their chosen strategy unilaterally
+Updates
+-------
 
-Regret minimization is a concept used in game theory to model how players learn and adapt their strategies over time. It measures the "regret" experienced by a player for not choosing a different strategy that could have yielded a better outcome in hindsight.
+Let :math:`A, B \in \mathbb{R}^{m \times n}` be the payoff matrices and
+:math:`x_t \in \Delta_m`, :math:`y_t \in \Delta_n` the mixed strategies
+played in round :math:`t`. Both players start uniformly, with zero cumulative
+regrets.
 
-Mathematically, let's consider a sequential game where player :math:`i` selects a strategy from a set :math:`S_i` at each time step. The regret :math:`R_i(t)` of player :math:`i` at time :math:`t` with respect to strategy :math:`s` is defined as:
+The pure-action utility vectors are
 
 .. math::
 
-    R_i(t) = \max_{s' \in S_i} \sum_{\tau=1}^{t} u_i(s', s_{-i}^\tau) - \sum_{\tau=1}^{t} u_i(s, s_{-i}^\tau)
+   a_t = A y_t, \qquad b_t = B^{\mathsf T} x_t.
 
-where:
-- :math:`s_{-i}^\tau` represents the joint strategy profile of all players except :math:`i` up to time :math:`\tau`.
-- :math:`u_i(s, s_{-i}^\tau)` is the utility or payoff obtained by player :math:`i` when playing strategy :math:`s` against the joint strategy :math:`s_{-i}^\tau`.
+The corresponding instantaneous regrets compare each action's utility to the
+player's current expected payoff:
 
-The regret measures how much payoff player :math:`i` could have gained if they had chosen a different strategy instead of :math:`s` in each time step up to time :math:`t`.
+.. math::
 
-Regret Minimization Implementation
-----------------------------------
+   r^r_t = a_t - (x_t^{\mathsf T} a_t) \mathbf{1}_m,
+   \qquad
+   r^c_t = b_t - (y_t^{\mathsf T} b_t) \mathbf{1}_n.
 
-An algorithm can be used to minimize "regret" by iteratively updating strategies based on past regrets. At each time step, a player selects the strategy that minimizes their regret. This approach aims to converge towards a strategy profile with low regret.
+Accumulate these signed differences for each action:
 
-Mathematically, the algorithm can be summarized as follows:
+.. math::
 
-- Initialize strategies for all players.
-- At each time step :math:`t`:
-  - Calculate the regret for each player based on their current strategy.
-  - Update strategies by selecting the option that minimizes regret for each player.
-- Repeat until convergence or a stopping condition is met.
+   R^r_t = R^r_{t-1} + r^r_t, \qquad
+   R^c_t = R^c_{t-1} + r^c_t.
 
-By iteratively updating strategies to minimize regret, players can learn to make better decisions over time and potentially converge towards a Nash equilibrium in the game.
+Negative entries must remain in the cumulative vectors. Only when choosing the
+next strategy do we take the positive part :math:`R^+_i = \max(R_i, 0)`:
 
+.. math::
+
+   x_{t+1,i} =
+   \begin{cases}
+      R^{r,+}_{t,i} / \sum_j R^{r,+}_{t,j}
+         & \text{if } \sum_j R^{r,+}_{t,j} > 0, \\
+      1/m & \text{otherwise}.
+   \end{cases}
+
+The column player uses the same rule with its own :math:`n` actions. Both
+players' utilities and regrets use the same pre-update profile
+:math:`(x_t, y_t)`.
+
+Averaging and convergence
+-------------------------
+
+After :math:`T > 0` played rounds the returned vectors are
+
+.. math::
+
+   \bar{x}_T = \frac{1}{T} \sum_{t=1}^T x_t,
+   \qquad
+   \bar{y}_T = \frac{1}{T} \sum_{t=1}^T y_t.
+
+The uniform initial strategies count as the first round. For zero rounds,
+Nashpy returns the uniform strategies by convention. The generator yields
+one final pair.
+
+In zero-sum games, both players' vanishing average external regret implies that
+the average profiles approach the set of Nash equilibria. For :math:`B=-A`,
+the non-negative duality gap
+
+.. math::
+
+   g_T = \max_i (A\bar{y}_T)_i -
+         \min_j (\bar{x}_T^{\mathsf T} A)_j
+
+is zero exactly at an equilibrium. It equals the sum of the two players'
+best-response gains and is bounded above by the sum of their positive average
+external regrets. A finite number of rounds need not give an exact equilibrium.
+See [Zinkevich2007]_, Section 2.3, for the connection between regret and
+approximate equilibrium.
+
+In general bimatrix games, the pair of average marginal strategies can lie
+outside the set of Nash equilibria.
 
 Using Nashpy
 ------------
 
-See :ref:`how-to-use-regret-minimization` for guidance of how to use Nashpy to
-use Regret Minimization.
+See :ref:`how-to-use-regret-minimization` for examples and migration guidance.
